@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://c8qscps3oh5v"]
+
+[ext_resource type="Script" uid="uid://bl2ekncae61bg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Node2D" unique_id=622469435]
+script = ExtResource("1_l6cm7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2071411176]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.08627451, 0.15686275, 1)
+
+[node name="Label" type="Label" parent="." unique_id=289317844]
+offset_left = 760.0
+offset_top = 280.0
+offset_right = 1160.0
+offset_bottom = 379.0
+theme_override_font_sizes/font_size = 72
+text = "SAFE SERVE"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1073807691]
+offset_left = 860.0
+offset_top = 390.0
+offset_right = 1060.0
+offset_bottom = 690.0
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=917689753]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "NOWA GRA"
+
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=594814752]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "KONTYNUUJ"
+
+[node name="Button3" type="Button" parent="VBoxContainer" unique_id=235537254]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "USTAWIENIA"
+
+[node name="Button4" type="Button" parent="VBoxContainer" unique_id=5190308]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "WYJŚCIE"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button4" to="." method="_on_button_4_pressed"]

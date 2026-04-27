@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b1dum2si50hwq"]
+
+[ext_resource type="Script" uid="uid://5jc3ddaamafl" path="res://scripts/pocisk.gd" id="1_iglvf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4hk0s"]
+radius = 5.0
+height = 15.0
+
+[node name="Pocisk" type="Area2D" unique_id=1439590801]
+script = ExtResource("1_iglvf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1630821114]
+shape = SubResource("CapsuleShape2D_4hk0s")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=408585728]
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 5.0
+offset_bottom = 10.0
