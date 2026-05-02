@@ -11,7 +11,7 @@ extends Area2D
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
 
-@onready var camera = $Camera2D
+#@onready var camera = $Camera2D  # rozważyć do usunięcia
 
 
 var velocity: Vector2 = Vector2.ZERO
@@ -23,8 +23,8 @@ var _steer_input: float = 0.0
 func _process(delta: float) -> void:
 	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
 	_steer_input = Input.get_axis("ui_left", "ui_right")
-	var look_ahead = transform.x * velocity.length() * 0.2
-	camera.position = look_ahead
+	#var look_ahead = transform.x * velocity.length() * 0.2 # rozważyć do usunięcia
+	#camera.position = look_ahead # rozważyć do usunięcia
 
 func _physics_process(delta: float) -> void:
 	apply_engine(delta)
