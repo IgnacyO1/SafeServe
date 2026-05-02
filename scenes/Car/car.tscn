@@ -19,3 +19,9 @@ texture = ExtResource("1_xbtw7")
 position = Vector2(-1, 0)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_xbtw7")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1905327528]
+rotation = 1.5707964
+ignore_rotation = false
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
