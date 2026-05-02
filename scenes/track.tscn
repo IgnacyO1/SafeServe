@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dosbe7kdbe5kp"]
+
+[ext_resource type="Texture2D" uid="uid://c1m5vk3rejca7" path="res://assets/Images/Monaco.png" id="1_s1rm4"]
+[ext_resource type="Texture2D" uid="uid://2msta3ane5h5" path="res://assets/Images/WaterBg.png" id="1_ur0e5"]
+[ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="3_a7tuf"]
+
+[node name="Track" type="Node2D" unique_id=446683934]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1297395228]
+position = Vector2(956.14996, 538.50006)
+scale = Vector2(1.684722, 1.6847222)
+texture = ExtResource("1_ur0e5")
+
+[node name="TrackImage" type="Sprite2D" parent="." unique_id=1758676248]
+position = Vector2(867.2444, 542.2)
+scale = Vector2(1.3219144, 1.3219144)
+texture = ExtResource("1_s1rm4")
+
+[node name="Car" parent="." unique_id=2134554690 instance=ExtResource("3_a7tuf")]
+position = Vector2(719, 436)
