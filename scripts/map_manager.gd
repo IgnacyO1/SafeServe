@@ -1,13 +1,16 @@
 extends Node2D
 
 # --- KONFIGURACJA ---
-var chunk_size_meters = 200.0  # Rozmiar chunka w METRACH (jak w Pythonie)
-var map_scale = 10.0           # 1 metr = 10 pikseli (TUTAJ zmieniasz wielkość mapy!)
+var chunk_size_meters = 200.0
+var map_scale = 20.0
 var load_radius = 2 
 var chunk_path = "res://data/map_chunks/"
 
-# To jest faktyczny rozmiar chunka w pikselach Godota
 @onready var chunk_size_px = chunk_size_meters * map_scale
+
+# --- ZASOBY ---
+@onready var grass_tex = preload("res://assets/graphics/tileable_grass_00.png")
+@onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
 
 var loaded_chunks = {} 
 
@@ -19,7 +22,6 @@ func _process(_delta):
 		update_chunks()
 
 func update_chunks():
-	# Liczymy chunk na podstawie pozycji w pikselach podzielonej przez rozmiar w pikselach
 	var p_x = int(floor(player.global_position.x / chunk_size_px))
 	var p_y = int(floor(player.global_position.y / chunk_size_px))
 	
@@ -50,12 +52,28 @@ func load_chunk_from_json(c_id):
 	add_child(chunk_node)
 	loaded_chunks[c_id] = chunk_node
 	
+	# 1. TŁO CHUNKA (Trawa)
+	var coords = c_id.split("_")
+	var cx = int(coords[0])
+	var cy = int(coords[1])
+	
+	# --- Zmień te linie w sekcji TŁO CHUNKA ---
+	var bg = Sprite2D.new()
+	bg.texture = grass_tex
+	bg.centered = false
+	bg.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED # To włącza kafelkowanie
+	bg.region_enabled = true
+	# Region musi być w pikselach (rozmiar chunka), wtedy tekstura wypełni go kafelkami
+	bg.region_rect = Rect2(0, 0, chunk_size_px, chunk_size_px) 
+	bg.position = Vector2(cx * chunk_size_px, cy * chunk_size_px)
+	bg.z_index = -10
+	chunk_node.add_child(bg)
+	
 	for feature in data:
 		spawn_feature(feature, chunk_node)
 
 func spawn_feature(feature, parent):
 	var points = PackedVector2Array()
-	# PRZELICZANIE PUNKTÓW: Metry z JSON * Skala Godota
 	for p in feature["geometry"]:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
 		
@@ -67,21 +85,58 @@ func spawn_feature(feature, parent):
 
 func create_building(points, parent):
 	var body = StaticBody2D.new()
+	
+	# Cień budynku (przesunięty czarny poligon)
+	var shadow = Polygon2D.new()
+	shadow.polygon = points
+	shadow.color = Color(0, 0, 0, 0.3)
+	shadow.position = Vector2(5, 5)
+	shadow.z_index = 1
+	
+	# Dach budynku
 	var visual = Polygon2D.new()
 	visual.polygon = points
-	visual.color = Color(0.25, 0.25, 0.25)
+	visual.color = Color(0.3, 0.3, 0.35) # Lekki błękit/szary
+	visual.z_index = 2
+	
+	# Obrys dachu
+	var outline = Line2D.new()
+	var opoints = points
+	opoints.append(points[0]) # domknięcie
+	outline.points = opoints
+	outline.width = 2.0
+	outline.default_color = Color(0.1, 0.1, 0.1)
+	outline.z_index = 3
 	
 	var collision = CollisionPolygon2D.new()
 	collision.polygon = points
 	
+	body.add_child(shadow)
 	body.add_child(visual)
+	body.add_child(outline)
 	body.add_child(collision)
 	parent.add_child(body)
 
 func create_road(points, parent):
-	var line = Line2D.new()
-	line.points = points
-	line.width = 4.0 * map_scale # Szerokość drogi też skalujemy!
-	line.default_color = Color(0.15, 0.15, 0.15)
-	line.z_index = -1
-	parent.add_child(line)
+	# Główny asfalt
+	var road = Line2D.new()
+	road.points = points
+	road.width = 4.0 * map_scale
+	road.texture = asphalt_tex
+	road.texture_mode = Line2D.LINE_TEXTURE_TILE # Powtarzanie tekstury
+	road.default_color = Color(1, 1, 1) # Biały przy teksturze oznacza "bezbarwny"
+	road.z_index = -2
+	road.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	road.end_cap_mode = Line2D.LINE_CAP_ROUND
+	road.joint_mode = Line2D.LINE_JOINT_ROUND
+	parent.add_child(road)
+	
+	# Pasy na środku (opcjonalnie)
+	var stripes = Line2D.new()
+	stripes.points = points
+	stripes.width = 0.5 * map_scale
+	stripes.default_color = Color(1, 1, 1, 0.5) # Półprzezroczysty biały
+	stripes.z_index = -1
+	# Efekt przerywanej linii robimy przez teksturę lub shader, 
+	# ale na razie zróbmy po prostu cienką linię pomocniczą.
+	parent.add_child(stripes)
