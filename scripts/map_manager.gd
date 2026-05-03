@@ -3,7 +3,7 @@ extends Node2D
 # --- KONFIGURACJA ---
 var chunk_size_meters = 200.0
 var map_scale = 20.0
-var load_radius = 2 
+var load_radius = 1
 var chunk_path = "res://data/map_chunks/"
 
 @onready var chunk_size_px = chunk_size_meters * map_scale
@@ -11,6 +11,7 @@ var chunk_path = "res://data/map_chunks/"
 # --- ZASOBY ---
 @onready var grass_tex = preload("res://assets/graphics/tileable_grass_00.png")
 @onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
+@onready var tree_tex = preload("res://assets/graphics/tree_top.png")
 
 var loaded_chunks = {} 
 
@@ -73,6 +74,12 @@ func load_chunk_from_json(c_id):
 		spawn_feature(feature, chunk_node)
 
 func spawn_feature(feature, parent):
+	# Sprawdzamy czy to punkt (drzewo)
+	if feature["props"].get("natural") == "tree" or feature["type"] == "tree":
+		var pos = Vector2(feature["geometry"][0][0] * map_scale, feature["geometry"][0][1] * map_scale)
+		create_tree(pos, parent)
+		return # Kończymy, żeby nie próbowało rysować linii/poligonów
+	
 	var points = PackedVector2Array()
 	for p in feature["geometry"]:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
@@ -118,25 +125,59 @@ func create_building(points, parent):
 	parent.add_child(body)
 
 func create_road(points, parent):
-	# Główny asfalt
 	var road = Line2D.new()
 	road.points = points
 	road.width = 4.0 * map_scale
-	road.texture = asphalt_tex
-	road.texture_mode = Line2D.LINE_TEXTURE_TILE # Powtarzanie tekstury
-	road.default_color = Color(1, 1, 1) # Biały przy teksturze oznacza "bezbarwny"
+	
+	# Upewnij się, że tekstura istnieje
+	if asphalt_tex:
+		road.texture = asphalt_tex
+		road.texture_mode = Line2D.LINE_TEXTURE_TILE
+		# Używamy Color.WHITE, aby tekstura nie była przyciemniona
+		road.default_color = Color.WHITE 
+	else:
+		# Debug: jeśli nie ma tekstury, ustaw chociaż kolor, żeby zobaczyć czy działa
+		road.default_color = Color.GRAY
+		
+	road.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	road.z_index = -2
-	road.begin_cap_mode = Line2D.LINE_CAP_ROUND
-	road.end_cap_mode = Line2D.LINE_CAP_ROUND
-	road.joint_mode = Line2D.LINE_JOINT_ROUND
 	parent.add_child(road)
 	
 	# Pasy na środku (opcjonalnie)
 	var stripes = Line2D.new()
 	stripes.points = points
-	stripes.width = 0.5 * map_scale
+	stripes.width = 0.1 * map_scale
 	stripes.default_color = Color(1, 1, 1, 0.5) # Półprzezroczysty biały
 	stripes.z_index = -1
 	# Efekt przerywanej linii robimy przez teksturę lub shader, 
 	# ale na razie zróbmy po prostu cienką linię pomocniczą.
 	parent.add_child(stripes)
+
+func create_tree(pos, parent):
+	var tree_node = StaticBody2D.new()
+	tree_node.position = pos
+	
+	# 1. Cień drzewa (lekko przesunięte czarne kółko lub kopia sprita)
+	var shadow = Sprite2D.new()
+	shadow.texture = tree_tex
+	shadow.modulate = Color(0, 0, 0, 0.3)
+	shadow.position = Vector2(3, 3)
+	shadow.scale = Vector2(0.1, 0.1) * map_scale # Dopasuj skalę do mapy
+	shadow.z_index = 1
+	
+	# 2. Korona drzewa
+	var visual = Sprite2D.new()
+	visual.texture = tree_tex
+	visual.scale = Vector2(0.1, 0.1) * map_scale
+	visual.z_index = 4 # Wyżej niż dachy budynków (opcjonalnie)
+	
+	# 3. Kolizja (okrągła, żeby auto mogło się obetrzeć o drzewo)
+	var col = CollisionShape2D.new()
+	var circle = CircleShape2D.new()
+	circle.radius = 0.4 * map_scale # Promień pnia/kolizji
+	col.shape = circle
+	
+	tree_node.add_child(shadow)
+	tree_node.add_child(visual)
+	tree_node.add_child(col)
+	parent.add_child(tree_node)
