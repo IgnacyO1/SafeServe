@@ -1,11 +1,19 @@
 extends CharacterBody2D
 
+@onready var label_skrzynka = get_parent().get_node("HUD/LabelSkrzynka")
+@onready var skrzynka_node = get_parent().get_node("CzarnaSkrzynka")
+
 const SPEED = 250.0
 const POCISK = preload("res://scenes/pocisk.tscn")
+var ma_skrzynke = false
+var przy_npc = null
+
+func _ready():
+	skrzynka_node.visible = false
+	skrzynka_node.get_node("CollisionShape2D").disabled = true
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.ZERO
-	
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
 	if Input.is_action_pressed("ui_left"):
@@ -14,11 +22,12 @@ func _physics_process(delta: float) -> void:
 		direction.y += 1
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
-	
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-	
-	velocity = direction * SPEED
+	var aktualna_predkosc = SPEED
+	if Input.is_action_pressed("ui_accept"):
+		aktualna_predkosc = SPEED * 1.8
+	velocity = direction * aktualna_predkosc
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -31,26 +40,39 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_parent().add_child(pocisk)
 			pocisk.global_position = $PunktStrzalu.global_position
 			pocisk.direction = (get_global_mouse_position() - global_position).normalized()
-	
+
 	if event is InputEventKey:
 		if event.keycode == KEY_E and event.pressed:
 			if przy_npc != null:
 				print("Zakładasz maskę na: ", przy_npc.name)
+				print("Babcia uratowana! Teraz znajdź czarną skrzynkę!")
 				przy_npc.queue_free()
 				przy_npc = null
-
-
-var przy_npc = null
-
-
+				# Skrzynka pojawia się dopiero teraz
+				skrzynka_node.visible = true
+				skrzynka_node.get_node("CollisionShape2D").disabled = false
+				label_skrzynka.text = "Znajdz czarna skrzynke!"
+			elif not ma_skrzynke:
+				var skrzynki = get_tree().get_nodes_in_group("skrzynka")
+				for s in skrzynki:
+					if global_position.distance_to(s.global_position) < 150:
+						ma_skrzynke = true
+						s.queue_free()
+						print("Podniosles czarna skrzynke!")
+						label_skrzynka.text = "Masz czarna skrzynke!"
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("npc"):
 		przy_npc = null
-		
-		
+
 func _on_area_entered(area: Area2D) -> void:
-	print("Weszła strefa: ", area.name)
+	print("Weszla strefa: ", area.name)
 	if area.is_in_group("npc"):
 		przy_npc = area
-		print("Babcia w zasięgu!")
+		print("Babcia w zasiegu!")
+	if area.is_in_group("wyjscie"):
+		if ma_skrzynke:
+			print("WYGRANA! Uciekles z serwerowni!")
+			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		else:
+			print("Nie masz czarnej skrzynki! Wróc po nia!")
