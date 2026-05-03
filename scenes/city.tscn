@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://yl4bvvhjql4p"]
+
+[ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="1_bih7l"]
+[ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="2_58ubr"]
+
+[node name="World" type="Node" unique_id=1958956810]
+
+[node name="MapManager" type="Node2D" parent="." unique_id=1997550378]
+script = ExtResource("1_bih7l")
+player_path = NodePath("../Car")
+
+[node name="Car" parent="." unique_id=2134554690 instance=ExtResource("2_58ubr")]
