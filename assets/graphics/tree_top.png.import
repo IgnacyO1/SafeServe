@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc1hn6j3rmhru"
-path="res://.godot/imported/01tizeta_asphalts.png-a583005a8ac25ed2d16b77c20db2a3ee.ctex"
+uid="uid://cix7hvlrb18ie"
+path="res://.godot/imported/tree_top.png-a022a2b69bfb689b568334f45a5c23a0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/01tizeta_asphalts.png"
-dest_files=["res://.godot/imported/01tizeta_asphalts.png-a583005a8ac25ed2d16b77c20db2a3ee.ctex"]
+source_file="res://assets/graphics/tree_top.png"
+dest_files=["res://.godot/imported/tree_top.png-a022a2b69bfb689b568334f45a5c23a0.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
