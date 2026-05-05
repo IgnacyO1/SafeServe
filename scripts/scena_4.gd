@@ -3,6 +3,7 @@ extends Node2D
 @onready var label_czas = $HUD/LabelCzas
 @onready var minimapa_bg = Sprite2D.new()
 @onready var markers_node = Node2D.new()
+@onready var label_skrzynka = $HUD/LabelSkrzynka if has_node("HUD/LabelSkrzynka") else null
 
 var czas = 180.0
 var gra_aktywna = true
@@ -42,6 +43,14 @@ func _ready():
 	if label_czas:
 		label_czas.set("theme_override_colors/font_outline_color", Color.BLACK)
 		label_czas.set("theme_override_constants/outline_size", 6)
+	if label_skrzynka:
+		label_skrzynka.set("theme_override_font_sizes/font_size", 24)
+		label_skrzynka.set("theme_override_colors/font_outline_color", Color.BLACK)
+		label_skrzynka.set("theme_override_constants/outline_size", 4)
+		label_skrzynka.set("theme_override_colors/font_color", Color.RED)
+		label_skrzynka.modulate = Color.RED
+		label_skrzynka.text = "Zgaś pożary (Podejdź i wciśnij E)"
+		label_skrzynka.visible = false
 	label_zadanie.set("theme_override_colors/font_outline_color", Color.BLACK)
 	label_zadanie.set("theme_override_constants/outline_size", 6)
 	label_zadanie.modulate = Color.YELLOW
@@ -131,14 +140,18 @@ func _process(delta: float) -> void:
 	# Chowanie głównego napisu ze środka po pierwszym ruszeniu
 	if label_zadanie.visible and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_accept")):
 		label_zadanie.visible = false
+		if label_skrzynka:
+			label_skrzynka.visible = true
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_M and event.pressed and not event.echo:
 		minimapa_bg.visible = !minimapa_bg.visible
 		if minimapa_bg.visible:
 			_odswiez_minimape()
-			if label_zadanie:
+			if label_zadanie and label_zadanie.visible:
 				label_zadanie.visible = false # Chowa napis przy otwarciu mapy
+				if label_skrzynka:
+					label_skrzynka.visible = true
 
 func _odswiez_minimape():
 	for child in markers_node.get_children():
@@ -213,11 +226,14 @@ func rozpocznij_faze_babcia():
 	faza = "BABCIA"
 	print("URATUJ BABCIE!")
 	if label_czas:
-		label_czas.text = "Uratuj babcie (fioletowe światło)"
 		label_czas.modulate = Color.RED
-	label_zadanie.text = "URATUJ BABCIE! DAJ JEJ MASKE (E)"
+	label_zadanie.text = "Uratuj Babcię"
 	label_zadanie.modulate = Color.RED
 	label_zadanie.visible = true # Pokaż napis od nowa gdy zadanie ulega zmianie
+	if label_skrzynka:
+		label_skrzynka.text = "Znajdź Babcię i kliknij E żeby uratować"
+		label_skrzynka.modulate = Color.RED
+		label_skrzynka.visible = false # Schowaj dopóki label_zadanie jest widoczne
 	# Aktualizujemy mapę, aby kropka babci się pokazała natychmiast jeśli mapa jest otwarta
 	if minimapa_bg.visible:
 		_odswiez_minimape()
@@ -246,11 +262,13 @@ func uratowano_babcie():
 		faza = "SKRZYNKA"
 		print("ZNAJDZ CZARNA SKRZYNKE!")
 		if label_czas:
-			label_czas.text = "Znajdź czarna skrzynkę (żółte światło)"
-			label_czas.modulate = Color.ORANGE
-		label_zadanie.text = "SZYBKO ZNAJDZ CZARNA SKRZYNKE (E)"
-		label_zadanie.modulate = Color.ORANGE
+			label_czas.modulate = Color.RED
+		label_zadanie.text = "Znajdź Czarną Skrzynkę"
+		label_zadanie.modulate = Color.RED
 		label_zadanie.visible = true
+		if label_skrzynka:
+			label_skrzynka.text = "Znajdź czarną skrzynkę (żółte światło na mini mapce) i kliknij E"
+			label_skrzynka.visible = false
 		
 		# Spawn Skrzynki
 		var skrzynka_area = Area2D.new()
@@ -279,13 +297,16 @@ func podniesiono_skrzynke():
 		faza = "KONIEC"
 		print("UCIEKAJ DO MAIN MENU!")
 		if label_czas:
-			label_czas.text = "Uciekaj do Drzwi (niebieskie światło)"
 			label_czas.modulate = Color.RED
 		
 		# Ustawiamy napis znowu
-		label_zadanie.text = "Uciekaj ze skrzynką do Drzwi (Niebieskie Światło)"
+		label_zadanie.text = "Kieruj się do wyjscia"
 		label_zadanie.visible = true
 		label_zadanie.modulate = Color.RED
+		if label_skrzynka:
+			label_skrzynka.text = "Aby opuścić udaj się do wyjścia niebieskiego światło na mapie"
+			label_skrzynka.modulate = Color.RED
+			label_skrzynka.visible = false
 		
 		# Spawn Wyjścia
 		var wyjscie_area = Area2D.new()

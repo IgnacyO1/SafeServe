@@ -64,8 +64,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					scena_głowna.uratowano_babcie()
 				przy_npc.queue_free()
 				przy_npc = null
-				if label_skrzynka:
-					label_skrzynka.text = "Znajdz czarna skrzynke!"
 			elif not ma_skrzynke:
 				var skrzynki = get_tree().get_nodes_in_group("skrzynka")
 				for s in skrzynki:
@@ -74,8 +72,6 @@ func _unhandled_input(event: InputEvent) -> void:
 						if scena_głowna.has_method("podniesiono_skrzynke"):
 							scena_głowna.podniesiono_skrzynke()
 						s.queue_free()
-						if label_skrzynka:
-							label_skrzynka.text = "Masz czarna skrzynke!"
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.is_in_group("npc"):
