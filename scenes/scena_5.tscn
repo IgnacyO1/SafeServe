@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://52vmaulm8c41" path="res://assets/graphics/scena5_frame_normal.png" id="3_norm"]
 [ext_resource type="Texture2D" uid="uid://00sh2b0nf2d5" path="res://assets/graphics/scena5_motorola_icon.png" id="4_moto"]
 [ext_resource type="Texture2D" uid="uid://c7eoibmby8slh" path="res://assets/graphics/scena5_avatar_podejrzany.png" id="5_ava"]
+[ext_resource type="Texture2D" uid="uid://c8foibmby8slh" path="res://assets/graphics/scena5_wrong_1.png" id="6_wr1"]
+[ext_resource type="Texture2D" uid="uid://c9foibmby8slh" path="res://assets/graphics/scena5_wrong_2.png" id="7_wr2"]
 
 [node name="Scena5" type="Node2D"]
 script = ExtResource("1_sc5gd")
@@ -15,14 +17,12 @@ texture = ExtResource("2_tlo")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="VideoPlayer" type="TextureRect" parent="UI"]
-offset_left = 320.0
-offset_top = 150.0
-offset_right = 1600.0
-offset_bottom = 870.0
-texture = ExtResource("3_norm")
-expand_mode = 1
-stretch_mode = 5
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="UI"]
+offset_left = 60.0
+offset_top = 80.0
+offset_right = 1300.0
+offset_bottom = 740.0
+expand = true
 
 [node name="FaceScanRect" type="ColorRect" parent="UI/VideoPlayer"]
 layout_mode = 0
@@ -108,11 +108,15 @@ expand_icon = true
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 text = "Piotr Nowak (Pracownik)"
+icon = ExtResource("6_wr1")
+expand_icon = true
 
 [node name="WrongButton2" type="Button" parent="UI/DatabasePanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 text = "Tomasz Wójcik (Ochrona)"
+icon = ExtResource("7_wr2")
+expand_icon = true
 
 [node name="FailScreen" type="ColorRect" parent="UI"]
 visible = false
