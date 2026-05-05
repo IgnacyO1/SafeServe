@@ -13,5 +13,12 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_entered(area):
 	if area.is_in_group("ogien"):
+		# Powiadamiamy scene 4 że zgasiliśmy ten ogień
+		var scena_głowna = get_tree().current_scene
+		if scena_głowna.has_method("zgaszono_ogien"):
+			scena_głowna.zgaszono_ogien(area)
+		elif area.get_parent().has_method("zgaszono_ogien"):
+			area.get_parent().zgaszono_ogien(area)
+
 		area.queue_free()
 		queue_free()

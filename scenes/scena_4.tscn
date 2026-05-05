@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d1falslb55lk8"]
 
-[ext_resource type="Script" uid="uid://dswoe13lj06q" path="res://scripts/scena_4.gd" id="1_2a01s"]
-[ext_resource type="Texture2D" uid="uid://djwek02bhrmr2" path="res://assets/graphics/scena4_nowe_tło.png" id="2_2a01s"]
+[ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_4.gd" id="1_2a01s"]
+[ext_resource type="Texture2D" uid="uid://clvsms847dahn" path="res://assets/graphics/scena4_collision.png" id="2_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="Texture2D" uid="uid://dtpdbhovyyl3y" path="res://assets/graphics/gracz_postac.png" id="2_nn3ug"]
 [ext_resource type="PackedScene" uid="uid://dbihrsfmcqb50" path="res://scenes/ogien.tscn" id="5_2a01s"]
@@ -102,6 +102,15 @@ offset_bottom = 73.0
 text = "\"\""
 
 [node name="Area2D" type="Area2D" parent="." unique_id=875042584]
+
+[node name="ScianyMapy" type="StaticBody2D" parent="." unique_id=928910951]
+
+[node name="Sprite2D" type="Sprite2D" parent="ScianyMapy" unique_id=1890069210]
+texture = ExtResource("2_2a01s")
+centered = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ScianyMapy/Sprite2D" unique_id=1251340093]
+polygon = PackedVector2Array(438, 161, 448, 387, 265, 405, 272, 664, 443, 672, 447, 822, 521, 823, 523, 940, 833, 941, 834, 712, 903, 649, 1092, 652, 1098, 869, 1331, 870, 1332, 765, 1393, 698, 1539, 704, 1544, 854, 1456, 928, 1688, 932, 1683, 226, 1538, 228, 1538, 349, 1389, 369, 1353, 344, 1322, 309, 1328, 246, 1324, 219, 1257, 222, 1259, 388, 1155, 508, 904, 506, 784, 397, 787, 217, 454, 213)
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]
