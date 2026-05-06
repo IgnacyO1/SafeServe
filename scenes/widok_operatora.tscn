@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cpv6vbvmdefnx"]
+
+[ext_resource type="Texture2D" uid="uid://bat6rg236cgnr" path="res://icon.svg" id="1_7fwlm"]
+[ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/operator_map.gd" id="2_sr02a"]
+
+[node name="Node2D" type="Node2D" unique_id=1247417273]
+
+[node name="Panel" type="Panel" parent="." unique_id=1393850329]
+offset_left = 192.0
+offset_top = 108.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Panel" unique_id=1009329280]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="Panel/SubViewportContainer" unique_id=49790325]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="Node2D" type="Node2D" parent="Panel/SubViewportContainer/SubViewport" unique_id=1622733699]
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel/SubViewportContainer/SubViewport/Node2D" unique_id=529677320]
+position = Vector2(324, 174)
+scale = Vector2(20, 20)
+texture = ExtResource("1_7fwlm")
+script = ExtResource("2_sr02a")
