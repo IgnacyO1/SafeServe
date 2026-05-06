@@ -284,14 +284,17 @@ func create_railway(points, parent, props):
 	
 	# Rysujemy dwie szyny (jako dwa Line2D przesunięte o offset)
 	for offset in [-gauge/2, gauge/2]:
-		var rail = Line2D.new()
-		var offset_points = Geometry2D.offset_polyline(points, offset, Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND)
-		if offset_points.size() > 0:
-			rail.points = offset_points[0]
-			rail.width = 0.2 * map_scale # Szerokość samej szyny
-			rail.default_color = Color(0.2, 0.2, 0.2) # Ciemny stalowy
-			rail.z_index = -1 # Nad drogą (tramwaj) lub na ziemi
-			parent.add_child(rail)
+			var rail = Line2D.new()
+			var offset_points = Geometry2D.offset_polyline(points, offset, Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND)
+			if offset_points.size() > 0:
+				rail.points = offset_points[0]
+				rail.width = 0.15 * map_scale
+				rail.default_color = Color(0.2, 0.2, 0.2)
+				rail.z_index = -1
+				# KLUCZ: Brak zaokrągleń na końcach szyn
+				rail.begin_cap_mode = Line2D.LINE_CAP_NONE
+				rail.end_cap_mode = Line2D.LINE_CAP_NONE
+				parent.add_child(rail)
 
 	# DODATEK: Podkłady dla kolei (nie dla tramwajów, chyba że chcesz)
 	if not is_tram:
