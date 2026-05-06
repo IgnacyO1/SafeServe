@@ -87,17 +87,11 @@ func spawn_feature(feature, parent):
 		
 	var type = feature["type"]
 	var props = feature["props"]
-	var highway_type = props.get("highway", "")
-
-	# Definiujemy co jest chodnikiem
-	var is_sidewalk = highway_type in ["footway", "path", "pedestrian", "cycleway", "steps"]
-
-	if type == "yes" or type == "building" or props.has("building"):
+	if feature["type"] == "yes" or feature["type"] == "building" or props.has("building"):
 		create_building(points, parent)
-	elif is_sidewalk:
-		create_road(points, parent, true) # Dodajemy parametr is_sidewalk = true
 	else:
-		create_road(points, parent, false) # is_sidewalk = false
+		# Przekazujemy punkty, rodzica i cały słownik tagów
+		create_road(points, parent, props)
 
 func create_building(points, parent):
 	var body = StaticBody2D.new()
@@ -133,39 +127,68 @@ func create_building(points, parent):
 	body.add_child(collision)
 	parent.add_child(body)
 
-func create_road(points, parent, is_sidewalk: bool):
+func create_road(points, parent, props: Dictionary):
 	var road = Line2D.new()
 	road.points = points
 	
+	var highway = props.get("highway", "")
+	var is_sidewalk = highway in ["footway", "path", "pedestrian", "cycleway"]
+	
+	# --- PARAMETRY FIZYCZNE ---
+	var lane_width_m = 3.2 # średnia szerokość pasa
+	
+	# --- DOMYŚLNE PASY (jeśli brak w OSM) ---
+	var default_lanes = {
+		"motorway": 4,
+		"trunk": 3,
+		"primary": 2,
+		"secondary": 2,
+		"tertiary": 2,
+		"residential": 2,
+		"service": 1
+	}
+	
+	var lanes = int(props.get("lanes", default_lanes.get(highway, 1)))
+	
 	if is_sidewalk:
-		road.width = 2.0 * map_scale # Chodnik jest znacznie węższy
+		road.width = 2.0 * map_scale # ~2 m
 		road.texture = sidewalk_tex
-		road.z_index = -3 # Chodniki pod jezdniami (opcjonalnie)
-		road.default_color = Color(0.8, 0.8, 0.8) # Jaśniejszy kolor dla tekstury
+		road.z_index = -3
+		road.default_color = Color(0.8, 0.8, 0.8)
 	else:
-		road.width = 5.0 * map_scale # Normalna szerokość jezdni
+		# --- SZEROKOŚĆ JEZDNI ---
+		var road_width_m = lanes * lane_width_m
+		
+		# opcjonalne pobocza dla większych dróg
+		if highway in ["motorway", "trunk"]:
+			road_width_m += 2.0 # pobocza
+		
+		road.width = road_width_m * map_scale
+		road.width = clamp(road.width, 5.0*map_scale, 20.0*map_scale)
 		road.texture = asphalt_tex
 		road.z_index = -2
 		road.default_color = Color.WHITE
-
+	
+	## --- ONEWAY ---
+	#if props.get("oneway") == "yes":
+		#road.default_color = Color(0.9, 0.9, 1.0)
+	
+	# --- RENDER ---
 	road.texture_mode = Line2D.LINE_TEXTURE_TILE
 	road.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	
-	# Zaokrąglone końce dróg, żeby lepiej się łączyły
 	road.begin_cap_mode = Line2D.LINE_CAP_ROUND
 	road.end_cap_mode = Line2D.LINE_CAP_ROUND
 	road.joint_mode = Line2D.LINE_JOINT_ROUND
-	
 	parent.add_child(road)
 	
-	# Rysuj pasy tylko na jezdniach (nie na chodnikach)
-	if not is_sidewalk:
-		var stripes = Line2D.new()
-		stripes.points = points
-		stripes.width = 0.1 * map_scale
-		stripes.default_color = Color(1, 1, 1, 0.4)
-		stripes.z_index = -1
-		parent.add_child(stripes)
+	## --- PASY (tylko wizualnie) ---
+	#if not is_sidewalk and lanes > 1:
+		#var stripes = Line2D.new()
+		#stripes.points = points
+		#stripes.width = 0.15 * map_scale
+		#stripes.default_color = Color(1, 1, 1, 0.6)
+		#stripes.z_index = -1
+		#parent.add_child(stripes)
 
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
