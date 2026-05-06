@@ -75,57 +75,92 @@ func load_chunk_from_json(c_id):
 		spawn_feature(feature, chunk_node)
 
 func spawn_feature(feature, parent):
-	# Sprawdzamy czy to punkt (drzewo)
-	if feature["props"].get("natural") == "tree" or feature["type"] == "tree":
+	var props = feature["props"]
+	var type = feature["type"]
+	
+	# 1. Drzewa
+	if props.get("natural") == "tree" or type == "tree":
 		var pos = Vector2(feature["geometry"][0][0] * map_scale, feature["geometry"][0][1] * map_scale)
 		create_tree(pos, parent)
-		return # Kończymy, żeby nie próbowało rysować linii/poligonów
-	
+		return
+
 	var points = PackedVector2Array()
 	for p in feature["geometry"]:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
-		
-	var type = feature["type"]
-	var props = feature["props"]
-	if feature["type"] == "yes" or feature["type"] == "building" or props.has("building"):
+
+	# 2. Woda (Wisła i zbiorniki)
+	if props.has("water") or props.has("waterway") or props.get("natural") == "water":
+		create_water(points, parent, props)
+		return
+
+	# 3. Tory (Tramwajowe i Kolejowe)
+	if props.has("railway"):
+		create_railway(points, parent, props)
+		return
+
+	# 4. Budynki
+	if type == "building" or props.has("building"):
 		create_building(points, parent)
 	else:
-		# Przekazujemy punkty, rodzica i cały słownik tagów
+		# 5. Drogi
 		create_road(points, parent, props)
 
 func create_building(points, parent):
+	# 1. Podstawowa walidacja danych z OSM
+	if points.size() < 3:
+		return
+	
+	# 2. Czyszczenie geometrii
+	# OSM czasem duplikuje punkty lub ma "brudne" dane. 
+	# offset_polygon(points, 0) to szybki sposób na naprawienie struktury poligonu.
+	var cleaned_polygons = Geometry2D.offset_polygon(points, 0.0)
+	if cleaned_polygons.size() == 0:
+		return
+	var clean_points = cleaned_polygons[0]
+
+	# 3. Rozwiązanie problemu "duchów" - Dekompozycja
+	# Dzielimy budynek (który może być wklęsły, np. w kształcie L) 
+	# na kilka mniejszych poligonów wypukłych (convex), które silnik fizyki rozumie idealnie.
+	var convex_polygons = Geometry2D.decompose_polygon_in_convex(clean_points)
+	
 	var body = StaticBody2D.new()
-	body.collision_layer = 1 # Obiekt jest na warstwie 1
-	body.collision_mask = 0  # Obiekt sam z niczym nie wykrywa kolizji (oszczędność CPU)
-	# Cień budynku (przesunięty czarny poligon)
-	var shadow = Polygon2D.new()
-	shadow.polygon = points
-	shadow.color = Color(0, 0, 0, 0.3)
-	shadow.position = Vector2(5, 5)
-	shadow.z_index = 1
+	body.collision_layer = 1 # Warstwa ŚWIAT
+	body.collision_mask = 0  # Budynek sam nie musi nic wykrywać
 	
-	# Dach budynku
+	# --- WIZUALIZACJA (Dach) ---
 	var visual = Polygon2D.new()
-	visual.polygon = points
-	visual.color = Color(0.3, 0.3, 0.35) # Lekki błękit/szary
+	visual.polygon = clean_points
+	visual.color = Color(0.3, 0.3, 0.35)
 	visual.z_index = 2
-	
-	# Obrys dachu
+	body.add_child(visual)
+
+	# --- WIZUALIZACJA (Cień) ---
+	var shadow = Polygon2D.new()
+	shadow.polygon = clean_points
+	shadow.color = Color(0, 0, 0, 0.3)
+	shadow.position = Vector2(5, 5) # Lekkie przesunięcie dla efektu 3D
+	shadow.z_index = 1
+	body.add_child(shadow)
+
+	# --- WIZUALIZACJA (Obrys) ---
 	var outline = Line2D.new()
-	var opoints = points
-	opoints.append(points[0]) # domknięcie
+	var opoints = clean_points
+	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
 	outline.points = opoints
 	outline.width = 2.0
 	outline.default_color = Color(0.1, 0.1, 0.1)
 	outline.z_index = 3
-	
-	var collision = CollisionPolygon2D.new()
-	collision.polygon = points
-	
-	body.add_child(shadow)
-	body.add_child(visual)
 	body.add_child(outline)
-	body.add_child(collision)
+
+	# --- KOLIZJA (Fizyka) ---
+	# Dodajemy osobny kształt kolizji dla każdego wypukłego fragmentu budynku
+	for poly in convex_polygons:
+		var collision = CollisionPolygon2D.new()
+		collision.polygon = poly
+		# BUILD_SOLIDS zapewnia, że całe wnętrze budynku jest "twarde"
+		collision.build_mode = CollisionPolygon2D.BUILD_SOLIDS
+		body.add_child(collision)
+		
 	parent.add_child(body)
 
 func create_road(points, parent, props: Dictionary):
@@ -146,6 +181,7 @@ func create_road(points, parent, props: Dictionary):
 		"secondary": 2,
 		"tertiary": 2,
 		"residential": 2,
+		"unclassified": 1.4,
 		"service": 1
 	}
 	
@@ -160,12 +196,12 @@ func create_road(points, parent, props: Dictionary):
 		# --- SZEROKOŚĆ JEZDNI ---
 		var road_width_m = lanes * lane_width_m
 		
-		# opcjonalne pobocza dla większych dróg
-		if highway in ["motorway", "trunk"]:
-			road_width_m += 2.0 # pobocza
+		## opcjonalne pobocza dla większych dróg
+		#if highway in ["motorway", "trunk"]:
+			#road_width_m += 2.0 # pobocza
 		
 		road.width = road_width_m * map_scale
-		road.width = clamp(road.width, 5.0*map_scale, 20.0*map_scale)
+		road.width = clamp(road.width, 5.0*map_scale, 15.0*map_scale)
 		road.texture = asphalt_tex
 		road.z_index = -2
 		road.default_color = Color.WHITE
@@ -221,3 +257,69 @@ func create_tree(pos, parent):
 	tree_node.add_child(visual)
 	tree_node.add_child(col)
 	parent.add_child(tree_node)
+
+func create_water(points, parent, props):
+	if points.size() < 2: return
+	
+	# Jeśli to obszar (zamknięta pętla)
+	if points[0].distance_to(points[-1]) < 0.1 and points.size() > 2:
+		var water_poly = Polygon2D.new()
+		water_poly.polygon = points
+		water_poly.color = Color(0.1, 0.4, 0.8, 0.8) # Ładny błękit
+		water_poly.z_index = -5 # Pod drogami
+		parent.add_child(water_poly)
+	else:
+		# Jeśli to linia (potok/mniejsza rzeka)
+		var water_line = Line2D.new()
+		water_line.points = points
+		water_line.width = 10.0 * map_scale # Domyślna szerokość rzeki
+		water_line.default_color = Color(0.1, 0.4, 0.8, 0.8)
+		water_line.z_index = -5
+		water_line.joint_mode = Line2D.LINE_JOINT_ROUND
+		parent.add_child(water_line)
+
+func create_railway(points, parent, props):
+	var is_tram = props.get("railway") == "tram"
+	var gauge = 1.435 * map_scale # Standardowy rozstaw szyn (w skali)
+	
+	# Rysujemy dwie szyny (jako dwa Line2D przesunięte o offset)
+	for offset in [-gauge/2, gauge/2]:
+		var rail = Line2D.new()
+		var offset_points = Geometry2D.offset_polyline(points, offset, Geometry2D.JOIN_ROUND, Geometry2D.END_ROUND)
+		if offset_points.size() > 0:
+			rail.points = offset_points[0]
+			rail.width = 0.2 * map_scale # Szerokość samej szyny
+			rail.default_color = Color(0.2, 0.2, 0.2) # Ciemny stalowy
+			rail.z_index = -1 # Nad drogą (tramwaj) lub na ziemi
+			parent.add_child(rail)
+
+	# DODATEK: Podkłady dla kolei (nie dla tramwajów, chyba że chcesz)
+	if not is_tram:
+		render_railway_sleepers(points, parent)
+
+func render_railway_sleepers(points, parent):
+	var sleeper_spacing = 0.6 * map_scale # Podkłady co ok. 60cm
+	var sleeper_width = 2.4 * map_scale   # Szerokość podkładu
+	
+	var total_dist = 0.0
+	for i in range(points.size() - 1):
+		var p1 = points[i]
+		var p2 = points[i+1]
+		var dir = (p2 - p1).normalized()
+		var perp = Vector2(-dir.y, dir.x) # Wektor prostopadły
+		var segment_len = p1.distance_to(p2)
+		
+		var d = 0.0
+		while d < segment_len:
+			var pos = p1 + dir * d
+			var s_p1 = pos + perp * (sleeper_width / 2)
+			var s_p2 = pos - perp * (sleeper_width / 2)
+			
+			var sleeper = Line2D.new()
+			sleeper.points = PackedVector2Array([s_p1, s_p2])
+			sleeper.width = 0.3 * map_scale
+			sleeper.default_color = Color(0.35, 0.25, 0.15) # Brązowy drewniany
+			sleeper.z_index = -2 # Pod szynami
+			parent.add_child(sleeper)
+			
+			d += sleeper_spacing
