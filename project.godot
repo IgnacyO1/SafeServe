@@ -33,6 +33,11 @@ interakcja={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Świat (budynki, drzewa)"
+2d_physics/layer_2="Gracz (samochód)"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

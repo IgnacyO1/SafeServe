@@ -95,7 +95,8 @@ func spawn_feature(feature, parent):
 
 func create_building(points, parent):
 	var body = StaticBody2D.new()
-	
+	body.collision_layer = 1 # Obiekt jest na warstwie 1
+	body.collision_mask = 0  # Obiekt sam z niczym nie wykrywa kolizji (oszczędność CPU)
 	# Cień budynku (przesunięty czarny poligon)
 	var shadow = Polygon2D.new()
 	shadow.polygon = points
@@ -141,7 +142,7 @@ func create_road(points, parent, props: Dictionary):
 	var default_lanes = {
 		"motorway": 4,
 		"trunk": 3,
-		"primary": 2,
+		"primary": 2, 
 		"secondary": 2,
 		"tertiary": 2,
 		"residential": 2,
@@ -192,6 +193,8 @@ func create_road(points, parent, props: Dictionary):
 
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
+	tree_node.collision_layer = 1
+	tree_node.collision_mask = 0
 	tree_node.position = pos
 	
 	# 1. Cień drzewa (lekko przesunięte czarne kółko lub kopia sprita)

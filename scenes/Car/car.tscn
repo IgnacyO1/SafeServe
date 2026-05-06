@@ -7,8 +7,16 @@
 radius = 29.0
 height = 78.0
 
-[node name="Car" type="Area2D" unique_id=2134554690]
+[node name="Car" type="CharacterBody2D" unique_id=1069412395]
 script = ExtResource("1_c8bcc")
+max_speed = null
+acceleration = null
+brake_force = null
+friction = null
+steer_speed = null
+steer_limit = null
+traction_fast = null
+traction_slow = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1070786045]
 rotation = 1.5707964

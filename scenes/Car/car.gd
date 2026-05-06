@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 @export var max_speed: float = 4500.0
 @export var acceleration: float = 200.0
@@ -11,20 +11,15 @@ extends Area2D
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
 
-#@onready var camera = $Camera2D  # rozważyć do usunięcia
+# ZMIENNA velocity została usunięta - CharacterBody2D ma ją wbudowaną!
 
-
-var velocity: Vector2 = Vector2.ZERO
 var steer_angle: float = 0.0
-
 var _throttle: float = 0.0
 var _steer_input: float = 0.0
 
 func _process(delta: float) -> void:
 	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
 	_steer_input = Input.get_axis("ui_left", "ui_right")
-	#var look_ahead = transform.x * velocity.length() * 0.2 # rozważyć do usunięcia
-	#camera.position = look_ahead # rozważyć do usunięcia
 
 func _physics_process(delta: float) -> void:
 	apply_engine(delta)
@@ -32,54 +27,45 @@ func _physics_process(delta: float) -> void:
 	apply_steering(delta)
 	apply_lateral_friction()
 
-	position += velocity * delta
+	# USUNIĘTO: position += velocity * delta 
+	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
+	move_and_slide()
 	
 func apply_engine(delta: float) -> void:
 	var forward = transform.x
-	# Sprawdzamy obecną prędkość wzdłuż osi przód-tył samochodu
 	var forward_speed = velocity.dot(forward)
 	
 	if _throttle != 0:
-		# is_braking jest prawdą, jeśli wciskasz gaz w przeciwną stronę niż jedziesz
-		# (abs > 10.0 zapobiega "szarpaniu" przy zera i pozwala płynnie przejść w cofanie)
 		var is_braking = sign(_throttle) != sign(forward_speed) and abs(forward_speed) > 10.0
 		
 		if is_braking:
-			# Zbijamy prędkość do zera używając silnego brake_force
 			velocity = velocity.move_toward(Vector2.ZERO, brake_force * delta)
 		else:
-			# Zwykłe przyspieszanie (w przód lub w tył)
 			if _throttle > 0:
 				velocity += forward * acceleration * _throttle * delta
 			elif _throttle < 0:
-				velocity += forward * acceleration * _throttle * 0.6 * delta # słabsze cofanie
+				velocity += forward * acceleration * _throttle * 0.6 * delta
 
 
 func apply_friction(delta: float) -> void:
 	if _throttle == 0:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 
-	# ograniczenie max prędkości
 	velocity = velocity.limit_length(max_speed)
+
 func apply_steering(delta: float) -> void:
 	var speed = velocity.length()
-	
-	# brak skrętu gdy prawie stoisz
 	if speed < 5:
 		return
 
-	# płynny skręt (nie instant)
 	steer_angle = lerp(steer_angle, _steer_input * steer_limit, steer_speed * delta)
-
-	# kierunek ruchu (ważne!)
 	var direction = velocity.normalized()
-	
-	# cofanie odwraca skręt
 	var forward = transform.x
 	var dot = direction.dot(forward)
 	var steer_dir = 1.0 if dot > 0 else -1.0
 
 	rotation += steer_angle * steer_dir * delta * speed / 100.0
+
 func apply_lateral_friction() -> void:
 	var forward = transform.x
 	var right = transform.y
