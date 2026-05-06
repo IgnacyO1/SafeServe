@@ -13,7 +13,7 @@ var chunk_path = "res://data/map_chunks/"
 @onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
 @onready var tree_tex = preload("res://assets/graphics/tree_top.png")
 @onready var sidewalk_tex = preload("res://assets/graphics/pavement_2.png")
-
+@onready var water_tex = preload("res://assets/graphics/water.tres") # To jest Twój AnimatedTexture
 var loaded_chunks = {} 
 
 @export var player_path: NodePath
@@ -259,24 +259,37 @@ func create_tree(pos, parent):
 	parent.add_child(tree_node)
 
 func create_water(points, parent, props):
-	if points.size() < 2: return
+	# 1. Podstawowa walidacja
+	if points.size() < 3: 
+		return
 	
-	# Jeśli to obszar (zamknięta pętla)
-	if points[0].distance_to(points[-1]) < 0.1 and points.size() > 2:
-		var water_poly = Polygon2D.new()
-		water_poly.polygon = points
-		water_poly.color = Color(0.1, 0.4, 0.8, 0.8) # Ładny błękit
-		water_poly.z_index = -5 # Pod drogami
-		parent.add_child(water_poly)
-	else:
-		# Jeśli to linia (potok/mniejsza rzeka)
-		var water_line = Line2D.new()
-		water_line.points = points
-		water_line.width = 10.0 * map_scale # Domyślna szerokość rzeki
-		water_line.default_color = Color(0.1, 0.4, 0.8, 0.8)
-		water_line.z_index = -5
-		water_line.joint_mode = Line2D.LINE_JOINT_ROUND
-		parent.add_child(water_line)
+	# 2. Sprawdzamy, czy to jest zamknięty obszar (Poligon)
+	# Sprawdzamy czy pierwszy i ostatni punkt są blisko siebie
+	var is_polygon = points[0].distance_to(points[-1]) < 0.1
+	
+	if not is_polygon:
+		# Jeśli to linia (rzeczka/kanał), a nie chcemy jej rysować - kończymy funkcję tutaj
+		return
+
+	# 3. Jeśli doszliśmy tutaj, znaczy że mamy obszar (np. Wisłę)
+	var water_node = Polygon2D.new()
+	water_node.polygon = points
+	
+	# Ustawienia tekstury (AnimatedTexture)
+	water_node.texture = water_tex
+	water_node.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	water_node.texture_scale = Vector2(2.0, 2.0) 
+	
+	# Ustawienia warstw
+	water_node.z_index = -5
+	
+	# Naprawa ewentualnych błędów geometrii (częste w OSM przy wodzie)
+	# offset_polygon z wartością 0 naprawia strukturę punktów
+	var cleaned = Geometry2D.offset_polygon(points, 0.0)
+	if cleaned.size() > 0:
+		water_node.polygon = cleaned[0]
+	
+	parent.add_child(water_node)
 
 func create_railway(points, parent, props):
 	var is_tram = props.get("railway") == "tram"
