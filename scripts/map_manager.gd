@@ -12,6 +12,7 @@ var chunk_path = "res://data/map_chunks/"
 @onready var grass_tex = preload("res://assets/graphics/tileable_grass_00.png")
 @onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
 @onready var tree_tex = preload("res://assets/graphics/tree_top.png")
+@onready var sidewalk_tex = preload("res://assets/graphics/pavement_2.png")
 
 var loaded_chunks = {} 
 
@@ -85,10 +86,18 @@ func spawn_feature(feature, parent):
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
 		
 	var type = feature["type"]
-	if type == "yes" or type == "building" or feature["props"].has("building"):
+	var props = feature["props"]
+	var highway_type = props.get("highway", "")
+
+	# Definiujemy co jest chodnikiem
+	var is_sidewalk = highway_type in ["footway", "path", "pedestrian", "cycleway", "steps"]
+
+	if type == "yes" or type == "building" or props.has("building"):
 		create_building(points, parent)
+	elif is_sidewalk:
+		create_road(points, parent, true) # Dodajemy parametr is_sidewalk = true
 	else:
-		create_road(points, parent)
+		create_road(points, parent, false) # is_sidewalk = false
 
 func create_building(points, parent):
 	var body = StaticBody2D.new()
@@ -124,34 +133,39 @@ func create_building(points, parent):
 	body.add_child(collision)
 	parent.add_child(body)
 
-func create_road(points, parent):
+func create_road(points, parent, is_sidewalk: bool):
 	var road = Line2D.new()
 	road.points = points
-	road.width = 4.0 * map_scale
 	
-	# Upewnij się, że tekstura istnieje
-	if asphalt_tex:
-		road.texture = asphalt_tex
-		road.texture_mode = Line2D.LINE_TEXTURE_TILE
-		# Używamy Color.WHITE, aby tekstura nie była przyciemniona
-		road.default_color = Color.WHITE 
+	if is_sidewalk:
+		road.width = 2.0 * map_scale # Chodnik jest znacznie węższy
+		road.texture = sidewalk_tex
+		road.z_index = -3 # Chodniki pod jezdniami (opcjonalnie)
+		road.default_color = Color(0.8, 0.8, 0.8) # Jaśniejszy kolor dla tekstury
 	else:
-		# Debug: jeśli nie ma tekstury, ustaw chociaż kolor, żeby zobaczyć czy działa
-		road.default_color = Color.GRAY
-		
+		road.width = 5.0 * map_scale # Normalna szerokość jezdni
+		road.texture = asphalt_tex
+		road.z_index = -2
+		road.default_color = Color.WHITE
+
+	road.texture_mode = Line2D.LINE_TEXTURE_TILE
 	road.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	road.z_index = -2
+	
+	# Zaokrąglone końce dróg, żeby lepiej się łączyły
+	road.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	road.end_cap_mode = Line2D.LINE_CAP_ROUND
+	road.joint_mode = Line2D.LINE_JOINT_ROUND
+	
 	parent.add_child(road)
 	
-	# Pasy na środku (opcjonalnie)
-	var stripes = Line2D.new()
-	stripes.points = points
-	stripes.width = 0.1 * map_scale
-	stripes.default_color = Color(1, 1, 1, 0.5) # Półprzezroczysty biały
-	stripes.z_index = -1
-	# Efekt przerywanej linii robimy przez teksturę lub shader, 
-	# ale na razie zróbmy po prostu cienką linię pomocniczą.
-	parent.add_child(stripes)
+	# Rysuj pasy tylko na jezdniach (nie na chodnikach)
+	if not is_sidewalk:
+		var stripes = Line2D.new()
+		stripes.points = points
+		stripes.width = 0.1 * map_scale
+		stripes.default_color = Color(1, 1, 1, 0.4)
+		stripes.z_index = -1
+		parent.add_child(stripes)
 
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
