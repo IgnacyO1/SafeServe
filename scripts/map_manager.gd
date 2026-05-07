@@ -78,7 +78,7 @@ func spawn_feature(feature, parent):
 	var props = feature["props"]
 	var type = feature["type"]
 	
-	# 1. Drzewa
+	# Punkty (Drzewa)
 	if props.get("natural") == "tree" or type == "tree":
 		var pos = Vector2(feature["geometry"][0][0] * map_scale, feature["geometry"][0][1] * map_scale)
 		create_tree(pos, parent)
@@ -88,21 +88,25 @@ func spawn_feature(feature, parent):
 	for p in feature["geometry"]:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
 
-	# 2. Woda (Wisła i zbiorniki)
+	# --- NOWOŚĆ: Przystanki i Perony ---
+	if props.get("railway") == "platform" or props.has("public_transport") or props.get("highway") == "platform":
+		create_platform(points, parent, props)
+		return
+
+	# Woda
 	if props.has("water") or props.has("waterway") or props.get("natural") == "water":
 		create_water(points, parent, props)
 		return
 
-	# 3. Tory (Tramwajowe i Kolejowe)
-	if props.has("railway"):
+	# Tory (zostawiamy tylko prawdziwe tory)
+	if props.has("railway") and props.get("railway") in ["tram", "rail", "subway"]:
 		create_railway(points, parent, props)
 		return
 
-	# 4. Budynki
+	# Budynki i Drogi
 	if type == "building" or props.has("building"):
 		create_building(points, parent)
 	else:
-		# 5. Drogi
 		create_road(points, parent, props)
 
 func create_building(points, parent):
@@ -169,48 +173,28 @@ func create_road(points, parent, props: Dictionary):
 	
 	var highway = props.get("highway", "")
 	var is_sidewalk = highway in ["footway", "path", "pedestrian", "cycleway"]
+	var is_oneway = props.get("oneway") == "yes"
 	
-	# --- PARAMETRY FIZYCZNE ---
-	var lane_width_m = 3.2 # średnia szerokość pasa
-	
-	# --- DOMYŚLNE PASY (jeśli brak w OSM) ---
+	var lane_width_m = 3.2
 	var default_lanes = {
-		"motorway": 4,
-		"trunk": 3,
-		"primary": 2, 
-		"secondary": 2,
-		"tertiary": 2,
-		"residential": 2,
-		"unclassified": 1.4,
-		"service": 1
+		"motorway": 4, "trunk": 3, "primary": 2, "secondary": 2, 
+		"tertiary": 2, "residential": 2, "unclassified": 1.4, "service": 1
 	}
 	
 	var lanes = int(props.get("lanes", default_lanes.get(highway, 1)))
 	
 	if is_sidewalk:
-		road.width = 2.0 * map_scale # ~2 m
+		road.width = 2.0 * map_scale
 		road.texture = sidewalk_tex
 		road.z_index = -3
 		road.default_color = Color(0.8, 0.8, 0.8)
 	else:
-		# --- SZEROKOŚĆ JEZDNI ---
 		var road_width_m = lanes * lane_width_m
-		
-		## opcjonalne pobocza dla większych dróg
-		#if highway in ["motorway", "trunk"]:
-			#road_width_m += 2.0 # pobocza
-		
-		road.width = road_width_m * map_scale
-		road.width = clamp(road.width, 5.0*map_scale, 15.0*map_scale)
+		road.width = clamp(road_width_m * map_scale, 5.0 * map_scale, 15.0 * map_scale)
 		road.texture = asphalt_tex
 		road.z_index = -2
 		road.default_color = Color.WHITE
 	
-	## --- ONEWAY ---
-	#if props.get("oneway") == "yes":
-		#road.default_color = Color(0.9, 0.9, 1.0)
-	
-	# --- RENDER ---
 	road.texture_mode = Line2D.LINE_TEXTURE_TILE
 	road.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	road.begin_cap_mode = Line2D.LINE_CAP_ROUND
@@ -218,15 +202,38 @@ func create_road(points, parent, props: Dictionary):
 	road.joint_mode = Line2D.LINE_JOINT_ROUND
 	parent.add_child(road)
 	
-	## --- PASY (tylko wizualnie) ---
-	#if not is_sidewalk and lanes > 1:
-		#var stripes = Line2D.new()
-		#stripes.points = points
-		#stripes.width = 0.15 * map_scale
-		#stripes.default_color = Color(1, 1, 1, 0.6)
-		#stripes.z_index = -1
-		#parent.add_child(stripes)
+	# RYSUJ STRZAŁKI DLA JEDNOKIERUNKOWYCH
+	if is_oneway and points.size() >= 2:
+		render_oneway_arrows(points, parent)
 
+func render_oneway_arrows(points, parent):
+	var arrow_spacing = 40.0 * map_scale # Strzałka co 40 metrów
+	var arrow_size = 2.0 * map_scale     # Rozmiar ramion strzałki
+	
+	for i in range(points.size() - 1):
+		var p1 = points[i]
+		var p2 = points[i+1]
+		var dir = (p2 - p1).normalized()
+		var segment_len = p1.distance_to(p2)
+		
+		var d = arrow_spacing / 2.0 # Zacznij kawałek od początku segmentu
+		while d < segment_len:
+			var pos = p1 + dir * d
+			
+			# Rysujemy prostą strzałkę "V" wskazującą kierunek
+			var arrow = Line2D.new()
+			
+			# Obliczamy ramiona strzałki
+			var left_arm = pos - dir * arrow_size + dir.rotated(PI/2) * (arrow_size * 0.5)
+			var right_arm = pos - dir * arrow_size + dir.rotated(-PI/2) * (arrow_size * 0.5)
+			
+			arrow.points = PackedVector2Array([left_arm, pos, right_arm])
+			arrow.width = 0.5 * map_scale
+			arrow.default_color = Color(0.613, 0.613, 0.613, 1.0) # Półprzezroczysty biały
+			arrow.z_index = -1 # Nad asfaltem
+			
+			parent.add_child(arrow)
+			d += arrow_spacing
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
 	tree_node.collision_layer = 1
@@ -339,3 +346,29 @@ func render_railway_sleepers(points, parent):
 			parent.add_child(sleeper)
 			
 			d += sleeper_spacing
+
+func create_platform(points, parent, props):
+	if points.size() < 2: return
+	
+	# Sprawdzamy czy to poligon (obszar) czy linia
+	var is_polygon = points[0].distance_to(points[-1]) < 0.1 and points.size() > 2
+	
+	if is_polygon:
+		var poly = Polygon2D.new()
+		poly.polygon = points
+		poly.texture = sidewalk_tex
+		poly.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		# Skalowanie tekstury, aby nie była rozciągnięta (dostosuj do map_scale)
+		poly.texture_scale = Vector2(1.0 / map_scale, 1.0 / map_scale) 
+		poly.z_index = -1
+		parent.add_child(poly)
+	else:
+		# Jeśli peron to tylko linia
+		var line = Line2D.new()
+		line.points = points
+		line.width = 3.0 * map_scale
+		line.texture = sidewalk_tex
+		line.texture_mode = Line2D.LINE_TEXTURE_TILE
+		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		line.z_index = -1
+		parent.add_child(line)
