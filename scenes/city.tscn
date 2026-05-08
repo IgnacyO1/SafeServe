@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="1_bih7l"]
 [ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="2_58ubr"]
+[ext_resource type="Script" uid="uid://car6qoc5oj7yq" path="res://scripts/traffic_manager.gd" id="3_rqxma"]
 
 [node name="World" type="Node" unique_id=1958956810]
 
@@ -18,3 +19,6 @@ steer_speed = 5.0
 steer_limit = 0.6
 traction_fast = 0.2
 traction_slow = 0.5
+
+[node name="Traffic Manager" type="Node" parent="." unique_id=1846529582]
+script = ExtResource("3_rqxma")

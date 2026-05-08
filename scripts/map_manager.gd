@@ -18,8 +18,7 @@ var loaded_chunks = {}
 
 
 #NPC POJAZDY
-@export var traffic_density = 1 # Szansa (0-1), że na danej drodze pojawi się auto
-@onready var npc_car_scene = preload("res://scenes/NPCCar.tscn") # Ścieżka do Twojej sceny NPC
+var road_network = {} # Klucz: Vector2 (pozycja), Wartość: Array[Array] (lista segmentów/dróg wychodzących)
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
@@ -76,8 +75,39 @@ func load_chunk_from_json(c_id):
 	bg.z_index = -10
 	chunk_node.add_child(bg)
 	
+	# ZMIEŃ TO:
 	for feature in data:
+		var props = feature.get("props", {})
+		var highway_type = props.get("highway", "")
+		
+		# Lista dróg, po których mogą jeździć auta (bez footway, path, cycleway)
+		var drivable_roads = ["primary", "secondary", "tertiary", "residential", "unclassified", "service", "motorway", "trunk"]
+		
+		if feature["type"] != "building" and highway_type in drivable_roads:
+			register_road_in_network(feature["geometry"])
+		
 		spawn_feature(feature, chunk_node)
+
+func register_road_in_network(coords):
+	var points = []
+	for p in coords:
+		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
+	
+	if points.size() < 2: return
+
+	# Rejestrujemy drogę w obu kierunkach (uproszczenie dla dwukierunkowych)
+	var start_node = points[0].snapped(Vector2(0.1, 0.1))
+	var end_node = points[-1].snapped(Vector2(0.1, 0.1))
+	
+	if not road_network.has(start_node): road_network[start_node] = []
+	road_network[start_node].append(points)
+	
+	# Dla dróg dwukierunkowych dodajemy odwrócony segment
+	var reversed_points = points.duplicate()
+	reversed_points.reverse()
+	if not road_network.has(end_node): road_network[end_node] = []
+	road_network[end_node].append(reversed_points)
+
 
 func spawn_feature(feature, parent):
 	var props = feature["props"]
@@ -179,11 +209,6 @@ func create_road(points, parent, props: Dictionary):
 	var highway = props.get("highway", "")
 	var is_sidewalk = highway in ["footway", "path", "pedestrian", "cycleway"]
 	var is_oneway = props.get("oneway") == "yes"
-	
-	var is_drivable = highway in ["primary", "secondary", "tertiary", "residential", "service"]
-	
-	if is_drivable and points.size() >= 2:
-		spawn_traffic_on_path(points, parent, props)
 	
 	var lane_width_m = 3.2
 	var default_lanes = {
@@ -382,47 +407,3 @@ func create_platform(points, parent, props):
 		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 		line.z_index = -1
 		parent.add_child(line)
-		
-func spawn_traffic_on_path(points, parent, props):
-	# 1. Tworzymy ścieżkę dla NPC
-	var path = Path2D.new()
-	var curve = Curve2D.new()
-	
-	for p in points:
-		curve.add_point(p)
-	path.curve = curve
-	parent.add_child(path)
-	
-	# 2. Decydujemy czy i ile aut postawić na tej drodze
-	# Krótkie drogi mają mniejszą szansę na auto
-	var road_length = curve.get_baked_length()
-	var num_cars = int(road_length / (100.0 * map_scale) * traffic_density)
-	
-	for i in range(num_cars):
-		if randf() > 0.5: # Nie każda droga musi być pełna
-			create_npc_on_path(path, road_length)
-
-func create_npc_on_path(path, road_length):
-	# PathFollow2D to węzeł, który "jeździ" po Path2D
-	var follow = PathFollow2D.new()
-	path.add_child(follow)
-	
-	# Wyłączamy rotację, jeśli chcemy ją kontrolować sami, 
-	# ale domyślnie "rotates = true" sprawi, że auto samo skręca!
-	follow.rotates = true 
-	follow.loop = true # Auto po dojechaniu do końca wraca na początek (lub znika)
-	
-	var npc = npc_car_scene.instantiate()
-	follow.add_child(npc)
-	
-	# Losujemy parametry
-	var random_speed = randf_range(200.0, 400.0) * map_scale / 20.0
-	var start_pos = randf_range(0, road_length)
-	
-	# Dodajemy skrypt sterujący ruchem follow (można to zrobić w NPCCar lub tu)
-	var mover = Node.new() 
-	mover.set_script(load("res://scripts/path_mover.gd"))
-	mover.speed = random_speed
-	follow.add_child(mover)
-	
-	follow.progress = start_pos
