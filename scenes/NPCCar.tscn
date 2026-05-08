@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dw14l67qwjmki"]
+
+[ext_resource type="Script" uid="uid://ccnub4e8bsgqw" path="res://scripts/NPCcar.gd" id="1_cp3nd"]
+[ext_resource type="Texture2D" uid="uid://cf8ocuebijd6y" path="res://assets/Images/white-modern-car-top-view-24.png" id="2_cp3nd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmpqq"]
+radius = 20.0
+height = 104.0
+
+[node name="NpcCar" type="CharacterBody2D" unique_id=792379994]
+script = ExtResource("1_cp3nd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1095535104]
+rotation = 3.1415927
+scale = Vector2(0.39062482, 0.40281624)
+texture = ExtResource("2_cp3nd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775485645]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_fmpqq")
