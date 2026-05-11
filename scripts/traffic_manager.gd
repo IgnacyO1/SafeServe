@@ -1,6 +1,6 @@
 extends Node
 
-@export var max_agents = 10
+@export var max_agents = 50
 @export var npc_scene = preload("res://scenes/NPCCar.tscn")
 @onready var map_manager = get_node("../MapManager")
 @onready var player = get_node("../Car")
@@ -20,15 +20,37 @@ func _process(_delta):
 		spawn_random_agent()
 
 func spawn_random_agent():
-	# Wybieramy losowy węzeł drogi, który jest blisko gracza
 	var nodes = map_manager.road_network.keys()
 	var spawn_node = nodes.pick_random()
 	
+	# 1. Sprawdź czy miejsce jest wolne (używając fizyki)
+	var space_state = get_viewport().find_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	
+	# Używamy małego koła do sprawdzenia czy droga jest wolna
+	var circle = CircleShape2D.new()
+	circle.radius = 50.0 # rozmiar auta w skali
+	query.shape = circle
+	query.transform = Transform2D(0, spawn_node)
+	query.collision_mask = 1 | 2 # Sprawdzamy czy nie ma tam budynku lub innego auta
+	
+	var result = space_state.intersect_shape(query)
+	if not result.is_empty():
+		return # Miejsce zajęte, spróbuj w następnej klatce
 	# Opcjonalnie: sprawdź czy spawn_node jest blisko gracza, żeby nie spawnować na drugim końcu mapy
 	
 	var start_road = map_manager.road_network[spawn_node].pick_random()
 	var npc = npc_scene.instantiate()
 	add_child(npc)
+	
+	# --- NOWOŚĆ: Wyłączenie kolizji NPC na start ---
+	var original_mask = npc.collision_mask
+	npc.collision_mask = 0
+	
+	get_tree().create_timer(1.0).timeout.connect(func():
+		if is_instance_valid(npc):
+			npc.collision_mask = original_mask
+	)
 	npc.setup(start_road, map_manager)
 	active_agents.append(npc)
 

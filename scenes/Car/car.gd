@@ -17,6 +17,20 @@ var steer_angle: float = 0.0
 var _throttle: float = 0.0
 var _steer_input: float = 0.0
 
+# Dodaj to na końcu car.gd
+func _ready():
+	# Zapamiętujemy oryginalną maskę (co auto widzi)
+	var original_mask = collision_mask
+	# Wyłączamy maskę (auto przenika przez wszystko)
+	collision_mask = 0
+	
+	# Po 1 sekundzie przywracamy kolizje
+	get_tree().create_timer(1.0).timeout.connect(func():
+		collision_mask = original_mask
+		# Opcjonalnie zerujemy prędkość, by zapobiec nagłemu skokowi
+		velocity = Vector2.ZERO 
+	)
+
 func _process(delta: float) -> void:
 	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
 	_steer_input = Input.get_axis("ui_left", "ui_right")

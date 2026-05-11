@@ -11,14 +11,6 @@ script = ExtResource("1_bih7l")
 player_path = NodePath("../Car")
 
 [node name="Car" parent="." unique_id=2134554690 instance=ExtResource("2_58ubr")]
-max_speed = 4500.0
-acceleration = 200.0
-brake_force = 400.0
-friction = 50.0
-steer_speed = 5.0
-steer_limit = 0.6
-traction_fast = 0.2
-traction_slow = 0.5
 
 [node name="Traffic Manager" type="Node" parent="." unique_id=1846529582]
 script = ExtResource("3_rqxma")
