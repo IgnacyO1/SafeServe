@@ -84,29 +84,31 @@ func load_chunk_from_json(c_id):
 		var drivable_roads = ["primary", "secondary", "tertiary", "residential", "unclassified", "service", "motorway", "trunk"]
 		
 		if feature["type"] != "building" and highway_type in drivable_roads:
-			register_road_in_network(feature["geometry"])
+			var is_oneway = props.get("oneway") == "yes" # Pobieramy info z OSM
+			register_road_in_network(feature["geometry"], is_oneway)
 		
 		spawn_feature(feature, chunk_node)
 
-func register_road_in_network(coords):
+func register_road_in_network(coords, is_oneway):
 	var points = []
 	for p in coords:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
 	
 	if points.size() < 2: return
 
-	# Rejestrujemy drogę w obu kierunkach (uproszczenie dla dwukierunkowych)
 	var start_node = points[0].snapped(Vector2(0.1, 0.1))
 	var end_node = points[-1].snapped(Vector2(0.1, 0.1))
 	
+	# Zawsze rejestrujemy kierunek zgodny z OSM
 	if not road_network.has(start_node): road_network[start_node] = []
 	road_network[start_node].append(points)
 	
-	# Dla dróg dwukierunkowych dodajemy odwrócony segment
-	var reversed_points = points.duplicate()
-	reversed_points.reverse()
-	if not road_network.has(end_node): road_network[end_node] = []
-	road_network[end_node].append(reversed_points)
+	# Rejestrujemy kierunek powrotny TYLKO jeśli droga NIE jest jednokierunkowa
+	if not is_oneway:
+		var reversed_points = points.duplicate()
+		reversed_points.reverse()
+		if not road_network.has(end_node): road_network[end_node] = []
+		road_network[end_node].append(reversed_points)
 
 
 func spawn_feature(feature, parent):
