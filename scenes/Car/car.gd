@@ -45,6 +45,8 @@ func _physics_process(delta: float) -> void:
 	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
 	move_and_slide()
 	
+	
+	
 func apply_engine(delta: float) -> void:
 	var forward = transform.x
 	var forward_speed = velocity.dot(forward)

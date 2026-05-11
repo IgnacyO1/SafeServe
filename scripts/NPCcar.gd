@@ -1,33 +1,50 @@
 extends CharacterBody2D
 
 var current_road_points = []
+var previous_road_points = [] # Przechowujemy poprzedni segment, by nie zawracać
 var target_index = 0
 var speed = 400.0
 var map_manager = null
+var current_lane_offset = -1.6 
+var is_oneway = false
 
-func setup(start_road, manager):
+
+
+# Zaktualizuj funkcję setup w NPCCar.gd
+func setup(start_points, manager, oneway_status):
 	map_manager = manager
-	current_road_points = start_road
+	current_road_points = start_points
+	is_oneway = oneway_status
+	current_lane_offset = 0.0 if is_oneway else -1.6
 	target_index = 1
-	global_position = current_road_points[0]
+	global_position = get_offset_point(0, 1)
 
 func _physics_process(delta):
 	if current_road_points.is_empty(): return
 	
-	var target_pos = current_road_points[target_index]
+	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
 	
 	velocity = dir * speed
-	look_at(target_pos) # Auto patrzy tam gdzie jedzie
+	
+	if velocity.length() > 0:
+		var target_angle = velocity.angle()
+		rotation = lerp_angle(rotation, target_angle, 10.0 * delta)
 	
 	move_and_slide()
 	
-	if global_position.distance_to(target_pos) < 10.0:
+	if global_position.distance_to(target_pos) < 15.0:
 		advance_path()
+
+func get_offset_point(from_idx, to_idx):
+	var p1 = current_road_points[from_idx]
+	var p2 = current_road_points[to_idx]
+	var direction = (p2 - p1).normalized()
+	var perpendicular = Vector2(direction.y, -direction.x)
+	return p2 + perpendicular * (current_lane_offset * map_manager.map_scale)
 
 func advance_path():
 	target_index += 1
-	# Jeśli dojechaliśmy do końca segmentu (skrzyżowanie)
 	if target_index >= current_road_points.size():
 		find_next_road()
 
@@ -36,32 +53,29 @@ func find_next_road():
 	
 	if map_manager.road_network.has(current_node):
 		var options = map_manager.road_network[current_node]
+		var best_options = []
 		
-		# Logika unikania natychmiastowego zawracania (U-turn)
-		# Jeśli mamy więcej niż jedną opcję, odrzućmy tę, która jest powrotem na obecną drogę
-		var filtered_options = []
-		if options.size() > 1:
-			var back_dir = (current_road_points[-2] - current_road_points[-1]).normalized()
-			for opt in options:
-				var next_dir = (opt[1] - opt[0]).normalized()
-				if next_dir.dot(back_dir) < 0.8: # Nie wybieraj dróg o zbyt podobnym kącie do tyłu
-					filtered_options.append(opt)
+		# Logika anty-zawracania
+		var entry_dir = (current_road_points[-1] - current_road_points[-2]).normalized()
 		
-		if filtered_options.size() > 0:
-			current_road_points = filtered_options.pick_random()
-		else:
-			current_road_points = options.pick_random()
+		for opt in options:
+			var exit_dir = (opt.points[1] - opt.points[0]).normalized()
 			
+			# Jeśli kąt > 150 stopni (dot < -0.85), to uznajemy to za zawracanie
+			if exit_dir.dot(entry_dir) > -0.85:
+				best_options.append(opt)
+		
+		var selected_road
+		if best_options.size() > 0:
+			selected_road = best_options.pick_random()
+		else:
+			# Ślepa uliczka - jedyna opcja to zawrócić
+			selected_road = options.pick_random()
+		
+		# APLIKUJEMY NOWE DANE
+		current_road_points = selected_road.points
+		is_oneway = selected_road.oneway
+		current_lane_offset = 0.0 if is_oneway else -1.6
 		target_index = 1
 	else:
-		# PRAWDZIWA ŚLEPA ULICZKA
-		# Jeśli to była droga dwukierunkowa, możemy zawrócić. 
-		# Ale najbezpieczniej dla logiki agentów (skoro to persistent agents) 
-		# jest po prostu go usunąć i zespawnować nowego, by nie psuć ruchu.
-		if map_manager.has_method("despawn_agent"): # Jeśli masz dostęp do managera
-			# Tutaj możesz wysłać sygnał do TrafficManagera o despawn
-			queue_free() 
-		else:
-			# Ostateczność: zawracanie (może naruszyć oneway, jeśli OSM ma błąd w danych)
-			current_road_points.reverse()
-			target_index = 1
+		queue_free()

@@ -39,10 +39,12 @@ func spawn_random_agent():
 		return # Miejsce zajęte, spróbuj w następnej klatce
 	# Opcjonalnie: sprawdź czy spawn_node jest blisko gracza, żeby nie spawnować na drugim końcu mapy
 	
-	var start_road = map_manager.road_network[spawn_node].pick_random()
+	var road_data = map_manager.road_network[spawn_node].pick_random()
 	var npc = npc_scene.instantiate()
 	add_child(npc)
 	
+	# Przekazujemy punkty ORAZ status oneway do setup
+	npc.setup(road_data.points, map_manager, road_data.oneway)
 	# --- NOWOŚĆ: Wyłączenie kolizji NPC na start ---
 	var original_mask = npc.collision_mask
 	npc.collision_mask = 0
@@ -51,8 +53,11 @@ func spawn_random_agent():
 		if is_instance_valid(npc):
 			npc.collision_mask = original_mask
 	)
-	npc.setup(start_road, map_manager)
+	
+	
 	active_agents.append(npc)
+	
+	
 
 func despawn_agent(agent):
 	active_agents.erase(agent)

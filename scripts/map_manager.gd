@@ -99,16 +99,22 @@ func register_road_in_network(coords, is_oneway):
 	var start_node = points[0].snapped(Vector2(0.1, 0.1))
 	var end_node = points[-1].snapped(Vector2(0.1, 0.1))
 	
-	# Zawsze rejestrujemy kierunek zgodny z OSM
 	if not road_network.has(start_node): road_network[start_node] = []
-	road_network[start_node].append(points)
 	
-	# Rejestrujemy kierunek powrotny TYLKO jeśli droga NIE jest jednokierunkowa
+	# Zapisujemy jako Słownik z metadanymi
+	road_network[start_node].append({
+		"points": points,
+		"oneway": is_oneway
+	})
+	
 	if not is_oneway:
 		var reversed_points = points.duplicate()
 		reversed_points.reverse()
 		if not road_network.has(end_node): road_network[end_node] = []
-		road_network[end_node].append(reversed_points)
+		road_network[end_node].append({
+			"points": reversed_points,
+			"oneway": false # Odwrócona dwukierunkowa jest traktowana jak zwykła
+		})
 
 
 func spawn_feature(feature, parent):
