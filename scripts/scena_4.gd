@@ -10,7 +10,7 @@ var gra_aktywna = true
 var faza = "POZARY" # Fazy: POZARY, BABCIA, SKRZYNKA, KONIEC
 
 const OGIEN_SCENA = preload("res://scenes/ogien.tscn")
-var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/images/Dot.png")
+var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/Images/Dot.png")
 var MAP_TEX = preload("res://assets/graphics/scena4_map.png") if ResourceLoader.exists("res://assets/graphics/scena4_map.png") else preload("res://assets/graphics/scena4_nowe_tło.png")
 
 var pozycje_ogni = [
@@ -184,7 +184,7 @@ func _odswiez_minimape():
 	# Zaznacz babcie we wszystkich fazach po pożarach
 	if faza == "BABCIA" and is_instance_valid(inst_babcia):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/images/Dot.png") if ResourceLoader.exists("res://assets/images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.DEEP_PINK
 		m.position = get_marker_pos.call(inst_babcia.global_position)
@@ -194,7 +194,7 @@ func _odswiez_minimape():
 	# Zaznacz skrzynke
 	if faza == "SKRZYNKA" and is_instance_valid(inst_skrzynka):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/images/Dot.png") if ResourceLoader.exists("res://assets/images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.YELLOW
 		m.position = get_marker_pos.call(inst_skrzynka.global_position)
@@ -204,7 +204,7 @@ func _odswiez_minimape():
 	# Zaznacz wyjscie (po zebraniu skrzynki)
 	if faza == "KONIEC" and is_instance_valid(inst_wyjscie):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/images/Dot.png") if ResourceLoader.exists("res://assets/images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.AQUA
 		m.position = get_marker_pos.call(inst_wyjscie.global_position)

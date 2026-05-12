@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
-
+@onready var horn_player: AudioStreamPlayer2D = $HornPlayer
 # ZMIENNA velocity została usunięta - CharacterBody2D ma ją wbudowaną!
 
 var steer_angle: float = 0.0
@@ -44,6 +44,10 @@ func _physics_process(delta: float) -> void:
 	# USUNIĘTO: position += velocity * delta 
 	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
 	move_and_slide()
+	# Wewnątrz _physics_process lub _input w car.gd
+	if Input.is_action_just_pressed("horn"): # Musisz dodać "horn" w Input Map
+		play_horn_sound() # Opcjonalnie
+		make_way_for_emergency()
 	
 	
 	
@@ -93,3 +97,24 @@ func apply_lateral_friction() -> void:
 	var traction = traction_fast if speed > 200 else traction_slow
 
 	velocity = forward_vel + lateral_vel * clamp(1.0 - traction, 0.0, 0.3)
+
+func play_horn_sound():
+	if horn_player:
+		if not horn_player.playing:
+			horn_player.play()
+
+func make_way_for_emergency():
+	# Szukamy managera w tej samej gałęzi co MapManager lub bezpośrednio w scenie
+	var traffic_manager = get_tree().current_scene.find_child("TrafficManager", true, false)
+	
+	if traffic_manager == null:
+		print("BŁĄD: Nie znaleziono TrafficManagera w scenie!")
+		return
+
+	for npc in traffic_manager.active_agents:
+		if is_instance_valid(npc):
+			var dist = global_position.distance_to(npc.global_position)
+			# 1000 pikseli = 50m przy skali 20
+			if dist < 5000.0:
+				if npc.has_method("yield_to_emergency"):
+					npc.yield_to_emergency()

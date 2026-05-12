@@ -1,30 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxab3k7p0f2q5"]
+[gd_scene format=3 uid="uid://cxab3k7p0f2q5"]
 
 [ext_resource type="Script" uid="uid://c6ax5p3i64uw7" path="res://scripts/scena_5.gd" id="1_sc5gd"]
-[ext_resource type="Texture2D" uid="uid://c1avvcj5cs4sn" path="res://assets/graphics/scena5_tlo.png" id="2_tlo"]
-[ext_resource type="Texture2D" uid="uid://52vmaulm8c41" path="res://assets/graphics/scena5_frame_normal.png" id="3_norm"]
-[ext_resource type="Texture2D" uid="uid://00sh2b0nf2d5" path="res://assets/graphics/scena5_motorola_icon.png" id="4_moto"]
-[ext_resource type="Texture2D" uid="uid://c7eoibmby8slh" path="res://assets/graphics/scena5_avatar_podejrzany.png" id="5_ava"]
-[ext_resource type="Texture2D" uid="uid://c8foibmby8slh" path="res://assets/graphics/scena5_wrong_1.png" id="6_wr1"]
-[ext_resource type="Texture2D" uid="uid://c9foibmby8slh" path="res://assets/graphics/scena5_wrong_2.png" id="7_wr2"]
+[ext_resource type="Texture2D" uid="uid://cpw70l18f5aqo" path="res://assets/graphics/scena5_tlo.png" id="2_tlo"]
+[ext_resource type="Texture2D" uid="uid://b0ust8awnalau" path="res://assets/graphics/scena5_motorola_icon.png" id="4_moto"]
+[ext_resource type="Texture2D" uid="uid://dheyhm5klrtmq" path="res://assets/graphics/scena5_avatar_podejrzany.png" id="5_ava"]
+[ext_resource type="Texture2D" uid="uid://bcaioi8xosu1e" path="res://assets/graphics/scena5_wrong_1.png" id="6_wr1"]
+[ext_resource type="Texture2D" uid="uid://dfim7t42js75y" path="res://assets/graphics/scena5_wrong_2.png" id="7_wr2"]
 
-[node name="Scena5" type="Node2D"]
+[node name="Scena5" type="Node2D" unique_id=1213983279]
 script = ExtResource("1_sc5gd")
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=313595030]
 position = Vector2(960, 540)
 texture = ExtResource("2_tlo")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1439407376]
 
-[node name="VideoPlayer" type="VideoStreamPlayer" parent="UI"]
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="UI" unique_id=973910154]
 offset_left = 60.0
 offset_top = 80.0
 offset_right = 1300.0
 offset_bottom = 740.0
 expand = true
 
-[node name="FaceScanRect" type="ColorRect" parent="UI/VideoPlayer"]
+[node name="FaceScanRect" type="ColorRect" parent="UI/VideoPlayer" unique_id=160271935]
 layout_mode = 0
 offset_left = 500.0
 offset_top = 200.0
@@ -32,21 +31,20 @@ offset_right = 700.0
 offset_bottom = 400.0
 color = Color(1, 0, 0, 0.4)
 
-[node name="Panel" type="Panel" parent="UI"]
+[node name="Panel" type="Panel" parent="UI" unique_id=2027767280]
 offset_left = 320.0
 offset_top = 890.0
 offset_right = 1600.0
 offset_bottom = 1000.0
 
-[node name="TimelineSlider" type="HSlider" parent="UI/Panel"]
+[node name="TimelineSlider" type="HSlider" parent="UI/Panel" unique_id=1717921643]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 20.0
 offset_right = 1000.0
 offset_bottom = 50.0
-value = 0.0
 
-[node name="TimerLabel" type="Label" parent="UI/Panel"]
+[node name="TimerLabel" type="Label" parent="UI/Panel" unique_id=1766170395]
 layout_mode = 0
 offset_left = 1100.0
 offset_top = 20.0
@@ -55,7 +53,7 @@ offset_bottom = 60.0
 theme_override_font_sizes/font_size = 24
 text = "Czas: 20s"
 
-[node name="PlayPauseButton" type="Button" parent="UI/Panel"]
+[node name="PlayPauseButton" type="Button" parent="UI/Panel" unique_id=1010039440]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 10.0
@@ -63,7 +61,7 @@ offset_right = 120.0
 offset_bottom = 60.0
 text = "Graj"
 
-[node name="MotorolaButton" type="Button" parent="UI/Panel"]
+[node name="MotorolaButton" type="Button" parent="UI/Panel" unique_id=1973091130]
 layout_mode = 0
 offset_left = 1100.0
 offset_top = 60.0
@@ -73,13 +71,13 @@ text = "Skanuj"
 icon = ExtResource("4_moto")
 expand_icon = true
 
-[node name="DatabasePanel" type="Panel" parent="UI"]
+[node name="DatabasePanel" type="Panel" parent="UI" unique_id=1436910536]
 offset_left = 1350.0
 offset_top = 200.0
 offset_right = 1850.0
 offset_bottom = 800.0
 
-[node name="Label" type="Label" parent="UI/DatabasePanel"]
+[node name="Label" type="Label" parent="UI/DatabasePanel" unique_id=1150992531]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 10.0
@@ -89,7 +87,7 @@ theme_override_font_sizes/font_size = 20
 text = "Baza Danych - Identyfikacja"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/DatabasePanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DatabasePanel" unique_id=335739989]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 70.0
@@ -97,57 +95,57 @@ offset_right = 480.0
 offset_bottom = 580.0
 theme_override_constants/separation = 20
 
-[node name="SuspectButton" type="Button" parent="UI/DatabasePanel/VBoxContainer"]
+[node name="SuspectButton" type="Button" parent="UI/DatabasePanel/VBoxContainer" unique_id=1139608749]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 text = "Jan Kowalski (Dostęp Odrzucony)"
 icon = ExtResource("5_ava")
 expand_icon = true
 
-[node name="WrongButton1" type="Button" parent="UI/DatabasePanel/VBoxContainer"]
+[node name="WrongButton1" type="Button" parent="UI/DatabasePanel/VBoxContainer" unique_id=1569043440]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 text = "Piotr Nowak (Pracownik)"
 icon = ExtResource("6_wr1")
 expand_icon = true
 
-[node name="WrongButton2" type="Button" parent="UI/DatabasePanel/VBoxContainer"]
+[node name="WrongButton2" type="Button" parent="UI/DatabasePanel/VBoxContainer" unique_id=1173245507]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 text = "Tomasz Wójcik (Ochrona)"
 icon = ExtResource("7_wr2")
 expand_icon = true
 
-[node name="FailScreen" type="ColorRect" parent="UI"]
+[node name="FailScreen" type="ColorRect" parent="UI" unique_id=2123870144]
 visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0, 0, 0, 0.8)
 
-[node name="Label" type="Label" parent="UI/FailScreen"]
+[node name="Label" type="Label" parent="UI/FailScreen" unique_id=1031073944]
 layout_mode = 0
 offset_left = 660.0
 offset_top = 400.0
 offset_right = 1260.0
 offset_bottom = 500.0
-theme_override_font_sizes/font_size = 40
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
 text = "Porażka!"
 horizontal_alignment = 1
 
-[node name="WinScreen" type="ColorRect" parent="UI"]
+[node name="WinScreen" type="ColorRect" parent="UI" unique_id=767018146]
 visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0, 0, 0, 0.8)
 
-[node name="Label" type="Label" parent="UI/WinScreen"]
+[node name="Label" type="Label" parent="UI/WinScreen" unique_id=334385878]
 layout_mode = 0
 offset_left = 660.0
 offset_top = 400.0
 offset_right = 1260.0
 offset_bottom = 500.0
-theme_override_font_sizes/font_size = 40
 theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 40
 text = "Sukces! Zidentyfikowano podejrzanego."
 horizontal_alignment = 1

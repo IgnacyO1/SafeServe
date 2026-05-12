@@ -79,3 +79,30 @@ func find_next_road():
 		target_index = 1
 	else:
 		queue_free()
+var is_yielding: bool = false
+var original_speed: float = 400.0
+
+func yield_to_emergency():
+	if is_yielding: return # Już przepuszcza
+	
+	is_yielding = true
+	original_speed = speed # Zapamiętujemy obecną prędkość
+	
+	# Zjeżdżamy jeszcze mocniej na prawo (korytarz życia)
+	current_lane_offset = -6.0 
+	
+	# Płynne zatrzymanie za pomocą Tweena
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(self, "speed", 0.0, 1.2).set_trans(Tween.TRANS_SINE)
+	
+	# Po 5 sekundach auto wraca do ruchu
+	get_tree().create_timer(5.0).timeout.connect(resume_driving)
+
+func resume_driving():
+	is_yielding = false
+	# Powrót do pasów
+	current_lane_offset = 0.0 if is_oneway else -1.6
+	
+	var tween = create_tween()
+	# Powolne przyspieszanie do 400.0
+	tween.tween_property(self, "speed", 400.0, 2.0).set_trans(Tween.TRANS_LINEAR)
