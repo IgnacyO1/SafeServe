@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_4.gd" id="1_2a01s"]
 [ext_resource type="Texture2D" uid="uid://clvsms847dahn" path="res://assets/graphics/scena4_collision.png" id="2_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
-[ext_resource type="Texture2D" uid="uid://dtpdbhovyyl3y" path="res://assets/graphics/gracz_postac.png" id="2_nn3ug"]
+[ext_resource type="Texture2D" path="res://assets/graphics/scena4_postacie_spritesheet.png" id="2_nn3ug"]
 [ext_resource type="PackedScene" uid="uid://dbihrsfmcqb50" path="res://scenes/ogien.tscn" id="5_2a01s"]
 [ext_resource type="Texture2D" uid="uid://ck2eo4n1dfskf" path="res://assets/graphics/npc_1_babcia.png" id="5_wb72h"]
 [ext_resource type="Texture2D" uid="uid://dv254p74neuij" path="res://assets/graphics/czarna_skrzynka.png" id="6_jfl74"]
@@ -39,6 +39,8 @@ script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
 texture = ExtResource("2_nn3ug")
+hframes = 2
+vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=1691777242]
 shape = SubResource("RectangleShape2D_nn3ug")

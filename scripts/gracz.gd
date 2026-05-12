@@ -28,6 +28,22 @@ func _physics_process(delta: float) -> void:
 		direction.y -= 1
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
+		# Ustawiamy klatkę animacji i pozycję PunktuStrzalu (gaśnicy) w zależności od kierunku ruchu
+		if abs(direction.x) > abs(direction.y):
+			if direction.x < 0:
+				$Sprite2D.frame = 2 # Lewy dolny to w lewo
+				$PunktStrzalu.position = Vector2(-20, 15)
+			else:
+				$Sprite2D.frame = 1 # Prawy górny to w prawo
+				$PunktStrzalu.position = Vector2(20, 15)
+		else:
+			if direction.y < 0:
+				$Sprite2D.frame = 0 # Lewy górny to w górę
+				$PunktStrzalu.position = Vector2(15, 5)
+			else:
+				$Sprite2D.frame = 3 # Prawy dolny to w dół
+				$PunktStrzalu.position = Vector2(-15, 15)
+
 	var aktualna_predkosc = SPEED
 	if Input.is_action_pressed("ui_accept"):
 		aktualna_predkosc = SPEED * 1.8
@@ -35,7 +51,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	look_at(get_global_mouse_position())
+	pass # Usunięto look_at() - gracz teraz obraca się za pomocą sprite'ów (klatek)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -43,7 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var pocisk = POCISK.instantiate()
 			get_parent().add_child(pocisk)
 			pocisk.global_position = $PunktStrzalu.global_position
-			pocisk.direction = (get_global_mouse_position() - global_position).normalized()
+			pocisk.direction = (get_global_mouse_position() - pocisk.global_position).normalized()
 
 	if event is InputEventKey:
 		if event.keycode == KEY_E and event.pressed:
