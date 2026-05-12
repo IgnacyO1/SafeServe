@@ -105,7 +105,7 @@ func play_horn_sound():
 
 func make_way_for_emergency():
 	# Szukamy managera w tej samej gałęzi co MapManager lub bezpośrednio w scenie
-	var traffic_manager = get_tree().current_scene.find_child("TrafficManager", true, false)
+	var traffic_manager = get_tree().current_scene.find_child("Traffic Manager", true, false)
 	
 	if traffic_manager == null:
 		print("BŁĄD: Nie znaleziono TrafficManagera w scenie!")
