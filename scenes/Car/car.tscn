@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://obelx74gq71w" path="res://scenes/Car/car.gd" id="1_c8bcc"]
 [ext_resource type="Texture2D" uid="uid://b7wmt1hcagsow" path="res://assets/Images/CarRed.png" id="1_xbtw7"]
-[ext_resource type="AudioStream" uid="uid://cio1nqbwe0xw0" path="res://assets/Sounds/277214_8-bit-powerup-get-something-big.wav" id="3_y0jbw"]
+[ext_resource type="AudioStream" uid="uid://dykt813ctgqxo" path="res://assets/Sounds/horn.mp3" id="3_y0jbw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbtw7"]
 radius = 29.0
