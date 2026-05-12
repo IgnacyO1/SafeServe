@@ -1,0 +1,18 @@
+<!-- POLICE CAR — 64x64 -->
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" fill="none"/>
+
+  <!-- Body -->
+  <path d="M10 36H54V46H10Z" fill="#E5E7EB"/>
+  <path d="M18 36L24 28H40L46 36Z" fill="#CBD5E1"/>
+
+  <!-- Windows -->
+  <path d="M25 30H39L43 36H21Z" fill="#111827"/>
+
+  <!-- Lightbar -->
+  <rect x="28" y="24" width="8" height="3" rx="1" fill="#2563EB"/>
+
+  <!-- Wheels -->
+  <circle cx="18" cy="48" r="5" fill="#111827"/>
+  <circle cx="46" cy="48" r="5" fill="#111827"/>
+</svg>

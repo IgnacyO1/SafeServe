@@ -1,0 +1,24 @@
+<!-- AMBULANCE — 64x64 -->
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" fill="none"/>
+
+  <!-- Rear -->
+  <rect x="8" y="26" width="34" height="20" rx="2" fill="#F3F4F6"/>
+
+  <!-- Cab -->
+  <rect x="42" y="32" width="14" height="14" rx="2" fill="#D1D5DB"/>
+
+  <!-- Window -->
+  <rect x="45" y="35" width="6" height="5" rx="1" fill="#111827"/>
+
+  <!-- Cross -->
+  <rect x="22" y="30" width="6" height="12" fill="#DC2626"/>
+  <rect x="19" y="33" width="12" height="6" fill="#DC2626"/>
+
+  <!-- Light -->
+  <rect x="26" y="22" width="8" height="3" rx="1" fill="#DC2626"/>
+
+  <!-- Wheels -->
+  <circle cx="18" cy="48" r="5" fill="#111827"/>
+  <circle cx="46" cy="48" r="5" fill="#111827"/>
+</svg>
