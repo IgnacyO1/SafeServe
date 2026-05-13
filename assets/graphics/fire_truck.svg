@@ -1,20 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- FIRE RESCUE TRUCK — 64x64 -->
-<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" fill="none"/>
 
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="fire_truck.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.609375"
+     inkscape:cx="32"
+     inkscape:cy="32"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <rect
+     width="64"
+     height="64"
+     fill="none"
+     id="rect1" />
   <!-- Rear -->
-  <rect x="8" y="28" width="34" height="18" rx="2" fill="#DC2626"/>
-
+  <rect
+     x="3.4002478"
+     y="26.179264"
+     width="40.516315"
+     height="21.449814"
+     rx="2"
+     fill="#dc2626"
+     id="rect2"
+     ry="2"
+     style="stroke-width:1.19166" />
   <!-- Cab -->
-  <rect x="42" y="32" width="14" height="14" rx="2" fill="#B91C1C"/>
-
+  <rect
+     x="43.916565"
+     y="30.94589"
+     width="16.683189"
+     height="16.683189"
+     rx="2"
+     fill="#b91c1c"
+     id="rect3"
+     ry="2"
+     style="stroke-width:1.19166" />
   <!-- Window -->
-  <rect x="45" y="35" width="6" height="5" rx="1" fill="#111827"/>
-
+  <rect
+     x="47.491531"
+     y="34.520859"
+     width="7.1499381"
+     height="5.9582815"
+     rx="1"
+     fill="#111827"
+     id="rect4"
+     ry="1"
+     style="stroke-width:1.19166" />
   <!-- Ladder -->
-  <rect x="14" y="22" width="24" height="3" rx="1" fill="#D1D5DB"/>
-
+  <rect
+     x="10.550186"
+     y="19.029327"
+     width="28.599752"
+     height="3.5749691"
+     rx="1"
+     fill="#d1d5db"
+     id="rect5"
+     ry="1"
+     style="stroke-width:1.19166" />
   <!-- Wheels -->
-  <circle cx="18" cy="48" r="5" fill="#111827"/>
-  <circle cx="46" cy="48" r="5" fill="#111827"/>
+  <circle
+     cx="15.316812"
+     cy="50.01239"
+     r="5.9582815"
+     fill="#111827"
+     id="circle5"
+     style="stroke-width:1.19166" />
+  <circle
+     cx="48.683189"
+     cy="50.01239"
+     r="5.9582815"
+     fill="#111827"
+     id="circle6"
+     style="stroke-width:1.19166" />
 </svg>

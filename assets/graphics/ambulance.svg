@@ -1,24 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- AMBULANCE — 64x64 -->
-<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" fill="none"/>
 
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="ambulance.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.609375"
+     inkscape:cx="32"
+     inkscape:cy="32"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <rect
+     width="64"
+     height="64"
+     fill="none"
+     id="rect1" />
   <!-- Rear -->
-  <rect x="8" y="26" width="34" height="20" rx="2" fill="#F3F4F6"/>
-
+  <rect
+     x="3.8760843"
+     y="24.023956"
+     width="39.842213"
+     height="23.436596"
+     rx="2"
+     fill="#f3f4f6"
+     id="rect2"
+     ry="2"
+     style="stroke-width:1.17183" />
   <!-- Cab -->
-  <rect x="42" y="32" width="14" height="14" rx="2" fill="#D1D5DB"/>
-
+  <rect
+     x="43.7183"
+     y="31.054935"
+     width="16.405617"
+     height="16.405617"
+     rx="2"
+     fill="#d1d5db"
+     id="rect3"
+     ry="2"
+     style="stroke-width:1.17183" />
   <!-- Window -->
-  <rect x="45" y="35" width="6" height="5" rx="1" fill="#111827"/>
-
+  <rect
+     x="47.233788"
+     y="34.570427"
+     width="7.0309792"
+     height="5.859149"
+     rx="1"
+     fill="#111827"
+     id="rect4"
+     ry="1"
+     style="stroke-width:1.17183" />
   <!-- Cross -->
-  <rect x="22" y="30" width="6" height="12" fill="#DC2626"/>
-  <rect x="19" y="33" width="12" height="6" fill="#DC2626"/>
-
+  <rect
+     x="20.281702"
+     y="28.711277"
+     width="7.0309792"
+     height="14.061958"
+     fill="#dc2626"
+     id="rect5"
+     style="stroke-width:1.17183" />
+  <rect
+     x="16.766212"
+     y="32.226765"
+     width="14.061958"
+     height="7.0309792"
+     fill="#dc2626"
+     id="rect6"
+     style="stroke-width:1.17183" />
   <!-- Light -->
-  <rect x="26" y="22" width="8" height="3" rx="1" fill="#DC2626"/>
-
+  <rect
+     x="24.969021"
+     y="19.336637"
+     width="9.3746386"
+     height="3.5154896"
+     rx="1"
+     fill="#dc2626"
+     id="rect7"
+     ry="1"
+     style="stroke-width:1.17183" />
   <!-- Wheels -->
-  <circle cx="18" cy="48" r="5" fill="#111827"/>
-  <circle cx="46" cy="48" r="5" fill="#111827"/>
+  <circle
+     cx="15.594382"
+     cy="49.804214"
+     r="5.859149"
+     fill="#111827"
+     id="circle7"
+     style="stroke-width:1.17183" />
+  <circle
+     cx="48.405617"
+     cy="49.804214"
+     r="5.859149"
+     fill="#111827"
+     id="circle8"
+     style="stroke-width:1.17183" />
 </svg>

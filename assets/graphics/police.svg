@@ -1,18 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- POLICE CAR — 64x64 -->
-<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" fill="none"/>
 
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="police.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.609375"
+     inkscape:cx="32"
+     inkscape:cy="32"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <rect
+     width="64"
+     height="64"
+     fill="none"
+     id="rect1" />
   <!-- Body -->
-  <path d="M10 36H54V46H10Z" fill="#E5E7EB"/>
-  <path d="M18 36L24 28H40L46 36Z" fill="#CBD5E1"/>
-
+  <path
+     d="M 2.7831475,35.179903 H 61.216853 V 48.460291 H 2.7831475 Z"
+     fill="#e5e7eb"
+     id="path1"
+     style="stroke-width:1.32804" />
+  <path
+     d="m 13.407457,35.179903 7.968233,-10.62431 h 21.24862 l 7.968233,10.62431 z"
+     fill="#cbd5e1"
+     id="path2"
+     style="stroke-width:1.32804" />
   <!-- Windows -->
-  <path d="M25 30H39L43 36H21Z" fill="#111827"/>
-
+  <path
+     d="m 22.703729,27.211671 h 18.592542 l 5.312155,7.968232 H 17.391574 Z"
+     fill="#111827"
+     id="path3"
+     style="stroke-width:1.32804" />
   <!-- Lightbar -->
-  <rect x="28" y="24" width="8" height="3" rx="1" fill="#2563EB"/>
-
+  <rect
+     x="26.687845"
+     y="19.243439"
+     width="10.62431"
+     height="3.9841163"
+     rx="1"
+     fill="#2563eb"
+     id="rect3"
+     ry="1"
+     style="stroke-width:1.32804" />
   <!-- Wheels -->
-  <circle cx="18" cy="48" r="5" fill="#111827"/>
-  <circle cx="46" cy="48" r="5" fill="#111827"/>
+  <circle
+     cx="13.407457"
+     cy="51.116367"
+     r="6.6401939"
+     fill="#111827"
+     id="circle3"
+     style="stroke-width:1.32804" />
+  <circle
+     cx="50.592541"
+     cy="51.116367"
+     r="6.6401939"
+     fill="#111827"
+     id="circle4"
+     style="stroke-width:1.32804" />
 </svg>
