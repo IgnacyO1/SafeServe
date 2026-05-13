@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d1falslb55lk8"]
 
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_4.gd" id="1_2a01s"]
-[ext_resource type="Texture2D" uid="uid://clvsms847dahn" path="res://assets/graphics/scena4_collision.png" id="2_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
-[ext_resource type="Texture2D" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
+[ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
+[ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
 [ext_resource type="PackedScene" uid="uid://dbihrsfmcqb50" path="res://scenes/ogien.tscn" id="5_2a01s"]
 [ext_resource type="Texture2D" uid="uid://ck2eo4n1dfskf" path="res://assets/graphics/npc_1_babcia.png" id="5_wb72h"]
 [ext_resource type="Texture2D" uid="uid://dv254p74neuij" path="res://assets/graphics/czarna_skrzynka.png" id="6_jfl74"]
@@ -28,13 +28,12 @@ position = Vector2(1, 0)
 script = ExtResource("1_2a01s")
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=921566932]
-position = Vector2(6000, 540)
-texture = ExtResource("2_2a01s")
-region_enabled = true
-region_rect = Rect2(0, 0, 12000, 1080)
+position = Vector2(1, 0)
+texture = ExtResource("2_o3ndk")
+centered = false
 
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=140514501 groups=["gracz"]]
-position = Vector2(800, 600)
+position = Vector2(5252, 2686)
 script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
@@ -104,15 +103,6 @@ offset_bottom = 73.0
 text = "\"\""
 
 [node name="Area2D" type="Area2D" parent="." unique_id=875042584]
-
-[node name="ScianyMapy" type="StaticBody2D" parent="." unique_id=928910951]
-
-[node name="Sprite2D" type="Sprite2D" parent="ScianyMapy" unique_id=1890069210]
-texture = ExtResource("2_2a01s")
-centered = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ScianyMapy/Sprite2D" unique_id=1251340093]
-polygon = PackedVector2Array(438, 161, 448, 387, 265, 405, 272, 664, 443, 672, 447, 822, 521, 823, 523, 940, 833, 941, 834, 712, 903, 649, 1092, 652, 1098, 869, 1331, 870, 1332, 765, 1393, 698, 1539, 704, 1544, 854, 1456, 928, 1688, 932, 1683, 226, 1538, 228, 1538, 349, 1389, 369, 1353, 344, 1322, 309, 1328, 246, 1324, 219, 1257, 222, 1259, 388, 1155, 508, 904, 506, 784, 397, 787, 217, 454, 213)
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]

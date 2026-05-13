@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-@onready var label_skrzynka = get_parent().get_node("HUD/LabelSkrzynka")
-@onready var skrzynka_node = get_parent().get_node("CzarnaSkrzynka")
+@onready var label_skrzynka = get_parent().get_node_or_null("HUD/LabelSkrzynka")
 
 const SPEED = 250.0
 const POCISK = preload("res://scenes/pocisk.tscn")
@@ -10,11 +9,6 @@ var przy_npc = null
 
 func _ready():
 	z_index = 10 # Ustawiamy gracza ZAWSZE nad mapą!
-	# Nie szukamy już skrzynki na sztywno przy starcie, wygeneruje ją scena główna
-	if skrzynka_node:
-		skrzynka_node.visible = false
-		if skrzynka_node.has_node("CollisionShape2D"):
-			skrzynka_node.get_node("CollisionShape2D").disabled = true
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.ZERO

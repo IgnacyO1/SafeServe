@@ -11,15 +11,24 @@ var faza = "POZARY" # Fazy: POZARY, BABCIA, SKRZYNKA, KONIEC
 
 const OGIEN_SCENA = preload("res://scenes/ogien.tscn")
 var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/Images/Dot.png")
-var MAP_TEX = preload("res://assets/graphics/scena4_map.png") if ResourceLoader.exists("res://assets/graphics/scena4_map.png") else preload("res://assets/graphics/scena4_nowe_tło.png")
+var MAP_TEX = preload("res://assets/graphics/safeservemap (1).png")
 
+# 10 pozycji ognia rozlozonych po calej mapie (sprawdzone - na bialych korytarzach)
 var pozycje_ogni = [
-	Vector2(550, 480), # Poprawione bardziej na srodek bieli
-	Vector2(850, 520),
-	Vector2(1480, 520)
+	Vector2(2257, 483),
+	Vector2(6149, 505),
+	Vector2(3651, 541),
+	Vector2(7559, 1054),
+	Vector2(4888, 1750),
+	Vector2(552, 1876),
+	Vector2(6641, 2233),
+	Vector2(3390, 2498),
+	Vector2(1066, 2790),
+	Vector2(6560, 3232),
 ]
 var ognie = []
 var gracz
+
 
 @onready var label_zadanie = Label.new()
 
@@ -59,9 +68,17 @@ func _ready():
 	minimapa_bg.texture = MAP_TEX
 	minimapa_bg.visible = false
 	minimapa_bg.modulate = Color(1, 1, 1, 0.85) # Półprzezroczystość jak w Among Us
-	# Środek ekranu pobrany bezpośrednio z ustawień okna gry, uodporniony na rozdzielczości
 	minimapa_bg.position = get_viewport_rect().size / 2.0 
-	minimapa_bg.scale = Vector2(0.8, 0.8) # Powiększono mapę
+	
+	# Obliczanie skali, żeby mapa zmieściła się na ekranie
+	var map_size = minimapa_bg.texture.get_size()
+	var vp_size = get_viewport_rect().size
+	var target_w = vp_size.x * 0.8
+	var target_h = vp_size.y * 0.8
+	var sc_x = target_w / map_size.x
+	var sc_y = target_h / map_size.y
+	var sc = min(sc_x, sc_y)
+	minimapa_bg.scale = Vector2(sc, sc)
 
 	# Czarny Panel pod mapą z obramowaniem (border)
 	var panel = ColorRect.new()
@@ -75,41 +92,20 @@ func _ready():
 	hud.add_child(minimapa_bg)
 	minimapa_bg.add_child(markers_node)
 	
-	# Automatyczne ściany (border) blokujące wyjście poza mapę 1920x1080
-	var map_bounds = StaticBody2D.new()
-	var sz_x = 1920
-	var sz_y = 1080
-	var grubosc = 100
+	# Wczytaj kolizje scian z obrazu (tylko czarne obszary) + granice mapy
+	_dodaj_sciany_graniczne()
+
 	
-	# Górna ściana
-	var top = CollisionShape2D.new()
-	top.shape = RectangleShape2D.new()
-	top.shape.size = Vector2(sz_x + grubosc*2, grubosc)
-	top.position = Vector2(sz_x/2, -grubosc/2)
-	map_bounds.add_child(top)
-	
-	# Dolna ściana
-	var bot = CollisionShape2D.new()
-	bot.shape = RectangleShape2D.new()
-	bot.shape.size = Vector2(sz_x + grubosc*2, grubosc)
-	bot.position = Vector2(sz_x/2, sz_y + grubosc/2)
-	map_bounds.add_child(bot)
-	
-	# Lewa ściana
-	var left = CollisionShape2D.new()
-	left.shape = RectangleShape2D.new()
-	left.shape.size = Vector2(grubosc, sz_y)
-	left.position = Vector2(-grubosc/2, sz_y/2)
-	map_bounds.add_child(left)
-	
-	# Prawa ściana
-	var right = CollisionShape2D.new()
-	right.shape = RectangleShape2D.new()
-	right.shape.size = Vector2(grubosc, sz_y)
-	right.position = Vector2(sz_x + grubosc/2, sz_y/2)
-	map_bounds.add_child(right)
-	
-	add_child(map_bounds)
+	if gracz:
+		# call_deferred aby miec pewnosc ze fizyka jest gotowa zanim przeniesiesz gracza
+		gracz.set_deferred("global_position", Vector2(5252, 2687))
+		var cam = gracz.get_node_or_null("Camera2D")
+		if cam:
+			cam.limit_left = 0
+			cam.limit_top = 0
+			cam.limit_right = 8192
+			cam.limit_bottom = 4096
+			cam.zoom = Vector2(1.5, 1.5)
 	
 	for poz in pozycje_ogni:
 		var ogien = OGIEN_SCENA.instantiate()
@@ -121,9 +117,13 @@ func _process(delta: float) -> void:
 	if not gra_aktywna:
 		return
 		
-	# Chowanie mapy przy ruchu
-	if minimapa_bg.visible and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right")):
-		minimapa_bg.visible = false
+	# Aktualizacja pozycji gracza na minimapie gdy jest widoczna
+	if minimapa_bg.visible:
+		_odswiez_minimape()
+		# Zamknij mapę gdy gracz się porusza
+		if Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_accept"):
+			minimapa_bg.visible = false
+
 		
 	czas -= delta
 	if label_czas:
@@ -144,41 +144,59 @@ func _process(delta: float) -> void:
 			label_skrzynka.visible = true
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.keycode == KEY_M and event.pressed and not event.echo:
-		minimapa_bg.visible = !minimapa_bg.visible
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_M:
+			# M otwiera/zamyka mapę
+			minimapa_bg.visible = !minimapa_bg.visible
+			if minimapa_bg.visible:
+				_odswiez_minimape()
+				if label_zadanie and label_zadanie.visible:
+					label_zadanie.visible = false
+					if label_skrzynka:
+						label_skrzynka.visible = true
+		else:
+			# Każdy inny klawisz zamyka mapę
+			if minimapa_bg.visible:
+				minimapa_bg.visible = false
+	elif event is InputEventMouseButton and event.pressed:
+		# Kliknięcie myszą też zamyka mapę
 		if minimapa_bg.visible:
-			_odswiez_minimape()
-			if label_zadanie and label_zadanie.visible:
-				label_zadanie.visible = false # Chowa napis przy otwarciu mapy
-				if label_skrzynka:
-					label_skrzynka.visible = true
+			minimapa_bg.visible = false
 
 func _odswiez_minimape():
 	for child in markers_node.get_children():
 		child.queue_free()
-		
-	var tex_size = minimapa_bg.texture.get_size()
-	var skala_mapy = tex_size # Traktujemy wielkość obrazka = wielkość Godota
 	
-	# Funkcja pomocnicza do przeliczeń (środek tekstury to 0,0 w Sprite2D pozycjonowaniu dzieci)
+	# Rozmiar swiata gry = rozmiar tekstury mapy
+	var map_world_size = Vector2(8192, 4096)
+	# Rozmiar tekstury na ekranie po przeskalowaniu
+	var tex_size = minimapa_bg.texture.get_size()
+	
+	# Funkcja przelicza pozycje ze swiata gry na pozycje na minimapie
+	# Sprite2D z centered=false ma srodek tekstury jako origin przy dodawaniu dzieci
+	# Dzieci sa wzgledem centrum sprite'a
 	var get_marker_pos = func(real_pos: Vector2) -> Vector2:
-		var pos_norm = real_pos / skala_mapy
-		return (pos_norm * tex_size) - (tex_size / 2.0)
+		var pos_norm = real_pos / map_world_size  # 0.0..1.0
+		return (pos_norm * tex_size) - (tex_size / 2.0)  # Wzgledem centrum sprite'a
 	
 	# Zaznacz pożary
 	for ogien in ognie:
 		if is_instance_valid(ogien):
 			var m = Sprite2D.new()
 			m.texture = WYKRZYKNIK_TEX
+			m.scale = Vector2(2.0, 2.0) # Zwiększony rozmiar płomieni na mapie
+			m.z_index = 20 # Zawsze na wierzchu
 			m.position = get_marker_pos.call(ogien.position)
 			markers_node.add_child(m)
 			
 	# Zaznacz gracza
 	if gracz and is_instance_valid(gracz):
 		var m = Sprite2D.new()
-		m.texture = WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
+		m.scale = Vector2(0.8, 0.8)
 		m.modulate = Color.GREEN
 		m.position = get_marker_pos.call(gracz.global_position)
+		m.z_index = 20
 		markers_node.add_child(m)
 		
 	# Zaznacz babcie we wszystkich fazach po pożarach
@@ -238,11 +256,12 @@ func rozpocznij_faze_babcia():
 	if minimapa_bg.visible:
 		_odswiez_minimape()
 	
-	# Spawn Babci z kodu
+	# Spawn Babci - zweryfikowana pozycja daleko od spawna gracza
 	var babcia_area = Area2D.new()
 	babcia_area.name = "Babcia"
 	babcia_area.add_to_group("npc")
-	babcia_area.position = Vector2(210, 100) # Pozycja Babci w pokoju
+	babcia_area.position = Vector2(6963, 614)  # Sprawdzone - jasna podłoga biura
+
 	
 	var col = CollisionShape2D.new()
 	var shape = CircleShape2D.new()
@@ -274,7 +293,7 @@ func uratowano_babcie():
 		var skrzynka_area = Area2D.new()
 		skrzynka_area.name = "CzarnaSkrzynka"
 		skrzynka_area.add_to_group("skrzynka")
-		skrzynka_area.position = Vector2(1880, 500) # Pozycja skrzynki
+		skrzynka_area.position = Vector2(1638, 3072)  # Sprawdzone - lewy dolny obszar biura
 		
 		var col = CollisionShape2D.new()
 		var shape = RectangleShape2D.new()
@@ -312,7 +331,7 @@ func podniesiono_skrzynke():
 		var wyjscie_area = Area2D.new()
 		wyjscie_area.name = "Wyjscie"
 		wyjscie_area.add_to_group("wyjscie")
-		wyjscie_area.position = Vector2(200, 500) # Startowa okolica na przyklad
+		wyjscie_area.position = Vector2(1638, 614)  # Sprawdzone - lewy gorny obszar biura
 		
 		var col = CollisionShape2D.new()
 		var shape = RectangleShape2D.new()
@@ -343,3 +362,56 @@ func przegrana():
 	print("PRZEGRANA! Czas minął!")
 	await get_tree().create_timer(3.0).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func _dodaj_sciany_graniczne():
+	# 1. Wczytaj kolizje prawdziwych scian z obrazu (tylko czarne obszary >30px)
+	var file = FileAccess.open("res://assets/graphics/scena4_walls.json", FileAccess.READ)
+	if file:
+		var text = file.get_as_text()
+		var json_obj = JSON.new()
+		var err = json_obj.parse(text)
+		if err == OK:
+			var data = json_obj.get_data()
+			var walls_body = StaticBody2D.new()
+			walls_body.name = "ScianyMapy"
+			for poly_pts in data:
+				var poly = CollisionPolygon2D.new()
+				var vec_arr = PackedVector2Array()
+				for pt in poly_pts:
+					vec_arr.append(Vector2(pt[0], pt[1]))
+				poly.polygon = vec_arr
+				walls_body.add_child(poly)
+			add_child(walls_body)
+	
+	# 2. Granica zewnetrzna mapy 8192x4096
+	var border = StaticBody2D.new()
+	border.name = "GranicaMapy"
+	var grubosc = 200.0
+	var szer = 8192.0
+	var wys = 4096.0
+	
+	var g = CollisionShape2D.new()  # Gorna
+	g.shape = RectangleShape2D.new()
+	g.shape.size = Vector2(szer + grubosc * 2, grubosc)
+	g.position = Vector2(szer / 2, -grubosc / 2)
+	border.add_child(g)
+	
+	var d = CollisionShape2D.new()  # Dolna
+	d.shape = RectangleShape2D.new()
+	d.shape.size = Vector2(szer + grubosc * 2, grubosc)
+	d.position = Vector2(szer / 2, wys + grubosc / 2)
+	border.add_child(d)
+	
+	var l = CollisionShape2D.new()  # Lewa
+	l.shape = RectangleShape2D.new()
+	l.shape.size = Vector2(grubosc, wys)
+	l.position = Vector2(-grubosc / 2, wys / 2)
+	border.add_child(l)
+	
+	var p = CollisionShape2D.new()  # Prawa
+	p.shape = RectangleShape2D.new()
+	p.shape.size = Vector2(grubosc, wys)
+	p.position = Vector2(szer + grubosc / 2, wys / 2)
+	border.add_child(p)
+	
+	add_child(border)
