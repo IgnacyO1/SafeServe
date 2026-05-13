@@ -3,7 +3,7 @@ var unit
 var emergency 
 var top_panel
 var bottom_panel
-# Called when the node enters the scene tree for the first time.
+var main_event = false
 var map_container : MapContainer 
 func _ready() -> void:
 	map_container = self.find_child("MapContainer")
@@ -24,8 +24,41 @@ func _ready() -> void:
 		map_container.spawn_event("Fire")
 	top_panel = find_child("SidePanelTop")
 	bottom_panel = find_child("SidePanelBottom")
-
-func message(event ) -> void:
+func generate_description(event : MapEvent) -> String:
+	var desc : String = ""
+	if event.type == "Fire":
+		desc += "Kategoria: Niekontrolowany ogień w budynku" 
+		desc += '\n'
+		desc += "Identyfikator budynku: " 
+		desc += str(10000 * event.id % 20 + 20000 + 100  * event.id % 30 + 300 + event.id)    
+		desc += '\n'
+		desc += "Status: Potrzebna pomoc straży pożarnej"
+	elif event.type == "Emergency":
+		desc += "Kategoria: Wypadek "
+		if event.id % 2:
+			desc += "samochodowy"
+		else:
+			desc += "w domu"
+		desc += '\n'
+		desc += "Wiek poszkodowanego: " 
+		desc += str(event.id % 70 + 10)    
+		desc += '\n'
+		desc += "Status: Potrzebna karetka"
+	elif event.type == "Crime":
+		desc += "Kategoria: "
+		if event.id % 3 == 0:
+			desc += "Kradzież z włamaniem"
+		if event.id % 3 == 1:
+			desc += "Kradzież"
+		if event.id % 3 == 2:
+			desc += "Napaść"
+		desc += "\n"
+		desc += "Status: Potrzebna asysta policji"
+		
+	else:
+		print("Wrong event type!")
+	return desc
+func message( event : MapEvent ) -> void:
 
 	const localization : Dictionary = {
 		"Fire" : "Ogień",
@@ -35,22 +68,21 @@ func message(event ) -> void:
 		"Emergency" : "Wypadek",
 		"Crime" : "Przestępstwo"
 	}
-
-	print(event.type)
+	
 	if event.type in ["Crime", "Emergency", "Fire"]:
 		top_panel.find_child("Label").text = localization[event.type]
 		top_panel.find_child("Icon").texture = event.marker.texture_normal
+		top_panel.find_child("Desc").text = generate_description(event)
 		emergency = event
+		if main_event:
+			map_container.map_locked = true
+			find_child("Message modal").visible = true
 	else:
 		bottom_panel.find_child("Label").text = localization[event.type]
 		bottom_panel.find_child("Icon").texture = event.marker.texture_normal
 		unit = event
 	if not bottom_panel.find_child("Send").visible and not unit == null and not emergency == null:
 		bottom_panel.find_child("Send").visible = true
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 
 func _send_unit():
 	const unit_to_emergency = {
@@ -67,15 +99,17 @@ func _send_unit():
 		bottom_panel.find_child("Send").visible = false
 		top_panel.find_child("Label").text = ""
 		top_panel.find_child("Icon").texture = null
+		top_panel.find_child("Desc").text = ""
 		bottom_panel.find_child("Label").text = ""
 		bottom_panel.find_child("Icon").texture = null
-		print(map_container.any_emergencies)
 	else:
 		find_child("Fail modal").visible = true
-		
+
 func _main_event():
 	if map_container.any_emergencies:
 		return
+	main_event = true
+	print(map_container.any_emergencies)	
 	find_child("New emergency modal").visible = true
-	
 	map_container.spawn_event("Fire")
+	
