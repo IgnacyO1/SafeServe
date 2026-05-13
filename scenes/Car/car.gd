@@ -11,6 +11,9 @@ extends CharacterBody2D
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
 @onready var horn_player: AudioStreamPlayer2D = $HornPlayer
+@onready var lights: AnimatedSprite2D = $EmergencyLights
+@onready var siren_player: AudioStreamPlayer2D = $SirenPlayer
+var lights_active: bool = false
 # ZMIENNA velocity została usunięta - CharacterBody2D ma ją wbudowaną!
 
 var steer_angle: float = 0.0
@@ -34,6 +37,9 @@ func _ready():
 func _process(delta: float) -> void:
 	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
 	_steer_input = Input.get_axis("ui_left", "ui_right")
+	# Obsługa włączania/wyłączania świateł
+	if Input.is_action_just_pressed("toggle_lights"):
+		toggle_emergency_lights()
 
 func _physics_process(delta: float) -> void:
 	apply_engine(delta)
@@ -48,7 +54,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("horn"): # Musisz dodać "horn" w Input Map
 		play_horn_sound() # Opcjonalnie
 		make_way_for_emergency()
-	
 	
 	
 func apply_engine(delta: float) -> void:
@@ -118,3 +123,17 @@ func make_way_for_emergency():
 			if dist < 5000.0:
 				if npc.has_method("yield_to_emergency"):
 					npc.yield_to_emergency()
+
+func toggle_emergency_lights():
+	print("Przycisk świateł naciśnięty!")
+	lights_active = !lights_active
+	lights.visible = lights_active
+	
+	if lights_active:
+		print("Światła i Syrena: ON")
+		lights.play()
+		siren_player.play() # Uruchamia dźwięk
+	else:
+		print("Światła i Syrena: OFF")
+		lights.stop()
+		siren_player.stop() # Zatrzymuje dźwięk
