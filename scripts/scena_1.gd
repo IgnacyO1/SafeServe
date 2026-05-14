@@ -109,7 +109,6 @@ func _main_event():
 	if map_container.any_emergencies:
 		return
 	main_event = true
-	print(map_container.any_emergencies)	
 	find_child("New emergency modal").visible = true
 	map_container.spawn_event("Fire")
 	
