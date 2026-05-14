@@ -294,10 +294,15 @@ func _rozpocznij_faze_pozary():
 
 	# Spawnuj ognie
 	for poz in pozycje_ogni:
-		var ogien = OGIEN_SCENA.instantiate()
-		ogien.position = poz
-		add_child(ogien)
-		ognie.append(ogien)
+		var ilosc = randi_range(1, 5)
+		for i in range(ilosc):
+			var ogien = OGIEN_SCENA.instantiate()
+			var offset = Vector2.ZERO
+			if i > 0:
+				offset = Vector2(randf_range(-80, 80), randf_range(-80, 80))
+			ogien.position = poz + offset
+			add_child(ogien)
+			ognie.append(ogien)
 
 func zgaszono_ogien(ogien):
 	if ognie.has(ogien):

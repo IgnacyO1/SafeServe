@@ -86,7 +86,7 @@ func _input(event) -> void:
 		if event.button_index == MouseButton.MOUSE_BUTTON_WHEEL_DOWN:
 			update_scale(-scroll_factor)
 	elif event is InputEventMouseMotion and dragging and not map_locked:
-		var delta = ( event.position - last_mouse_position ) * 1
+		var delta = ( event.position - last_mouse_position ) * 	1
 		position += delta
 		clamp_position()
 		last_mouse_position = event.position
