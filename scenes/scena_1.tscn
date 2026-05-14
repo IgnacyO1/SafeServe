@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dt7egj8tvt6xm" path="res://assets/graphics/scena1_tlo.png" id="4_r3f15"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
 [ext_resource type="Texture2D" uid="uid://b1ao3wx4o1804" path="res://assets/graphics/Popup background.png" id="5_el5c8"]
-[ext_resource type="Texture2D" path="res://assets/graphics/Arrow_icon_orange.svg" id="6_u2q0q"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
 [ext_resource type="Texture2D" uid="uid://dbsdkck73023o" path="res://assets/graphics/Button texture.png" id="7_da6gn"]
 [ext_resource type="Texture2D" uid="uid://dl1jm7xgs722u" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
@@ -184,9 +183,10 @@ vertical_alignment = 1
 
 [node name="Text" type="Label" parent="Tutorial modal" unique_id=807487684]
 layout_mode = 0
-offset_top = 100.0
-offset_right = 520.0
-offset_bottom = 399.0
+offset_left = 80.0
+offset_top = 89.0
+offset_right = 600.0
+offset_bottom = 388.0
 text = "- Przeciągaj mapę
 - Wybierz jednocześnie zdarzenie i odpowiadającą jednostkę, potem kliknij \"Wyślij\", aby ją wysłać "
 label_settings = SubResource("LabelSettings_du2nj")
@@ -236,10 +236,6 @@ text = "Ogień"
 label_settings = SubResource("LabelSettings_du2nj")
 vertical_alignment = 1
 autowrap_mode = 2
-
-[node name="Sprite2D3" type="Sprite2D" parent="Tutorial modal/Control67" unique_id=1178020509]
-position = Vector2(32, 32)
-texture = ExtResource("6_u2q0q")
 
 [node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control67" unique_id=1550146987]
 position = Vector2(32, 32)
@@ -477,10 +473,11 @@ offset_left = 468.0
 offset_top = 45.0
 offset_right = 873.0
 offset_bottom = 253.99997
-text = "Rozumiem."
+text = "Przyjąłem"
 label_settings = SubResource("LabelSettings_maknc")
 
 [node name="New emergency modal" type="Panel" parent="." unique_id=1939458738]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -530,7 +527,7 @@ offset_left = 468.0
 offset_top = 45.0
 offset_right = 873.0
 offset_bottom = 253.99997
-text = "Rozumiem."
+text = "Przyjąłem"
 label_settings = SubResource("LabelSettings_maknc")
 
 [node name="Message modal" type="Panel" parent="." unique_id=1045472808]

@@ -7,17 +7,20 @@ var type : String
 var map_margin 
 func on_press():
 	container_node.get_tree().current_scene.message(self)
-func _init(container_node_i : MapContainer, marker_texture : Texture2D, arrow_texture : Texture2D, type_i : String):
+func _init(container_node_i : MapContainer, marker_texture : Texture2D, arrow_texture : Texture2D, type_i : String, position_i : Vector2):
 	id = randi()
 	type = type_i
 	container_node = container_node_i
 	marker = TextureButton.new()
 	marker.texture_normal = marker_texture
 	map_margin = container_node.map_margin
-	@warning_ignore("integer_division", "narrowing_conversion")
-	marker.position.x = randi_range(marker_texture.get_width() / 2 + map_margin.x, container_node.MapSprite.texture.get_size().x * container_node.MapSprite.scale.x - marker_texture.get_width() / 2 - map_margin.x)
-	@warning_ignore("integer_division", "narrowing_conversion")
-	marker.position.y = randi_range(marker_texture.get_height() / 2 + map_margin.y, container_node.MapSprite.texture.get_size().y * container_node.MapSprite.scale.y - marker_texture.get_height() / 2 - map_margin.y)
+	if position_i ==  Vector2(-1, -1):
+		@warning_ignore("integer_division", "narrowing_conversion")
+		marker.position.x = randi_range(marker_texture.get_width() / 2 + map_margin.x, container_node.MapSprite.texture.get_size().x * container_node.MapSprite.scale.x - marker_texture.get_width() / 2 - map_margin.x)
+		@warning_ignore("integer_division", "narrowing_conversion")
+		marker.position.y = randi_range(marker_texture.get_height() / 2 + map_margin.y, container_node.MapSprite.texture.get_size().y * container_node.MapSprite.scale.y - marker_texture.get_height() / 2 - map_margin.y)
+	else: 
+		marker.position = position_i
 	marker.pressed.connect(on_press)
 	marker.name = type + " Icon"
 

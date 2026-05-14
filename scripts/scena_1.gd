@@ -10,7 +10,8 @@ func _ready() -> void:
 	map_container = self.find_child("MapContainer")
 	var arr = []
 	for i in range(3):
-		arr.append(randi_range(2,4))
+		#arr.append(randi_range(2,4))
+		arr.append(1)
 	for i in range(arr[0]):
 		map_container.spawn_event("Police")
 	for i in range(arr[1]):
@@ -111,5 +112,5 @@ func _main_event():
 		return
 	main_event = true
 	find_child("New emergency modal").visible = true
-	map_container.spawn_event("Fire")
+	map_container.spawn_event("Fire", Vector2(564, 2318))
 	

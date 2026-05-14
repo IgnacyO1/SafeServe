@@ -35,12 +35,14 @@ var MapSprite : Sprite2D
 var Events : Array[MapEvent]
 
 
-func spawn_event(type : String):
+func spawn_event(type : String, target_position : Vector2 = Vector2(-1, -1)):
 	Events.push_back(
 	MapEvent.new(self,
 	load(find_marker_filename(type)), 
 	load(find_arrow_filename(type)),
-	type)) 
+	type,
+	target_position
+	)) 
 
 	if type in ["Crime", "Emergency", "Fire"]:
 		any_emergencies = true
