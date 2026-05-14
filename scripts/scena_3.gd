@@ -9,15 +9,12 @@ var target_pos_px = Vector2(-62668, 73086)
 
 var coords_label: Label
 var arrow_sprite: Polygon2D
+var fade_rect: ColorRect # Do efektu przejścia
+var is_changing_scene = false # Flaga, żeby nie odpalić przejścia 100 razy
 
 func _ready():
-	if not player:
-		print("BŁĄD: Brak gracza!")
-		return
-		
-	# 1. Konfigurujemy mapę pod tę konkretną trasę
+	if not player: return
 	setup_level()
-	# 2. Tworzymy UI
 	setup_ui()
 
 func setup_level():
@@ -45,18 +42,49 @@ func setup_ui():
 	])
 	arrow_sprite.color = Color.RED
 	arrow_container.add_child(arrow_sprite)
+	
+	# czarny ekran do przejśćia później
+	fade_rect = ColorRect.new()
+	fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	fade_rect.color = Color(0, 0, 0, 0) # Startujemy od przeźroczystego
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE # Żeby nie blokował kliknięć
+	canvas.add_child(fade_rect)
 
 func _process(_delta):
+	if is_changing_scene: return # Blokada process podczas zmiany sceny
+	
 	if is_instance_valid(player) and arrow_sprite:
 		var player_pos = player.global_position
 		var dist_vec = target_pos_px - player_pos
 		var dist_m = dist_vec.length() / 20.0
 		
+		# Aktualizacja UI
 		coords_label.text = "GPS: %d, %d\nDO CELU: %d m" % [player_pos.x, player_pos.y, int(dist_m)]
 		
-		# TWOJA POPRAWIONA ROTACJA
-		var angle_to_target = dist_vec.angle()
-		var final_angle = angle_to_target - player.rotation
-		# final_angle -= PI/2 # Odkomentuj jeśli znów ucieknie o 90 stopni
-		
-		arrow_sprite.rotation = final_angle
+		# Rotacja strzałki (Twoja sprawdzona metoda)
+		arrow_sprite.rotation = dist_vec.angle() - player.rotation
+
+		# --- LOGIKA DOJAZDU DO CELU ---
+		# Sprawdzamy dystans (< 5m) i czy auto prawie stoi (prędkość < 10)
+		var current_speed = 0.0
+		if player is RigidBody2D:
+			current_speed = player.linear_velocity.length()
+		elif "velocity" in player: # Jeśli to CharacterBody2D
+			current_speed = player.velocity.length()
+
+		if dist_m < 5.0 and current_speed < 10.0:
+			finish_level()
+
+func finish_level():
+	is_changing_scene = true
+	print("Cel osiągnięty! Przełączam na Scenę 4...")
+	
+	# ŁADNE PRZEJŚCIE (FADE OUT)
+	var tween = create_tween()
+	# Animujemy kolor fade_rect z przeźroczystego do czarnego w 1.5 sekundy
+	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.5)
+	
+	# Po zakończeniu animacji zmień scenę
+	tween.finished.connect(func():
+		get_tree().change_scene_to_file("res://scenes/scena_4.tscn") # Upewnij się co do ścieżki!
+	)
