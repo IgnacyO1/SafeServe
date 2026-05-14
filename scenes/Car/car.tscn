@@ -608,7 +608,6 @@ rotation_smoothing_enabled = true
 
 [node name="HornPlayer" type="AudioStreamPlayer2D" parent="." unique_id=470119659]
 stream = ExtResource("3_y0jbw")
-autoplay = true
 
 [node name="EmergencyLights" type="AnimatedSprite2D" parent="." unique_id=38540455]
 visible = false
