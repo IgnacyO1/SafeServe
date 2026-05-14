@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/scena_3_radio.gd" id="1_t1kk4"]
 [ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="2_dorrt"]
 [ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="3_foj7g"]
-[ext_resource type="Script" path="res://scripts/traffic_manager.gd" id="4_bpjt2"]
+[ext_resource type="Script" uid="uid://car6qoc5oj7yq" path="res://scripts/traffic_manager.gd" id="4_bpjt2"]
 [ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/Images/Screenshot_20260514_144541.png" id="5_dorrt"]
 [ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="6_foj7g"]
 [ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bpjt2"]
@@ -22,7 +22,9 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=596924865]
+handle_input_locally = false
 size = Vector2i(1920, 1080)
+render_target_update_mode = 4
 
 [node name="World" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=2106525458]
 script = ExtResource("1_1oxvm")
