@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f36x640l8460"
-path="res://.godot/imported/wykrzyknik.svg-86124e95e0d975da6a6b532ab34bbdc3.ctex"
+uid="uid://dn44or3mctvxg"
+path="res://.godot/imported/ogien.png-d2362e1bb22b829748c7dd98280cc62e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/wykrzyknik.svg"
-dest_files=["res://.godot/imported/wykrzyknik.svg-86124e95e0d975da6a6b532ab34bbdc3.ctex"]
+source_file="res://assets/graphics/scena_1/ogien.png"
+dest_files=["res://.godot/imported/ogien.png-d2362e1bb22b829748c7dd98280cc62e.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

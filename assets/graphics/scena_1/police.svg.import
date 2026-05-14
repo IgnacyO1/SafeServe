@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eknwd41pgfgu"
-path="res://.godot/imported/Arrow_icon_black.svg-5ac8a430c3224d8720a186608bf9ca9f.ctex"
+uid="uid://buwc6fwhaet7r"
+path="res://.godot/imported/police.svg-76e30ba9a5765a1ebd3efcdf0cfe175e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/Arrow_icon_black.svg"
-dest_files=["res://.godot/imported/Arrow_icon_black.svg-5ac8a430c3224d8720a186608bf9ca9f.ctex"]
+source_file="res://assets/graphics/scena_1/police.svg"
+dest_files=["res://.godot/imported/police.svg-76e30ba9a5765a1ebd3efcdf0cfe175e.ctex"]
 
 [params]
 

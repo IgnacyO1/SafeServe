@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk1wyjg43npsc"
-path="res://.godot/imported/Arrow_icon_orange.svg-b56508aae37798a38258f97c7acc8b60.ctex"
+uid="uid://dynjxkt5affec"
+path="res://.godot/imported/fire_truck.svg-5ea82f23e107c5cdea3cf5dbd62334f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/Arrow_icon_orange.svg"
-dest_files=["res://.godot/imported/Arrow_icon_orange.svg-b56508aae37798a38258f97c7acc8b60.ctex"]
+source_file="res://assets/graphics/scena_1/fire_truck.svg"
+dest_files=["res://.godot/imported/fire_truck.svg-5ea82f23e107c5cdea3cf5dbd62334f7.ctex"]
 
 [params]
 

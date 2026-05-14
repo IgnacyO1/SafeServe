@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bndfhp14qpjfd"
-path="res://.godot/imported/Arrow_icon_green.svg-6798c3acca4ff9e10a234c3844647280.ctex"
+uid="uid://f36x640l8460"
+path="res://.godot/imported/wykrzyknik.svg-675b9a63256511426a99e5e5849c463c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/Arrow_icon_green.svg"
-dest_files=["res://.godot/imported/Arrow_icon_green.svg-6798c3acca4ff9e10a234c3844647280.ctex"]
+source_file="res://assets/graphics/scena_1/wykrzyknik.svg"
+dest_files=["res://.godot/imported/wykrzyknik.svg-675b9a63256511426a99e5e5849c463c.ctex"]
 
 [params]
 

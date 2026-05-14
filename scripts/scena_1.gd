@@ -1,4 +1,5 @@
 extends Node
+class_name scena1
 var unit
 var emergency 
 var top_panel

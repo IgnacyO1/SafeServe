@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl44xpieoapfj"
-path="res://.godot/imported/ambulance.svg-be2193858e6ab14a9df63bea0076a5ce.ctex"
+uid="uid://dncfkyrggv8ub"
+path="res://.godot/imported/Arrow_icon_blue.svg-12650a97da66a24e61aeedcbbcd8848f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/ambulance.svg"
-dest_files=["res://.godot/imported/ambulance.svg-be2193858e6ab14a9df63bea0076a5ce.ctex"]
+source_file="res://assets/graphics/scena_1/Arrow_icon_blue.svg"
+dest_files=["res://.godot/imported/Arrow_icon_blue.svg-12650a97da66a24e61aeedcbbcd8848f.ctex"]
 
 [params]
 

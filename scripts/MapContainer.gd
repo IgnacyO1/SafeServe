@@ -6,27 +6,29 @@ var any_emergencies = false
 const scroll_factor : float = 0.05
 const map_margin : Vector2 = Vector2(250, 150)
 
-const event_type_to_marker_filename : Dictionary = {
-	"Fire" : "ogien.png",
-	"Police" : "police.svg",
-	"Fire rescue" : "fire_truck.svg",
-	"Ambulance" : "ambulance.svg",
-	"Emergency" : "wykrzyknik.svg",
-	"Crime" : "zlodziej.svg"
-}
-const event_type_to_arrow_color : Dictionary = {
-	"Fire" : "orange",
-	"Police" : "blue",
-	"Fire rescue" : "dark_red",
-	"Ambulance" : "white",
-	"Emergency" : "red",
-	"Crime" : "black"
-}
+
+
 func find_marker_filename(type : String ):
-	return "res://assets/graphics/" + event_type_to_marker_filename[type] 
+	const event_type_to_marker_filename : Dictionary = {
+		"Fire" : "ogien.png",
+		"Police" : "police.svg",
+		"Fire rescue" : "fire_truck.svg",
+		"Ambulance" : "ambulance.svg",
+		"Emergency" : "wykrzyknik.svg",
+		"Crime" : "zlodziej.svg"
+	}
+	return "res://assets/graphics/scena_1/" + event_type_to_marker_filename[type] 
 
 func find_arrow_filename(type : String ):
-	return "res://assets/graphics/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
+	const event_type_to_arrow_color : Dictionary = {
+		"Fire" : "orange",
+		"Police" : "blue",
+		"Fire rescue" : "dark_red",
+		"Ambulance" : "white",
+		"Emergency" : "red",
+		"Crime" : "black"
+	}
+	return "res://assets/graphics/scena_1/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
 
 var map_view_size
 var MapSprite : Sprite2D
@@ -39,6 +41,7 @@ func spawn_event(type : String):
 	load(find_marker_filename(type)), 
 	load(find_arrow_filename(type)),
 	type)) 
+
 	if type in ["Crime", "Emergency", "Fire"]:
 		any_emergencies = true
 
@@ -73,7 +76,7 @@ func _process(_delta : float):
 	for i in range(Events.size()):
 		Events[i].update_arrow()
 
-var map_locked : bool = false
+var map_locked : bool = true
 var dragging : bool = false
 var last_mouse_position : Vector2 = Vector2.ZERO
 func _input(event) -> void:

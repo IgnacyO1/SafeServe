@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl1jm7xgs722u"
-path="res://.godot/imported/Arrow_icon_red.svg-b058adc19691726da799917932f5621e.ctex"
+uid="uid://b64vgysho6bc0"
+path="res://.godot/imported/zlodziej.svg-fe57c7fe0f788d6d97a782b37a73baf0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/Arrow_icon_red.svg"
-dest_files=["res://.godot/imported/Arrow_icon_red.svg-b058adc19691726da799917932f5621e.ctex"]
+source_file="res://assets/graphics/scena_1/zlodziej.svg"
+dest_files=["res://.godot/imported/zlodziej.svg-fe57c7fe0f788d6d97a782b37a73baf0.ctex"]
 
 [params]
 
