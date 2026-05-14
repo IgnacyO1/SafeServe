@@ -60,7 +60,6 @@ offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
-text = ""
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]

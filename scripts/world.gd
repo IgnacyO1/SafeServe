@@ -3,7 +3,7 @@ extends Node2D
 @onready var player = $Car
 
 # Cel
-var target_pos_px = Vector2(-3136, 3661)
+var target_pos_px = Vector2(-62668, 73086)
 
 var coords_label: Label
 var arrow_sprite: Polygon2D # Zmieniamy na konkretny typ
@@ -42,23 +42,23 @@ func _process(delta):
 		var player_pos = player.global_position
 		var dist_vec = target_pos_px - player_pos
 		
-		# Debugowanie w konsoli (jeśli to widzisz, to znaczy że skrypt działa)
-		# print("Kąt do celu: ", dist_vec.angle()) 
-
 		# AKTUALIZACJA TEKSTU
 		var dist_m = dist_vec.length() / 20.0
 		coords_label.text = "GPS: %d, %d\nDO CELU: %d m" % [player_pos.x, player_pos.y, int(dist_m)]
 		
 		# OBLICZANIE ROTACJI
-		# 1. Kąt wektora do celu
-		var final_angle = dist_vec.angle() + PI/2
+		# 1. Pobieramy kąt wektora do celu
+		var angle_to_target = dist_vec.angle() 
 		
-		# 2. JEŚLI KAMERA SIĘ OBRACA: 
-		# Musimy odjąć rotację gracza, żeby strzałka "na ekranie" 
-		# wskazywała realny kierunek świata.
-		final_angle -= player.rotation 
+		# 2. Obliczamy rotację strzałki:
+		# angle_to_target -> kierunek na cel w świecie
+		# - player.rotation -> odejmujemy obrót auta, żeby strzałka była stabilna na UI
+		# + PI/2 -> korekta, bo Twoja strzałka w Polygon2D patrzy "w górę"
+		# - PI/2 -> TWOJA KOREKTA (90 stopni), bo kamera/auto jest obrócone!
+		
+		var final_angle = angle_to_target - player.rotation
+		
+		# Jeśli strzałka dalej ucieka o 90 stopni, zmień minus na plus poniżej:
+		#final_angle -= PI/2 
 		
 		arrow_sprite.rotation = final_angle
-
-		# TEST WIROWANIA (Odkomentuj TYLKO linię poniżej, a zakomentuj arrow_sprite.rotation powyżej)
-		# arrow_sprite.rotation += delta * 10
