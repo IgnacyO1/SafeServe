@@ -32,7 +32,7 @@ func _ready():
 	await get_tree().process_frame 
 	
 	if player:
-		player.global_position = Vector2(-2356, 44164)
+		player.global_position = Vector2(-62668, 73086)#Vector2(-2356, 44164)
 		last_update_pos = player.global_position # Ważne: zresetuj to tutaj
 	
 	update_chunks()
