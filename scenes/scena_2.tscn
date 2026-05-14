@@ -1,21 +1,21 @@
-[gd_scene format=3 uid="uid://317x3t1u2c0b"]
+[gd_scene format=3 uid="uid://yl4bvvhjql4p"]
 
-[ext_resource type="Script" uid="uid://oh0oc2lu8oc8" path="res://scripts/scena_2_radio.gd" id="1_pfn1c"]
-[ext_resource type="Script" uid="uid://cu1ly8db8bhan" path="res://scripts/scena_4.gd" id="2_pfn1c"]
-[ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="3_t55wj"]
-[ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="4_us2mp"]
-[ext_resource type="Script" path="res://scripts/traffic_manager.gd" id="5_bk8f3"]
-[ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/Images/Screenshot_20260514_144541.png" id="6_x6fgu"]
-[ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="7_2021g"]
-[ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="8_v141r"]
-[ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="9_y4qjf"]
+[ext_resource type="Script" uid="uid://2ajbjujpc70s" path="res://scripts/scena_2.gd" id="1_1oxvm"]
+[ext_resource type="Script" uid="uid://oh0oc2lu8oc8" path="res://scripts/scena_2_radio.gd" id="1_t1kk4"]
+[ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="2_dorrt"]
+[ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="3_foj7g"]
+[ext_resource type="Script" path="res://scripts/traffic_manager.gd" id="4_bpjt2"]
+[ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/Images/Screenshot_20260514_144541.png" id="5_dorrt"]
+[ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="6_foj7g"]
+[ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bpjt2"]
+[ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="8_1y6gg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxtjr"]
 font_size = 32
 font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Root" type="Node2D" unique_id=452106287]
-script = ExtResource("1_pfn1c")
+script = ExtResource("1_t1kk4")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1994133029]
 offset_right = 40.0
@@ -28,40 +28,40 @@ size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="World" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=2106525458]
-script = ExtResource("2_pfn1c")
+script = ExtResource("1_1oxvm")
 
 [node name="MapManager" type="Node2D" parent="SubViewportContainer/SubViewport/World" unique_id=1997550378]
-script = ExtResource("3_t55wj")
+script = ExtResource("2_dorrt")
 player_path = NodePath("../Car")
 
-[node name="Car" parent="SubViewportContainer/SubViewport/World" unique_id=2134554690 instance=ExtResource("4_us2mp")]
+[node name="Car" parent="SubViewportContainer/SubViewport/World" unique_id=2134554690 instance=ExtResource("3_foj7g")]
 
 [node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
-script = ExtResource("5_bk8f3")
+script = ExtResource("4_bpjt2")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=885939410]
 visible = false
 z_index = -4
 position = Vector2(-64329.668, 74395.13)
 scale = Vector2(14.431, 14.431)
-texture = ExtResource("6_x6fgu")
+texture = ExtResource("5_dorrt")
 
 [node name="Sprite2D2" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=581956178]
 visible = false
 position = Vector2(-55364, 69539)
 scale = Vector2(3.5974536, 3.5974534)
-texture = ExtResource("7_2021g")
+texture = ExtResource("6_foj7g")
 
 [node name="Sprite2D3" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=1441417386]
 visible = false
 position = Vector2(-71487, 79076)
 scale = Vector2(5.559322, 5.559322)
-texture = ExtResource("7_2021g")
+texture = ExtResource("6_foj7g")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=810173777]
 position = Vector2(1759, 919)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_v141r")
+texture = ExtResource("7_bpjt2")
 
 [node name="Radio popup" type="Control" parent="." unique_id=471436606]
 visible = false
@@ -72,7 +72,7 @@ offset_bottom = 40.0
 
 [node name="Sprite2D2" type="Sprite2D" parent="Radio popup" unique_id=1805104318]
 position = Vector2(930, 967)
-texture = ExtResource("9_y4qjf")
+texture = ExtResource("8_1y6gg")
 
 [node name="Label" type="Label" parent="Radio popup" unique_id=809855996]
 layout_mode = 0
