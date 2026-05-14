@@ -20,17 +20,20 @@ player_path = NodePath("../Car")
 script = ExtResource("4_bpjt2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=885939410]
+visible = false
 z_index = -4
 position = Vector2(-64329.668, 74395.13)
 scale = Vector2(14.431, 14.431)
 texture = ExtResource("5_dorrt")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=581956178]
+visible = false
 position = Vector2(-55364, 69539)
 scale = Vector2(3.5974536, 3.5974534)
 texture = ExtResource("6_foj7g")
 
 [node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1441417386]
+visible = false
 position = Vector2(-71487, 79076)
 scale = Vector2(5.559322, 5.559322)
 texture = ExtResource("6_foj7g")

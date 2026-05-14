@@ -602,9 +602,7 @@ shape = SubResource("CapsuleShape2D_xbtw7")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1905327528]
 position = Vector2(300, 0)
 rotation = 1.5707964
-scale = Vector2(10, 10)
 ignore_rotation = false
-zoom = Vector2(0.1, 0.1)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 

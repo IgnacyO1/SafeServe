@@ -19,35 +19,35 @@ var update_threshold = 200.0
 @onready var water_tex = preload("res://assets/graphics/water.tres")
 
 var loaded_chunks = {}
-
-# NPC POJAZDY
 var road_network = {}
 var chunk_load_queue = []
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
 
-func _ready():
-	# Czekamy klatkę, aż całe drzewo World się zainicjalizuje
-	await get_tree().process_frame 
-	
+# NOWE: Funkcja inicjalizująca, wywoływana przez scenę trasy
+func initialize_map(start_pos: Vector2):
 	if player:
-		player.global_position = Vector2(-62668, 73086)#Vector2(-2356, 44164)
-		last_update_pos = player.global_position # Ważne: zresetuj to tutaj
+		player.global_position = start_pos
+		last_update_pos = start_pos
+	
+	# Czyścimy stare dane, jeśli to kolejny wyścig
+	for c in loaded_chunks.values(): c.queue_free()
+	loaded_chunks.clear()
+	chunk_load_queue.clear()
+	road_network.clear()
 	
 	update_chunks()
 
-func _process(delta):
+func _process(_delta):
 	if player:
 		if player.global_position.distance_to(last_update_pos) > update_threshold:
 			update_chunks()
 			last_update_pos = player.global_position
 
-		# Ładuj tylko jeden chunk na klatkę
 		if chunk_load_queue.size() > 0:
 			var next_chunk = chunk_load_queue.pop_front()
 			load_chunk_from_json(next_chunk)
-
 func update_chunks():
 	var p_x = int(floor(player.global_position.x / chunk_size_px))
 	var p_y = int(floor(player.global_position.y / chunk_size_px))
