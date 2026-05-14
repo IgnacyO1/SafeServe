@@ -5,9 +5,9 @@ var chunk_size_meters = 200.0
 var map_scale = 20.0
 var load_radius = 1
 var chunk_path = "res://data/map_chunks/"
-var coords_label: Label
+
 var last_update_pos = Vector2.ZERO
-var update_threshold = 200.0 # Aktualizuj co 200px (czyli co kawałek drogi)
+var update_threshold = 200.0
 
 @onready var chunk_size_px = chunk_size_meters * map_scale
 
@@ -16,66 +16,37 @@ var update_threshold = 200.0 # Aktualizuj co 200px (czyli co kawałek drogi)
 @onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
 @onready var tree_tex = preload("res://assets/graphics/tree_top.png")
 @onready var sidewalk_tex = preload("res://assets/graphics/pavement_2.png")
-@onready var water_tex = preload("res://assets/graphics/water.tres") # To jest Twój AnimatedTexture
-var loaded_chunks = {} 
+@onready var water_tex = preload("res://assets/graphics/water.tres")
 
+var loaded_chunks = {}
 
-#NPC POJAZDY
-var road_network = {} # Klucz: Vector2 (pozycja), Wartość: Array[Array] (lista segmentów/dróg wychodzących)
-var chunk_load_queue = [] # Kolejka chunków do załadowania
+# NPC POJAZDY
+var road_network = {}
+var chunk_load_queue = []
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
 
 func _ready():
-	setup_coords_ui()
+	# Czekamy klatkę, aż całe drzewo World się zainicjalizuje
+	await get_tree().process_frame 
 	
-	# Ustawiamy gracza na wybranym przez Ciebie punkcie (używamy PX)
 	if player:
 		player.global_position = Vector2(-2356, 44164)
+		last_update_pos = player.global_position # Ważne: zresetuj to tutaj
 	
-	# Natychmiastowe ładowanie chunków dla tej pozycji
 	update_chunks()
-func setup_coords_ui():
-	# Tworzymy CanvasLayer, aby UI "pływało" nad światem gry
-	var canvas = CanvasLayer.new()
-	add_child(canvas)
-	
-	# Tworzymy etykietę (Label)
-	coords_label = Label.new()
-	canvas.add_child(coords_label)
-	
-	# Stylizacja (opcjonalna)
-	coords_label.position = Vector2(20, 20) # Lewy górny róg z marginesem
-	coords_label.add_theme_font_size_override("font_size", 24)
-	coords_label.add_theme_color_override("font_color", Color.YELLOW) # Żółty będzie widoczny na asfalcie i trawie
-	
-	# Dodajemy lekki cień pod tekstem, żeby był czytelniejszy
-	coords_label.add_theme_constant_override("shadow_offset_x", 2)
-	coords_label.add_theme_constant_override("shadow_offset_y", 2)
-	coords_label.add_theme_color_override("font_shadow_color", Color.BLACK)
-func update_coords_display():
-	if coords_label and player:
-		var pos = player.global_position
-		# Wyświetlamy pozycję w pikselach oraz w "metrach" (dzieląc przez skalę)
-		# To pomoże Ci korelować dane z JSONem (który jest w metrach/skali 1.0)
-		var pos_m = pos / map_scale
-		
-		coords_label.text = "GPS Gracza:\n"
-		coords_label.text += "PX: X: %d, Y: %d\n" % [pos.x, pos.y]
-		coords_label.text += "M : X: %.2f, Y: %.2f" % [pos_m.x, pos_m.y]
+
 func _process(delta):
 	if player:
 		if player.global_position.distance_to(last_update_pos) > update_threshold:
 			update_chunks()
 			last_update_pos = player.global_position
-		
-		# ŁADUJ TYLKO JEDEN CHUNK NA KLATKĘ, jeśli kolejka nie jest pusta
+
+		# Ładuj tylko jeden chunk na klatkę
 		if chunk_load_queue.size() > 0:
 			var next_chunk = chunk_load_queue.pop_front()
 			load_chunk_from_json(next_chunk)
-			
-		update_coords_display()
 
 func update_chunks():
 	var p_x = int(floor(player.global_position.x / chunk_size_px))
