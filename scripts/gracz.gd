@@ -8,9 +8,12 @@ var ma_skrzynke = false
 var przy_npc = null
 
 func _ready():
-	z_index = 10 # Ustawiamy gracza ZAWSZE nad mapą!
+	z_index = 10
 
 func _physics_process(delta: float) -> void:
+	var scena = get_parent()
+	var w_fazie_drzwi = scena.has_method("rabniecie_drzwi") and scena.get("faza") == "DRZWI"
+
 	var direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
@@ -22,20 +25,19 @@ func _physics_process(delta: float) -> void:
 		direction.y -= 1
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-		# Ustawiamy klatkę animacji i pozycję PunktuStrzalu (gaśnicy) w zależności od kierunku ruchu
 		if abs(direction.x) > abs(direction.y):
 			if direction.x < 0:
-				$Sprite2D.frame = 2 # Lewy dolny to w lewo
+				$Sprite2D.frame = 2
 				$PunktStrzalu.position = Vector2(-20, 15)
 			else:
-				$Sprite2D.frame = 1 # Prawy górny to w prawo
+				$Sprite2D.frame = 1
 				$PunktStrzalu.position = Vector2(20, 15)
 		else:
 			if direction.y < 0:
-				$Sprite2D.frame = 0 # Lewy górny to w górę
+				$Sprite2D.frame = 0
 				$PunktStrzalu.position = Vector2(15, 5)
 			else:
-				$Sprite2D.frame = 3 # Prawy dolny to w dół
+				$Sprite2D.frame = 3
 				$PunktStrzalu.position = Vector2(-15, 15)
 
 	var aktualna_predkosc = SPEED
@@ -45,11 +47,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	pass # Usunięto look_at() - gracz teraz obraca się za pomocą sprite'ów (klatek)
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var scena = get_parent()
+			# Nie strzelaj gaśnicą w fazie DRZWI
+			if scena.get("faza") == "DRZWI":
+				return
 			var pocisk = POCISK.instantiate()
 			get_parent().add_child(pocisk)
 			pocisk.global_position = $PunktStrzalu.global_position
@@ -58,22 +64,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.keycode == KEY_E and event.pressed:
 			var scena_głowna = get_parent()
-			# Gasi pożar jeśli blisko
+
+			# W fazie DRZWI - nie rób nic (obsługa w _process sceny)
+			if scena_głowna.get("faza") == "DRZWI":
+				return
+
+			# Gaszenie pożarów
 			if scena_głowna.has_method("zgaszono_ogien"):
 				var wszystkie_ognie = get_tree().get_nodes_in_group("ogien")
 				for ogien in wszystkie_ognie:
-					if global_position.distance_to(ogien.global_position) < 80: # Zasięg gaszenia
+					if global_position.distance_to(ogien.global_position) < 80:
 						scena_głowna.zgaszono_ogien(ogien)
 						ogien.queue_free()
-						break # Gasi tylko 1 naraz
+						break
 
+			# Babcia
 			if przy_npc != null:
-				print("Zakładasz maskę na: ", przy_npc.name)
-				print("Babcia uratowana! Teraz znajdź czarną skrzynkę!")
+				print("Babcia uratowana!")
 				if scena_głowna.has_method("uratowano_babcie"):
 					scena_głowna.uratowano_babcie()
 				przy_npc.queue_free()
 				przy_npc = null
+			# Skrzynka
 			elif not ma_skrzynke:
 				var skrzynki = get_tree().get_nodes_in_group("skrzynka")
 				for s in skrzynki:
@@ -88,13 +100,9 @@ func _on_area_exited(area: Area2D) -> void:
 		przy_npc = null
 
 func _on_area_entered(area: Area2D) -> void:
-	print("Weszla strefa: ", area.name)
 	if area.is_in_group("npc"):
 		przy_npc = area
-		print("Babcia w zasiegu!")
 	if area.is_in_group("wyjscie"):
-		if ma_skrzynke:
-			print("WYGRANA! Uciekles z serwerowni!")
-			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-		else:
-			print("Nie masz czarnej skrzynki! Wróc po nia!")
+		var scena = get_parent()
+		if ma_skrzynke and scena.has_method("ucieczka_udana"):
+			scena.ucieczka_udana()

@@ -4,24 +4,12 @@
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
 [ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
-[ext_resource type="PackedScene" uid="uid://dbihrsfmcqb50" path="res://scenes/ogien.tscn" id="5_2a01s"]
-[ext_resource type="Texture2D" uid="uid://ck2eo4n1dfskf" path="res://assets/graphics/npc_1_babcia.png" id="5_wb72h"]
-[ext_resource type="Texture2D" uid="uid://dv254p74neuij" path="res://assets/graphics/czarna_skrzynka.png" id="6_jfl74"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn3ug"]
 size = Vector2(30, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wb72h"]
 radius = 80.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfl74"]
-size = Vector2(40, 60)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2a01s"]
-size = Vector2(40, 30)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3ndk"]
-size = Vector2(60, 100)
 
 [node name="Scena4" type="Node2D" unique_id=2111619701]
 position = Vector2(1, 0)
@@ -33,7 +21,7 @@ texture = ExtResource("2_o3ndk")
 centered = false
 
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=140514501 groups=["gracz"]]
-position = Vector2(5252, 2686)
+position = Vector2(7500, 1600)
 script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
@@ -53,37 +41,9 @@ position = Vector2(40, 0)
 shape = SubResource("CircleShape2D_wb72h")
 
 [node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1992300471]
-limit_right = 12000
+limit_right = 8192
+limit_bottom = 4096
 position_smoothing_enabled = true
-
-[node name="Ogien1" parent="." unique_id=1433046882 instance=ExtResource("5_2a01s")]
-position = Vector2(900, 400)
-
-[node name="Babcia" type="Area2D" parent="." unique_id=1642988206 groups=["npc"]]
-position = Vector2(10500, 450)
-
-[node name="Sprite2D" type="Sprite2D" parent="Babcia" unique_id=450886298]
-texture = ExtResource("5_wb72h")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Babcia" unique_id=979457529]
-shape = SubResource("RectangleShape2D_jfl74")
-
-[node name="CzarnaSkrzynka" type="Area2D" parent="." unique_id=249426290 groups=["skrzynka"]]
-position = Vector2(11000, 540)
-
-[node name="Sprite2D" type="Sprite2D" parent="CzarnaSkrzynka" unique_id=7258110]
-texture = ExtResource("6_jfl74")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CzarnaSkrzynka" unique_id=388488661]
-shape = SubResource("RectangleShape2D_2a01s")
-
-[node name="Wyjscie" type="Area2D" parent="." unique_id=30299449 groups=["wyjscie"]]
-position = Vector2(11700, 540)
-
-[node name="Sprite2D" type="Sprite2D" parent="Wyjscie" unique_id=1909869546]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wyjscie" unique_id=1794796010]
-shape = SubResource("RectangleShape2D_o3ndk")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=475091537]
 
@@ -100,9 +60,7 @@ offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
-text = "\"\""
-
-[node name="Area2D" type="Area2D" parent="." unique_id=875042584]
+text = ""
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]
