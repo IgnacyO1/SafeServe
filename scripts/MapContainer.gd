@@ -15,9 +15,9 @@ const event_type_to_marker_filename : Dictionary = {
 	"Crime" : "zlodziej.svg"
 }
 const event_type_to_arrow_color : Dictionary = {
-	"Fire" : "red",
+	"Fire" : "orange",
 	"Police" : "blue",
-	"Fire rescue" : "blue",
+	"Fire rescue" : "dark_red",
 	"Ambulance" : "white",
 	"Emergency" : "red",
 	"Crime" : "black"
