@@ -68,6 +68,14 @@ func _physics_process(delta: float) -> void:
 	var scena = get_parent()
 	var w_fazie_drzwi = scena.has_method("rabniecie_drzwi") and scena.get("faza") == "DRZWI"
 
+	if scena.get("minimapa_bg") != null and scena.minimapa_bg.visible:
+		if last_state != "idle":
+			last_state = "idle"
+			set_animation("idle", last_dir_str)
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
 	var direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1

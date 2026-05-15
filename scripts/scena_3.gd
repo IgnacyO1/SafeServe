@@ -175,8 +175,6 @@ func _process(delta: float) -> void:
 
 	if minimapa_bg.visible:
 		_odswiez_minimape()
-		if Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_accept"):
-			minimapa_bg.visible = false
 
 	# Chowanie napisu po JAKIMKOLWIEK ruchu (we wszystkich fazach)
 	if label_zadanie.visible and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right")):
