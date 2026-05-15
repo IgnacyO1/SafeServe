@@ -290,7 +290,7 @@ func _rozpocznij_faze_pozary():
 	label_zadanie.modulate = Color.YELLOW
 	label_zadanie.visible = true
 	if label_skrzynka:
-		label_skrzynka.text = "Zgaś pożary (Podejdź i wciśnij E)"
+		label_skrzynka.text = "Zgaś pożary (Klikaj lewy przycisk myszy)"
 		label_skrzynka.modulate = Color.RED
 		label_skrzynka.visible = false
 
