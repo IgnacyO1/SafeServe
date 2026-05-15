@@ -54,6 +54,7 @@ func setup_ui():
 	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	video_player.modulate.a = 0 # Ukryty na początku
 	canvas.add_child(video_player)
+
 	
 	# Czarny ekran (na samej górze, layer 100 i ostatni child w canvas)
 	fade_rect = ColorRect.new()
@@ -89,6 +90,7 @@ func _process(_delta):
 			play_cutscene_sequence()
 
 func play_cutscene_sequence():
+	get_tree().current_scene.find_child("HUD").visible = false
 	is_changing_scene = true
 	
 	# 1. Ściemnienie gry (Fade Out)
