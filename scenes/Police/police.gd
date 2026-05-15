@@ -1,0 +1,139 @@
+extends CharacterBody2D
+
+@export var max_speed: float = 500.0
+@export var acceleration: float = 200.0
+@export var brake_force: float = 400.0
+@export var friction: float = 50.0
+
+@export var steer_speed: float = 5.0
+@export var steer_limit: float = 0.6
+
+@export var traction_fast: float = 0.2
+@export var traction_slow: float = 0.5
+@onready var horn_player: AudioStreamPlayer2D = $HornPlayer
+@onready var lights: AnimatedSprite2D = $EmergencyLights
+@onready var siren_player: AudioStreamPlayer2D = $SirenPlayer
+var lights_active: bool = false
+# ZMIENNA velocity została usunięta - CharacterBody2D ma ją wbudowaną!
+
+var steer_angle: float = 0.0
+var _throttle: float = 0.0
+var _steer_input: float = 0.0
+
+# Dodaj to na końcu car.gd
+func _ready():
+	# Zapamiętujemy oryginalną maskę (co auto widzi)
+	var original_mask = collision_mask
+	# Wyłączamy maskę (auto przenika przez wszystko)
+	collision_mask = 0
+	
+	# Po 1 sekundzie przywracamy kolizje
+	get_tree().create_timer(1.0).timeout.connect(func():
+		collision_mask = original_mask
+		# Opcjonalnie zerujemy prędkość, by zapobiec nagłemu skokowi
+		velocity = Vector2.ZERO 
+	)
+
+func _process(delta: float) -> void:
+	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
+	_steer_input = Input.get_axis("ui_left", "ui_right")
+	# Obsługa włączania/wyłączania świateł
+	if Input.is_action_just_pressed("toggle_lights"):
+		toggle_emergency_lights()
+
+func _physics_process(delta: float) -> void:
+	apply_engine(delta)
+	apply_friction(delta)
+	apply_steering(delta)
+	apply_lateral_friction()
+
+	# USUNIĘTO: position += velocity * delta 
+	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
+	move_and_slide()
+	# Wewnątrz _physics_process lub _input w car.gd
+	if Input.is_action_just_pressed("horn"): # Musisz dodać "horn" w Input Map
+		play_horn_sound() # Opcjonalnie
+		make_way_for_emergency()
+	
+	
+func apply_engine(delta: float) -> void:
+	var forward = transform.x
+	var forward_speed = velocity.dot(forward)
+	
+	if _throttle != 0:
+		var is_braking = sign(_throttle) != sign(forward_speed) and abs(forward_speed) > 10.0
+		
+		if is_braking:
+			velocity = velocity.move_toward(Vector2.ZERO, brake_force * delta)
+		else:
+			if _throttle > 0:
+				velocity += forward * acceleration * _throttle * delta
+			elif _throttle < 0:
+				velocity += forward * acceleration * _throttle * 0.6 * delta
+
+
+func apply_friction(delta: float) -> void:
+	if _throttle == 0:
+		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+
+	velocity = velocity.limit_length(max_speed)
+
+func apply_steering(delta: float) -> void:
+	var speed = velocity.length()
+	if speed < 5:
+		return
+
+	steer_angle = lerp(steer_angle, _steer_input * steer_limit, steer_speed * delta)
+	var direction = velocity.normalized()
+	var forward = transform.x
+	var dot = direction.dot(forward)
+	var steer_dir = 1.0 if dot > 0 else -1.0
+
+	rotation += steer_angle * steer_dir * delta * speed / 100.0
+
+func apply_lateral_friction() -> void:
+	var forward = transform.x
+	var right = transform.y
+
+	var forward_vel = forward * velocity.dot(forward)
+	var lateral_vel = right * velocity.dot(right)
+
+	var speed = velocity.length()
+	var traction = traction_fast if speed > 200 else traction_slow
+
+	velocity = forward_vel + lateral_vel * clamp(1.0 - traction, 0.0, 0.3)
+
+func play_horn_sound():
+	if horn_player:
+		if not horn_player.playing:
+			horn_player.play()
+
+func make_way_for_emergency():
+	# Szukamy managera w tej samej gałęzi co MapManager lub bezpośrednio w scenie
+	var traffic_manager = get_tree().current_scene.find_child("Traffic Manager", true, false)
+	
+	if traffic_manager == null:
+		print("BŁĄD: Nie znaleziono TrafficManagera w scenie!")
+		return
+
+	for npc in traffic_manager.active_agents:
+		if is_instance_valid(npc):
+			var dist = global_position.distance_to(npc.global_position)
+			# 1000 pikseli = 50m przy skali 20
+			if dist < 5000.0:
+				if npc.has_method("yield_to_emergency"):
+					npc.yield_to_emergency()
+
+func toggle_emergency_lights():
+	print("Przycisk świateł naciśnięty!")
+	lights_active = !lights_active
+	lights.visible = lights_active
+	
+	if lights_active:
+		print("Światła i Syrena: ON")
+		lights.play()
+		siren_player.play() # Uruchamia dźwięk
+	else:
+		print("Światła i Syrena: OFF")
+		lights.stop()
+		siren_player.stop() # Zatrzymuje dźwięk
