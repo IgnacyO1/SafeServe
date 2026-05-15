@@ -1,9 +1,9 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-2356, 44164)
+var start_pos_px = Vector2(-40671, 98832)#Vector2(-2356, 44164)
 var target_pos_px = Vector2(-40671, 98832)
-var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
+var cutscene_path = "res://assets/Videos/zawila.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
 
 @onready var player = $Police
 @onready var map_manager = $MapManager
@@ -110,14 +110,14 @@ func play_cutscene_sequence():
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
 	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(8.0).timeout
 	
 	# 5. Ściemnienie wideo (Fade Out przed zmianą sceny)
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
-	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
+	get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
 
 #func _input(event):
 	## Zmieniono z is_action_just_pressed na is_action_pressed
