@@ -5,7 +5,7 @@ var start_pos_px = Vector2(-2356, 44164)
 var target_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
 
-@onready var player = $Car
+@onready var player = $Police
 @onready var map_manager = $MapManager
 
 var coords_label: Label

@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var popup = $"Radio popup"
-@onready var label = $"Radio popup/Label"
+@onready var popup = $"HUD/Radio popup"
+@onready var label = $"HUD/Radio popup/Label"
 # Called when the node enters the scene tree for the first time.
 func show_radio_message(text : String):
 	label.text = text
