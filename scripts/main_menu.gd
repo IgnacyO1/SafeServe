@@ -14,8 +14,12 @@ var loading_layer: CanvasLayer = null
 # POPRAWKA 1: Zmiana typu na ProgressBar (to naprawi błąd przypisania)
 var progress_bar: ProgressBar = null 
 var tip_label: Label = null
+var is_loading = false
 
 func _on_button_pressed(): 
+	if is_loading:
+		return
+	is_loading = true
 	_uruchom_loading_screen()
 
 func _uruchom_loading_screen():
@@ -116,6 +120,7 @@ func _proces_ladowania():
 	await get_tree().create_timer(0.4).timeout
 
 	get_tree().change_scene_to_file("res://scenes/scena_1.tscn")
+	is_loading = false
 
 func _on_button_2_pressed(): # Kontynuacja
 	pass
