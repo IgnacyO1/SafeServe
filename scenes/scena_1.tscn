@@ -203,8 +203,8 @@ offset_bottom = 140.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control2" unique_id=1517164884]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Wypadek"
 label_settings = SubResource("LabelSettings_du2nj")
@@ -229,8 +229,8 @@ offset_bottom = 207.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control67" unique_id=1524602099]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Ogień"
 label_settings = SubResource("LabelSettings_du2nj")
@@ -254,8 +254,8 @@ offset_bottom = 274.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control3" unique_id=749034303]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Przestępstwo"
 label_settings = SubResource("LabelSettings_du2nj")
@@ -279,8 +279,8 @@ offset_bottom = 341.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control4" unique_id=436237509]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Policja"
 label_settings = SubResource("LabelSettings_du2nj")
@@ -304,8 +304,8 @@ offset_bottom = 408.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control5" unique_id=628176168]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Straż pożarna"
 label_settings = SubResource("LabelSettings_du2nj")
@@ -329,8 +329,8 @@ offset_bottom = 475.0
 
 [node name="Text2" type="Label" parent="Tutorial modal/Control6" unique_id=145815693]
 layout_mode = 0
-offset_left = 128.0
-offset_right = 392.0
+offset_left = 138.0
+offset_right = 402.0
 offset_bottom = 64.0
 text = "Karetka"
 label_settings = SubResource("LabelSettings_du2nj")
