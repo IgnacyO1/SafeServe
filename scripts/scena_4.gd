@@ -109,4 +109,4 @@ func play_cutscene_sequence():
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
-	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
+	get_tree().change_scene_to_file("res://scenes/scena_5.tscn")

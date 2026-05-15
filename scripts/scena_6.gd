@@ -2,7 +2,7 @@ extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
 var start_pos_px = Vector2(-2356, 44164) 
-var target_pos_px = Vector2(-62668, 73086)
+var target_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
 
 @onready var player = $Car
@@ -109,4 +109,4 @@ func play_cutscene_sequence():
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
-	get_tree().change_scene_to_file("res://scenes/scena_3.tscn")
+	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
