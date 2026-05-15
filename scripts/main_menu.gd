@@ -65,16 +65,55 @@ func _uruchom_loading_screen():
 	_proces_ladowania()
 
 func _proces_ladowania():
-	var czas_ladowania = 10.0
-	var kroki = 100
-	var odstep = czas_ladowania / kroki
+	var progress = 0.0
+	
+	while progress < 100.0:
+		if not is_instance_valid(progress_bar):
+			break
 
-	for i in range(kroki + 1):
-		if not is_instance_valid(progress_bar): break
-		progress_bar.value = i
-		if i % 30 == 0 and i > 0:
+		# ----------------------------
+		# LOSOWY PRZYROST
+		# ----------------------------
+		
+		var increment = randf_range(0.3, 3.5)
+
+		# Im bliżej końca, tym wolniej
+		if progress > 70:
+			increment *= 0.5
+
+		if progress > 90:
+			increment *= 0.2
+
+		progress += increment
+		progress = min(progress, 100)
+
+		progress_bar.value = progress
+
+		# ----------------------------
+		# LOSOWE ZMIANY TIPÓW
+		# ----------------------------
+		
+		if randi() % 12 == 0:
 			tip_label.text = tips[randi() % tips.size()]
-		await get_tree().create_timer(odstep).timeout
+
+		# ----------------------------
+		# SHUTTERY / PRZYCIĘCIA
+		# ----------------------------
+
+		var wait_time = randf_range(0.03, 0.30)
+
+		# Mały lag
+		if randi() % 10 == 0:
+			wait_time += randf_range(0.15, 0.4)
+
+		# Duży "doczyt"
+		if randi() % 25 == 0:
+			wait_time += randf_range(0.5, 1.2)
+
+		await get_tree().create_timer(wait_time).timeout
+
+	# Małe zatrzymanie na 100%
+	await get_tree().create_timer(0.4).timeout
 
 	get_tree().change_scene_to_file("res://scenes/scena_1.tscn")
 

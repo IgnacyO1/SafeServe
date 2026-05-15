@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cixlgu5bietv2"]
+[gd_scene format=3 uid="uid://bvb2hbr0c7hhw"]
 
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
 [ext_resource type="AudioStream" uid="uid://bgbjqpw3bkdnf" path="res://assets/Sounds/dying_robot.mp3" id="2_yj0pn"]
