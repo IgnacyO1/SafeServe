@@ -1,9 +1,8 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-2356, 44164)
-var target_pos_px = Vector2(-40671, 98832)
-var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
+var start_pos_px = Vector2(-40671, 98832)
+var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
 
 @onready var player = $Police
 @onready var map_manager = $MapManager
@@ -13,7 +12,7 @@ var arrow_sprite: Polygon2D
 var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
-var uciekinier = false
+var uciekinier = true
 
 func _ready():
 	if not player: return
@@ -24,10 +23,34 @@ func setup_level():
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
 	
-	# Szukamy Traffic Managera i ustawiamy tryb pościgu
 	var tm = get_node_or_null("Traffic Manager")
-	if tm: # pościg dopiero od zawiłej w scenie 7
-		tm.setup_mode(false)
+	if tm:
+		# Ważne: setup_mode wywołujemy po initialize_map
+		tm.setup_mode(true)
+
+func _process(_delta):
+	if is_changing_scene: return
+	
+	var boss = get_tree().get_first_node_in_group("uciekinier")
+	
+	if is_instance_valid(boss):
+		var dist_to_boss = player.global_position.distance_to(boss.global_position)
+		var dist_m = dist_to_boss / 20.0
+		
+		# Strzałka na uciekiniera
+		var dist_vec = boss.global_position - player.global_position
+		arrow_sprite.rotation = dist_vec.angle() - player.rotation
+		
+		coords_label.text = "POŚCIG ZA CYBERKRABEM\nDYSTANS: %d m" % int(dist_m)
+
+		# Warunek złapania:
+		# Sprawdzamy czy uciekinier dojechał do końca (jego speed spadnie do 0 w advance_path)
+		# albo czy jesteśmy bardzo blisko gdy on zwalnia
+		if dist_m < 7.0 and boss.speed < 200.0:
+			play_cutscene_sequence()
+	else:
+		coords_label.text = "SZUKANIE SYGNAŁU..."
+		# Jeśli bossa nie ma, strzałka może się kręcić albo być ukryta
 
 func setup_ui():
 	var canvas = CanvasLayer.new()
@@ -64,30 +87,7 @@ func setup_ui():
 	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	canvas.add_child(fade_rect)
 
-func _process(_delta):
-	if is_changing_scene: return # Blokada process podczas zmiany sceny
-	
-	if is_instance_valid(player) and arrow_sprite:
-		var player_pos = player.global_position
-		var dist_vec = target_pos_px - player_pos
-		var dist_m = dist_vec.length() / 20.0
-		
-		# Aktualizacja UI
-		coords_label.text = "GPS: %d, %d\nDO CELU: %d m" % [player_pos.x, player_pos.y, int(dist_m)]
-		
-		# Rotacja strzałki (Twoja sprawdzona metoda)
-		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
-		# --- LOGIKA DOJAZDU DO CELU ---
-		# Sprawdzamy dystans (< 5m) i czy auto prawie stoi (prędkość < 10)
-		var current_speed = 0.0
-		if player is RigidBody2D:
-			current_speed = player.linear_velocity.length()
-		elif "velocity" in player: # Jeśli to CharacterBody2D
-			current_speed = player.velocity.length()
-
-		if dist_m < 5.0 and current_speed < 10.0:
-			play_cutscene_sequence()
 
 func play_cutscene_sequence():
 	is_changing_scene = true
@@ -114,7 +114,7 @@ func play_cutscene_sequence():
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
-	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
+	get_tree().change_scene_to_file("res://scenes/scena_8.tscn")
 
 #func _input(event):
 	## Zmieniono z is_action_just_pressed na is_action_pressed
