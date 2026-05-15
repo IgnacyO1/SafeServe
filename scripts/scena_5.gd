@@ -10,9 +10,12 @@ var reg_input: LineEdit
 
 var video_duration: float = 1.0
 var slider_update_in_progress: bool = false
+var video_aspect_ratio: float = 16.0 / 9.0
+var video_target_width: float = 0.0
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	video_target_width = get_viewport_rect().size.x * 0.5
 	_build_ui()
 	_setup_video()
 
@@ -26,10 +29,17 @@ func _build_ui() -> void:
 	main_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(main_vbox)
 
+	var video_center = CenterContainer.new()
+	video_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	video_center.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	main_vbox.add_child(video_center)
+
 	video_player = VideoStreamPlayer.new()
-	video_player.expand = true
-	video_player.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	main_vbox.add_child(video_player)
+	video_player.expand = false
+	video_player.custom_minimum_size = Vector2(video_target_width, video_target_width / video_aspect_ratio)
+	video_player.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	video_player.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	video_center.add_child(video_player)
 
 	# Ważne: Łączymy sygnał zakończenia filmu
 	video_player.finished.connect(_on_video_finished)
@@ -87,6 +97,13 @@ func _setup_video() -> void:
 		await get_tree().create_timer(0.2).timeout
 		video_duration = video_player.get_stream_length()
 		if video_duration <= 0: video_duration = 1.0
+
+		if video_player.stream and video_player.stream.has_method("get_width") and video_player.stream.has_method("get_height"):
+			var width = video_player.stream.get_width()
+			var height = video_player.stream.get_height()
+			if width > 0 and height > 0:
+				video_aspect_ratio = float(width) / float(height)
+				video_player.custom_minimum_size = Vector2(video_target_width, video_target_width / video_aspect_ratio)
 	else:
 		status_label.text = "Błąd: Nie znaleziono pliku " + video_path
 

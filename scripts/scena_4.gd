@@ -1,9 +1,10 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-62668, 73086)
+var start_pos_px = Vector2(-2356, 44164)#Vector2(-62668, 73086)
 var target_pos_px = Vector2(-2356, 44164)
-var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
+var cutscene_path = "res://assets/Videos/komisariat.ogv"
+var cutscene_path2 = "res://assets/Videos/policja.ogv"
 
 @onready var player = $Car
 @onready var map_manager = $MapManager
@@ -93,23 +94,43 @@ func play_cutscene_sequence():
 	# 1. Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
+	await tween.finished
 	
-	await tween.finished # Czekamy aż zgaśnie
-	
-	# 2. Przygotowanie wideo pod czarną zasłoną
+	# 2. Start pierwszego filmu
+	video_player.stream = load(cutscene_path)
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# 3. Rozjaśnienie wideo (Fade In wideo)
+	# 3. Rozjaśnienie (widzimy film 1)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
-	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
-	await get_tree().create_timer(2.0).timeout
+	# 4. Czekamy na koniec pierwszego filmu (bezpieczniejsza metoda niż samo finished)
+	# Jeśli wiesz, że film ma np. 5 sekund, możesz użyć timer, 
+	# ale .finished powinno działać jeśli stream jest załadowany przed play()
+	await video_player.finished
 	
-	# 5. Ściemnienie wideo (Fade Out przed zmianą sceny)
+	# 5. Ściemnienie MIĘDZY filmami (bardzo ważne dla płynności)
+	var tween_mid = create_tween()
+	tween_mid.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 0.5)
+	await tween_mid.finished
+	
+	# 6. Podmiana filmu pod czarną zasłoną
+	video_player.stop()
+	video_player.stream = load(cutscene_path2)
+	video_player.play()
+	
+	# 7. Rozjaśnienie (widzimy film 2)
+	var tween_mid_in = create_tween()
+	tween_mid_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
+	await tween_mid_in.finished
+	
+	# 8. Czekamy na koniec drugiego filmu
+	await video_player.finished
+	
+	# 9. Finałowe ściemnienie przed nową sceną
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
-	
 	await tween_out.finished
+	
 	get_tree().change_scene_to_file("res://scenes/scena_5.tscn")
