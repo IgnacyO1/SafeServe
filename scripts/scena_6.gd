@@ -1,7 +1,7 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-40671, 98832)#Vector2(-2356, 44164)
+var start_pos_px = Vector2(-2356, 44164)
 var target_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/zawila.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
 
