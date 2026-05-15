@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://bvb2hbr0c7hhw"]
+[gd_scene format=3 uid="uid://cixlgu5bietv2"]
 
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
+[ext_resource type="AudioStream" uid="uid://bgbjqpw3bkdnf" path="res://assets/Sounds/dying_robot.mp3" id="2_yj0pn"]
 
 [node name="Scena8" type="Node2D" unique_id=1730050766]
 script = ExtResource("1_scena8")
+
+[node name="SmiercKrabaDzwiek" type="AudioStreamPlayer2D" parent="." unique_id=636303400]
+stream = ExtResource("2_yj0pn")

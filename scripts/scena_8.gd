@@ -205,6 +205,7 @@ func krab_trafiony(obrazenia: int):
 
 	# Sprawdź śmierć kraba
 	if krab_hp <= 0:
+		$SmiercKrabaDzwiek.play()
 		_wygrana()
 
 func _sprawdz_faze():
