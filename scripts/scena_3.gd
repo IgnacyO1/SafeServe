@@ -30,6 +30,7 @@ var pozycje_ogni = [
 ]
 var ognie = []
 var gracz
+var czas_do_rozrostu = 5.0
 
 # --- DRZWI (rąbanie) ---
 var drzwi_hp = 30.0
@@ -213,6 +214,19 @@ func _process(delta: float) -> void:
 	if czas <= 0 and gra_aktywna:
 		czas = 0
 		przegrana()
+
+	if faza == "POZARY":
+		czas_do_rozrostu -= delta
+		if czas_do_rozrostu <= 0:
+			czas_do_rozrostu = 5.0 # rozrost co 5 sekund
+			if ognie.size() > 0 and ognie.size() < 30: # Max 30 pożarów na mapie
+				var losowy_ogien = ognie[randi() % ognie.size()]
+				if is_instance_valid(losowy_ogien):
+					var nowy_ogien = OGIEN_SCENA.instantiate()
+					var offset = Vector2(randf_range(-120, 120), randf_range(-120, 120))
+					nowy_ogien.position = losowy_ogien.position + offset
+					add_child(nowy_ogien)
+					ognie.append(nowy_ogien)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -440,6 +454,29 @@ func przegrana():
 	label_zadanie.text = "CZAS MINĄŁ!"
 	label_zadanie.modulate = Color.RED
 	label_zadanie.visible = true
+	
+	# --- BACKDOOR: Cutscenka spalania (koniec czasu) ---
+	# _odtworz_cutscenke_spalania()
+	# return # Zablokuj przejście do main_menu jeśli używasz cutscenki!
+	# ---------------------------------------------------
+	
+	_fade_out(2.0)
+	await get_tree().create_timer(3.0).timeout
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func przegrana_spalenie():
+	gra_aktywna = false
+	if label_czas:
+		label_czas.text = "PRZEGRANA!"
+	label_zadanie.text = "SPŁONĄŁEŚ!"
+	label_zadanie.modulate = Color.RED
+	label_zadanie.visible = true
+	
+	# --- BACKDOOR: Cutscenka spalania (wejście w ogień) ---
+	# _odtworz_cutscenke_spalania()
+	# return # Zablokuj przejście do main_menu jeśli używasz cutscenki!
+	# ------------------------------------------------------
+	
 	_fade_out(2.0)
 	await get_tree().create_timer(3.0).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

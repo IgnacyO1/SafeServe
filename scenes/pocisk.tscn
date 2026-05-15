@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1dum2si50hwq"]
 
 [ext_resource type="Script" uid="uid://5jc3ddaamafl" path="res://scripts/pocisk.gd" id="1_iglvf"]
+[ext_resource type="Texture2D" path="res://assets/graphics/piana.png" id="2_piana"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4hk0s"]
 radius = 5.0
@@ -12,9 +13,6 @@ script = ExtResource("1_iglvf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1630821114]
 shape = SubResource("CapsuleShape2D_4hk0s")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=408585728]
-offset_left = -5.0
-offset_top = -10.0
-offset_right = 5.0
-offset_bottom = 10.0
-color = Color(0, 1, 1, 1)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_piana")
+scale = Vector2(0.5, 0.5)

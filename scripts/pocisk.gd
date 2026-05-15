@@ -5,16 +5,27 @@ var direction = Vector2.RIGHT
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
-	body_entered.connect(_on_body_entered)
 	await get_tree().create_timer(2.0).timeout
 	queue_free()
 
 func _physics_process(delta: float) -> void:
-	position += direction * speed * delta
+	var move_vec = direction * speed * delta
+	
+	# Raycast sprawdzający ściany wzdłuż ruchu pocisku, aby nie przelatywał przez cienkie polygony!
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(global_position, global_position + move_vec)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	var result = space_state.intersect_ray(query)
+	
+	if result:
+		queue_free()
+		return
+		
+	position += move_vec
 
 func _on_area_entered(area):
 	if area.is_in_group("ogien"):
-		# Powiadamiamy scene 4 że zgasiliśmy ten ogień
 		var scena_głowna = get_tree().current_scene
 		if scena_głowna.has_method("zgaszono_ogien"):
 			scena_głowna.zgaszono_ogien(area)
@@ -22,8 +33,4 @@ func _on_area_entered(area):
 			area.get_parent().zgaszono_ogien(area)
 
 		area.queue_free()
-		queue_free()
-
-func _on_body_entered(body: Node2D) -> void:
-	if body is StaticBody2D or body is TileMap:
 		queue_free()

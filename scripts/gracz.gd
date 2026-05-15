@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var label_skrzynka = get_parent().get_node_or_null("HUD/LabelSkrzynka")
 @onready var sprite = $Sprite2D
 
-const SPEED = 250.0
+const SPEED = 320.0
 const POCISK = preload("res://scenes/pocisk.tscn")
 var ma_skrzynke = false
 var przy_npc = null
@@ -158,15 +158,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			if scena_głowna.get("faza") == "DRZWI":
 				return
 
-			# Gaszenie pożarów
-			if scena_głowna.has_method("zgaszono_ogien"):
-				var wszystkie_ognie = get_tree().get_nodes_in_group("ogien")
-				for ogien in wszystkie_ognie:
-					if global_position.distance_to(ogien.global_position) < 80:
-						scena_głowna.zgaszono_ogien(ogien)
-						ogien.queue_free()
-						break
-
 			# Babcia
 			if przy_npc != null:
 				print("Babcia uratowana!")
@@ -195,3 +186,17 @@ func _on_area_entered(area: Area2D) -> void:
 		var scena = get_parent()
 		if ma_skrzynke and scena.has_method("ucieczka_udana"):
 			scena.ucieczka_udana()
+	
+	if area.is_in_group("ogien"):
+		var scena = get_parent()
+		if scena.has_method("przegrana_spalenie"):
+			scena.przegrana_spalenie()
+		elif scena.has_method("przegrana"):
+			scena.przegrana()
+		
+		# --- BACKDOOR: Cutscenka po dotknięciu ognia ---
+		# Aby dodać cutscenkę zamiast natychmiastowej przegranej, 
+		# zakomentuj powyższe wywołanie 'scena.przegrana()' i odkomentuj poniższe:
+		# print("Gracz dotknął ognia! (Cutscenka spalania)")
+		# scena._odtworz_cutscenke_spalania() # wywołanie przyszłej funkcji
+		# -----------------------------------------------
