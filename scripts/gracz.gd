@@ -45,11 +45,11 @@ func _physics_process(delta: float) -> void:
 				$PunktStrzalu.position = Vector2(15, -5)
 			elif direction.x < 0 and direction.y > 0:
 				# Dół-lewo
-				sprite_skosy.frame = 2
+				sprite_skosy.frame = 3
 				$PunktStrzalu.position = Vector2(-15, 15)
 			elif direction.x > 0 and direction.y > 0:
 				# Dół-prawo
-				sprite_skosy.frame = 3
+				sprite_skosy.frame = 2
 				$PunktStrzalu.position = Vector2(15, 15)
 		else:
 			# --- RUCH KARDYNALNY: użyj standardowego sprite'a ---
