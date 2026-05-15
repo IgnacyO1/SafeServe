@@ -3,12 +3,11 @@
 [ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena_1.gd" id="1_exvab"]
 [ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/MapContainer.gd" id="2_t3u43"]
 [ext_resource type="Texture2D" uid="uid://pgf88xpege5b" path="res://assets/graphics/Mapa Krakow.png" id="3_so24r"]
-[ext_resource type="Texture2D" uid="uid://dt7egj8tvt6xm" path="res://assets/graphics/scena1_tlo.png" id="4_r3f15"]
+[ext_resource type="Texture2D" uid="uid://kbxgfhbjsjm" path="res://assets/graphics/scena_1/HUD nowy.svg" id="4_el5c8"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
-[ext_resource type="Texture2D" uid="uid://b1ao3wx4o1804" path="res://assets/graphics/Popup background.png" id="5_el5c8"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
-[ext_resource type="Texture2D" uid="uid://dbsdkck73023o" path="res://assets/graphics/Button texture.png" id="7_da6gn"]
 [ext_resource type="Texture2D" uid="uid://dl1jm7xgs722u" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
+[ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
 [ext_resource type="Texture2D" uid="uid://f36x640l8460" path="res://assets/graphics/scena_1/wykrzyknik.svg" id="9_8cvow"]
 [ext_resource type="Texture2D" uid="uid://bk1wyjg43npsc" path="res://assets/graphics/scena_1/Arrow_icon_orange.svg" id="9_el5c8"]
 [ext_resource type="Texture2D" uid="uid://eknwd41pgfgu" path="res://assets/graphics/scena_1/Arrow_icon_black.svg" id="10_el5c8"]
@@ -19,11 +18,20 @@
 [ext_resource type="Texture2D" uid="uid://dynjxkt5affec" path="res://assets/graphics/scena_1/fire_truck.svg" id="15_n24rr"]
 [ext_resource type="Texture2D" uid="uid://2oatsvtkffan" path="res://assets/graphics/scena_1/Arrow_icon_white.svg" id="16_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://bl44xpieoapfj" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
+[ext_resource type="Texture2D" uid="uid://lyal5gxrpo0l" path="res://assets/graphics/scena_1/Button.png" id="21_0bpa3"]
+
+[sub_resource type="Theme" id="Theme_el5c8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da6gn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2fvm5"]
 font_size = 48
 
 [sub_resource type="LabelSettings" id="LabelSettings_3epbs"]
+
+[sub_resource type="Theme" id="Theme_maknc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bpa3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_maknc"]
 font_size = 75
@@ -34,6 +42,8 @@ font_size = 42
 [sub_resource type="LabelSettings" id="LabelSettings_du2nj"]
 font_size = 30
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_maknc"]
+
 [node name="Control" type="Control" unique_id=265069389]
 layout_mode = 3
 anchors_preset = 15
@@ -42,12 +52,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_exvab")
-
-[node name="Background2" type="Sprite2D" parent="." unique_id=632915359]
-position = Vector2(1572.1732, 478)
-rotation = 1.5707964
-scale = Vector2(1, 1.3664539)
-texture = ExtResource("5_el5c8")
 
 [node name="MapView" type="Panel" parent="." unique_id=1404406384]
 layout_mode = 0
@@ -78,14 +82,16 @@ texture = ExtResource("3_so24r")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1241085609]
 position = Vector2(960, 540)
-texture = ExtResource("4_r3f15")
+texture = ExtResource("4_el5c8")
 
 [node name="SidePanelTop" type="Panel" parent="." unique_id=1070282638]
 layout_mode = 0
-offset_left = 1336.0
+offset_left = 1375.0
 offset_top = 107.0
-offset_right = 1824.0
+offset_right = 1853.0
 offset_bottom = 441.0
+theme = SubResource("Theme_el5c8")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
 
 [node name="Label" type="Label" parent="SidePanelTop" unique_id=2120738279]
 layout_mode = 0
@@ -111,10 +117,12 @@ vertical_alignment = 1
 
 [node name="SidePanelBottom" type="Panel" parent="." unique_id=691123791]
 layout_mode = 0
-offset_left = 1336.0
+offset_left = 1379.0
 offset_top = 457.0
-offset_right = 1824.0
+offset_right = 1857.0
 offset_bottom = 791.0
+theme = SubResource("Theme_maknc")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0bpa3")
 
 [node name="Label" type="Label" parent="SidePanelBottom" unique_id=222729260]
 layout_mode = 0
@@ -132,16 +140,16 @@ scale = Vector2(2, 2)
 [node name="Send" type="TextureButton" parent="SidePanelBottom" unique_id=663895100]
 visible = false
 layout_mode = 0
-offset_left = -8.0
-offset_top = 247.0
-offset_right = 1332.0
-offset_bottom = 452.0
+offset_left = -6.0
+offset_top = 235.0
+offset_right = 1334.0
+offset_bottom = 440.0
 scale = Vector2(0.37, 0.37)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="SidePanelBottom/Send" unique_id=993634051]
@@ -150,8 +158,9 @@ offset_left = 468.0
 offset_top = 45.0
 offset_right = 873.0
 offset_bottom = 253.99997
-text = "Rozumiem."
+text = "Wyślij"
 label_settings = SubResource("LabelSettings_maknc")
+horizontal_alignment = 1
 
 [node name="Tutorial modal" type="Panel" parent="." unique_id=1116195531]
 layout_mode = 1
@@ -168,9 +177,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Tutorial modal" unique_id=1613760775]
-position = Vector2(569, 297)
-scale = Vector2(0.85872394, 1)
-texture = ExtResource("5_el5c8")
+position = Vector2(548.00006, 270)
+scale = Vector2(0.95559704, 1.2449999)
+texture = ExtResource("8_maknc")
 
 [node name="Label" type="Label" parent="Tutorial modal" unique_id=223030600]
 layout_mode = 0
@@ -352,11 +361,11 @@ offset_top = 376.0
 offset_right = 1371.0
 offset_bottom = 581.0
 scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="Tutorial modal/TextureButton" unique_id=943155831]
@@ -382,11 +391,12 @@ offset_right = 322.0
 offset_bottom = 182.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
 
 [node name="Sprite2D" type="Sprite2D" parent="Fail modal" unique_id=1730813827]
 position = Vector2(359, 122)
 scale = Vector2(0.5, 0.583)
-texture = ExtResource("5_el5c8")
+texture = ExtResource("8_maknc")
 
 [node name="Label" type="Label" parent="Fail modal" unique_id=1173885687]
 layout_mode = 0
@@ -401,16 +411,16 @@ vertical_alignment = 1
 
 [node name="TextureButton" type="TextureButton" parent="Fail modal" unique_id=634199202]
 layout_mode = 0
-offset_left = 51.0
-offset_top = 141.0
-offset_right = 1391.0
-offset_bottom = 346.0
+offset_left = 56.0
+offset_top = 127.0
+offset_right = 1396.0
+offset_bottom = 332.0
 scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="Fail modal/TextureButton" unique_id=648725539]
@@ -436,11 +446,12 @@ offset_right = 280.0
 offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
 
 [node name="Sprite2D" type="Sprite2D" parent="Success modal" unique_id=1732626861]
 position = Vector2(349, 181)
 scale = Vector2(0.5, 0.583)
-texture = ExtResource("5_el5c8")
+texture = ExtResource("8_maknc")
 
 [node name="Label" type="Label" parent="Success modal" unique_id=1943317274]
 layout_mode = 0
@@ -455,16 +466,16 @@ vertical_alignment = 1
 
 [node name="TextureButton" type="TextureButton" parent="Success modal" unique_id=151140849]
 layout_mode = 0
-offset_left = 33.0
-offset_top = 190.0
-offset_right = 1373.0
-offset_bottom = 395.0
+offset_left = 49.0
+offset_top = 183.0
+offset_right = 1389.0
+offset_bottom = 388.0
 scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="Success modal/TextureButton" unique_id=1045552010]
@@ -484,17 +495,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -290.0
-offset_top = -171.0
-offset_right = 299.0
-offset_bottom = 77.0
+offset_left = -320.0
+offset_top = -140.0
+offset_right = 280.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
 
 [node name="Sprite2D" type="Sprite2D" parent="New emergency modal" unique_id=1295612627]
 position = Vector2(299, 162)
 scale = Vector2(0.5, 0.583)
-texture = ExtResource("5_el5c8")
+texture = ExtResource("8_maknc")
 
 [node name="Label" type="Label" parent="New emergency modal" unique_id=10407431]
 layout_mode = 0
@@ -514,11 +526,11 @@ offset_top = 160.0
 offset_right = 1336.0
 offset_bottom = 365.0
 scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="New emergency modal/TextureButton" unique_id=1566890538]
@@ -544,18 +556,19 @@ offset_right = -360.0
 offset_bottom = -171.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
 
 [node name="Sprite2D" type="Sprite2D" parent="Message modal" unique_id=1881991181]
 position = Vector2(322, 169)
 scale = Vector2(0.5, 0.583)
-texture = ExtResource("5_el5c8")
+texture = ExtResource("8_maknc")
 
 [node name="Label" type="Label" parent="Message modal" unique_id=1289796101]
 layout_mode = 0
-offset_left = -132.0
-offset_top = 46.0
-offset_right = 707.0
-offset_bottom = 115.0
+offset_left = -102.0
+offset_top = 69.0
+offset_right = 737.0
+offset_bottom = 138.0
 text = "[Nowa wiadomość]"
 label_settings = SubResource("LabelSettings_du2nj")
 horizontal_alignment = 1
@@ -568,11 +581,11 @@ offset_top = 160.0
 offset_right = 1355.0
 offset_bottom = 365.0
 scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("7_da6gn")
-texture_pressed = ExtResource("7_da6gn")
-texture_hover = ExtResource("7_da6gn")
-texture_disabled = ExtResource("7_da6gn")
-texture_focused = ExtResource("7_da6gn")
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
 [node name="Label" type="Label" parent="Message modal/TextureButton" unique_id=545655583]
@@ -585,10 +598,11 @@ text = "Odsłuchaj"
 label_settings = SubResource("LabelSettings_maknc")
 
 [connection signal="pressed" from="SidePanelBottom/Send" to="." method="_send_unit"]
-[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_begin_game"]
+[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Fail modal/TextureButton" to="Fail modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Success modal/TextureButton" to="." method="_main_event"]
 [connection signal="pressed" from="Success modal/TextureButton" to="Success modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="New emergency modal/TextureButton" to="New emergency modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
