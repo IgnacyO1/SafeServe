@@ -14,6 +14,8 @@ var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if R
 var MAP_TEX_ZAMKNIETE = preload("res://assets/graphics/safeservemap (1).png")
 var MAP_TEX_OTWARTE = preload("res://assets/graphics/scena4_mapa_otwarte.png")
 var SIEKIRA_TEX = preload("res://assets/graphics/siekira_scena4.png")
+var VIDEO_PATH = "res://assets/Videos/cutscean2.ogv" # Zmień na właściwą ścieżkę
+var video_player: VideoStreamPlayer = null
 
 var pozycje_ogni = [
 	Vector2(2257, 483), Vector2(6149, 505), Vector2(3651, 541),
@@ -407,7 +409,12 @@ func ucieczka_udana():
 		gra_aktywna = false
 		_fade_out(1.0)
 		await get_tree().create_timer(1.2).timeout
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		
+		# Ukrywamy HUD, żeby nie zasłaniał filmu
+		if has_node("HUD"):
+			$HUD.visible = false
+			
+		_odtworz_cutscenke()
 
 func przegrana():
 	gra_aktywna = false
@@ -541,3 +548,37 @@ func _dodaj_sciany_graniczne():
 	p.position = Vector2(szer + grubosc / 2, wys / 2)
 	border.add_child(p)
 	add_child(border)
+
+func _odtworz_cutscenke():
+	# Tworzymy odtwarzacz wideo dynamicznie
+	video_player = VideoStreamPlayer.new()
+	video_player.stream = load(VIDEO_PATH)
+	video_player.expand = true
+	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
+	video_player.bus = "Master" # Upewnij się, że film ma dźwięk w OGV
+	
+	# Dodajemy go do CanvasLayer, żeby był na samym wierzchu
+	var cv = CanvasLayer.new()
+	cv.layer = 120 # Powyżej wszystkiego
+	add_child(cv)
+	cv.add_child(video_player)
+	
+	# Połącz sygnał zakończenia filmu
+	video_player.finished.connect(_po_cutscence)
+	
+	video_player.play()
+	
+	# Opcjonalnie: Fade in filmu, jeśli fade_out był do czarnego
+	var tw = create_tween()
+	video_player.modulate.a = 0
+	tw.tween_property(video_player, "modulate:a", 1.0, 0.5)
+
+func _po_cutscence():
+	if video_player:
+		video_player.stop()
+	
+	# Finalny Fade Out przed nową sceną
+	_fade_out(1.0)
+	await get_tree().create_timer(1.0).timeout
+	
+	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
