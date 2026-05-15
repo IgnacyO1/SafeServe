@@ -1,7 +1,7 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-2356, 44164)#Vector2(-62668, 73086)
+var start_pos_px = Vector2(-62668, 73086)
 var target_pos_px = Vector2(-2356, 44164)
 var cutscene_path = "res://assets/Videos/komisariat.ogv"
 var cutscene_path2 = "res://assets/Videos/policja.ogv"
