@@ -9,7 +9,7 @@ func _ready():
 	add_to_group("ogien")
 	start_y = position.y
 	kierunek = [-1, 1].pick_random()
-
+	
 var czas_klatki = 0.0
 var fps = 10.0
 
@@ -39,4 +39,3 @@ func _on_body_entered(body):
 		await tw.finished
 		
 		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-

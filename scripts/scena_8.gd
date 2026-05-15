@@ -299,30 +299,170 @@ func _wygrana():
 		return
 	gra_aktywna = false
 
-	# Zniszcz kraba z efektem
+	# === Ukryj pasek HP i etykiety bossa ===
+	var tw_hud = create_tween()
+	if pasek_hp:
+		tw_hud.tween_property(pasek_hp, "modulate:a", 0.0, 0.5)
+	if pasek_hp_bg:
+		tw_hud.parallel().tween_property(pasek_hp_bg, "modulate:a", 0.0, 0.5)
+	if label_hp:
+		tw_hud.parallel().tween_property(label_hp, "modulate:a", 0.0, 0.5)
+	if label_faza:
+		tw_hud.parallel().tween_property(label_faza, "modulate:a", 0.0, 0.5)
+
+	# Zapamiętaj pozycję kraba na eksplozje
+	var krab_pos = Vector2(960, 540)
+	if krab and is_instance_valid(krab):
+		krab_pos = krab.global_position
+
+	# ========================================
+	#  FAZA 1: AGONIA (1.5s) - krab się trzęsie i miga
+	# ========================================
 	if krab and is_instance_valid(krab):
 		var spr = krab.get_node_or_null("Sprite2D")
 		if spr:
-			var tw = create_tween()
-			tw.tween_property(spr, "modulate", Color(1, 0, 0, 1), 0.3)
-			tw.tween_property(spr, "scale", Vector2(0.6, 0.6), 0.5)
-			tw.parallel().tween_property(spr, "modulate:a", 0.0, 0.5)
-			tw.tween_callback(func():
-				if is_instance_valid(krab): krab.queue_free())
+			# Zatrzymaj ruch kraba
+			krab.set_physics_process(false)
 
-	# Efekty - partykuły eksplozji (proste kwadraty)
+			# Trzęsienie + miganie czerwono-biało
+			var tw_agonia = create_tween()
+			for i in range(15):
+				var offset = Vector2(randf_range(-12, 12), randf_range(-8, 8))
+				tw_agonia.tween_property(krab, "position", krab_pos + offset, 0.05)
+				if i % 2 == 0:
+					tw_agonia.parallel().tween_property(spr, "modulate", Color(5, 0.2, 0.2, 1), 0.05)
+				else:
+					tw_agonia.parallel().tween_property(spr, "modulate", Color(1, 1, 1, 1), 0.05)
+
+			# Wróć na pozycję i zostaw czerwonego
+			tw_agonia.tween_property(krab, "position", krab_pos, 0.05)
+			tw_agonia.tween_property(spr, "modulate", Color(3, 0.1, 0.1, 1), 0.2)
+			await tw_agonia.finished
+
+	# ========================================
+	#  FAZA 2: SLOW-MOTION + SERIA EKSPLOZJI (2s)
+	# ========================================
+	Engine.time_scale = 0.4  # Spowolnienie
+
+	# Mini-eksplozje wokół kraba (pojawiają się z opóźnieniem)
+	for i in range(6):
+		var exp_offset = Vector2(randf_range(-100, 100), randf_range(-70, 70))
+		_spawn_eksplozja(krab_pos + exp_offset, randf_range(30, 60))
+		_screen_shake(8.0)
+		await get_tree().create_timer(0.15).timeout  # Uwzględnia slow-mo
+
+	# ========================================
+	#  FAZA 3: GŁÓWNA EKSPLOZJA + BIAŁY FLASH
+	# ========================================
+	Engine.time_scale = 0.2  # Jeszcze wolniej na moment uderzenia
+
+	# Biały flash ekranu
+	var white_flash = ColorRect.new()
+	white_flash.color = Color(1, 1, 1, 0)
+	white_flash.set_anchors_preset(Control.PRESET_FULL_RECT)
+	white_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	white_flash.z_index = 95
+	hud.add_child(white_flash)
+
+	var tw_flash = create_tween().set_ease(Tween.EASE_OUT)
+	tw_flash.tween_property(white_flash, "color:a", 0.9, 0.1)
+
+	# Zniszcz sprite'a kraba - rozjaśnienie do białego, potem zniknięcie
 	if krab and is_instance_valid(krab):
-		for i in range(20):
-			var part = ColorRect.new()
-			part.color = Color(randf_range(0.8, 1.0), randf_range(0.0, 0.3), 0.0, 1.0)
-			part.size = Vector2(randf_range(8, 25), randf_range(8, 25))
-			part.position = krab.global_position + Vector2(randf_range(-60, 60), randf_range(-40, 40))
-			part.z_index = 50
-			add_child(part)
-			var tw_p = create_tween()
-			tw_p.tween_property(part, "position", part.position + Vector2(randf_range(-200, 200), randf_range(-200, 200)), randf_range(0.5, 1.5))
-			tw_p.parallel().tween_property(part, "modulate:a", 0.0, randf_range(0.5, 1.5))
-			tw_p.tween_callback(func(): if is_instance_valid(part): part.queue_free())
+		var spr = krab.get_node_or_null("Sprite2D")
+		if spr:
+			var tw_die = create_tween()
+			tw_die.tween_property(spr, "modulate", Color(10, 10, 10, 1), 0.15)
+			tw_die.tween_property(spr, "modulate:a", 0.0, 0.1)
+
+	await get_tree().create_timer(0.15).timeout
+
+	# Duża eksplozja centralna
+	_spawn_eksplozja(krab_pos, 120)
+	_screen_shake(25.0)
+
+	# ========================================
+	#  FAZA 4: ROZRZUT PARTYKUŁÓW (gwiaździsty)
+	# ========================================
+	Engine.time_scale = 0.6
+
+	# Pierścień eksplozji (rozchodzący się okrąg)
+	var ring = ColorRect.new()
+	ring.color = Color(1, 0.6, 0.1, 0.8)
+	ring.size = Vector2(10, 10)
+	ring.position = krab_pos - Vector2(5, 5)
+	ring.pivot_offset = Vector2(5, 5)
+	ring.z_index = 55
+	add_child(ring)
+	var tw_ring = create_tween()
+	tw_ring.tween_property(ring, "scale", Vector2(80, 80), 0.5)
+	tw_ring.parallel().tween_property(ring, "modulate:a", 0.0, 0.5)
+	tw_ring.tween_callback(func(): if is_instance_valid(ring): ring.queue_free())
+
+	# Partykuły gwiaździste - wylatują we wszystkich kierunkach
+	for i in range(40):
+		var angle = (TAU / 40.0) * i + randf_range(-0.15, 0.15)
+		var dist = randf_range(250, 500)
+		var target_pos = krab_pos + Vector2(cos(angle), sin(angle)) * dist
+		var rozmiar = randf_range(4, 18)
+
+		var part = ColorRect.new()
+		# Kolory: pomarańczowy, żółty, czerwony, biały
+		var kolory = [
+			Color(1.0, 0.6, 0.0, 1.0),
+			Color(1.0, 0.9, 0.2, 1.0),
+			Color(1.0, 0.15, 0.0, 1.0),
+			Color(1.0, 1.0, 1.0, 1.0),
+			Color(1.0, 0.4, 0.0, 1.0),
+		]
+		part.color = kolory[randi() % kolory.size()]
+		part.size = Vector2(rozmiar, rozmiar)
+		part.position = krab_pos - Vector2(rozmiar / 2, rozmiar / 2)
+		part.pivot_offset = Vector2(rozmiar / 2, rozmiar / 2)
+		part.rotation = randf_range(0, TAU)
+		part.z_index = 52
+		add_child(part)
+
+		var czas_lotu = randf_range(0.4, 1.2)
+		var tw_p = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+		tw_p.tween_property(part, "position", target_pos, czas_lotu)
+		tw_p.parallel().tween_property(part, "rotation", part.rotation + randf_range(-3, 3), czas_lotu)
+		tw_p.parallel().tween_property(part, "modulate:a", 0.0, czas_lotu)
+		tw_p.parallel().tween_property(part, "scale", Vector2(0.1, 0.1), czas_lotu)
+		tw_p.tween_callback(func(): if is_instance_valid(part): part.queue_free())
+
+	# Iskry - mniejsze, szybsze
+	for i in range(25):
+		var iskra = ColorRect.new()
+		iskra.color = Color(1, 1, 0.7, 1)
+		iskra.size = Vector2(3, 3)
+		iskra.position = krab_pos
+		iskra.z_index = 54
+		add_child(iskra)
+		var angle = randf_range(0, TAU)
+		var dist = randf_range(150, 600)
+		var tw_i = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		tw_i.tween_property(iskra, "position", krab_pos + Vector2(cos(angle), sin(angle)) * dist, randf_range(0.3, 0.8))
+		tw_i.parallel().tween_property(iskra, "modulate:a", 0.0, randf_range(0.3, 0.8))
+		tw_i.tween_callback(func(): if is_instance_valid(iskra): iskra.queue_free())
+
+	# Usuń kraba
+	if krab and is_instance_valid(krab):
+		krab.queue_free()
+
+	# Wygaszanie białego flashu
+	await get_tree().create_timer(0.3).timeout
+	var tw_flash_out = create_tween()
+	tw_flash_out.tween_property(white_flash, "color:a", 0.0, 1.0)
+	tw_flash_out.tween_callback(func(): if is_instance_valid(white_flash): white_flash.queue_free())
+
+	# ========================================
+	#  FAZA 5: WRACANIE DO NORMALNOŚCI + TEKST
+	# ========================================
+	# Płynne przywrócenie normalnej prędkości
+	var tw_time = create_tween()
+	tw_time.tween_method(func(v): Engine.time_scale = v, Engine.time_scale, 1.0, 0.8)
+	await tw_time.finished
 
 	_pokaz_info("CYBERKRAB POKONANY!", 3.0)
 
@@ -330,12 +470,42 @@ func _wygrana():
 	_fade_out(1.5)
 	await get_tree().create_timer(2.0).timeout
 
+	Engine.time_scale = 1.0  # Bezpieczne przywrócenie
+
 	# --- PRZEJŚCIE PO WYGRANEJ ---
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-	# OPCJA 2: Cutscenka (odkomentuj poniżej i podaj ścieżkę)
-	#_odtworz_cutscenke("res://assets/Videos/cutscene_ending.ogv")
-	# OPCJA 3: Następna scena / credits
-	#get_tree().change_scene_to_file("res://scenes/credits.tscn")
+
+# Pomocnicza funkcja do tworzenia eksplozji
+func _spawn_eksplozja(pos: Vector2, rozmiar: float):
+	# Centralny błysk
+	var flash = ColorRect.new()
+	flash.color = Color(1, 0.8, 0.2, 0.9)
+	flash.size = Vector2(rozmiar, rozmiar)
+	flash.position = pos - Vector2(rozmiar / 2, rozmiar / 2)
+	flash.pivot_offset = Vector2(rozmiar / 2, rozmiar / 2)
+	flash.z_index = 53
+	add_child(flash)
+
+	var tw = create_tween()
+	tw.tween_property(flash, "scale", Vector2(2.5, 2.5), 0.2)
+	tw.parallel().tween_property(flash, "modulate", Color(1, 0.2, 0, 0.7), 0.2)
+	tw.tween_property(flash, "scale", Vector2(3.5, 3.5), 0.3)
+	tw.parallel().tween_property(flash, "modulate:a", 0.0, 0.3)
+	tw.tween_callback(func(): if is_instance_valid(flash): flash.queue_free())
+
+	# Obwódka eksplozji
+	var obwodka = ColorRect.new()
+	obwodka.color = Color(1, 1, 0.5, 0.6)
+	obwodka.size = Vector2(rozmiar * 0.7, rozmiar * 0.7)
+	obwodka.position = pos - Vector2(rozmiar * 0.35, rozmiar * 0.35)
+	obwodka.pivot_offset = Vector2(rozmiar * 0.35, rozmiar * 0.35)
+	obwodka.z_index = 54
+	add_child(obwodka)
+
+	var tw2 = create_tween()
+	tw2.tween_property(obwodka, "scale", Vector2(4, 4), 0.15)
+	tw2.parallel().tween_property(obwodka, "modulate:a", 0.0, 0.35)
+	tw2.tween_callback(func(): if is_instance_valid(obwodka): obwodka.queue_free())
 
 # ============================================
 #  EFEKTY WIZUALNE

@@ -1,10 +1,9 @@
-[gd_scene format=3 uid="uid://yl4bvvhjql4p"]
+[gd_scene format=3 uid="uid://d1falslb55lk8"]
 
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
 [ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
-[ext_resource type="Texture2D" uid="uid://bvxrnfg1ydi47" path="res://assets/graphics/scena4_spritesheet_skosy_beztla.png.png" id="3_skosy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn3ug"]
 size = Vector2(30, 50)
@@ -27,12 +26,6 @@ script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
 texture = ExtResource("2_nn3ug")
-hframes = 2
-vframes = 2
-
-[node name="SpriteSkosy" type="Sprite2D" parent="Gracz" unique_id=252655932]
-visible = false
-texture = ExtResource("3_skosy")
 hframes = 2
 vframes = 2
 
@@ -132,7 +125,15 @@ polygon = PackedVector2Array(3374, 1029, 3608, 1032, 3607, 1161, 3685, 1159, 368
 polygon = PackedVector2Array(3384, 603, 3985, 604, 3982, 897, 3385, 894)
 
 [node name="CollisionPolygon2D21" type="CollisionPolygon2D" parent="ScianyRysowane" unique_id=439864899]
-polygon = PackedVector2Array(7895, 390, 7893, 836, 7871, 836, 7871, 974, 7893, 975, 7894, 1514, 7871, 1516, 7874, 1652, 7895, 1652, 7895, 2189, 7870, 2189, 7872, 2330, 7894, 2328, 7892, 2866, 7870, 2869, 7871, 3005, 7896, 3007, 7892, 3437, 7871, 3439, 7871, 3474, 7830, 3477, 7830, 3645, 7226, 3634, 7230, 3468, 7149, 3467, 7147, 2841, 7158, 2863, 7157, 2431, 7156, 2326, 7171, 2326, 7174, 2191, 7160, 2190, 7159, 1757, 7159, 1714, 7209, 1715, 7211, 1550, 7101, 1548, 7101, 1652, 7133, 1653, 7132, 2189, 7099, 2190, 7099, 2328, 7132, 2329, 7134, 2867, 7138, 3666, 7898, 3668, 7898, 3647, 7946, 3649, 7944, 3438, 7920, 3438, 7922, 390)
+polygon = PackedVector2Array(7895, 390, 7893, 836, 7871, 836, 7871, 974, 7893, 975, 7892, 1380, 7870, 1212, 7874, 1652, 7895, 1652, 7895, 2189, 7870, 2189, 7872, 2330, 7894, 2328, 7892, 2866, 7870, 2869, 7871, 3005, 7896, 3007, 7892, 3437, 7871, 3439, 7871, 3474, 7830, 3477, 7830, 3645, 7226, 3634, 7230, 3468, 7149, 3467, 7147, 2841, 7158, 2863, 7157, 2431, 7156, 2326, 7171, 2326, 7174, 2191, 7160, 2190, 7159, 1757, 7159, 1714, 7209, 1715, 7214, 1222, 7104, 1343, 7101, 1652, 7133, 1653, 7132, 2189, 7099, 2190, 7099, 2328, 7132, 2329, 7134, 2867, 7138, 3666, 7898, 3668, 7898, 3647, 7946, 3649, 7944, 3438, 7920, 3438, 7922, 390)
+
+[node name="BlokadaDrzwi" type="StaticBody2D" parent="." unique_id=1627401126]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BlokadaDrzwi" unique_id=1319004261]
+polygon = PackedVector2Array(7532, 1239, 7299, 1237, 7280, 1761, 7550, 1762, 7559, 1832, 7246, 1825, 7250, 1198, 7541, 1198)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="BlokadaDrzwi" unique_id=461016143]
+polygon = PackedVector2Array(7516, 1238, 7810, 1242, 7802, 1765, 7794, 1765, 7520, 1763, 7523, 1879, 7857, 1881, 7838, 1174, 7521, 1172)
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]

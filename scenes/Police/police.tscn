@@ -616,7 +616,7 @@ rotation = 1.3700835
 scale = Vector2(0.09499429, 0.07684212)
 sprite_frames = SubResource("SpriteFrames_y0jbw")
 animation = &"Emergency Lights"
-frame_progress = 0.07206803
+frame_progress = 0.6028169
 
 [node name="SirenPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1397137812]
 stream = ExtResource("5_436w1")
