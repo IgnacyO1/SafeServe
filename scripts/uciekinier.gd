@@ -147,7 +147,7 @@ Vector2(-10482, 11211),
 Vector2(-10216, 10967),
 ]
 var target_index = 0
-var speed = 400.0
+var speed = 200.0
 var map_manager = null
 var current_lane_offset = -1.6 
 var is_oneway = false
@@ -177,18 +177,32 @@ func _physics_process(delta):
 	# 1. Obliczamy postęp pościgu (0.0 do 1.0)
 	var progress = float(current_progress_index) / float(total_path_points)
 	
-	# 2. Dostosowujemy prędkość wg Twojego planu:
-	if progress < 0.1:
-		# Pierwsze 10% - ucieka (szybciej niż policja)
-		speed = base_speed * 1.2 
-	elif progress > 0.9:
-		# Ostatnie 10% - daje się złapać (wolniej)
-		speed = base_speed * 0.7
-	else:
-		# Środek pościgu - równa walka
-		speed = base_speed
+	# Pobieramy dystans do policji (gracza)
+	var police = get_tree().get_first_node_in_group("police") # Upewnij się, że Police car jest w grupie "police"
+	var distance_to_police = 0.0
+	if is_instance_valid(police):
+		distance_to_police = global_position.distance_to(police.global_position)
 
-	# Logika ruchu (bez zmian)
+	# 2. Logika prędkości
+	if progress < 0.1:
+		# POCZĄTEK: Agresywna ucieczka
+		speed = base_speed * 1.2
+	elif progress > 0.9:
+		# KOŃCÓWKA: Zwalnianie do przechwycenia
+		speed = base_speed * 0.6
+	else:
+		# ŚRODEK: Rubber Banding (zależny od dystansu)
+		# Dystans podajemy w pikselach (50m = 1000px, 200m = 4000px przy skali 20)
+		var dist_px = distance_to_police
+		
+		if dist_px > 60.0: # Dalej niż 200m
+			speed = base_speed * 0.7 # Zwalnia, żeby gracz mógł dogonić
+		elif dist_px < 20.0: # Bliżej niż 50m
+			speed = base_speed * 1.3 # Przyspiesza, żeby gracz go nie taranował za wcześnie
+		else:
+			speed = base_speed # Standardowa walka
+
+	# 3. Logika ruchu
 	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
 	
@@ -200,7 +214,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-	if global_position.distance_to(target_pos) < 30.0:
+	if global_position.distance_to(target_pos) < 50.0: # Zwiększony margines dla płynności
 		advance_path()
 
 func get_offset_point(from_idx, to_idx):
