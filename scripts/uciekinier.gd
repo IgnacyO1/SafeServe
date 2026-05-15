@@ -173,6 +173,9 @@ func _ready():
 
 func _physics_process(delta):
 	if current_road_points.is_empty(): return
+	if target_index >= current_road_points.size():
+		speed = 0
+		return
 	
 	# 1. Obliczamy postęp pościgu (0.0 do 1.0)
 	var progress = float(current_progress_index) / float(total_path_points)
@@ -214,7 +217,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-	if global_position.distance_to(target_pos) < 50.0: # Zwiększony margines dla płynności
+	if global_position.distance_to(target_pos) < 50.0: # Zwiększony margines dla płynności w końcowej fazie pościgu
 		advance_path()
 
 func get_offset_point(from_idx, to_idx):
@@ -230,6 +233,6 @@ func advance_path():
 	
 	if target_index >= current_road_points.size():
 		# Tutaj uciekinier dojechał do końca trasy
-		# Możesz tu wywołać koniec misji lub zatrzymanie auta
+		target_index = current_road_points.size() - 1
 		speed = 0
 		print("Uciekinier dotarł do punktu końcowego!")
