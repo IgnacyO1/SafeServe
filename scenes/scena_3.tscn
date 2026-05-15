@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://yl4bvvhjql4p"]
+[gd_scene format=3 uid="uid://d1falslb55lk8"]
 
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
@@ -67,6 +67,11 @@ offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
+
+[node name="ScianyRysowane" type="StaticBody2D" parent="." unique_id=576166230]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ScianyRysowane" unique_id=654685720]
+polygon = PackedVector2Array(1747, 1570, 1747, 1595, 1797, 1595, 1797, 2272, 2559, 2272, 2561, 2768, 2221, 2771, 2221, 2616, 2396, 2616, 2395, 2590, 2080, 2590, 2081, 2613, 2195, 2615, 2194, 2773, 1966, 2773, 1967, 2416, 1940, 2416, 1939, 2796, 2560, 2795, 2560, 2804, 2585, 2805, 2588, 2182, 1969, 2182, 1966, 1637, 2322, 1638, 2326, 2034, 2588, 2037, 2590, 1593, 2656, 1592, 2656, 1567)
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]

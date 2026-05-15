@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d28qbx3xivgjg"
+path="res://.godot/imported/Final Boss Battle - Rod Kim.mp3-67a5e809999a094f812c10028bde0d6a.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/Final Boss Battle - Rod Kim.mp3"
+dest_files=["res://.godot/imported/Final Boss Battle - Rod Kim.mp3-67a5e809999a094f812c10028bde0d6a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
