@@ -112,5 +112,5 @@ func _main_event():
 		return
 	main_event = true
 	find_child("New emergency modal").visible = true
-	map_container.spawn_event("Fire", Vector2(564, 2318))
+	map_container.spawn_event("Fire", Vector2(200, 818))
 	
