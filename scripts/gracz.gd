@@ -1,14 +1,68 @@
 extends CharacterBody2D
 
 @onready var label_skrzynka = get_parent().get_node_or_null("HUD/LabelSkrzynka")
+@onready var sprite = $Sprite2D
 
 const SPEED = 250.0
 const POCISK = preload("res://scenes/pocisk.tscn")
 var ma_skrzynke = false
 var przy_npc = null
 
+var anim_timer = 0.0
+var anim_speed = 0.15
+var current_anim_frames = 1
+var current_frame_idx = 0
+var last_dir_str = "down"
+var last_state = "idle"
+
+var textures = {
+	"idle": {
+		"up": preload("res://assets/graphics/scena3_animacja_ruchu/idle_gora.png"),
+		"down": preload("res://assets/graphics/scena3_animacja_ruchu/idle_dol.png"),
+		"left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
+		"right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png"),
+		"up_left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
+		"up_right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png"),
+		"down_left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
+		"down_right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png")
+	},
+	"walk": {
+		"up": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_gora.png"),
+		"down": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_dol.png"),
+		"left": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_lewo1.png"),
+		"right": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_prawover1.png"),
+		"up_left": preload("res://assets/graphics/scena3_animacja_ruchu/skos_gora_lewo.png"),
+		"up_right": preload("res://assets/graphics/scena3_animacja_ruchu/skos_gora_prawo.png"),
+		"down_left": preload("res://assets/graphics/scena3_animacja_ruchu/skos_dol_lewo.png"),
+		"down_right": preload("res://assets/graphics/scena3_animacja_ruchu/skos_dol_prawo.png")
+	}
+}
+
+var frame_counts = {
+	"idle": 1,
+	"walk_up": 4, "walk_down": 4,
+	"walk_left": 3, "walk_right": 3,
+	"walk_up_left": 2, "walk_up_right": 2,
+	"walk_down_left": 2, "walk_down_right": 2
+}
+
 func _ready():
 	z_index = 10
+	set_animation("idle", "down")
+
+func set_animation(state: String, dir_str: String):
+	var tex = textures[state][dir_str]
+	if sprite.texture != tex:
+		sprite.texture = tex
+		var frames_count = 1
+		if state == "walk":
+			frames_count = frame_counts["walk_" + dir_str]
+		sprite.hframes = frames_count
+		sprite.vframes = 1
+		current_anim_frames = frames_count
+		current_frame_idx = 0
+		sprite.frame = 0
+		anim_timer = 0.0
 
 func _physics_process(delta: float) -> void:
 	var scena = get_parent()
@@ -24,52 +78,43 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
 
-	# Sprawdź czy mamy sprite skosów (tylko w scenie 3)
-	var sprite_skosy = get_node_or_null("SpriteSkosy")
-	var jest_skos = direction.x != 0 and direction.y != 0
-
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
 
-		if jest_skos and sprite_skosy:
-			# --- RUCH PO SKOSIE: użyj sprite'a skosów ---
-			$Sprite2D.visible = false
-			sprite_skosy.visible = true
-			if direction.x < 0 and direction.y < 0:
-				# Góra-lewo
-				sprite_skosy.frame = 0
-				$PunktStrzalu.position = Vector2(-15, -5)
-			elif direction.x > 0 and direction.y < 0:
-				# Góra-prawo
-				sprite_skosy.frame = 1
-				$PunktStrzalu.position = Vector2(15, -5)
-			elif direction.x < 0 and direction.y > 0:
-				# Dół-lewo
-				sprite_skosy.frame = 3
-				$PunktStrzalu.position = Vector2(-15, 15)
-			elif direction.x > 0 and direction.y > 0:
-				# Dół-prawo
-				sprite_skosy.frame = 2
-				$PunktStrzalu.position = Vector2(15, 15)
-		else:
-			# --- RUCH KARDYNALNY: użyj standardowego sprite'a ---
-			$Sprite2D.visible = true
-			if sprite_skosy:
-				sprite_skosy.visible = false
-			if abs(direction.x) > abs(direction.y):
-				if direction.x < 0:
-					$Sprite2D.frame = 2
-					$PunktStrzalu.position = Vector2(-20, 15)
-				else:
-					$Sprite2D.frame = 1
-					$PunktStrzalu.position = Vector2(20, 15)
-			else:
-				if direction.y < 0:
-					$Sprite2D.frame = 0
-					$PunktStrzalu.position = Vector2(15, 5)
-				else:
-					$Sprite2D.frame = 3
-					$PunktStrzalu.position = Vector2(-15, 15)
+	var state = "idle"
+	var dir_str = last_dir_str
+
+	if direction != Vector2.ZERO:
+		state = "walk"
+		if direction.x < -0.1 and direction.y < -0.1:
+			dir_str = "up_left"
+			$PunktStrzalu.position = Vector2(-15, -5)
+		elif direction.x > 0.1 and direction.y < -0.1:
+			dir_str = "up_right"
+			$PunktStrzalu.position = Vector2(15, -5)
+		elif direction.x < -0.1 and direction.y > 0.1:
+			dir_str = "down_left"
+			$PunktStrzalu.position = Vector2(-15, 15)
+		elif direction.x > 0.1 and direction.y > 0.1:
+			dir_str = "down_right"
+			$PunktStrzalu.position = Vector2(15, 15)
+		elif direction.x < -0.1:
+			dir_str = "left"
+			$PunktStrzalu.position = Vector2(-20, 15)
+		elif direction.x > 0.1:
+			dir_str = "right"
+			$PunktStrzalu.position = Vector2(20, 15)
+		elif direction.y < -0.1:
+			dir_str = "up"
+			$PunktStrzalu.position = Vector2(15, 5)
+		elif direction.y > 0.1:
+			dir_str = "down"
+			$PunktStrzalu.position = Vector2(-15, 15)
+
+	if state != last_state or dir_str != last_dir_str:
+		set_animation(state, dir_str)
+		last_state = state
+		last_dir_str = dir_str
 
 	var aktualna_predkosc = SPEED
 	if Input.is_action_pressed("ui_accept"):
@@ -78,7 +123,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	pass
+	if current_anim_frames > 1:
+		anim_timer += delta
+		if anim_timer >= anim_speed:
+			anim_timer -= anim_speed
+			current_frame_idx = (current_frame_idx + 1) % current_anim_frames
+			sprite.frame = current_frame_idx
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

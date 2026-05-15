@@ -107,7 +107,7 @@ func _ready():
 	hud.add_child(minimapa_bg)
 	minimapa_bg.add_child(markers_node)
 
-	_dodaj_sciany_graniczne()
+	_dodaj_sciany_graniczne() # Wywołujemy tylko granice zewnętrze
 
 	# Gracz spawn - przed drzwiami (prawy górny róg mapy)
 	if gracz:
@@ -258,6 +258,12 @@ func _drzwi_wyburzone():
 	if drzwi_label: drzwi_label.visible = false
 	# Ukryj siekierę
 	if siekira_pivot: siekira_pivot.visible = false
+
+	# === NOWE: Niszczymy blokadę drzwi! ===
+	var blokada = get_node_or_null("BlokadaDrzwi")
+	if blokada:
+		blokada.queue_free()
+	# ======================================
 
 	# Fade out
 	_fade_out(0.5)
@@ -504,24 +510,10 @@ func _odswiez_minimape():
 		markers_node.add_child(m)
 
 func _dodaj_sciany_graniczne():
-	var file = FileAccess.open("res://assets/graphics/scena4_walls.json", FileAccess.READ)
-	if file:
-		var text = file.get_as_text()
-		var json_obj = JSON.new()
-		var err = json_obj.parse(text)
-		if err == OK:
-			var data = json_obj.get_data()
-			var walls_body = StaticBody2D.new()
-			walls_body.name = "ScianyMapy"
-			for poly_pts in data:
-				var poly = CollisionPolygon2D.new()
-				var vec_arr = PackedVector2Array()
-				for pt in poly_pts:
-					vec_arr.append(Vector2(pt[0], pt[1]))
-				poly.polygon = vec_arr
-				walls_body.add_child(poly)
-			add_child(walls_body)
-
+	# USUNĄŁEM WCZYTYWANIE JSONA
+	# Zostawiamy tylko kod, który tworzy zewnętrzne granice mapy (grubą ramkę),
+	# żeby gracz w ogóle nie wypadł poza świat.
+	
 	var border = StaticBody2D.new()
 	border.name = "GranicaMapy"
 	var grubosc = 200.0
