@@ -19,9 +19,14 @@ var video_player: VideoStreamPlayer = null
 
 var pozycje_ogni = [
 	Vector2(2257, 483), Vector2(6149, 505), Vector2(3651, 541),
-	Vector2(7559, 1054), Vector2(4888, 1750), Vector2(552, 1876),
+	Vector2(7000, 2000), Vector2(4888, 1750), Vector2(552, 1876),
 	Vector2(6641, 2233), Vector2(3390, 2498), Vector2(1066, 2790),
 	Vector2(6560, 3232),
+	# Nowe pozycje (klitki biurowe i korytarze)
+	Vector2(1500, 1200), Vector2(2800, 1500), Vector2(3500, 1200),
+	Vector2(4200, 800), Vector2(1800, 2200), Vector2(2500, 2800),
+	Vector2(4000, 3200), Vector2(5200, 2500), Vector2(5800, 1000),
+	Vector2(3000, 800), Vector2(1200, 1500), Vector2(4500, 2900)
 ]
 var ognie = []
 var gracz
@@ -275,9 +280,17 @@ func _drzwi_wyburzone():
 		tlo.texture = MAP_TEX_OTWARTE
 	minimapa_bg.texture = MAP_TEX_OTWARTE
 
-	# Przenieś gracza do środka budynku
+	# Przenieś gracza do środka budynku (od razu za drzwiami)
 	if gracz:
-		gracz.global_position = Vector2(7200, 700)
+		gracz.global_position = Vector2(7500, 1100)
+		
+		# --- ZAKOMENTOWANA ANIMACJA DO LOSOWEJ ŚCIEŻKI ---
+		# var losowa_sciezka_x = randf_range(6000, 7200)
+		# var losowa_sciezka_y = randf_range(600, 1200)
+		# var cel_animacji = Vector2(losowa_sciezka_x, losowa_sciezka_y)
+		# var tween = create_tween()
+		# tween.tween_property(gracz, "global_position", cel_animacji, 1.5).set_trans(Tween.TRANS_SINE)
+		# -------------------------------------------------
 
 	# Fade in
 	_fade_in(0.8)
