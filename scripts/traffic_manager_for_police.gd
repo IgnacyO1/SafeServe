@@ -1,23 +1,52 @@
 extends Node
 
-@export var max_agents = 50
+@export var max_agents = 10
 @export var npc_scene = preload("res://scenes/NPCCar.tscn")
+@export var uciekinier_scene = preload("res://scenes/uciekinier.tscn") # <--- DODAJ TO
+
 @onready var map_manager = get_node("../MapManager")
 @onready var player = get_node("../Police")
 
 var active_agents = []
+var is_pursuit_mode = false # <--- Zmienna sterująca trybem
+
+var uciekinier_spawned = false
+
+func setup_mode(pursuit_active: bool):
+	is_pursuit_mode = pursuit_active
+	print("TRYB POŚCIGU USTAWIONY NA: ", pursuit_active)
+	
+	if is_pursuit_mode:
+		# Czyścimy wszystko co zdążyło się zespawnować
+		for agent in active_agents:
+			if is_instance_valid(agent): agent.queue_free()
+		active_agents.clear()
+		uciekinier_spawned = false # Pozwalamy na spawn bossa
 
 func _process(_delta):
-	# 1. Usuń agentów, którzy wyjechali za daleko (poza załadowane chunki)
+	if is_pursuit_mode:
+		# Spawnuje bossa TYLKO RAZ, gdy tylko map_manager będzie gotowy (będzie miał skalę itp.)
+		if not uciekinier_spawned and map_manager:
+			spawn_boss_car()
+			uciekinier_spawned = true
+		return # KLUCZOWE: Nie idź dalej do spawnowania NPC!
+	# Reszta kodu spawnowania cywilów...
 	for agent in active_agents:
 		if is_instance_valid(agent):
 			var dist = agent.global_position.distance_to(player.global_position)
 			if dist > map_manager.load_radius * map_manager.chunk_size_px * 1.5:
 				despawn_agent(agent)
 
-	# 2. Jeśli brakuje agentów, zespawnuj nowych
 	if active_agents.size() < max_agents and map_manager.road_network.size() > 0:
 		spawn_random_agent()
+
+func spawn_boss_car():
+	var boss = uciekinier_scene.instantiate()
+	add_child(boss)
+	# Boss nie potrzebuje losowych punktów z sieci, bo ma je wbudowane w skrypcie
+	boss.setup([], map_manager, false) 
+	active_agents.append(boss)
+	print("SPAWNED: Cyberkrab gotowy do ucieczki!")
 
 func spawn_random_agent():
 	var nodes = map_manager.road_network.keys()
