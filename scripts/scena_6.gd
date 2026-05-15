@@ -1,8 +1,8 @@
 extends Node2D
 
 # --- UNIKALNE USTAWIENIA TEJ TRASY ---
-var start_pos_px = Vector2(-40671, 98832) 
-var target_pos_px = Vector2(-2356, 44164) #Vector2(-40671, 98832)
+var start_pos_px = Vector2(-2356, 44164)
+var target_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
 
 @onready var player = $Police
@@ -111,16 +111,16 @@ func play_cutscene_sequence():
 	await tween_out.finished
 	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
 
-func _input(event):
-	# Zmieniono z is_action_just_pressed na is_action_pressed
-	# Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
-	if event.is_action_pressed("ui_accept", false):
-		log_current_coordinates()
-
-func log_current_coordinates():
-	if is_instance_valid(player):
-		var pos = player.global_position
-		# round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
-		var clean_x = round(pos.x)
-		var clean_y = round(pos.y)
-		print("Vector2(%d, %d)," % [clean_x, clean_y])
+#func _input(event):
+	## Zmieniono z is_action_just_pressed na is_action_pressed
+	## Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
+	#if event.is_action_pressed("ui_accept", false):
+		#log_current_coordinates()
+#
+#func log_current_coordinates():
+	#if is_instance_valid(player):
+		#var pos = player.global_position
+		## round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
+		#var clean_x = round(pos.x)
+		#var clean_y = round(pos.y)
+		#print("Vector2(%d, %d)," % [clean_x, clean_y])
