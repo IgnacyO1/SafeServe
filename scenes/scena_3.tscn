@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
 [ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
+[ext_resource type="Texture2D" path="res://assets/graphics/scena4_spritesheet_skosy_beztla.png" id="3_skosy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn3ug"]
 size = Vector2(30, 50)
@@ -26,6 +27,12 @@ script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
 texture = ExtResource("2_nn3ug")
+hframes = 2
+vframes = 2
+
+[node name="SpriteSkosy" type="Sprite2D" parent="Gracz"]
+visible = false
+texture = ExtResource("3_skosy")
 hframes = 2
 vframes = 2
 

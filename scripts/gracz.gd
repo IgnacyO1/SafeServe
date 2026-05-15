@@ -23,22 +23,53 @@ func _physics_process(delta: float) -> void:
 		direction.y += 1
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
+
+	# Sprawdź czy mamy sprite skosów (tylko w scenie 3)
+	var sprite_skosy = get_node_or_null("SpriteSkosy")
+	var jest_skos = direction.x != 0 and direction.y != 0
+
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-		if abs(direction.x) > abs(direction.y):
-			if direction.x < 0:
-				$Sprite2D.frame = 2
-				$PunktStrzalu.position = Vector2(-20, 15)
-			else:
-				$Sprite2D.frame = 1
-				$PunktStrzalu.position = Vector2(20, 15)
-		else:
-			if direction.y < 0:
-				$Sprite2D.frame = 0
-				$PunktStrzalu.position = Vector2(15, 5)
-			else:
-				$Sprite2D.frame = 3
+
+		if jest_skos and sprite_skosy:
+			# --- RUCH PO SKOSIE: użyj sprite'a skosów ---
+			$Sprite2D.visible = false
+			sprite_skosy.visible = true
+			if direction.x < 0 and direction.y < 0:
+				# Góra-lewo
+				sprite_skosy.frame = 0
+				$PunktStrzalu.position = Vector2(-15, -5)
+			elif direction.x > 0 and direction.y < 0:
+				# Góra-prawo
+				sprite_skosy.frame = 1
+				$PunktStrzalu.position = Vector2(15, -5)
+			elif direction.x < 0 and direction.y > 0:
+				# Dół-lewo
+				sprite_skosy.frame = 2
 				$PunktStrzalu.position = Vector2(-15, 15)
+			elif direction.x > 0 and direction.y > 0:
+				# Dół-prawo
+				sprite_skosy.frame = 3
+				$PunktStrzalu.position = Vector2(15, 15)
+		else:
+			# --- RUCH KARDYNALNY: użyj standardowego sprite'a ---
+			$Sprite2D.visible = true
+			if sprite_skosy:
+				sprite_skosy.visible = false
+			if abs(direction.x) > abs(direction.y):
+				if direction.x < 0:
+					$Sprite2D.frame = 2
+					$PunktStrzalu.position = Vector2(-20, 15)
+				else:
+					$Sprite2D.frame = 1
+					$PunktStrzalu.position = Vector2(20, 15)
+			else:
+				if direction.y < 0:
+					$Sprite2D.frame = 0
+					$PunktStrzalu.position = Vector2(15, 5)
+				else:
+					$Sprite2D.frame = 3
+					$PunktStrzalu.position = Vector2(-15, 15)
 
 	var aktualna_predkosc = SPEED
 	if Input.is_action_pressed("ui_accept"):
