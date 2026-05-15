@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://tb1a1nljx5tj"
+path="res://.godot/imported/Y2K Heist - Rod Kim.mp3-e997460d31898ce7bd0cf02637e48ccf.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/Y2K Heist - Rod Kim.mp3"
+dest_files=["res://.godot/imported/Y2K Heist - Rod Kim.mp3-e997460d31898ce7bd0cf02637e48ccf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

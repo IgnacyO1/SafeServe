@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b52jb6y30uvf1"
+path="res://.godot/imported/Overboard - The Grey Room _ Golden Palms.mp3-c467fbf4dc1c4d9065535b7d338294ae.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3"
+dest_files=["res://.godot/imported/Overboard - The Grey Room _ Golden Palms.mp3-c467fbf4dc1c4d9065535b7d338294ae.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

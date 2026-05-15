@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dumdvyt2mojxu"
+path="res://.godot/imported/Test Your Fight - Rod Kim.mp3-4cee78ac9571ae788cb68a18b2b8d074.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/Test Your Fight - Rod Kim.mp3"
+dest_files=["res://.godot/imported/Test Your Fight - Rod Kim.mp3-4cee78ac9571ae788cb68a18b2b8d074.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

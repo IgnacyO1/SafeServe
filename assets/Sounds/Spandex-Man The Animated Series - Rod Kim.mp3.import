@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://vsh5gnoxd553"
+path="res://.godot/imported/Spandex-Man The Animated Series - Rod Kim.mp3-a6db0ae7dee6f24542ae53647cfcdccb.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/Spandex-Man The Animated Series - Rod Kim.mp3"
+dest_files=["res://.godot/imported/Spandex-Man The Animated Series - Rod Kim.mp3-a6db0ae7dee6f24542ae53647cfcdccb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
