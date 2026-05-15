@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	_steer_input = Input.get_axis("ui_left", "ui_right")
 	# Obsługa włączania/wyłączania świateł
 	if Input.is_action_just_pressed("toggle_lights"):
-		toggle_emergency_lights()
+		turn_emergency_lights(lights_active)
 
 func _physics_process(delta: float) -> void:
 	apply_engine(delta)
@@ -124,16 +124,16 @@ func make_way_for_emergency():
 				if npc.has_method("yield_to_emergency"):
 					npc.yield_to_emergency()
 
-func toggle_emergency_lights():
+func turn_emergency_lights( mode : bool ):
 	print("Przycisk świateł naciśnięty!")
 	lights_active = !lights_active
-	lights.visible = lights_active
-	
-	if lights_active:
-		print("Światła i Syrena: ON")
+	lights.visible = mode
+	if mode:
 		lights.play()
+	else:
+		lights.stop()
+func turn_siren( mode : bool ):
+	if mode:
 		siren_player.play() # Uruchamia dźwięk
 	else:
-		print("Światła i Syrena: OFF")
-		lights.stop()
 		siren_player.stop() # Zatrzymuje dźwięk

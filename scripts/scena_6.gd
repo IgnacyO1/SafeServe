@@ -19,7 +19,9 @@ func _ready():
 	if not player: return
 	setup_level()
 	setup_ui()
-
+	await get_tree().process_frame
+	get_tree().current_scene.map.set_target(target_pos_px)
+	
 func setup_level():
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
@@ -71,7 +73,8 @@ func _process(_delta):
 		var player_pos = player.global_position
 		var dist_vec = target_pos_px - player_pos
 		var dist_m = dist_vec.length() / 20.0
-		
+		get_tree().current_scene.map.set_player(player_pos, player.rotation)
+
 		# Aktualizacja UI
 		coords_label.text = "GPS: %d, %d\nDO CELU: %d m" % [player_pos.x, player_pos.y, int(dist_m)]
 		

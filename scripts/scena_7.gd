@@ -19,6 +19,7 @@ func _ready():
 	setup_level()
 	setup_ui()
 
+	
 func setup_level():
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
@@ -36,7 +37,9 @@ func _process(_delta):
 	if is_instance_valid(boss):
 		var dist_to_boss = player.global_position.distance_to(boss.global_position)
 		var dist_m = dist_to_boss / 20.0
-		
+		get_tree().current_scene.map.set_player(player.global_position, player.rotation)
+		get_tree().current_scene.map.set_target(boss.global_position)
+
 		# Strzałka na uciekiniera
 		var dist_vec = boss.global_position - player.global_position
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
