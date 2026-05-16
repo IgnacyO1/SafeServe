@@ -14,8 +14,12 @@ var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if R
 var MAP_TEX_ZAMKNIETE = preload("res://assets/graphics/safeservemap (1).png")
 var MAP_TEX_OTWARTE = preload("res://assets/graphics/scena4_mapa_otwarte.png")
 var SIEKIRA_TEX = preload("res://assets/graphics/siekira_scena4.png")
-var VIDEO_PATH = "res://assets/Videos/cutscean2.ogv" # Zmień na właściwą ścieżkę
+
+var VIDEO_PATH = "res://assets/Videos/cutscean2.ogv" # Ścieżka do filmu
+var AUDIO_PATH = "res://assets/Sounds/znalazłem_czaną_skrzynkę.mp3" 
+
 var video_player: VideoStreamPlayer = null
+var audio_player: AudioStreamPlayer = null  # Odtwarzacz dla dodatkowego dźwięku
 
 var pozycje_ogni = [
 	Vector2(2257, 483), Vector2(3651, 541),
@@ -114,7 +118,7 @@ func _ready():
 	hud.add_child(minimapa_bg)
 	minimapa_bg.add_child(markers_node)
 
-	_dodaj_sciany_graniczne() # Wywołujemy tylko granice zewnętrze
+	_dodaj_sciany_graniczne()
 
 	# Gracz spawn - przed drzwiami (prawy górny róg mapy)
 	if gracz:
@@ -135,33 +139,30 @@ func _ready():
 func _stworz_siekire():
 	if not gracz:
 		return
-	# Pivot obraca się wokół gracza, siekira jest przesunięta od pivota
 	siekira_pivot = Node2D.new()
 	siekira_pivot.z_index = 15
 	gracz.add_child(siekira_pivot)
 	siekira_sprite = Sprite2D.new()
 	siekira_sprite.texture = SIEKIRA_TEX
 	siekira_sprite.scale = Vector2(0.3, 0.3)
-	# Offset tak żeby rączka (dolny-prawy róg) była przy pivocie gracza
 	siekira_sprite.offset = Vector2(-SIEKIRA_TEX.get_size().x * 0.35, -SIEKIRA_TEX.get_size().y * 0.35)
 	siekira_sprite.position = Vector2.ZERO
 	siekira_sprite.visible = true
 	siekira_pivot.add_child(siekira_sprite)
 
 func _stworz_pasek_drzwi(hud):
-	# Tło paska
 	drzwi_pasek_bg = ColorRect.new()
 	drzwi_pasek_bg.color = Color(0.2, 0.2, 0.2, 0.8)
 	drzwi_pasek_bg.position = Vector2(760, 900)
 	drzwi_pasek_bg.size = Vector2(400, 30)
 	hud.add_child(drzwi_pasek_bg)
-	# Pasek postępu
+	
 	drzwi_pasek = ColorRect.new()
 	drzwi_pasek.color = Color(1.0, 0.4, 0.0, 1.0)
 	drzwi_pasek.position = Vector2(760, 900)
 	drzwi_pasek.size = Vector2(0, 30)
 	hud.add_child(drzwi_pasek)
-	# Label
+	
 	drzwi_label = Label.new()
 	drzwi_label.text = "Drzwi: 100%"
 	drzwi_label.position = Vector2(900, 870)
@@ -178,32 +179,26 @@ func _process(delta: float) -> void:
 	if minimapa_bg.visible:
 		_odswiez_minimape()
 
-	# Chowanie napisu po JAKIMKOLWIEK ruchu (we wszystkich fazach)
 	if label_zadanie.visible and (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right")):
 		label_zadanie.visible = false
 		if label_skrzynka:
 			label_skrzynka.visible = true
 
-	# Faza DRZWI - spin siekiry wokół gracza przy trzymaniu E
 	if faza == "DRZWI":
 		var trzyma_e = Input.is_key_pressed(KEY_E)
 		if trzyma_e and gracz:
-			# Spin siekiry wokół gracza
 			rabanie_kat -= delta * 8.0
 			if siekira_pivot:
 				siekira_pivot.rotation = rabanie_kat
-			# Zadawaj obrażenia co 0.3s jeśli blisko drzwi
 			rabanie_cooldown -= delta
 			if rabanie_cooldown <= 0:
 				rabanie_cooldown = 0.3
 				_rabniecie_drzwi_tick()
 		else:
-			# Zwolnij siekirę - spowalniaj obrót
 			if siekira_pivot:
 				siekira_pivot.rotation = lerp_angle(siekira_pivot.rotation, 0.0, delta * 3.0)
-		return  # Nie odliczaj czasu w fazie DRZWI
+		return
 
-	# Odliczanie czasu (od fazy POZARY)
 	czas -= delta
 	if label_czas:
 		label_czas.text = "Czas: " + str(int(czas))
@@ -219,11 +214,10 @@ func _process(delta: float) -> void:
 	if faza == "POZARY":
 		czas_do_rozrostu -= delta
 		if czas_do_rozrostu <= 0:
-			czas_do_rozrostu = 5.0 # rozrost co 5 sekund
-			if ognie.size() > 0 and ognie.size() < 30: # Max 30 pożarów
+			czas_do_rozrostu = 5.0
+			if ognie.size() > 0 and ognie.size() < 30:
 				var losowy_ogien = ognie[randi() % ognie.size()]
 				if is_instance_valid(losowy_ogien):
-					# Próbujemy znaleźć czyste miejsce (maksymalnie 5 prób, żeby nie zapętlić gry)
 					var znaleziono_miejsce = false
 					var nowa_pozycja = Vector2.ZERO
 					
@@ -235,7 +229,6 @@ func _process(delta: float) -> void:
 							znaleziono_miejsce = true
 							break
 					
-					# Jeśli miejsce jest czyste, spawnujemy ogień
 					if znaleziono_miejsce:
 						var nowy_ogien = OGIEN_SCENA.instantiate()
 						nowy_ogien.position = nowa_pozycja
@@ -254,24 +247,21 @@ func _input(event: InputEvent) -> void:
 		if minimapa_bg.visible:
 			minimapa_bg.visible = false
 
-# --- MECHANIKA RĄBANIA DRZWI ---
 func _rabniecie_drzwi_tick():
 	if faza != "DRZWI" or not gracz:
 		return
-	# Sprawdź czy gracz jest blisko drzwi (duży zasięg - cały czarny plac)
 	var drzwi_pos = Vector2(7500, 1000)
 	if gracz.global_position.distance_to(drzwi_pos) > 800:
 		return
 
 	drzwi_hp -= 1.0
-	# Aktualizuj pasek
 	var procent = drzwi_hp / drzwi_max_hp
 	if drzwi_pasek:
 		drzwi_pasek.size.x = (1.0 - procent) * 400.0
 		drzwi_pasek.color = Color(1.0, procent * 0.6, 0.0, 1.0)
 	if drzwi_label:
 		drzwi_label.text = "Drzwi: " + str(int(procent * 100)) + "%"
-	# Screen shake
+	
 	var cam = gracz.get_node_or_null("Camera2D")
 	if cam:
 		cam.offset = Vector2(randf_range(-5, 5), randf_range(-5, 5))
@@ -283,51 +273,34 @@ func _rabniecie_drzwi_tick():
 
 func _drzwi_wyburzone():
 	jest_rabanie = false
-	# Ukryj pasek
 	if drzwi_pasek: drzwi_pasek.visible = false
 	if drzwi_pasek_bg: drzwi_pasek_bg.visible = false
 	if drzwi_label: drzwi_label.visible = false
-	# Ukryj siekierę
 	if siekira_pivot: siekira_pivot.visible = false
 
-	# === NOWE: Niszczymy blokadę drzwi! ===
 	var blokada = get_node_or_null("BlokadaDrzwi")
 	if blokada:
 		blokada.queue_free()
-	# ======================================
 
-	# Fade out
 	_fade_out(0.5)
 	await get_tree().create_timer(0.6).timeout
 
-	# Podmień mapę
 	var tlo = get_node_or_null("Tlo")
 	if tlo:
 		tlo.texture = MAP_TEX_OTWARTE
 	minimapa_bg.texture = MAP_TEX_OTWARTE
 
-	# Przenieś gracza do środka budynku (od razu za drzwiami)
 	if gracz:
 		gracz.global_position = Vector2(7500, 1100)
-		
-		# --- ZAKOMENTOWANA ANIMACJA DO LOSOWEJ ŚCIEŻKI ---
-		# var losowa_sciezka_x = randf_range(6000, 7200)
-		# var losowa_sciezka_y = randf_range(600, 1200)
-		# var cel_animacji = Vector2(losowa_sciezka_x, losowa_sciezka_y)
-		# var tween = create_tween()
-		# tween.tween_property(gracz, "global_position", cel_animacji, 1.5).set_trans(Tween.TRANS_SINE)
-		# -------------------------------------------------
 
-	# Fade in
 	_fade_in(0.8)
 
-	# Przejdź do fazy POZARY
 	await get_tree().create_timer(0.3).timeout
 	_rozpocznij_faze_pozary()
 
 func _rozpocznij_faze_pozary():
 	faza = "POZARY"
-	czas = 300.0  # 5 minut na resztę gry
+	czas = 300.0
 
 	if label_czas:
 		label_czas.visible = true
@@ -339,13 +312,11 @@ func _rozpocznij_faze_pozary():
 		label_skrzynka.modulate = Color.RED
 		label_skrzynka.visible = false
 
-	# Spawnuj ognie
 	for poz in pozycje_ogni:
 		var ilosc = randi_range(1, 5)
 		var spakowane_w_tej_strefie = 0
 		var proby_strefy = 0
 		
-		# Próbujemy wygenerować zadaną ilość ognia, dbając o kolizje
 		while spakowane_w_tej_strefie < ilosc and proby_strefy < 15:
 			proby_strefy += 1
 			var offset = Vector2.ZERO
@@ -441,7 +412,6 @@ func podniesiono_skrzynke():
 		label_skrzynka.modulate = Color.AQUA
 		label_skrzynka.visible = false
 
-	# Wyjście = przy wyburzonych drzwiach
 	var wyjscie_area = Area2D.new()
 	wyjscie_area.name = "Wyjscie"
 	wyjscie_area.add_to_group("wyjscie")
@@ -465,7 +435,6 @@ func ucieczka_udana():
 		_fade_out(1.0)
 		await get_tree().create_timer(1.2).timeout
 		
-		# Ukrywamy HUD, żeby nie zasłaniał filmu
 		if has_node("HUD"):
 			$HUD.visible = false
 			
@@ -479,11 +448,6 @@ func przegrana():
 	label_zadanie.modulate = Color.RED
 	label_zadanie.visible = true
 	
-	# --- BACKDOOR: Cutscenka spalania (koniec czasu) ---
-	# _odtworz_cutscenke_spalania()
-	# return # Zablokuj przejście do main_menu jeśli używasz cutscenki!
-	# ---------------------------------------------------
-	
 	_fade_out(2.0)
 	await get_tree().create_timer(3.0).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
@@ -495,11 +459,6 @@ func przegrana_spalenie():
 	label_zadanie.text = "SPŁONĄŁEŚ!"
 	label_zadanie.modulate = Color.RED
 	label_zadanie.visible = true
-	
-	# --- BACKDOOR: Cutscenka spalania (wejście w ogień) ---
-	# _odtworz_cutscenke_spalania()
-	# return # Zablokuj przejście do main_menu jeśli używasz cutscenki!
-	# ------------------------------------------------------
 	
 	_fade_out(2.0)
 	await get_tree().create_timer(3.0).timeout
@@ -571,7 +530,6 @@ func _odswiez_minimape():
 		m.z_index = 10
 		markers_node.add_child(m)
 
-	# Zaznacz drzwi w fazie DRZWI
 	if faza == "DRZWI":
 		var m = Sprite2D.new()
 		m.texture = WYKRZYKNIK_TEX
@@ -582,10 +540,6 @@ func _odswiez_minimape():
 		markers_node.add_child(m)
 
 func _dodaj_sciany_graniczne():
-	# USUNĄŁEM WCZYTYWANIE JSONA
-	# Zostawiamy tylko kod, który tworzy zewnętrzne granice mapy (grubą ramkę),
-	# żeby gracz w ogóle nie wypadł poza świat.
-	
 	var border = StaticBody2D.new()
 	border.name = "GranicaMapy"
 	var grubosc = 200.0
@@ -613,26 +567,37 @@ func _dodaj_sciany_graniczne():
 	border.add_child(p)
 	add_child(border)
 
+# --- ZMODYFIKOWANA SEKIDJA CUTSCENKI ---
 func _odtworz_cutscenke():
-	# Tworzymy odtwarzacz wideo dynamicznie
+	# 1. Dynamiczne tworzenie odtwarzacza wideo
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(VIDEO_PATH)
 	video_player.expand = true
 	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
-	video_player.bus = "Master" # Upewnij się, że film ma dźwięk w OGV
+	video_player.bus = "Master"
 	
-	# Dodajemy go do CanvasLayer, żeby był na samym wierzchu
+	# 2. DYNAMICZNE TWORZENIE ODTWARZACZA AUDIO (Równoległy dźwięk)
+	audio_player = AudioStreamPlayer.new()
+	if ResourceLoader.exists(AUDIO_PATH):
+		audio_player.stream = load(AUDIO_PATH)
+	audio_player.bus = "Master"
+	
+	# Dodajemy elementy do nowego CanvasLayer, aby były na samym wierzchu
 	var cv = CanvasLayer.new()
-	cv.layer = 120 # Powyżej wszystkiego
+	cv.layer = 120
 	add_child(cv)
 	cv.add_child(video_player)
+	cv.add_child(audio_player) # Audio Player nie ma reprezentacji wizualnej, ale potrzebuje drzewa
 	
-	# Połącz sygnał zakończenia filmu
+	# Połącz sygnał zakończenia filmu, aby posprzątać i zmienić scenę
 	video_player.finished.connect(_po_cutscence)
 	
+	# Uruchomienie obu odtwarzaczy jednocześnie
 	video_player.play()
+	if audio_player.stream:
+		audio_player.play()
 	
-	# Opcjonalnie: Fade in filmu, jeśli fade_out był do czarnego
+	# Płynne pojawienie się wideo
 	var tw = create_tween()
 	video_player.modulate.a = 0
 	tw.tween_property(video_player, "modulate:a", 1.0, 0.5)
@@ -640,14 +605,14 @@ func _odtworz_cutscenke():
 func _po_cutscence():
 	if video_player:
 		video_player.stop()
+	if audio_player:
+		audio_player.stop()
 	
-	# Finalny Fade Out przed nową sceną
 	_fade_out(1.0)
 	await get_tree().create_timer(1.0).timeout
 	
 	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
 
-# Funkcja zwraca true, jeśli na danej pozycji znajduje się obiekt kolizyjny
 func _czy_pozycja_zablokowana(pozycja: Vector2) -> bool:
 	var space_state = get_world_2d().direct_space_state
 	if not space_state:
@@ -655,8 +620,6 @@ func _czy_pozycja_zablokowana(pozycja: Vector2) -> bool:
 		
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = pozycja
-	# Tutaj możesz ustawić collision_mask, np. query.collision_mask = 1 
-	# (Ustaw taką maskę, na której znajdują się Twoje ściany/CollisionPolygony)
 	query.collision_mask = 1 
 	
 	var wyniki = space_state.intersect_point(query)
