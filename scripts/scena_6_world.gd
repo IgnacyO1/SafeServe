@@ -16,10 +16,14 @@ var is_changing_scene = false
 var arrival_message_played = false
 var uciekinier = false
 
+# --- NOWOŚĆ: STREFA DOCELOWA ---
+var target_zone_visual: Polygon2D
+
 func _ready():
 	if not player: return
 	setup_level()
 	setup_ui()
+	setup_target_zone_visual()
 	await get_tree().process_frame
 	get_tree().current_scene.map.set_target(target_pos_px)
 	
@@ -32,7 +36,25 @@ func setup_level():
 	if tm: # pościg dopiero od zawiłej w scenie 7
 		tm.setup_mode(false)
 
-func setup_ui():
+func setup_target_zone_visual():
+	target_zone_visual = Polygon2D.new()
+	target_zone_visual.global_position = target_pos_px
+	
+	# Obliczamy promień w pikselach: 10 metrów * skala mapy (20) = 200 pikseli
+	var radius_px = 10.0 * 20.0
+	var points_count = 32
+	var points = PackedVector2Array()
+	for i in range(points_count):
+		var angle = i * (PI * 2.0) / points_count
+		points.append(Vector2(cos(angle), sin(angle)) * radius_px)
+
+	target_zone_visual.polygon = points
+	
+	target_zone_visual.color = Color(1.0, 0.0, 0.0, 0.3)
+	target_zone_visual.z_index = -1
+	add_child(target_zone_visual)
+
+func setup_ui(): 
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100
 	add_child(canvas)
@@ -116,6 +138,10 @@ func play_cutscene_sequence():
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
+	# Ukrywamy strefę docelową na czas cutscenki, żeby nie prześwitywała
+	if is_instance_valid(target_zone_visual):
+		target_zone_visual.visible = false
+
 	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
 	await get_tree().create_timer(8.0).timeout
 	
