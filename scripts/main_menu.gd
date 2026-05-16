@@ -20,9 +20,9 @@ func _on_button_pressed():
 	if is_loading:
 		return
 	is_loading = true
-	_uruchom_loading_screen()
+	_uruchom_loading_screen("res://scenes/scena_1.tscn")
 
-func _uruchom_loading_screen():
+func _uruchom_loading_screen(scene_path: String):
 	# 1. Tworzymy warstwę
 	loading_layer = CanvasLayer.new()
 	loading_layer.layer = 100
@@ -66,9 +66,9 @@ func _uruchom_loading_screen():
 	loading_layer.add_child(tip_label)
 
 	# 5. Start
-	_proces_ladowania()
+	_proces_ladowania(scene_path)
 
-func _proces_ladowania():
+func _proces_ladowania(scene_path: String):
 	var progress = 0.0
 	
 	while progress < 100.0:
@@ -119,11 +119,15 @@ func _proces_ladowania():
 	# Małe zatrzymanie na 100%
 	await get_tree().create_timer(0.4).timeout
 
-	get_tree().change_scene_to_file("res://scenes/scena_1.tscn")
+	get_tree().change_scene_to_file(scene_path)
 	is_loading = false
 
 func _on_button_2_pressed(): # Kontynuacja
-	pass
+	if is_loading:
+		return
+	is_loading = true
+	var last_level = GameConfig.get_last_level()
+	_uruchom_loading_screen(last_level)
 
 func _on_button_3_pressed(): # Ustawienia
 	pass

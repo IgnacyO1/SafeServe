@@ -30,6 +30,7 @@ var SCRIPT_GRACZ = preload("res://scripts/gracz_scena8.gd")
 var SCRIPT_KRAB = preload("res://scripts/krab.gd")
 
 func _ready():
+	GameConfig.save_level("res://scenes/scena_8.tscn")
 	# === TŁO ===
 	var tlo = Sprite2D.new()
 	tlo.texture = TEX_TLO

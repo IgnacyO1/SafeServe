@@ -10,6 +10,7 @@ var map_container : MapContainer
 @onready var radio = $"HUD/Radio popup"
 
 func _ready() -> void:
+	GameConfig.save_level("res://scenes/scena_1.tscn")
 	map_container = self.find_child("MapContainer")
 	var arr = []
 	for i in range(3):

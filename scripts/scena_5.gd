@@ -41,6 +41,7 @@ var plates: Dictionary = {
 }
 
 func _ready() -> void:
+	GameConfig.save_level("res://scenes/scena_5.tscn")
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	video_target_width = get_viewport_rect().size.x * 0.5
 	_build_ui()

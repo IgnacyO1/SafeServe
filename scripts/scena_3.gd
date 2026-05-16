@@ -55,6 +55,7 @@ var inst_wyjscie = null
 @onready var label_zadanie = Label.new()
 
 func _ready():
+	GameConfig.save_level("res://scenes/scena_3.tscn")
 	gracz = get_tree().get_nodes_in_group("gracz")[0] if get_tree().get_nodes_in_group("gracz").size() > 0 else null
 	
 	var hud = $HUD if has_node("HUD") else CanvasLayer.new()
