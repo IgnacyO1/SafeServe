@@ -1,8 +1,17 @@
 extends Control
 
 @onready var label = $Label
-func show_radio_message(text : String):
+func show_radio_message(text : String, audio_file_path : String = ""):
 	label.text = text
 	visible = true
-	await get_tree().create_timer(5.0).timeout
+	if audio_file_path != "":
+		var audio = find_child("AudioStreamPlayer2D")
+		audio.stream = load(audio_file_path)
+		audio.play()
+		await audio.finished
+		audio.stream = null
+	else:
+		await get_tree().create_timer(3.0).timeout
+		pass
 	visible = false
+	

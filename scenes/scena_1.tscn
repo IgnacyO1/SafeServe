@@ -18,7 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://dynjxkt5affec" path="res://assets/graphics/scena_1/fire_truck.svg" id="15_n24rr"]
 [ext_resource type="Texture2D" uid="uid://2oatsvtkffan" path="res://assets/graphics/scena_1/Arrow_icon_white.svg" id="16_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://bl44xpieoapfj" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
+[ext_resource type="AudioStream" uid="uid://brw24n8b477jg" path="res://assets/Sounds/pozar_w_polyservers.wav" id="20_da6gn"]
 [ext_resource type="Texture2D" uid="uid://lyal5gxrpo0l" path="res://assets/graphics/scena_1/Button.png" id="21_0bpa3"]
+[ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
+[ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="22_n24rr"]
+[ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
 
 [sub_resource type="Theme" id="Theme_el5c8"]
 
@@ -43,6 +47,10 @@ font_size = 42
 font_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_maknc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ar68y"]
+font_size = 32
+font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Control" type="Control" unique_id=265069389]
 layout_mode = 3
@@ -596,6 +604,44 @@ offset_right = 873.0
 offset_bottom = 253.99997
 text = "Odsłuchaj"
 label_settings = SubResource("LabelSettings_maknc")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Message modal" unique_id=2047641932]
+position = Vector2(40, 31)
+stream = ExtResource("20_da6gn")
+
+[node name="HUD" type="Control" parent="." unique_id=1462378878]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RadioSprite" type="Sprite2D" parent="HUD" unique_id=470503202]
+position = Vector2(89.00001, 900)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("21_bqyrf")
+
+[node name="Radio popup" type="Control" parent="HUD" unique_id=1043280712]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("22_n24rr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Radio popup" unique_id=1481724730]
+position = Vector2(858.25, 967)
+scale = Vector2(0.9040134, 1)
+texture = ExtResource("23_cmwsu")
+
+[node name="Label" type="Label" parent="HUD/Radio popup" unique_id=1705143820]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 869.0
+offset_right = 1509.0
+offset_bottom = 1106.0
+text = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
+label_settings = SubResource("LabelSettings_ar68y")
+autowrap_mode = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=834002578]
 
 [connection signal="pressed" from="SidePanelBottom/Send" to="." method="_send_unit"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_begin_game"]

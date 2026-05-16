@@ -1,7 +1,4 @@
 extends Node2D
-class_name scena_2
+class_name radio_script
 @onready var radio = $"HUD/Radio popup"
 @onready var map = $Map
-	
-func _ready() -> void:
-	print(map)

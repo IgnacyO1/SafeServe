@@ -6,6 +6,9 @@ var top_panel
 var bottom_panel
 var main_event = false
 var map_container : MapContainer 
+
+@onready var radio = $"HUD/Radio popup"
+
 func _ready() -> void:
 	map_container = self.find_child("MapContainer")
 	var arr = []
