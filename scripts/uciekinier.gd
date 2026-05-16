@@ -171,39 +171,38 @@ func setup(_unused_points, manager, oneway_status):
 func _ready():
 	add_to_group("uciekinier")
 
+# Dodaj nową zmienną na górze klasy:
+var real_speed: float = 0.0
+
 func _physics_process(delta):
 	if current_road_points.is_empty(): return
 	if target_index >= current_road_points.size():
 		speed = 0
+		real_speed = 0 # Wymuszamy zero na końcu trasy
 		return
 	
-	# 1. Obliczamy postęp pościgu (0.0 do 1.0)
+	# 1. Obliczamy postęp pościgu (bez zmian)
 	var progress = float(current_progress_index) / float(total_path_points)
 	
-	# Pobieramy dystans do policji (gracza)
-	var police = get_tree().get_first_node_in_group("police") # Upewnij się, że Police car jest w grupie "police"
+	# Pobieramy dystans do policji (bez zmian)
+	var police = get_tree().get_first_node_in_group("police")
 	var distance_to_police = 0.0
 	if is_instance_valid(police):
 		distance_to_police = global_position.distance_to(police.global_position)
 
-	# 2. Logika prędkości
+	# 2. Logika prędkości (bez zmian)
 	if progress < 0.1:
-		# POCZĄTEK: Agresywna ucieczka
 		speed = base_speed * 1.2
 	elif progress > 0.9:
-		# KOŃCÓWKA: Zwalnianie do przechwycenia
 		speed = base_speed * 0.6
 	else:
-		# ŚRODEK: Rubber Banding (zależny od dystansu)
-		# Dystans podajemy w pikselach (50m = 1000px, 200m = 4000px przy skali 20)
 		var dist_px = distance_to_police
-		
-		if dist_px > 60.0: # Dalej niż 200m
-			speed = base_speed * 0.7 # Zwalnia, żeby gracz mógł dogonić
-		elif dist_px < 20.0: # Bliżej niż 50m
-			speed = base_speed * 1.3 # Przyspiesza, żeby gracz go nie taranował za wcześnie
+		if dist_px > 4000.0: # POPRAWKA: Miałeś tu 60.0 i 20.0 (w metrach), a dystans jest w px! 200m = 4000px
+			speed = base_speed * 0.7 
+		elif dist_px < 1000.0: # 50m = 1000px
+			speed = base_speed * 1.3 
 		else:
-			speed = base_speed # Standardowa walka
+			speed = base_speed
 
 	# 3. Logika ruchu
 	var target_pos = get_offset_point(target_index - 1, target_index)
@@ -215,9 +214,13 @@ func _physics_process(delta):
 		var target_angle = velocity.angle()
 		rotation = lerp_angle(rotation, target_angle, 10.0 * delta)
 	
+	# Wykonanie ruchu fizycznego
 	move_and_slide()
 	
-	if global_position.distance_to(target_pos) < 50.0: # Zwiększony margines dla płynności w końcowej fazie pościgu
+	# KLUCZOWA ZMIANA: Pobieramy faktyczną prędkość, z jaką ciało się przesunęło
+	real_speed = get_real_velocity().length()
+	
+	if global_position.distance_to(target_pos) < 50.0:
 		advance_path()
 
 func get_offset_point(from_idx, to_idx):

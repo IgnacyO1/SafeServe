@@ -46,10 +46,15 @@ func _process(_delta):
 		
 		coords_label.text = "POŚCIG ZA CYBERKRABEM\nDYSTANS: %d m" % int(dist_m)
 
-		# Warunek złapania:
-		# Sprawdzamy czy uciekinier dojechał do końca (jego speed spadnie do 0 w advance_path)
-		# albo czy jesteśmy bardzo blisko gdy on zwalnia
-		if dist_m < 7.0 and boss.speed < 200.0:
+		# --- NOWY WARUNEK ZŁAPANIA (NA PODSTAWIE REAL_SPEED) ---
+		# Przerywnik odpali się, jeśli:
+		# a) Jesteś blisko (< 7m) I uciekinier fizycznie utknął / stoi (real_speed < 30.0)
+		# b) LUB uciekinier dojechał do samego końca trasy (boss.speed == 0)
+		
+		var is_close_and_blocked = (dist_m < 7.0 and boss.real_speed < 30.0)
+		var reached_end_of_path = (boss.speed == 0.0)
+
+		if is_close_and_blocked or reached_end_of_path:
 			play_cutscene_sequence()
 	else:
 		coords_label.text = "SZUKANIE SYGNAŁU..."
