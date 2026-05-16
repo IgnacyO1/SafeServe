@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ci22buk5nmqls" path="res://scripts/scena_6.gd" id="1_ik431"]
 [ext_resource type="Script" uid="uid://bl56lrn5e35gw" path="res://scripts/scena_6_world.gd" id="2_mijow"]
-[ext_resource type="Script" path="res://scripts/map_manager_for_police.gd" id="3_mijow"]
-[ext_resource type="Script" path="res://scripts/traffic_manager_for_police.gd" id="5_i3kjs"]
+[ext_resource type="Script" uid="uid://biq5prfp00bux" path="res://scripts/map_manager_for_police.gd" id="3_mijow"]
+[ext_resource type="Script" uid="uid://c0mjmoxa2yyk4" path="res://scripts/traffic_manager_for_police.gd" id="5_i3kjs"]
 [ext_resource type="PackedScene" uid="uid://dpu65mdptiq8b" path="res://scenes/Police/police.tscn" id="5_mijow"]
 [ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/Images/Screenshot_20260514_144541.png" id="6_qkxkd"]
 [ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="7_h702h"]
@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://diiovhg0my5gj" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_jliou"]
 [ext_resource type="Texture2D" uid="uid://c8hlloie2j8d" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_ik431"]
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_wexbb"]
-[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_jliou"]
+[ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="15_jliou"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_ik431"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
