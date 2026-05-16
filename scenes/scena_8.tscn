@@ -2,9 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
 [ext_resource type="AudioStream" uid="uid://bgbjqpw3bkdnf" path="res://assets/Sounds/dying_robot.mp3" id="2_yj0pn"]
+[ext_resource type="AudioStream" uid="uid://d28qbx3xivgjg" path="res://assets/Sounds/Final Boss Battle - Rod Kim.mp3" id="3_djapk"]
 
 [node name="Scena8" type="Node2D" unique_id=1730050766]
 script = ExtResource("1_scena8")
 
 [node name="SmiercKrabaDzwiek" type="AudioStreamPlayer2D" parent="." unique_id=636303400]
 stream = ExtResource("2_yj0pn")
+
+[node name="Muzyka" type="AudioStreamPlayer2D" parent="." unique_id=1375650535]
+stream = ExtResource("3_djapk")
+autoplay = true
+parameters/looping = true

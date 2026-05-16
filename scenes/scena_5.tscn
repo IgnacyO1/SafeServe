@@ -1,8 +1,45 @@
 [gd_scene format=3 uid="uid://cxab3k7p0f2q5"]
 
 [ext_resource type="Script" uid="uid://dukdf1db753yw" path="res://scripts/scena_5.gd" id="1_sc5gd"]
+[ext_resource type="AudioStream" uid="uid://dbk6iuduehycf" path="res://assets/Sounds/Conspiracy Theory - Rod Kim.mp3" id="2_6hmby"]
+[ext_resource type="Texture2D" uid="uid://dn52leh6bgbqd" path="res://assets/graphics/pasekwindows.png" id="3_mc8du"]
+[ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="4_7ve8e"]
+[ext_resource type="Texture2D" uid="uid://1cxrkb33s1ag" path="res://assets/graphics/moto-1.png" id="5_jhgwc"]
 
 [node name="Scena5" type="Control" unique_id=1391430140]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_sc5gd")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
+stream = ExtResource("2_6hmby")
+autoplay = true
+parameters/looping = true
+
+[node name="pasekzadań" type="Sprite2D" parent="." unique_id=950731206]
+z_index = 10
+position = Vector2(960, 1058)
+scale = Vector2(0.7507109, 0.750711)
+texture = ExtResource("3_mc8du")
+
+[node name="okno" type="Sprite2D" parent="." unique_id=357794957]
+z_index = 10
+position = Vector2(960, 18)
+scale = Vector2(0.8376963, 0.74)
+texture = ExtResource("4_7ve8e")
+
+[node name="moto" type="Sprite2D" parent="." unique_id=559961015]
+z_index = 1
+position = Vector2(1789.0001, 967.99994)
+scale = Vector2(0.2006095, 0.20060956)
+texture = ExtResource("5_jhgwc")
+
+[node name="Label" type="Label" parent="." unique_id=177958328]
+z_index = 11
+layout_mode = 0
+offset_left = 785.0
+offset_top = 7.0
+offset_right = 1031.475
+offset_bottom = 79.0
+text = "SMART REGISTER SYSTEM | CCTV
+"
