@@ -3,11 +3,12 @@ extends Node2D
 # --- KONFIGURACJA LOADING SCREENA ---
 var loading_bg_tex = preload("res://assets/graphics/loading_background.png") 
 var tips = [
-	"TIP: Używaj siekiery, aby wyważyć zablokowane drzwi.",
 	"TIP: Gaszenie ognia zajmuje czas, planuj trasę!",
-	"TIP: Babcia czeka na ratunek w północnej części budynku.",
-	"TIP: Czarna skrzynka jest kluczowa dla misji.",
-	"TIP: Masz ograniczony czas, nie marnuj go na stanie w miejscu!"
+	"TIP: Starsza osoba czeka na ratunek w północnej części budynku.",
+	"TIP: Masz ograniczony czas, nie marnuj go na stanie w miejscu!",
+	"TIP: Jeździj głównymi drogami, nie będziesz się wderzał w budynki.",
+	"TIP: Gdy przytrzymasz M, zobaczysz mapę.",
+	"TIP: Jadąc ulicami, gdy wciśniesz H to zatrąbisz i samochody utworzą korytarz życia."
 ]
 
 var loading_layer: CanvasLayer = null
