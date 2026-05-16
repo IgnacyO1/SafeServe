@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
+[ext_resource type="AudioStream" uid="uid://dumdvyt2mojxu" path="res://assets/Sounds/Test Your Fight - Rod Kim.mp3" id="2_dorrt"]
 [ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
 [ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
 
@@ -11,9 +12,14 @@ size = Vector2(30, 50)
 [sub_resource type="CircleShape2D" id="CircleShape2D_wb72h"]
 radius = 80.0
 
-[node name="Scena4" type="Node2D" unique_id=2111619701]
+[node name="Scena3" type="Node2D" unique_id=2111619701]
 position = Vector2(1, 0)
 script = ExtResource("1_2a01s")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1358248542]
+stream = ExtResource("2_dorrt")
+autoplay = true
+parameters/looping = true
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=921566932]
 position = Vector2(1, 0)

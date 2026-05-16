@@ -220,14 +220,27 @@ func _process(delta: float) -> void:
 		czas_do_rozrostu -= delta
 		if czas_do_rozrostu <= 0:
 			czas_do_rozrostu = 5.0 # rozrost co 5 sekund
-			if ognie.size() > 0 and ognie.size() < 30: # Max 30 pożarów na mapie
+			if ognie.size() > 0 and ognie.size() < 30: # Max 30 pożarów
 				var losowy_ogien = ognie[randi() % ognie.size()]
 				if is_instance_valid(losowy_ogien):
-					var nowy_ogien = OGIEN_SCENA.instantiate()
-					var offset = Vector2(randf_range(-120, 120), randf_range(-120, 120))
-					nowy_ogien.position = losowy_ogien.position + offset
-					add_child(nowy_ogien)
-					ognie.append(nowy_ogien)
+					# Próbujemy znaleźć czyste miejsce (maksymalnie 5 prób, żeby nie zapętlić gry)
+					var znaleziono_miejsce = false
+					var nowa_pozycja = Vector2.ZERO
+					
+					for proba in range(5):
+						var offset = Vector2(randf_range(-120, 120), randf_range(-120, 120))
+						nowa_pozycja = losowy_ogien.position + offset
+						
+						if not _czy_pozycja_zablokowana(nowa_pozycja):
+							znaleziono_miejsce = true
+							break
+					
+					# Jeśli miejsce jest czyste, spawnujemy ogień
+					if znaleziono_miejsce:
+						var nowy_ogien = OGIEN_SCENA.instantiate()
+						nowy_ogien.position = nowa_pozycja
+						add_child(nowy_ogien)
+						ognie.append(nowy_ogien)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -329,14 +342,24 @@ func _rozpocznij_faze_pozary():
 	# Spawnuj ognie
 	for poz in pozycje_ogni:
 		var ilosc = randi_range(1, 5)
-		for i in range(ilosc):
-			var ogien = OGIEN_SCENA.instantiate()
+		var spakowane_w_tej_strefie = 0
+		var proby_strefy = 0
+		
+		# Próbujemy wygenerować zadaną ilość ognia, dbając o kolizje
+		while spakowane_w_tej_strefie < ilosc and proby_strefy < 15:
+			proby_strefy += 1
 			var offset = Vector2.ZERO
-			if i > 0:
+			if spakowane_w_tej_strefie > 0:
 				offset = Vector2(randf_range(-80, 80), randf_range(-80, 80))
-			ogien.position = poz + offset
-			add_child(ogien)
-			ognie.append(ogien)
+			
+			var testowana_pozycja = poz + offset
+			
+			if not _czy_pozycja_zablokowana(testowana_pozycja):
+				var ogien = OGIEN_SCENA.instantiate()
+				ogien.position = testowana_pozycja
+				add_child(ogien)
+				ognie.append(ogien)
+				spakowane_w_tej_strefie += 1
 
 func zgaszono_ogien(ogien):
 	if ognie.has(ogien):
@@ -623,3 +646,18 @@ func _po_cutscence():
 	await get_tree().create_timer(1.0).timeout
 	
 	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
+
+# Funkcja zwraca true, jeśli na danej pozycji znajduje się obiekt kolizyjny
+func _czy_pozycja_zablokowana(pozycja: Vector2) -> bool:
+	var space_state = get_world_2d().direct_space_state
+	if not space_state:
+		return false
+		
+	var query = PhysicsPointQueryParameters2D.new()
+	query.position = pozycja
+	# Tutaj możesz ustawić collision_mask, np. query.collision_mask = 1 
+	# (Ustaw taką maskę, na której znajdują się Twoje ściany/CollisionPolygony)
+	query.collision_mask = 1 
+	
+	var wyniki = space_state.intersect_point(query)
+	return wyniki.size() > 0

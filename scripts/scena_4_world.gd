@@ -15,10 +15,14 @@ var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
 
+# --- NOWOŚĆ: STREFA DOCELOWA ---
+var target_zone_visual: Polygon2D
+
 func _ready():
 	if not player: return
 	setup_level()
 	setup_ui()
+	setup_target_zone_visual()
 	await get_tree().process_frame
 	get_tree().current_scene.map.set_target(target_pos_px)
 
@@ -26,6 +30,23 @@ func setup_level():
 	# Mówimy managerowi, gdzie ma zacząć generować świat
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
+
+func setup_target_zone_visual():
+	target_zone_visual = Polygon2D.new()
+	target_zone_visual.global_position = target_pos_px
+	
+	# Obliczamy promień w pikselach: 10 metrów * skala mapy (20) = 200 pikseli
+	var radius_px = 10.0 * 20.0
+	var points_count = 32
+	var points = PackedVector2Array()
+	for i in range(points_count):
+		var angle = i * (PI * 2.0) / points_count
+		points.append(Vector2(cos(angle), sin(angle)) * radius_px)
+
+	target_zone_visual.polygon = points
+	target_zone_visual.color = Color(1.0, 0.0, 0.0, 0.3)
+	target_zone_visual.z_index = -1
+	add_child(target_zone_visual)
 
 func setup_ui():
 	var canvas = CanvasLayer.new()
@@ -126,6 +147,10 @@ func play_cutscene_sequence():
 	var tween_mid_in = create_tween()
 	tween_mid_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	await tween_mid_in.finished
+
+	# Ukrywamy strefę docelową na czas cutscenki, żeby nie prześwitywała
+	if is_instance_valid(target_zone_visual):
+		target_zone_visual.visible = false
 	
 	# 8. Czekamy na koniec drugiego filmu
 	await video_player.finished
