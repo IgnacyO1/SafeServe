@@ -94,30 +94,26 @@ func _physics_process(delta: float) -> void:
 
 	if direction != Vector2.ZERO:
 		state = "walk"
-		if direction.x < -0.1 and direction.y < -0.1:
+		var move_dir = direction.normalized()
+		# Wydłużony offset, tak aby poziome i pionowe kierunki oraz skosy
+		# startowały poza kolizją gracza i nie blokowały strzału.
+		$PunktStrzalu.position = move_dir * 40.0
+		if move_dir.x < -0.1 and move_dir.y < -0.1:
 			dir_str = "up_left"
-			$PunktStrzalu.position = Vector2(-15, -5)
-		elif direction.x > 0.1 and direction.y < -0.1:
+		elif move_dir.x > 0.1 and move_dir.y < -0.1:
 			dir_str = "up_right"
-			$PunktStrzalu.position = Vector2(15, -5)
-		elif direction.x < -0.1 and direction.y > 0.1:
+		elif move_dir.x < -0.1 and move_dir.y > 0.1:
 			dir_str = "down_left"
-			$PunktStrzalu.position = Vector2(-15, 15)
-		elif direction.x > 0.1 and direction.y > 0.1:
+		elif move_dir.x > 0.1 and move_dir.y > 0.1:
 			dir_str = "down_right"
-			$PunktStrzalu.position = Vector2(15, 15)
-		elif direction.x < -0.1:
+		elif move_dir.x < -0.1:
 			dir_str = "left"
-			$PunktStrzalu.position = Vector2(-20, 15)
-		elif direction.x > 0.1:
+		elif move_dir.x > 0.1:
 			dir_str = "right"
-			$PunktStrzalu.position = Vector2(20, 15)
-		elif direction.y < -0.1:
+		elif move_dir.y < -0.1:
 			dir_str = "up"
-			$PunktStrzalu.position = Vector2(15, 5)
-		elif direction.y > 0.1:
+		elif move_dir.y > 0.1:
 			dir_str = "down"
-			$PunktStrzalu.position = Vector2(-15, 15)
 
 	if state != last_state or dir_str != last_dir_str:
 		set_animation(state, dir_str)
