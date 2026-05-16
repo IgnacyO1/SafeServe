@@ -13,6 +13,7 @@ script = ExtResource("1_sc5gd")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
 stream = ExtResource("2_6hmby")
+volume_db = -11.982
 autoplay = true
 parameters/looping = true
 
