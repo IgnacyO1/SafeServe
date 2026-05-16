@@ -14,10 +14,14 @@ var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
 
+# --- NOWOŚĆ: STREFA DOCELOWA ---
+var target_zone_visual: Polygon2D
+
 func _ready():
 	if not player: return
 	setup_level()
 	setup_ui()
+	setup_target_zone_visual() # <-- Inicjalizacja wizualizacji celu
 	await get_tree().process_frame
 	get_tree().current_scene.map.set_target(target_pos_px)
 
@@ -25,6 +29,28 @@ func setup_level():
 	# Mówimy managerowi, gdzie ma zacząć generować świat
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
+
+# --- NOWOŚĆ: GENEROWANIE WIZUALNEGO OKRĘGU ---
+func setup_target_zone_visual():
+	target_zone_visual = Polygon2D.new()
+	target_zone_visual.global_position = target_pos_px
+	
+	# Obliczamy promień w pikselach: 5 metrów * skala mapy (20) = 100 pikseli
+	var radius_px = 10.0 * 20.0 
+	var points_count = 32 # Gładkość okręgu
+	var points = PackedVector2Array()
+	
+	for i in range(points_count):
+		var angle = i * (PI * 2.0) / points_count
+		points.append(Vector2(cos(angle), sin(angle)) * radius_px)
+		
+	target_zone_visual.polygon = points
+	# Kolor czerwony z 30% przezroczystością (RGBA)
+	target_zone_visual.color = Color(1.0, 0.0, 0.0, 0.3)
+	# Z-index ustawiony tak, by okrąg leżał na asfalcie, ale pod samochodem
+	target_zone_visual.z_index = -1 
+	
+	add_child(target_zone_visual)
 
 func setup_ui():
 	var canvas = CanvasLayer.new()
@@ -62,7 +88,6 @@ func setup_ui():
 	canvas.add_child(fade_rect)
 
 func _process(_delta):
-
 	if is_changing_scene: return # Blokada process podczas zmiany sceny
 	
 	if is_instance_valid(player) and arrow_sprite:
@@ -74,24 +99,26 @@ func _process(_delta):
 		# Aktualizacja UI
 		coords_label.text = "GPS: %d, %d\nDO CELU: %d m" % [player_pos.x, player_pos.y, int(dist_m)]
 		
-		# Rotacja strzałki (Twoja sprawdzona metoda)
+		# Rotacja strzałki
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
 		# --- LOGIKA DOJAZDU DO CELU ---
-		# Sprawdzamy dystans (< 5m) i czy auto prawie stoi (prędkość < 10)
 		var current_speed = 0.0
 		if player is RigidBody2D:
 			current_speed = player.linear_velocity.length()
-		elif "velocity" in player: # Jeśli to CharacterBody2D
+		elif "velocity" in player:
 			current_speed = player.velocity.length()
 
-		if dist_m < 5.0 and current_speed < 10.0:
+		if dist_m < 10.0 and current_speed < 10.0:
 			play_cutscene_sequence()
-		
 
 func play_cutscene_sequence():
 	is_changing_scene = true
 	get_tree().current_scene.find_child("HUD").visible = false
+	
+	# Ukrywamy strefę docelową na czas cutscenki, żeby nie prześwitywała
+	if is_instance_valid(target_zone_visual):
+		target_zone_visual.visible = false
 
 	# 1. Ściemnienie gry (Fade Out)
 	var tween = create_tween()

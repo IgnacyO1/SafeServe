@@ -13,6 +13,7 @@ var arrow_sprite: Polygon2D
 var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
+var arrival_message_played = false
 var uciekinier = false
 
 func _ready():
@@ -82,15 +83,21 @@ func _process(_delta):
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
 		# --- LOGIKA DOJAZDU DO CELU ---
-		# Sprawdzamy dystans (< 5m) i czy auto prawie stoi (prędkość < 10)
+		if dist_m < 20.0 and not arrival_message_played:
+			arrival_message_played = true
+			call_deferred("play_arrival_radio_message")
+
 		var current_speed = 0.0
 		if player is RigidBody2D:
 			current_speed = player.linear_velocity.length()
 		elif "velocity" in player: # Jeśli to CharacterBody2D
 			current_speed = player.velocity.length()
 
-		if dist_m < 5.0 and current_speed < 10.0:
+		if dist_m < 10.0 and current_speed < 10.0:
 			play_cutscene_sequence()
+
+func play_arrival_radio_message():
+	get_tree().current_scene.radio.show_radio_message("dobra, jesteśmy na miejscu, Zawiła 44 E. Zatrzymajmy się aby się rozejrzeć,")#, "res://assets/Sounds/zawila.mp3")
 
 func play_cutscene_sequence():
 	is_changing_scene = true

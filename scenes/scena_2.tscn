@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://8f00fel4m8ru" path="res://scripts/scena_2.gd" id="1_wb0wj"]
 [ext_resource type="Script" uid="uid://bpftlypthaga5" path="res://scripts/map_manager.gd" id="2_dorrt"]
 [ext_resource type="PackedScene" uid="uid://bwvp7s5o3punc" path="res://scenes/Car/car.tscn" id="3_foj7g"]
-[ext_resource type="Script" path="res://scripts/traffic_manager.gd" id="4_bpjt2"]
+[ext_resource type="Script" uid="uid://car6qoc5oj7yq" path="res://scripts/traffic_manager.gd" id="4_bpjt2"]
 [ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/Images/Screenshot_20260514_144541.png" id="5_dorrt"]
 [ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="6_foj7g"]
 [ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bpjt2"]
@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c8hlloie2j8d" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_l4snw"]
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_tbjg3"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="15_tbjg3"]
-[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="16_wb0wj"]
+[ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="16_wb0wj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxtjr"]
 font_size = 32
