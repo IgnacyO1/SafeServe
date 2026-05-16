@@ -18,7 +18,7 @@ var VIDEO_PATH = "res://assets/Videos/cutscean2.ogv" # Zmień na właściwą śc
 var video_player: VideoStreamPlayer = null
 
 var pozycje_ogni = [
-	Vector2(2257, 483), Vector2(6149, 505), Vector2(3651, 541),
+	Vector2(2257, 483), Vector2(3651, 541),
 	Vector2(7000, 2000), Vector2(4888, 1750), Vector2(552, 1876),
 	Vector2(6641, 2233), Vector2(3390, 2498), Vector2(1066, 2790),
 	Vector2(6560, 3232),
@@ -313,11 +313,11 @@ func _drzwi_wyburzone():
 
 func _rozpocznij_faze_pozary():
 	faza = "POZARY"
-	czas = 200.0  # ~3.3 minuty na resztę gry
+	czas = 300.0  # 5 minut na resztę gry
 
 	if label_czas:
 		label_czas.visible = true
-	label_zadanie.text = "ZGAŚ POŻARY! MASZ 3 MINUTY!"
+	label_zadanie.text = "ZGAŚ POŻARY! MASZ 5 MINUT!"
 	label_zadanie.modulate = Color.YELLOW
 	label_zadanie.visible = true
 	if label_skrzynka:

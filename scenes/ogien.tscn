@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://dbihrsfmcqb50"]
 
-[ext_resource type="Script" uid="uid://dd01d3stx8lij" path="res://scripts/ogien.gd" id="1_3me4k"]
-[ext_resource type="Texture2D" path="res://assets/Images/ogien_animacja.png" id="2_7bi8s"]
+[ext_resource type="Script" uid="uid://ki8kkhq266t4" path="res://scripts/ogien.gd" id="1_3me4k"]
+[ext_resource type="Texture2D" uid="uid://cocdw3qogt6iy" path="res://assets/Images/ogien_animacja.png" id="2_7bi8s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wb72h"]
-size = Vector2(100, 150)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3me4k"]
+radius = 36.0
+height = 84.0
 
 [node name="Ogien1" type="Area2D" unique_id=1433046882 groups=["ogien"]]
 script = ExtResource("1_3me4k")
@@ -15,6 +16,7 @@ texture = ExtResource("2_7bi8s")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1585619310]
-shape = SubResource("RectangleShape2D_wb72h")
+position = Vector2(-1, 16)
+shape = SubResource("CapsuleShape2D_3me4k")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
