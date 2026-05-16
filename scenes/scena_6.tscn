@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_wexbb"]
 [ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="15_jliou"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_ik431"]
+[ext_resource type="AudioStream" uid="uid://tb1a1nljx5tj" path="res://assets/Sounds/Y2K Heist - Rod Kim.mp3" id="18_wexbb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
 font_size = 32
@@ -105,6 +106,7 @@ label_settings = SubResource("LabelSettings_q82ln")
 autowrap_mode = 2
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=1865934095]
+volume_db = 24.0
 
 [node name="Control" type="Control" parent="HUD" unique_id=1142380390]
 anchors_preset = 0
@@ -158,6 +160,12 @@ script = ExtResource("15_jliou")
 position = Vector2(495.3, 383.175)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("16_ik431")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1640422323]
+stream = ExtResource("18_wexbb")
+volume_db = -19.033
+autoplay = true
+parameters/looping = true
 
 [connection signal="toggled" from="HUD/Control/TextureButton2" to="SubViewportContainer/SubViewport/World/Police" method="turn_siren"]
 [connection signal="toggled" from="HUD/Control/TextureButton" to="SubViewportContainer/SubViewport/World/Police" method="turn_emergency_lights"]
