@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- UNIKALNE USTAWIENIA TEJ TRASY ---
+# Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
 
@@ -46,7 +46,7 @@ func _process(_delta):
 		
 		coords_label.text = "POŚCIG ZA CYBERKRABEM\nDYSTANS: %d m" % int(dist_m)
 
-		# --- NOWY WARUNEK ZŁAPANIA (NA PODSTAWIE REAL_SPEED) ---
+		# Nowy WARUNEK ZŁAPANIA (NA PODSTAWIE REAL_SPEED)
 		# Przerywnik odpali się, jeśli:
 		# a) Jesteś blisko (< 7m) I uciekinier fizycznie utknął / stoi (real_speed < 30.0)
 		# b) LUB uciekinier dojechał do samego końca trasy (boss.speed == 0)
@@ -80,7 +80,6 @@ func setup_ui():
 	arrow_sprite.color = Color.RED
 	arrow_container.add_child(arrow_sprite)
 
-	# --- NOWOŚĆ: VIDEO PLAYER ---
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(cutscene_path)
 	video_player.expand = true
@@ -100,40 +99,40 @@ func setup_ui():
 func play_cutscene_sequence():
 	is_changing_scene = true
 	
-	# 1. Ściemnienie gry (Fade Out)
+	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween.finished # Czekamy aż zgaśnie
 	
-	# 2. Przygotowanie wideo pod czarną zasłoną
+	# Przygotowanie wideo pod czarną zasłoną
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# 3. Rozjaśnienie wideo (Fade In wideo)
+	# Rozjaśnienie wideo (Fade In wideo)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
-	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
+	# Czekamy aż film się skończy (lub używamy timer na 2s)
 	await get_tree().create_timer(2.0).timeout
 	
-	# 5. Ściemnienie wideo (Fade Out przed zmianą sceny)
+	# Ściemnienie wideo (Fade Out przed zmianą sceny)
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
 	get_tree().change_scene_to_file("res://scenes/scena_8.tscn")
 
-#func _input(event):
-	## Zmieniono z is_action_just_pressed na is_action_pressed
-	## Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
-	#if event.is_action_pressed("ui_accept", false):
-		#log_current_coordinates()
+# func _input(event):
+	# # Zmieniono z is_action_just_pressed na is_action_pressed
+	# # Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
+	# if event.is_action_pressed("ui_accept", false):
+		# log_current_coordinates()
 #
-#func log_current_coordinates():
-	#if is_instance_valid(player):
-		#var pos = player.global_position
-		## round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
-		#var clean_x = round(pos.x)
-		#var clean_y = round(pos.y)
-		#print("Vector2(%d, %d)," % [clean_x, clean_y])
+# func log_current_coordinates():
+	# if is_instance_valid(player):
+		# var pos = player.global_position
+		# # round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
+		# var clean_x = round(pos.x)
+		# var clean_y = round(pos.y)
+		# print("Vector2(%d, %d)," % [clean_x, clean_y])

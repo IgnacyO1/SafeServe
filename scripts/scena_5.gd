@@ -360,7 +360,7 @@ func _on_close_map_pressed() -> void:
 	if not dispatch_btn.disabled:
 		status_label.text = "System monitoringu aktywny."
 
-# --- POMOCNICZE FUNKCJE STYLIZOWANIA UI SYSTEMOWEGO (MOTOROLA DESIGN) ---
+# Pomocnicze FUNKCJE STYLIZOWANIA UI SYSTEMOWEGO (MOTOROLA DESIGN)
 func _style_button(btn: Button, bg_col: Color, hover_col: Color) -> void:
 	var normal = StyleBoxFlat.new()
 	normal.bg_color = bg_col

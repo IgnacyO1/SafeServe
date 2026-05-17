@@ -1,7 +1,7 @@
 extends "res://scripts/radio.gd"
 
 
-# Called when the node enters the scene tree for the first time.
+# Gdy węzeł trafi do drzewa sceny.
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_2.tscn")
 	var sekundy_przed_wiadmoscia = randi_range(10, 20) # Tu ilość sekund, po której pojawia się popup

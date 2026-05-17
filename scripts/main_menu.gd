@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- KONFIGURACJA LOADING SCREENA ---
+# Konfiguracja LOADING SCREENA
 var loading_bg_tex = preload("res://assets/graphics/loading_background.png") 
 var tips = [
 	"TIP: Gaszenie ognia zajmuje czas, planuj trasę!",
@@ -24,19 +24,19 @@ func _on_button_pressed():
 	_uruchom_loading_screen("res://scenes/scena_1.tscn")
 
 func _uruchom_loading_screen(scene_path: String):
-	# 1. Tworzymy warstwę
+	# Tworzymy warstwę
 	loading_layer = CanvasLayer.new()
 	loading_layer.layer = 100
 	add_child(loading_layer)
 
-	# 2. Tło
+	# Tło
 	var bg = TextureRect.new()
 	bg.texture = loading_bg_tex
 	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	loading_layer.add_child(bg)
 
-	# 3. Pasek postępu
+	# Pasek postępu
 	var bar_width = 800
 	var bar_height = 40
 	
@@ -52,7 +52,7 @@ func _uruchom_loading_screen(scene_path: String):
 	progress_bar.value = 0
 	loading_layer.add_child(progress_bar)
 
-	# 4. Tekst z poradami
+	# Tekst z poradami
 	tip_label = Label.new()
 	tip_label.text = tips[randi() % tips.size()]
 	tip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -66,7 +66,7 @@ func _uruchom_loading_screen(scene_path: String):
 	tip_label.set("theme_override_constants/outline_size", 5)
 	loading_layer.add_child(tip_label)
 
-	# 5. Start
+	# Start
 	_proces_ladowania(scene_path)
 
 func _proces_ladowania(scene_path: String):
@@ -76,9 +76,9 @@ func _proces_ladowania(scene_path: String):
 		if not is_instance_valid(progress_bar):
 			break
 
-		# ----------------------------
-		# LOSOWY PRZYROST
-		# ----------------------------
+		# ----------
+		# Losowy PRZYROST
+		# ----------
 		
 		var increment = randf_range(0.3, 3.5)
 
@@ -94,16 +94,16 @@ func _proces_ladowania(scene_path: String):
 
 		progress_bar.value = progress
 
-		# ----------------------------
-		# LOSOWE ZMIANY TIPÓW
-		# ----------------------------
+		# ----------
+		# Losowe ZMIANY TIPÓW
+		# ----------
 		
 		if randi() % 12 == 0:
 			tip_label.text = tips[randi() % tips.size()]
 
-		# ----------------------------
-		# SHUTTERY / PRZYCIĘCIA
-		# ----------------------------
+		# ----------
+		# Shuttery / PRZYCIĘCIA
+		# ----------
 
 		var wait_time = randf_range(0.03, 0.30)
 

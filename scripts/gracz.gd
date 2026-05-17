@@ -190,9 +190,9 @@ func _on_area_entered(area: Area2D) -> void:
 		elif scena.has_method("przegrana"):
 			scena.przegrana()
 		
-		# --- BACKDOOR: Cutscenka po dotknięciu ognia ---
+		# BACKDOOR: Cutscenka po dotknięciu ognia
 		# Aby dodać cutscenkę zamiast natychmiastowej przegranej, 
 		# zakomentuj powyższe wywołanie 'scena.przegrana()' i odkomentuj poniższe:
 		# print("Gracz dotknął ognia! (Cutscenka spalania)")
 		# scena._odtworz_cutscenke_spalania() # wywołanie przyszłej funkcji
-		# -----------------------------------------------
+		# -----------------------------

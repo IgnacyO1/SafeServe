@@ -19,7 +19,7 @@ out = cv2.VideoWriter(
 )
 
 # =========================
-# TRACK ID GROUPS
+# Track ID GROUPS
 # =========================
 
 groups = {
@@ -60,7 +60,7 @@ groups = {
 }
 
 # =========================
-# ID -> MASTER ID
+# Id -> MASTER ID
 # =========================
 
 id_map = {}
@@ -71,7 +71,7 @@ for master_id, ids in groups.items():
         id_map[i] = master_id
 
 # =========================
-# PLATES
+# Plates
 # =========================
 
 plates = {
@@ -111,7 +111,7 @@ plates = {
     389: "ZS 7TR55",
     392: "SCI 2AC11",
 
-    # PODEJRZANY
+    # Podejrzany
     543: "KR4B2137",
 
     558: "KGR 8PF22",
@@ -121,7 +121,7 @@ plates = {
 }
 
 # =========================
-# TRACKING
+# Tracking
 # =========================
 
 results = model.track(
@@ -157,7 +157,7 @@ for frame_idx, result in enumerate(results):
             color = (0,255,0)
 
 
-            # BOX
+            # Box
             cv2.rectangle(
                 frame,
                 (x1, y1),
@@ -166,7 +166,7 @@ for frame_idx, result in enumerate(results):
                 2
             )
 
-            # LABEL
+            # Label
             cv2.putText(
                 frame,
                 plate,

@@ -1,4 +1,4 @@
-# path_mover.gd
+#
 extends Node
 
 var speed = 200.0

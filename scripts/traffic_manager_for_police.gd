@@ -52,7 +52,7 @@ func spawn_random_agent():
 	var nodes = map_manager.road_network.keys()
 	var spawn_node = nodes.pick_random()
 	
-	# 1. Sprawdź czy miejsce jest wolne (używając fizyki)
+	# Sprawdź czy miejsce jest wolne (używając fizyki)
 	var space_state = get_viewport().find_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	
@@ -74,7 +74,6 @@ func spawn_random_agent():
 	
 	# Przekazujemy punkty ORAZ status oneway do setup
 	npc.setup(road_data.points, map_manager, road_data.oneway)
-	# --- NOWOŚĆ: Wyłączenie kolizji NPC na start ---
 	var original_mask = npc.collision_mask
 	npc.collision_mask = 0
 	

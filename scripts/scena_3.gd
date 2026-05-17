@@ -36,7 +36,7 @@ var ognie = []
 var gracz
 var czas_do_rozrostu = 5.0
 
-# --- DRZWI (rąbanie) ---
+# DRZWI (rąbanie)
 var drzwi_hp = 30.0
 var drzwi_max_hp = 30.0
 var siekira_pivot: Node2D = null
@@ -48,10 +48,10 @@ var jest_rabanie = false
 var rabanie_kat = 0.0
 var rabanie_cooldown = 0.0
 
-# --- FADE ---
+# Fade
 var fade_rect: ColorRect = null
 
-# --- Obiekty faz ---
+# Obiekty faz
 var inst_babcia = null
 var inst_skrzynka = null
 var inst_wyjscie = null
@@ -464,7 +464,7 @@ func przegrana_spalenie():
 	await get_tree().create_timer(3.0).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
-# --- FADE EFFECTS ---
+# Fade EFFECTS
 func _fade_in(duration: float):
 	if not fade_rect:
 		return
@@ -477,7 +477,7 @@ func _fade_out(duration: float):
 	var tw = create_tween()
 	tw.tween_property(fade_rect, "color:a", 1.0, duration)
 
-# --- MINIMAPA ---
+# Minimapa
 func _odswiez_minimape():
 	for child in markers_node.get_children():
 		child.queue_free()
@@ -567,16 +567,16 @@ func _dodaj_sciany_graniczne():
 	border.add_child(p)
 	add_child(border)
 
-# --- ZMODYFIKOWANA SEKIDJA CUTSCENKI ---
+# Zmodyfikowana SEKIDJA CUTSCENKI
 func _odtworz_cutscenke():
-	# 1. Dynamiczne tworzenie odtwarzacza wideo
+	# Dynamiczne tworzenie odtwarzacza wideo
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(VIDEO_PATH)
 	video_player.expand = true
 	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
 	video_player.bus = "Master"
 	
-	# 2. DYNAMICZNE TWORZENIE ODTWARZACZA AUDIO (Równoległy dźwięk)
+	# DYNAMICZNE TWORZENIE ODTWARZACZA AUDIO (Równoległy dźwięk)
 	audio_player = AudioStreamPlayer.new()
 	if ResourceLoader.exists(AUDIO_PATH):
 		audio_player.stream = load(AUDIO_PATH)

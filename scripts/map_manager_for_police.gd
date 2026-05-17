@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- KONFIGURACJA ---
+# Konfiguracja
 var chunk_size_meters = 200.0
 var map_scale = 20.0
 var load_radius = 1
@@ -11,7 +11,7 @@ var update_threshold = 200.0
 
 @onready var chunk_size_px = chunk_size_meters * map_scale
 
-# --- ZASOBY ---
+# Zasoby
 @onready var grass_tex = preload("res://assets/graphics/tileable_grass_00.png")
 @onready var asphalt_tex = preload("res://assets/graphics/01tizeta_asphalts.png")
 @onready var tree_tex = preload("res://assets/graphics/tree_top.png")
@@ -81,12 +81,12 @@ func load_chunk_from_json(c_id):
 	add_child(chunk_node)
 	loaded_chunks[c_id] = chunk_node
 	
-	# 1. TŁO CHUNKA (Trawa)
+	# TŁO CHUNKA (Trawa)
 	var coords = c_id.split("_")
 	var cx = int(coords[0])
 	var cy = int(coords[1])
 	
-	# --- Zmień te linie w sekcji TŁO CHUNKA ---
+	# Zmień te linie w sekcji TŁO CHUNKA
 	var bg = Sprite2D.new()
 	bg.texture = grass_tex
 	bg.centered = false
@@ -98,7 +98,7 @@ func load_chunk_from_json(c_id):
 	bg.z_index = -10
 	chunk_node.add_child(bg)
 	
-	# ZMIEŃ TO:
+	# Zmień to:
 	for feature in data:
 		var props = feature.get("props", {})
 		var highway_type = props.get("highway", "")
@@ -154,7 +154,6 @@ func spawn_feature(feature, parent):
 	for p in feature["geometry"]:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
 
-	# --- NOWOŚĆ: Przystanki i Perony ---
 	if props.get("railway") == "platform" or props.has("public_transport") or props.get("highway") == "platform":
 		create_platform(points, parent, props)
 		return
@@ -176,11 +175,11 @@ func spawn_feature(feature, parent):
 		create_road(points, parent, props)
 
 func create_building(points, parent):
-	# 1. Podstawowa walidacja danych z OSM
+	# Podstawowa walidacja danych z OSM
 	if points.size() < 3:
 		return
 	
-	# 2. Czyszczenie geometrii
+	# Czyszczenie geometrii
 	# OSM czasem duplikuje punkty lub ma "brudne" dane. 
 	# offset_polygon(points, 0) to szybki sposób na naprawienie struktury poligonu.
 	var cleaned_polygons = Geometry2D.offset_polygon(points, 0.0)
@@ -188,7 +187,7 @@ func create_building(points, parent):
 		return
 	var clean_points = cleaned_polygons[0]
 
-	# 3. Rozwiązanie problemu "duchów" - Dekompozycja
+	# Rozwiązanie problemu "duchów" - Dekompozycja
 	# Dzielimy budynek (który może być wklęsły, np. w kształcie L) 
 	# na kilka mniejszych poligonów wypukłych (convex), które silnik fizyki rozumie idealnie.
 	var convex_polygons = Geometry2D.decompose_polygon_in_convex(clean_points)
@@ -197,14 +196,14 @@ func create_building(points, parent):
 	body.collision_layer = 1 # Warstwa ŚWIAT
 	body.collision_mask = 0  # Budynek sam nie musi nic wykrywać
 	
-	# --- WIZUALIZACJA (Dach) ---
+	# WIZUALIZACJA (Dach)
 	var visual = Polygon2D.new()
 	visual.polygon = clean_points
 	visual.color = Color(0.3, 0.3, 0.35)
 	visual.z_index = 2
 	body.add_child(visual)
 
-	# --- WIZUALIZACJA (Cień) ---
+	# WIZUALIZACJA (Cień)
 	var shadow = Polygon2D.new()
 	shadow.polygon = clean_points
 	shadow.color = Color(0, 0, 0, 0.3)
@@ -212,7 +211,7 @@ func create_building(points, parent):
 	shadow.z_index = 1
 	body.add_child(shadow)
 
-	# --- WIZUALIZACJA (Obrys) ---
+	# WIZUALIZACJA (Obrys)
 	var outline = Line2D.new()
 	var opoints = clean_points
 	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
@@ -222,7 +221,7 @@ func create_building(points, parent):
 	outline.z_index = 3
 	body.add_child(outline)
 
-	# --- KOLIZJA (Fizyka) ---
+	# KOLIZJA (Fizyka)
 	# Dodajemy osobny kształt kolizji dla każdego wypukłego fragmentu budynku
 	for poly in convex_polygons:
 		var collision = CollisionPolygon2D.new()
@@ -268,7 +267,7 @@ func create_road(points, parent, props: Dictionary):
 	road.joint_mode = Line2D.LINE_JOINT_ROUND
 	parent.add_child(road)
 	
-	# RYSUJ STRZAŁKI DLA JEDNOKIERUNKOWYCH
+	# Rysuj STRZAŁKI DLA JEDNOKIERUNKOWYCH
 	if is_oneway and points.size() >= 2:
 		render_oneway_arrows(points, parent)
 
@@ -306,7 +305,7 @@ func create_tree(pos, parent):
 	tree_node.collision_mask = 0
 	tree_node.position = pos
 	
-	# 1. Cień drzewa (lekko przesunięte czarne kółko lub kopia sprita)
+	# Cień drzewa (lekko przesunięte czarne kółko lub kopia sprita)
 	var shadow = Sprite2D.new()
 	shadow.texture = tree_tex
 	shadow.modulate = Color(0, 0, 0, 0.3)
@@ -314,13 +313,13 @@ func create_tree(pos, parent):
 	shadow.scale = Vector2(0.1, 0.1) * map_scale # Dopasuj skalę do mapy
 	shadow.z_index = 1
 	
-	# 2. Korona drzewa
+	# Korona drzewa
 	var visual = Sprite2D.new()
 	visual.texture = tree_tex
 	visual.scale = Vector2(0.1, 0.1) * map_scale
 	visual.z_index = 4 # Wyżej niż dachy budynków (opcjonalnie)
 	
-	# 3. Kolizja (okrągła, żeby auto mogło się obetrzeć o drzewo)
+	# Kolizja (okrągła, żeby auto mogło się obetrzeć o drzewo)
 	var col = CollisionShape2D.new()
 	var circle = CircleShape2D.new()
 	circle.radius = 0.4 * map_scale # Promień pnia/kolizji
@@ -332,11 +331,11 @@ func create_tree(pos, parent):
 	parent.add_child(tree_node)
 
 func create_water(points, parent, props):
-	# 1. Podstawowa walidacja
+	# Podstawowa walidacja
 	if points.size() < 3: 
 		return
 	
-	# 2. Sprawdzamy, czy to jest zamknięty obszar (Poligon)
+	# Sprawdzamy, czy to jest zamknięty obszar (Poligon)
 	# Sprawdzamy czy pierwszy i ostatni punkt są blisko siebie
 	var is_polygon = points[0].distance_to(points[-1]) < 0.1
 	
@@ -344,7 +343,7 @@ func create_water(points, parent, props):
 		# Jeśli to linia (rzeczka/kanał), a nie chcemy jej rysować - kończymy funkcję tutaj
 		return
 
-	# 3. Jeśli doszliśmy tutaj, znaczy że mamy obszar (np. Wisłę)
+	# Jeśli doszliśmy tutaj, znaczy że mamy obszar (np. Wisłę)
 	var water_node = Polygon2D.new()
 	water_node.polygon = points
 	

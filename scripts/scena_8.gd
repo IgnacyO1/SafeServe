@@ -181,7 +181,7 @@ func _process(delta):
 	_aktualizuj_pasek_hp()
 
 # ============================================
-#  SYSTEM HP I FAZ
+# System HP i FAZ
 # ============================================
 
 func krab_trafiony(obrazenia: int):
@@ -259,7 +259,7 @@ func _aktualizuj_pasek_hp():
 		pasek_hp.color = Color(0.9, pulse * 0.2, 0.0, 1.0)
 
 # ============================================
-#  GRACZ TRAFIONY = PRZEGRANA
+# Gracz TRAFIONY = PRZEGRANA
 # ============================================
 
 func gracz_trafiony():
@@ -287,13 +287,13 @@ func gracz_trafiony():
 	_fade_out(2.0)
 	await get_tree().create_timer(3.0).timeout
 
-	# --- PRZEJŚCIE PO PRZEGRANEJ ---
+	# Przejście PO PRZEGRANEJ
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	# OPCJA 2: Restart sceny (odkomentuj poniżej)
-	#get_tree().reload_current_scene()
+	# get_tree().reload_current_scene()
 
 # ============================================
-#  KRAB POKONANY = WYGRANA
+# Krab POKONANY = WYGRANA
 # ============================================
 
 func _wygrana():
@@ -318,7 +318,7 @@ func _wygrana():
 		krab_pos = krab.global_position
 
 	# ========================================
-	#  FAZA 1: AGONIA (1.5s) - krab się trzęsie i miga
+	# FAZA 1: AGONIA (1.5s) - krab się trzęsie i miga
 	# ========================================
 	if krab and is_instance_valid(krab):
 		var spr = krab.get_node_or_null("Sprite2D")
@@ -342,7 +342,7 @@ func _wygrana():
 			await tw_agonia.finished
 
 	# ========================================
-	#  FAZA 2: SLOW-MOTION + SERIA EKSPLOZJI (2s)
+	# FAZA 2: SLOW-MOTION + SERIA EKSPLOZJI (2s)
 	# ========================================
 	Engine.time_scale = 0.4  # Spowolnienie
 
@@ -354,7 +354,7 @@ func _wygrana():
 		await get_tree().create_timer(0.15).timeout  # Uwzględnia slow-mo
 
 	# ========================================
-	#  FAZA 3: GŁÓWNA EKSPLOZJA + BIAŁY FLASH
+	# Faza 3: GŁÓWNA EKSPLOZJA + BIAŁY FLASH
 	# ========================================
 	Engine.time_scale = 0.2  # Jeszcze wolniej na moment uderzenia
 
@@ -384,7 +384,7 @@ func _wygrana():
 	_screen_shake(25.0)
 
 	# ========================================
-	#  FAZA 4: ROZRZUT PARTYKUŁÓW (gwiaździsty)
+	# FAZA 4: ROZRZUT PARTYKUŁÓW (gwiaździsty)
 	# ========================================
 	Engine.time_scale = 0.6
 
@@ -459,7 +459,7 @@ func _wygrana():
 	tw_flash_out.tween_callback(func(): if is_instance_valid(white_flash): white_flash.queue_free())
 
 	# ========================================
-	#  FAZA 5: WRACANIE DO NORMALNOŚCI + TEKST
+	# Faza 5: WRACANIE DO NORMALNOŚCI + TEKST
 	# ========================================
 	# Płynne przywrócenie normalnej prędkości
 	var tw_time = create_tween()
@@ -474,7 +474,7 @@ func _wygrana():
 
 	Engine.time_scale = 1.0  # Bezpieczne przywrócenie
 
-	# --- PRZEJŚCIE PO WYGRANEJ ---
+	# Przejście PO WYGRANEJ
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 # Pomocnicza funkcja do tworzenia eksplozji
@@ -510,7 +510,7 @@ func _spawn_eksplozja(pos: Vector2, rozmiar: float):
 	tw2.tween_callback(func(): if is_instance_valid(obwodka): obwodka.queue_free())
 
 # ============================================
-#  EFEKTY WIZUALNE
+# Efekty WIZUALNE
 # ============================================
 
 func _fade_in(duration: float):
@@ -550,7 +550,7 @@ func _screen_shake(intensity: float = 5.0):
 		tw.tween_property(gracz, "position", original_pos, 0.03)
 
 # ============================================
-#  ŚCIANY ARENY (niewidoczne)
+# ŚCIANY ARENY (niewidoczne)
 # ============================================
 
 func _stworz_sciany_areny():
@@ -592,22 +592,22 @@ func _stworz_sciany_areny():
 	add_child(border)
 
 # ============================================
-#  CUTSCENKA (zakomentowane - do użycia później)
+# CUTSCENKA (zakomentowane - do użycia później)
 # ============================================
 
-#func _odtworz_cutscenke(path: String):
-#	var video_player = VideoStreamPlayer.new()
-#	video_player.stream = load(path)
-#	video_player.expand = true
-#	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
-#	video_player.bus = "Master"
-#	var cv = CanvasLayer.new()
-#	cv.layer = 120
-#	add_child(cv)
-#	cv.add_child(video_player)
-#	video_player.finished.connect(func():
-#		video_player.stop()
-#		_fade_out(1.0)
-#		await get_tree().create_timer(1.0).timeout
-#		get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
-#	video_player.play()
+# func _odtworz_cutscenke(path: String):
+# var video_player = VideoStreamPlayer.new()
+# video_player.stream = load(path)
+# video_player.expand = true
+# video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
+# video_player.bus = "Master"
+# var cv = CanvasLayer.new()
+# cv.layer = 120
+# add_child(cv)
+# cv.add_child(video_player)
+# video_player.finished.connect(func():
+# video_player.stop()
+# _fade_out(1.0)
+# await get_tree().create_timer(1.0).timeout
+# get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
+# video_player.play()

@@ -151,7 +151,7 @@ var speed = 200.0
 var map_manager = null
 var current_lane_offset = -1.6 
 var is_oneway = false
-# --- LOGIKA POŚCIGU ---
+# Logika POŚCIGU
 @export var base_speed: float = 450.0 # Prędkość bazowa (taka jak policja)
 var total_path_points: int = 0
 var current_progress_index: int = 0
@@ -181,7 +181,7 @@ func _physics_process(delta):
 		real_speed = 0 # Wymuszamy zero na końcu trasy
 		return
 	
-	# 1. Obliczamy postęp pościgu (bez zmian)
+	# Obliczamy postęp pościgu (bez zmian)
 	var progress = float(current_progress_index) / float(total_path_points)
 	
 	# Pobieramy dystans do policji (bez zmian)
@@ -190,7 +190,7 @@ func _physics_process(delta):
 	if is_instance_valid(police):
 		distance_to_police = global_position.distance_to(police.global_position)
 
-	# 2. Logika prędkości (bez zmian)
+	# Logika prędkości (bez zmian)
 	if progress < 0.1:
 		speed = base_speed * 1.2
 	elif progress > 0.9:
@@ -204,7 +204,7 @@ func _physics_process(delta):
 		else:
 			speed = base_speed
 
-	# 3. Logika ruchu
+	# Logika ruchu
 	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
 	

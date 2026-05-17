@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- UNIKALNE USTAWIENIA TEJ TRASY ---
+# Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-62668, 73086)
 var target_pos_px = Vector2(-2356, 44164)
 var cutscene_path = "res://assets/Videos/komisariat.ogv"
@@ -15,7 +15,6 @@ var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
 
-# --- NOWOŚĆ: STREFA DOCELOWA ---
 var target_zone_visual: Polygon2D
 
 func _ready():
@@ -68,7 +67,6 @@ func setup_ui():
 	arrow_sprite.color = Color.RED
 	arrow_container.add_child(arrow_sprite)
 
-	# --- NOWOŚĆ: VIDEO PLAYER ---
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(cutscene_path)
 	video_player.expand = true
@@ -99,7 +97,7 @@ func _process(_delta):
 		# Rotacja strzałki (Twoja sprawdzona metoda)
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
-		# --- LOGIKA DOJAZDU DO CELU ---
+		# Logika dojazdu do celu
 		# Sprawdzamy dystans (< 5m) i czy auto prawie stoi (prędkość < 10)
 		var current_speed = 0.0
 		if player is RigidBody2D:
@@ -114,36 +112,36 @@ func play_cutscene_sequence():
 	get_tree().current_scene.find_child("HUD").visible = false
 	is_changing_scene = true
 	
-	# 1. Ściemnienie gry (Fade Out)
+	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	await tween.finished
 	
-	# 2. Start pierwszego filmu
+	# Start pierwszego filmu
 	video_player.stream = load(cutscene_path)
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# 3. Rozjaśnienie (widzimy film 1)
+	# Rozjaśnienie (widzimy film 1)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
-	# 4. Czekamy na koniec pierwszego filmu (bezpieczniejsza metoda niż samo finished)
+	# Czekamy na koniec pierwszego filmu (bezpieczniejsza metoda niż samo finished)
 	# Jeśli wiesz, że film ma np. 5 sekund, możesz użyć timer, 
 	# ale .finished powinno działać jeśli stream jest załadowany przed play()
 	await video_player.finished
 	
-	# 5. Ściemnienie MIĘDZY filmami (bardzo ważne dla płynności)
+	# Ściemnienie MIĘDZY filmami (bardzo ważne dla płynności)
 	var tween_mid = create_tween()
 	tween_mid.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 0.5)
 	await tween_mid.finished
 	
-	# 6. Podmiana filmu pod czarną zasłoną
+	# Podmiana filmu pod czarną zasłoną
 	video_player.stop()
 	video_player.stream = load(cutscene_path2)
 	video_player.play()
 	
-	# 7. Rozjaśnienie (widzimy film 2)
+	# Rozjaśnienie (widzimy film 2)
 	var tween_mid_in = create_tween()
 	tween_mid_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	await tween_mid_in.finished
@@ -152,10 +150,10 @@ func play_cutscene_sequence():
 	if is_instance_valid(target_zone_visual):
 		target_zone_visual.visible = false
 	
-	# 8. Czekamy na koniec drugiego filmu
+	# Czekamy na koniec drugiego filmu
 	await video_player.finished
 	
-	# 9. Finałowe ściemnienie przed nową sceną
+	# Finałowe ściemnienie przed nową sceną
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	await tween_out.finished

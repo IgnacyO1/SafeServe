@@ -9,7 +9,7 @@ with Image.open(gif_path) as im:
     frames = []
     try:
         while True:
-            # Copy the frame so we can store it
+            # Kopiuj klatkę, aby można było ją zapisać.
             im.seek(im.tell())
             frames.append(im.copy().convert("RGBA"))
             im.seek(im.tell() + 1)
@@ -23,7 +23,7 @@ if not frames:
 num_frames = len(frames)
 width, height = frames[0].size
 
-# Create a horizontal spritesheet
+# Utwórz poziomą planszę sprite’ów.
 total_width = width * num_frames
 max_height = height
 

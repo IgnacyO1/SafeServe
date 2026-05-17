@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- UNIKALNE USTAWIENIA TEJ TRASY ---
+# Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-2356, 44164)
 var target_pos_px = Vector2(-40671, 98832)
 var cutscene_path = "res://assets/Videos/zawila.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
@@ -16,7 +16,6 @@ var is_changing_scene = false
 var arrival_message_played = false
 var uciekinier = false
 
-# --- NOWOŚĆ: STREFA DOCELOWA ---
 var target_zone_visual: Polygon2D
 
 func _ready():
@@ -74,7 +73,6 @@ func setup_ui():
 	arrow_sprite.color = Color.RED
 	arrow_container.add_child(arrow_sprite)
 
-	# --- NOWOŚĆ: VIDEO PLAYER ---
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(cutscene_path)
 	video_player.expand = true
@@ -104,7 +102,7 @@ func _process(_delta):
 		# Rotacja strzałki (Twoja sprawdzona metoda)
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
-		# --- LOGIKA DOJAZDU DO CELU ---
+		# Logika dojazdu do celu
 		if dist_m < 20.0 and not arrival_message_played:
 			arrival_message_played = true
 			call_deferred("play_arrival_radio_message")
@@ -124,17 +122,17 @@ func play_arrival_radio_message():
 func play_cutscene_sequence():
 	is_changing_scene = true
 	
-	# 1. Ściemnienie gry (Fade Out)
+	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween.finished # Czekamy aż zgaśnie
 	
-	# 2. Przygotowanie wideo pod czarną zasłoną
+	# Przygotowanie wideo pod czarną zasłoną
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# 3. Rozjaśnienie wideo (Fade In wideo)
+	# Rozjaśnienie wideo (Fade In wideo)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
@@ -142,26 +140,26 @@ func play_cutscene_sequence():
 	if is_instance_valid(target_zone_visual):
 		target_zone_visual.visible = false
 
-	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
+	# Czekamy aż film się skończy (lub używamy timer na 2s)
 	await get_tree().create_timer(8.0).timeout
 	
-	# 5. Ściemnienie wideo (Fade Out przed zmianą sceny)
+	# Ściemnienie wideo (Fade Out przed zmianą sceny)
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween_out.finished
 	get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
 
-#func _input(event):
-	## Zmieniono z is_action_just_pressed na is_action_pressed
-	## Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
-	#if event.is_action_pressed("ui_accept", false):
-		#log_current_coordinates()
+# func _input(event):
+	# # Zmieniono z is_action_just_pressed na is_action_pressed
+	# # Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
+	# if event.is_action_pressed("ui_accept", false):
+		# log_current_coordinates()
 #
-#func log_current_coordinates():
-	#if is_instance_valid(player):
-		#var pos = player.global_position
-		## round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
-		#var clean_x = round(pos.x)
-		#var clean_y = round(pos.y)
-		#print("Vector2(%d, %d)," % [clean_x, clean_y])
+# func log_current_coordinates():
+	# if is_instance_valid(player):
+		# var pos = player.global_position
+		# # round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
+		# var clean_x = round(pos.x)
+		# var clean_y = round(pos.y)
+		# print("Vector2(%d, %d)," % [clean_x, clean_y])

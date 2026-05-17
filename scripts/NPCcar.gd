@@ -75,7 +75,7 @@ func find_next_road():
 	else:
 		queue_free()
 
-# --- FUNKCJE RATUNKOWE ---
+# Funkcje RATUNKOWE
 
 func yield_to_emergency():
 	print("WYWOŁUJE SIĘ FUNKCJA")

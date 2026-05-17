@@ -2,7 +2,7 @@ import json
 import math
 import os
 
-# --- KONFIGURACJA ---
+# Konfiguracja
 INPUT_FILE = "krakow-SW.geojson"  # Twoja nazwa pliku
 OUTPUT_DIR = "map_chunks"           # Folder wyjściowy (wrzuć go potem do Godota)
 CHUNK_SIZE_METERS = 200.0           # Rozmiar chunka w metrach
@@ -21,7 +21,7 @@ def process_map():
     with open(INPUT_FILE, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    # 1. Znajdź punkt odniesienia (lewy dolny róg lub środek)
+    # Znajdź punkt odniesienia (lewy dolny róg lub środek)
     # Dla uproszczenia bierzemy pierwszy punkt z brzegu jako (0,0)
     first_feat = data['features'][0]['geometry']['coordinates']
     while isinstance(first_feat[0], list): first_feat = first_feat[0]
@@ -63,13 +63,13 @@ def process_map():
                 }
                 chunks[chunk_id].append(new_feature)
 
-    # 2. Zapisz pliki
+    # Zapisz pliki
     for (cx, cy), features in chunks.items():
         filename = f"chunk_{cx}_{cy}.json"
         with open(os.path.join(OUTPUT_DIR, filename), 'w') as f:
             json.dump(features, f)
     
-    # 3. Zapisz metadane (żeby Godot wiedział gdzie jest (0,0) i jaka skala)
+    # Zapisz metadane (żeby Godot wiedział gdzie jest (0,0) i jaka skala)
     meta = {"ref_lat": ref_lat, "ref_lon": ref_lon, "chunk_size": CHUNK_SIZE_METERS}
     with open(os.path.join(OUTPUT_DIR, "metadata.json"), 'w') as f:
         json.dump(meta, f)

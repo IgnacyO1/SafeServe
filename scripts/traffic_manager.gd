@@ -8,14 +8,14 @@ extends Node
 var active_agents = []
 
 func _process(_delta):
-	# 1. Usuń agentów, którzy wyjechali za daleko (poza załadowane chunki)
+	# Usuń agentów, którzy wyjechali za daleko (poza załadowane chunki)
 	for agent in active_agents:
 		if is_instance_valid(agent):
 			var dist = agent.global_position.distance_to(player.global_position)
 			if dist > map_manager.load_radius * map_manager.chunk_size_px * 1.5:
 				despawn_agent(agent)
 
-	# 2. Jeśli brakuje agentów, zespawnuj nowych
+	# Jeśli brakuje agentów, zespawnuj nowych
 	if active_agents.size() < max_agents and map_manager.road_network.size() > 0:
 		spawn_random_agent()
 
@@ -23,7 +23,7 @@ func spawn_random_agent():
 	var nodes = map_manager.road_network.keys()
 	var spawn_node = nodes.pick_random()
 	
-	# 1. Sprawdź czy miejsce jest wolne (używając fizyki)
+	# Sprawdź czy miejsce jest wolne (używając fizyki)
 	var space_state = get_viewport().find_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	
@@ -45,7 +45,6 @@ func spawn_random_agent():
 	
 	# Przekazujemy punkty ORAZ status oneway do setup
 	npc.setup(road_data.points, map_manager, road_data.oneway)
-	# --- NOWOŚĆ: Wyłączenie kolizji NPC na start ---
 	var original_mask = npc.collision_mask
 	npc.collision_mask = 0
 	

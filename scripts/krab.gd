@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# --- Parametry ---
+# Parametry
 var predkosc_bazowa = 120.0
 var predkosc = 120.0
 var kierunek = Vector2(1, 0.5).normalized()
@@ -39,7 +39,7 @@ func _physics_process(delta):
 
 	czas_gry += delta
 
-	# --- Ruch: patrol po arenie, odbijanie od krawędzi ---
+	# Ruch: patrol po arenie, odbijanie od krawędzi
 	# Prędkość rośnie powoli z czasem (niezależnie od fazy)
 	predkosc = predkosc_bazowa + czas_gry * 2.0  # +2 px/s co sekundę
 
@@ -58,13 +58,13 @@ func _physics_process(delta):
 	if randi() % 180 == 0:  # ~raz na 3 sekundy przy 60fps
 		kierunek = kierunek.rotated(randf_range(-0.8, 0.8)).normalized()
 
-	# --- Strzelanie ---
+	# Strzelanie
 	strzal_timer += delta
 	if strzal_timer >= strzal_interwal:
 		strzal_timer = 0.0
 		_strzal()
 
-	# --- Teleportacja ---
+	# Teleportacja
 	if teleportacja_aktywna:
 		teleport_timer += delta
 		if teleport_timer >= teleport_interwal:

@@ -1,6 +1,6 @@
 extends Node2D
 
-# --- UNIKALNE USTAWIENIA TEJ TRASY ---
+# Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-2356, 44164) 
 var target_pos_px = Vector2(-62668, 73086)
 var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # <--- TU WPISZ ŚCIEŻKĘ DO PLIKU
@@ -14,7 +14,6 @@ var fade_rect: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
 
-# --- NOWOŚĆ: STREFA DOCELOWA ---
 var target_zone_visual: Polygon2D
 
 func _ready():
@@ -30,7 +29,6 @@ func setup_level():
 	if map_manager:
 		map_manager.initialize_map(start_pos_px)
 
-# --- NOWOŚĆ: GENEROWANIE WIZUALNEGO OKRĘGU ---
 func setup_target_zone_visual():
 	target_zone_visual = Polygon2D.new()
 	target_zone_visual.global_position = target_pos_px
@@ -72,7 +70,6 @@ func setup_ui():
 	arrow_sprite.color = Color.RED
 	arrow_container.add_child(arrow_sprite)
 
-	# --- NOWOŚĆ: VIDEO PLAYER ---
 	video_player = VideoStreamPlayer.new()
 	video_player.stream = load(cutscene_path)
 	video_player.expand = true
@@ -102,7 +99,7 @@ func _process(_delta):
 		# Rotacja strzałki
 		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 
-		# --- LOGIKA DOJAZDU DO CELU ---
+		# Logika dojazdu do celu
 		var current_speed = 0.0
 		if player is RigidBody2D:
 			current_speed = player.linear_velocity.length()
@@ -120,24 +117,24 @@ func play_cutscene_sequence():
 	if is_instance_valid(target_zone_visual):
 		target_zone_visual.visible = false
 
-	# 1. Ściemnienie gry (Fade Out)
+	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
 	await tween.finished # Czekamy aż zgaśnie
 	
-	# 2. Przygotowanie wideo pod czarną zasłoną
+	# Przygotowanie wideo pod czarną zasłoną
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# 3. Rozjaśnienie wideo (Fade In wideo)
+	# Rozjaśnienie wideo (Fade In wideo)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
-	# 4. Czekamy aż film się skończy (lub używamy timer na 2s)
+	# Czekamy aż film się skończy (lub używamy timer na 2s)
 	await get_tree().create_timer(2.0).timeout
 	
-	# 5. Ściemnienie wideo (Fade Out przed zmianą sceny)
+	# Ściemnienie wideo (Fade Out przed zmianą sceny)
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	
