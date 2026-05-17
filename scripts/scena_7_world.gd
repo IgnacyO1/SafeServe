@@ -2,7 +2,7 @@ extends Node2D
 
 # Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-40671, 98832)
-var cutscene_path = "res://assets/Videos/cuscean1ver4.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
+var cutscene_path = "res://assets/Videos/spin.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
 
 @onready var player = $Police
 @onready var map_manager = $MapManager

@@ -383,7 +383,7 @@ func _style_button(btn: Button, bg_col: Color, hover_col: Color) -> void:
 
 func _style_line_edit(le: LineEdit) -> void:
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color("#003063") # Dodatkowo przyciemniony wkład tekstowy
+	style.bg_color = Color("352f33ff") # Dodatkowo przyciemniony wkład tekstowy
 	style.set_border_width_all(2)
 	style.border_color = COLOR_PRIMARY
 	style.set_corner_radius_all(6)
