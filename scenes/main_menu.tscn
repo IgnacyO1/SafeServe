@@ -66,6 +66,7 @@ zoom = Vector2(1.26, 1.26)
 
 [node name="MenuMusic" type="AudioStreamPlayer2D" parent="." unique_id=1271868088]
 stream = ExtResource("3_bqqt6")
+volume_db = -13.595
 autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

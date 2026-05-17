@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_tbjg3"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="15_tbjg3"]
 [ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="16_wb0wj"]
+[ext_resource type="AudioStream" uid="uid://vsh5gnoxd553" path="res://assets/Sounds/Spandex-Man The Animated Series - Rod Kim.mp3" id="18_yhfs0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxtjr"]
 font_size = 32
@@ -100,6 +101,7 @@ label_settings = SubResource("LabelSettings_pxtjr")
 autowrap_mode = 2
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=894259998]
+volume_db = 19.712
 
 [node name="Control" type="Control" parent="HUD" unique_id=2011615049]
 anchors_preset = 0
@@ -154,6 +156,11 @@ script = ExtResource("16_wb0wj")
 position = Vector2(495.3, 383.175)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("15_tbjg3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=676667078]
+stream = ExtResource("18_yhfs0")
+volume_db = -14.954
+parameters/looping = true
 
 [connection signal="toggled" from="HUD/Control/TextureButton2" to="SubViewportContainer/SubViewport/World/Car" method="turn_siren"]
 [connection signal="toggled" from="HUD/Control/TextureButton" to="SubViewportContainer/SubViewport/World/Car" method="turn_emergency_lights"]

@@ -631,7 +631,7 @@ anchor_bottom = 0.2
 offset_left = -320.0
 offset_top = -80.0
 offset_right = 320.0
-offset_bottom = 80.0
+offset_bottom = 217.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_el5c8")
@@ -639,16 +639,18 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
 
 [node name="Background" type="ColorRect" parent="Notification popup" unique_id=1987654323]
 layout_mode = 0
-offset_right = 640.0
-offset_bottom = 160.0
+offset_left = -241.0
+offset_top = 691.0
+offset_right = 1118.0
+offset_bottom = 944.0
 color = Color(0.35, 0, 0, 0.8)
 
 [node name="NotificationText" type="Label" parent="Notification popup" unique_id=1987654322]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 596.0
-offset_bottom = 96.0
+offset_left = -200.0
+offset_top = 707.0
+offset_right = 372.0
+offset_bottom = 929.0
 text = "Halo halo, mamy pożar w biurze w PolyServers, ulica Zielone Tulipany 82, palą nam się serwery, mamy w budynku uwięzioną 1 starszą osobę, potrzebujemy pilnie pomocy!"
 label_settings = SubResource("LabelSettings_du2nj")
 horizontal_alignment = 1
@@ -657,10 +659,10 @@ autowrap_mode = 2
 
 [node name="SoundWave" type="Label" parent="Notification popup" unique_id=1987654324]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 100.0
-offset_right = 616.0
-offset_bottom = 148.0
+offset_left = 466.0
+offset_top = 761.0
+offset_right = 1058.0
+offset_bottom = 864.0
 text = "∿  ∿  ∿  ∿  ∿"
 label_settings = SubResource("LabelSettings_maknc")
 horizontal_alignment = 1
