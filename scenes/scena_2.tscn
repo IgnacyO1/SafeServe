@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c8hlloie2j8d" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_l4snw"]
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_tbjg3"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="15_tbjg3"]
-[ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="16_wb0wj"]
+[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="16_wb0wj"]
 [ext_resource type="AudioStream" uid="uid://vsh5gnoxd553" path="res://assets/Sounds/Spandex-Man The Animated Series - Rod Kim.mp3" id="18_yhfs0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxtjr"]

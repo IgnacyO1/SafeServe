@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://diiovhg0my5gj" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_074bb"]
 [ext_resource type="Texture2D" uid="uid://c8hlloie2j8d" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_h7kjp"]
 [ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_mdnec"]
-[ext_resource type="Script" path="res://scripts/scena_2_mapa.gd" id="15_ohnw0"]
+[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_ohnw0"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_u6ham"]
 [ext_resource type="AudioStream" uid="uid://b52jb6y30uvf1" path="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3" id="18_5d6c7"]
 
@@ -43,7 +43,7 @@ script = ExtResource("2_tc0r3")
 script = ExtResource("3_ohnw0")
 player_path = NodePath("../Police")
 
-[node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 instance=ExtResource("4_u6ham")]
+[node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 groups=["police"] instance=ExtResource("4_u6ham")]
 
 [node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
 script = ExtResource("5_5d6c7")
