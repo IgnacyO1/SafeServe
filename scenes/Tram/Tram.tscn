@@ -20,6 +20,7 @@ scale = Vector2(0.26, 0.26)
 texture = ExtResource("3_cfis5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Segment1" unique_id=2031933230]
+z_index = 1
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")
 
@@ -27,6 +28,7 @@ shape = SubResource("RectangleShape2D_cfis5")
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
+z_index = 2
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("4_uucmp")
 
@@ -42,5 +44,6 @@ scale = Vector2(0.26, 0.26)
 texture = ExtResource("5_e3bno")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=84850316]
+z_index = 1
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")

@@ -95,4 +95,3 @@ func _input(event) -> void:
 		position += delta
 		clamp_position()
 		last_mouse_position = event.position
-	
