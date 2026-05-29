@@ -120,14 +120,15 @@ func load_chunk_from_json(c_id):
 		
 		if feature["type"] != "building" and highway_type in drivable_roads:
 			var is_oneway = props.get("oneway") == "yes"
-			register_road_in_network(feature["geometry"], is_oneway, highway_type, c_id)
+			# POPRAWKA: Przekazujemy props jako osobny parametr, zachowując c_id na końcu
+			register_road_in_network(feature["geometry"], is_oneway, props, c_id)
 		
 		# TUTAJ: Dodajemy c_id jako trzeci parametr
 		spawn_feature(feature, chunk_node, c_id)
 		
 	rebuild_major_nodes()
 
-func register_road_in_network(coords, is_oneway, highway_type, c_id):
+func register_road_in_network(coords, is_oneway, props: Dictionary, c_id: String):
 	var points = []
 	for p in coords:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
@@ -137,16 +138,20 @@ func register_road_in_network(coords, is_oneway, highway_type, c_id):
 	var start_node = points[0].snapped(Vector2(0.1, 0.1))
 	var end_node = points[-1].snapped(Vector2(0.1, 0.1))
 	
-	# Definiujemy, które drogi są "główne" i nadają się do spawnowania NPC
+	var highway_type = props.get("highway", "")
 	var major_roads = ["motorway", "trunk", "primary", "secondary", "tertiary"]
 	var is_major_road = highway_type in major_roads
+
+	# Bezpieczne i bezbłędne pobranie szerokości
+	var calculated_width = calculate_road_width(props)
 
 	if not road_network.has(start_node): road_network[start_node] = []
 	
 	var road_data = {
 		"points": points,
 		"oneway": is_oneway,
-		"is_major": is_major_road
+		"is_major": is_major_road,
+		"width": calculated_width # Dodane na potrzeby gracza, NPC to ignorują
 	}
 	road_network[start_node].append(road_data)
 	
@@ -161,7 +166,8 @@ func register_road_in_network(coords, is_oneway, highway_type, c_id):
 		var rev_road_data = {
 			"points": reversed_points,
 			"oneway": false,
-			"is_major": is_major_road # Odwrócona droga zachowuje ten sam typ
+			"is_major": is_major_road,
+			"width": calculated_width
 		}
 		road_network[end_node].append(rev_road_data)
 		chunk_roads[c_id].append({"start_node": end_node, "road_data": rev_road_data})
@@ -314,22 +320,14 @@ func create_road(points, parent, props: Dictionary):
 	var is_sidewalk = highway in ["footway", "path", "pedestrian", "cycleway"]
 	var is_oneway = props.get("oneway") == "yes"
 	
-	var lane_width_m = 3.2
-	var default_lanes = {
-		"motorway": 4, "trunk": 3, "primary": 2, "secondary": 2, 
-		"tertiary": 2, "residential": 2, "unclassified": 1.4, "service": 1
-	}
-	
-	var lanes = int(props.get("lanes", default_lanes.get(highway, 1)))
+	# Korzystamy z nowej, wspólnej funkcji:
+	road.width = calculate_road_width(props)
 	
 	if is_sidewalk:
-		road.width = 2.0 * map_scale
 		road.texture = sidewalk_tex
 		road.z_index = -3
 		road.default_color = Color(0.8, 0.8, 0.8)
 	else:
-		var road_width_m = lanes * lane_width_m
-		road.width = clamp(road_width_m * map_scale, 5.0 * map_scale, 15.0 * map_scale)
 		road.texture = asphalt_tex
 		road.z_index = -2
 		road.default_color = Color.WHITE
@@ -341,7 +339,6 @@ func create_road(points, parent, props: Dictionary):
 	road.joint_mode = Line2D.LINE_JOINT_ROUND
 	parent.add_child(road)
 	
-	# Rysuj STRZAŁKI DLA JEDNOKIERUNKOWYCH
 	if is_oneway and points.size() >= 2:
 		render_oneway_arrows(points, parent)
 
@@ -569,3 +566,38 @@ func unload_chunk_trams(c_id: String):
 		chunk_trams.erase(c_id)
 	# Opcjonalnie przefiltruj tram_nodes, aby usunąć martwe węzły
 	tram_nodes = tram_nodes.filter(func(n): return tram_network.has(n))
+
+func calculate_road_width(props: Dictionary) -> float:
+	var highway = props.get("highway", "")
+	var is_sidewalk = highway in ["footway", "path", "pedestrian", "cycleway"]
+	
+	var lane_width_m = 3.2
+	var default_lanes = {
+		"motorway": 4, "trunk": 3, "primary": 2, "secondary": 2, 
+		"tertiary": 2, "residential": 2, "unclassified": 1.4, "service": 1
+	}
+	
+	var lanes = int(props.get("lanes", default_lanes.get(highway, 1)))
+	
+	if is_sidewalk:
+		return 2.0 * map_scale
+	else:
+		var road_width_m = lanes * lane_width_m
+		return clamp(road_width_m * map_scale, 5.0 * map_scale, 15.0 * map_scale)
+func is_point_on_road(global_pos: Vector2) -> bool:
+	for start_node in road_network:
+		for road in road_network[start_node]:
+			var points = road["points"]
+			var half_width = road["width"] / 2.0
+			
+			for i in range(points.size() - 1):
+				var p1 = points[i]
+				var p2 = points[i+1]
+				
+				var closest_point = Geometry2D.get_closest_point_to_segment(global_pos, p1, p2)
+				
+				# Dodajemy mały margines błędu (15 pikseli), żeby auto nie "skakało" na krawędziach
+				if global_pos.distance_to(closest_point) <= (half_width + 15.0):
+					return true 
+					
+	return false

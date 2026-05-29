@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bwvp7s5o3punc"]
 
 [ext_resource type="Script" uid="uid://obelx74gq71w" path="res://scenes/Car/car.gd" id="1_c8bcc"]
-[ext_resource type="Texture2D" uid="uid://bxvqlbgv1ytko" path="res://assets/graphics/firetruck.png" id="2_y0jbw"]
+[ext_resource type="Texture2D" uid="uid://ccueftcoietsd" path="res://assets/graphics/firetruck.png" id="2_y0jbw"]
 [ext_resource type="AudioStream" uid="uid://dykt813ctgqxo" path="res://assets/Sounds/horn.mp3" id="3_y0jbw"]
-[ext_resource type="Texture2D" uid="uid://d16q4gpdmfihn" path="res://assets/graphics/lights_grid2.png" id="4_j5ret"]
+[ext_resource type="Texture2D" uid="uid://gjvwdwuilj0a" path="res://assets/graphics/lights_grid2.png" id="4_j5ret"]
 [ext_resource type="AudioStream" uid="uid://duw5bgcn21xft" path="res://assets/Sounds/police-siren-drill-type-sound-fx_F.wav" id="5_eh8x1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbtw7"]
