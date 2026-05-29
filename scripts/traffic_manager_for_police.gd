@@ -49,9 +49,25 @@ func spawn_boss_car():
 	print("SPAWNED: Cyberkrab gotowy do ucieczki!")
 
 func spawn_random_agent():
-	var nodes = map_manager.road_network.keys()
-	var spawn_node = nodes.pick_random()
+	if map_manager.road_network_nodes.is_empty():
+		return
+
+	# Spróbuj do 5 razy znaleźć węzeł w odpowiedniej odległości od gracza
+	var spawn_node = Vector2.ZERO
+	var found = false
+	var max_spawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.25
 	
+	for i in range(5):
+		var node = map_manager.road_network_nodes.pick_random()
+		var dist = node.distance_to(player.global_position)
+		if dist <= max_spawn_dist and dist >= 500.0:
+			spawn_node = node
+			found = true
+			break
+			
+	if not found:
+		return
+
 	# Sprawdź czy miejsce jest wolne (używając fizyki)
 	var space_state = get_viewport().find_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
@@ -66,7 +82,6 @@ func spawn_random_agent():
 	var result = space_state.intersect_shape(query)
 	if not result.is_empty():
 		return # Miejsce zajęte, spróbuj w następnej klatce
-	# Opcjonalnie: sprawdź czy spawn_node jest blisko gracza, żeby nie spawnować na drugim końcu mapy
 	
 	var road_data = map_manager.road_network[spawn_node].pick_random()
 	var npc = npc_scene.instantiate()
@@ -82,9 +97,7 @@ func spawn_random_agent():
 			npc.collision_mask = original_mask
 	)
 	
-	
 	active_agents.append(npc)
-	
 	
 
 func despawn_agent(agent):

@@ -1,6 +1,6 @@
 extends Node
 
-@export var max_agents = 50
+@export var max_agents = 10
 @export var npc_scene = preload("res://scenes/NPCCar.tscn")
 @onready var map_manager = get_node("../MapManager")
 @onready var player = get_node("../Car")
@@ -20,30 +20,52 @@ func _process(_delta):
 		spawn_random_agent()
 
 func spawn_random_agent():
-	var nodes = map_manager.road_network.keys()
-	var spawn_node = nodes.pick_random()
+	if map_manager.major_nodes.is_empty():
+		return
+
+	# Spróbuj do 5 razy znaleźć węzeł w odpowiedniej odległości od gracza
+	var spawn_node = Vector2.ZERO
+	var found = false
+	var max_spawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.25
 	
+	for i in range(5):
+		var node = map_manager.major_nodes.pick_random()
+		var dist = node.distance_to(player.global_position)
+		if dist <= max_spawn_dist and dist >= 500.0:
+			spawn_node = node
+			found = true
+			break
+			
+	if not found:
+		return
+
 	# Sprawdź czy miejsce jest wolne (używając fizyki)
 	var space_state = get_viewport().find_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	
-	# Używamy małego koła do sprawdzenia czy droga jest wolna
 	var circle = CircleShape2D.new()
-	circle.radius = 50.0 # rozmiar auta w skali
+	circle.radius = 50.0
 	query.shape = circle
 	query.transform = Transform2D(0, spawn_node)
-	query.collision_mask = 1 | 2 # Sprawdzamy czy nie ma tam budynku lub innego auta
+	query.collision_mask = 1 | 2
 	
 	var result = space_state.intersect_shape(query)
 	if not result.is_empty():
-		return # Miejsce zajęte, spróbuj w następnej klatce
-	# Opcjonalnie: sprawdź czy spawn_node jest blisko gracza, żeby nie spawnować na drugim końcu mapy
+		return # Miejsce zajęte
 	
-	var road_data = map_manager.road_network[spawn_node].pick_random()
+	# 3. Z opcji wychodzących z tego węzła losujemy TYLKO tę, która jest główną drogą
+	var options = map_manager.road_network[spawn_node]
+	var major_options = []
+	for opt in options:
+		if opt.get("is_major", false):
+			major_options.append(opt)
+			
+	var road_data = major_options.pick_random()
+	
+	# 4. Reszta kodu bez zmian (instancjonowanie i setup NPC)
 	var npc = npc_scene.instantiate()
 	add_child(npc)
 	
-	# Przekazujemy punkty ORAZ status oneway do setup
 	npc.setup(road_data.points, map_manager, road_data.oneway)
 	var original_mask = npc.collision_mask
 	npc.collision_mask = 0
@@ -52,7 +74,6 @@ func spawn_random_agent():
 		if is_instance_valid(npc):
 			npc.collision_mask = original_mask
 	)
-	
 	
 	active_agents.append(npc)
 	
