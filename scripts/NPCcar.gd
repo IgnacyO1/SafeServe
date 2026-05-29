@@ -56,15 +56,43 @@ func find_next_road():
 	var current_node = current_road_points[-1].snapped(Vector2(0.1, 0.1))
 	if map_manager.road_network.has(current_node):
 		var options = map_manager.road_network[current_node]
-		var entry_dir = (current_road_points[-1] - current_road_points[-2]).normalized()
-		var best_options = []
 		
+		# Oblicz kierunek wejściowy
+		var entry_dir = (current_road_points[-1] - current_road_points[-2]).normalized()
+		
+		var option_weights = []
 		for opt in options:
 			var exit_dir = (opt.points[1] - opt.points[0]).normalized()
-			if exit_dir.dot(entry_dir) > -0.85:
-				best_options.append(opt)
+			
+			# Kąt skrętu w radianach
+			var x = entry_dir.angle_to(exit_dir)
+			
+			# Wzór: f(x) = (sin(x + PI/2) + 1) * 1.5
+			var f_x = (sin(x + 0.5 * PI) + 1.0) * (0.5 + 1.0)
+			
+			# U-turn kara (jeśli jedzie z powrotem na tę samą drogę)
+			if exit_dir.dot(entry_dir) < -0.85:
+				f_x -= 10.0
+				
+			option_weights.append(f_x)
+			
+		# Obliczanie Softmax dla wyboru drogi
+		var exps = []
+		var sum_exps = 0.0
+		for w in option_weights:
+			var e = exp(w)
+			exps.append(e)
+			sum_exps += e
+			
+		var r = randf() * sum_exps
+		var cumulative = 0.0
+		var selected_road = options[0]
 		
-		var selected_road = best_options.pick_random() if best_options.size() > 0 else options.pick_random()
+		for i in range(options.size()):
+			cumulative += exps[i]
+			if r <= cumulative:
+				selected_road = options[i]
+				break
 		
 		current_road_points = selected_road.points
 		is_oneway = selected_road.oneway
