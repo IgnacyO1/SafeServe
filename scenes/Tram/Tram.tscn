@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://b5mt5b8dbsb5e" path="res://assets/Images/segment2.png" id="4_uucmp"]
 [ext_resource type="Texture2D" uid="uid://hifpsjji7fsl" path="res://assets/Images/segment3.png" id="5_e3bno"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
+size = Vector2(41, 86)
+
 [node name="Tram" type="Node2D" unique_id=354519398]
 script = ExtResource("1_twm23")
 
@@ -13,22 +16,31 @@ script = ExtResource("1_twm23")
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment1" unique_id=129379051]
-position = Vector2(114.999985, 10.999999)
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("3_cfis5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment1" unique_id=2031933230]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
 
 [node name="Segment2" type="CharacterBody2D" parent="." unique_id=1174539438]
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
-position = Vector2(0.99999994, 10.999999)
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("4_uucmp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment2" unique_id=20536380]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
 
 [node name="Segment3" type="CharacterBody2D" parent="." unique_id=650745104]
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=2022612332]
-position = Vector2(-110.99999, 10.999999)
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("5_e3bno")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=84850316]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
