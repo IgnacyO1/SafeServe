@@ -160,7 +160,7 @@ func _stworz_pasek_drzwi(hud):
 	drzwi_pasek = ColorRect.new()
 	drzwi_pasek.color = Color(1.0, 0.4, 0.0, 1.0)
 	drzwi_pasek.position = Vector2(760, 900)
-	drzwi_pasek.size = Vector2(0, 30)
+	drzwi_pasek.size = Vector2(400, 30)
 	hud.add_child(drzwi_pasek)
 	
 	drzwi_label = Label.new()
@@ -257,7 +257,7 @@ func _rabniecie_drzwi_tick():
 	drzwi_hp -= 1.0
 	var procent = drzwi_hp / drzwi_max_hp
 	if drzwi_pasek:
-		drzwi_pasek.size.x = (1.0 - procent) * 400.0
+		drzwi_pasek.size.x = procent * 400.0
 		drzwi_pasek.color = Color(1.0, procent * 0.6, 0.0, 1.0)
 	if drzwi_label:
 		drzwi_label.text = "Drzwi: " + str(int(procent * 100)) + "%"
