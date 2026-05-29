@@ -73,10 +73,10 @@ Wszelkie zasoby muszą trafiać w odpowiednie, predefiniowane miejsca w katalogu
 *   **`scenes/`**: Węzły główne w formacie `.tscn`. Każda scena gry to osobny plik (od `scena_1.tscn` do `scena_8.tscn`). Znajdują się tu też instancjonowane prefaby (np. `pocisk.tscn`, `ogien.tscn`, `uciekinier.tscn`).
 *   **`scripts/`**: Skrypty logiki (`.gd`). Główny skrypt sceny nosi dokładnie taką samą nazwę jak scena (np. `scena_8.tscn` -> `scena_8.gd`).
 *   **`assets/`**: Repozytorium multimediów:
-    *   `graphics/`: Sprite'y, spritesheety, tła map (OSM), ikony ui, modele postaci.
-    *   `Videos/`: Pliki z cutscenkami (`.ogv`), np. `cuscean1ver4.ogv`, `zawila.ogv`.
-    *   `Images/`: Podstawowe assety UI (np. kropki `Dot.png`).
-    *   `Fonts/` i `Sounds/`: Czcionki i efekty dźwiękowe.
+	*   `graphics/`: Sprite'y, spritesheety, tła map (OSM), ikony ui, modele postaci.
+	*   `Videos/`: Pliki z cutscenkami (`.ogv`), np. `cuscean1ver4.ogv`, `zawila.ogv`.
+	*   `Images/`: Podstawowe assety UI (np. kropki `Dot.png`).
+	*   `Fonts/` i `Sounds/`: Czcionki i efekty dźwiękowe.
 *   **`data/`**: Surowe zbiory danych, skrypty pre-processingowe (np. `krakow-SW.geojson`, skrypty w Pythonie jak `map_preprocessing.py`, `mapa4_generator.py` służące do proceduralnego generowania terenów dla gier).
 
 ---

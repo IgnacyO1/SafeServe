@@ -10,7 +10,7 @@ var gra_aktywna = true
 var faza = "DRZWI"  # DRZWI -> POZARY -> BABCIA -> SKRZYNKA -> KONIEC
 
 const OGIEN_SCENA = preload("res://scenes/ogien.tscn")
-var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/Images/Dot.png")
+var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/graphics/Dot.png")
 var MAP_TEX_ZAMKNIETE = preload("res://assets/graphics/safeservemap (1).png")
 var MAP_TEX_OTWARTE = preload("res://assets/graphics/scena4_mapa_otwarte.png")
 var SIEKIRA_TEX = preload("res://assets/graphics/siekira_scena4.png")
@@ -504,7 +504,7 @@ func _odswiez_minimape():
 
 	if gracz and is_instance_valid(gracz):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/graphics/Dot.png") if ResourceLoader.exists("res://assets/graphics/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.8, 0.8)
 		m.modulate = Color.GREEN
 		m.position = get_marker_pos.call(gracz.global_position)
@@ -513,7 +513,7 @@ func _odswiez_minimape():
 
 	if faza == "BABCIA" and is_instance_valid(inst_babcia):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/graphics/Dot.png") if ResourceLoader.exists("res://assets/graphics/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.DEEP_PINK
 		m.position = get_marker_pos.call(inst_babcia.global_position)
@@ -521,7 +521,7 @@ func _odswiez_minimape():
 		markers_node.add_child(m)
 	if faza == "SKRZYNKA" and is_instance_valid(inst_skrzynka):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/graphics/Dot.png") if ResourceLoader.exists("res://assets/graphics/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.YELLOW
 		m.position = get_marker_pos.call(inst_skrzynka.global_position)
@@ -529,7 +529,7 @@ func _odswiez_minimape():
 		markers_node.add_child(m)
 	if faza == "KONIEC" and is_instance_valid(inst_wyjscie):
 		var m = Sprite2D.new()
-		m.texture = preload("res://assets/Images/Dot.png") if ResourceLoader.exists("res://assets/Images/Dot.png") else WYKRZYKNIK_TEX
+		m.texture = preload("res://assets/graphics/Dot.png") if ResourceLoader.exists("res://assets/graphics/Dot.png") else WYKRZYKNIK_TEX
 		m.scale = Vector2(0.5, 0.5)
 		m.modulate = Color.AQUA
 		m.position = get_marker_pos.call(inst_wyjscie.global_position)
