@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="AudioStream" uid="uid://dumdvyt2mojxu" path="res://assets/Sounds/Test Your Fight - Rod Kim.mp3" id="2_dorrt"]
-[ext_resource type="Texture2D" uid="uid://cd4xcdrgewvgk" path="res://assets/graphics/scena4_sritesheet_wyczyszczone-removebg-preview.png" id="2_nn3ug"]
 [ext_resource type="Texture2D" uid="uid://dsro2g5btlh3f" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn3ug"]
@@ -16,11 +15,6 @@ radius = 80.0
 position = Vector2(1, 0)
 script = ExtResource("1_2a01s")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1358248542]
-stream = ExtResource("2_dorrt")
-autoplay = true
-parameters/looping = true
-
 [node name="Tlo" type="Sprite2D" parent="." unique_id=921566932]
 position = Vector2(1, 0)
 texture = ExtResource("2_o3ndk")
@@ -31,7 +25,6 @@ position = Vector2(7500, 1600)
 script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
-texture = ExtResource("2_nn3ug")
 hframes = 2
 vframes = 2
 
@@ -140,6 +133,10 @@ polygon = PackedVector2Array(7532, 1239, 7299, 1237, 7280, 1761, 7550, 1762, 755
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="BlokadaDrzwi" unique_id=461016143]
 polygon = PackedVector2Array(7516, 1238, 7810, 1242, 7802, 1765, 7794, 1765, 7520, 1763, 7523, 1879, 7857, 1881, 7838, 1174, 7521, 1172)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1465433753]
+stream = ExtResource("2_dorrt")
+autoplay = true
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]
 [connection signal="area_exited" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_exited"]
