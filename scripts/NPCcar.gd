@@ -1,5 +1,18 @@
 extends CharacterBody2D
 
+# --- BAZA WARIANTÓW SAMOCHODÓW ---
+# Definiujemy tekstury dla różnych marek/typów aut
+const CAR_VARIANTS = [
+	"res://assets/cars/car1.png",
+	"res://assets/cars/car2.png",
+	"res://assets/cars/car3.png",
+	"res://assets/cars/car4.png",
+	"res://assets/cars/car5.png",
+	"res://assets/cars/car6.png",
+	"res://assets/cars/car7.png",
+	"res://assets/cars/car8.png"
+]
+
 var current_road_points = []
 var target_index = 0
 var speed = 400.0
@@ -9,6 +22,28 @@ var is_oneway = false
 
 var is_yielding: bool = false
 var original_speed: float = 400.0
+
+@onready var sprite = $Sprite2D # <--- Łapiemy nasz jedyny Sprite2D
+
+func _ready():
+	choose_random_variant()
+
+func choose_random_variant():
+	if CAR_VARIANTS.is_empty(): return
+	
+	# 1. Losujemy losową teksturę z listy
+	var random_texture_path = CAR_VARIANTS.pick_random()
+	sprite.texture = load(random_texture_path)
+	
+	# 2. Opcjonalnie: Dodajemy wariancję osiągów na podstawie wylosowanego typu!
+	if "truck" in random_texture_path:
+		original_speed = randf_range(280.0, 320.0) # Ciężarówki są wolniejsze
+	elif "suv" in random_texture_path:
+		original_speed = randf_range(360.0, 410.0)
+	else:
+		original_speed = randf_range(400.0, 460.0) # Sedany i hatchbacki
+		
+	speed = original_speed
 
 func setup(start_points, manager, oneway_status):
 	map_manager = manager
