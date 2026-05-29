@@ -22,5 +22,5 @@ func set_target(position_t : Vector2 ):
 	print(target_marker.position)
 	
 func _input(event):
-	if event is InputEventKey and event.keycode == KEY_M or event.keycode == KEY_TAB:
+	if event is InputEventKey and event.keycode == KEY_M:
 		self.visible = event.pressed
