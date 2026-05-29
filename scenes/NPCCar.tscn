@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://dw14l67qwjmki"]
 
 [ext_resource type="Script" uid="uid://ccnub4e8bsgqw" path="res://scripts/NPCcar.gd" id="1_cp3nd"]
-[ext_resource type="Texture2D" uid="uid://ctnqlboh7wxcn" path="res://assets/graphics/white-modern-car-top-view-24.png" id="2_cp3nd"]
+[ext_resource type="Texture2D" uid="uid://cke4qxtqmaw31" path="res://assets/cars/car1.png" id="2_cp3nd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cp3nd"]
 radius = 19.0
-height = 102.0
+height = 80.0
 
 [node name="NpcCar" type="CharacterBody2D" unique_id=792379994]
 script = ExtResource("1_cp3nd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1095535104]
-rotation = 3.1415927
-scale = Vector2(0.39062482, 0.40281624)
+position = Vector2(4.7683716e-07, 4.7683716e-07)
+rotation = 1.5707964
+scale = Vector2(1.9038628, 1.9632825)
 texture = ExtResource("2_cp3nd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1947582282]
