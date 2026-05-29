@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/Images/Oil.png" id="6_foj7g"]
 [ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bpjt2"]
 [ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="8_1y6gg"]
+[ext_resource type="Script" uid="uid://hrsaxsrw6xu0" path="res://scenes/TramManager.gd" id="8_5kbnn"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="9_a85bs"]
 [ext_resource type="Texture2D" uid="uid://dehwh8wy0223d" path="res://assets/graphics/scena_2_HUD/HUD background.svg" id="10_nsvpr"]
 [ext_resource type="Texture2D" uid="uid://e6jxgjwwd13k" path="res://assets/graphics/scena_2_HUD/Switch off.svg" id="11_jff4l"]
@@ -66,6 +67,9 @@ visible = false
 position = Vector2(-71487, 79076)
 scale = Vector2(5.559322, 5.559322)
 texture = ExtResource("6_foj7g")
+
+[node name="TramManager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1139521972]
+script = ExtResource("8_5kbnn")
 
 [node name="HUD" type="Control" parent="." unique_id=764452857]
 layout_mode = 3

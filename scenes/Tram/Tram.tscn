@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b8xeg4m1d1p0y"]
+
+[ext_resource type="Script" uid="uid://b5qdf3evjhep7" path="res://scenes/Tram/TramController.gd" id="1_twm23"]
+[ext_resource type="Script" uid="uid://7aan0ljexgr2" path="res://scenes/Tram/TramSegment.gd" id="2_mcfro"]
+[ext_resource type="Texture2D" uid="uid://c6bht868x72p" path="res://assets/Images/segment1.png" id="3_cfis5"]
+[ext_resource type="Texture2D" uid="uid://b5mt5b8dbsb5e" path="res://assets/Images/segment2.png" id="4_uucmp"]
+[ext_resource type="Texture2D" uid="uid://hifpsjji7fsl" path="res://assets/Images/segment3.png" id="5_e3bno"]
+
+[node name="Tram" type="Node2D" unique_id=354519398]
+script = ExtResource("1_twm23")
+
+[node name="Segment1" type="CharacterBody2D" parent="." unique_id=1348999955]
+script = ExtResource("2_mcfro")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment1" unique_id=129379051]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_cfis5")
+
+[node name="Segment2" type="CharacterBody2D" parent="." unique_id=1174539438]
+script = ExtResource("2_mcfro")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_uucmp")
+
+[node name="Segment3" type="CharacterBody2D" parent="." unique_id=650745104]
+script = ExtResource("2_mcfro")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=2022612332]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_e3bno")

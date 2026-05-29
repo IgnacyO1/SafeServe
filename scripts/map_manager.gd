@@ -23,6 +23,9 @@ var road_network = {}
 var chunk_load_queue = []
 var chunk_roads = {} # c_id -> Array of {"start_node": Vector2, "road_data": Dictionary}
 var major_nodes = []
+var tram_network = {}
+var tram_nodes = []
+var chunk_trams = {} # c_id -> Tablica torów do czyszczenia przy usuwaniu chunka
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
@@ -68,6 +71,7 @@ func update_chunks():
 			loaded_chunks[c_id].queue_free()
 			loaded_chunks.erase(c_id)
 			unload_chunk_roads(c_id)
+			unload_chunk_trams(c_id)
 			removed_any = true
 			
 	if removed_any:
@@ -108,7 +112,6 @@ func load_chunk_from_json(c_id):
 	bg.z_index = -10
 	chunk_node.add_child(bg)
 	
-	# Zmień to:
 	for feature in data:
 		var props = feature.get("props", {})
 		var highway_type = props.get("highway", "")
@@ -117,10 +120,10 @@ func load_chunk_from_json(c_id):
 		
 		if feature["type"] != "building" and highway_type in drivable_roads:
 			var is_oneway = props.get("oneway") == "yes"
-			# ZMIANA: Przekazujemy highway_type i c_id do rejestracji sieci
 			register_road_in_network(feature["geometry"], is_oneway, highway_type, c_id)
 		
-		spawn_feature(feature, chunk_node)
+		# TUTAJ: Dodajemy c_id jako trzeci parametr
+		spawn_feature(feature, chunk_node, c_id)
 		
 	rebuild_major_nodes()
 
@@ -163,6 +166,22 @@ func register_road_in_network(coords, is_oneway, highway_type, c_id):
 		road_network[end_node].append(rev_road_data)
 		chunk_roads[c_id].append({"start_node": end_node, "road_data": rev_road_data})
 
+func register_tram_in_network(points, is_oneway, c_id):
+	# KLUCZOWA ZMIANA: Jeśli tor nie jest jednokierunkowy, całkowicie go olewamy
+	if not is_oneway: 
+		return
+		
+	if points.size() < 2: return
+	var start_node = points[0].snapped(Vector2(0.1, 0.1))
+
+	if not tram_network.has(start_node): tram_network[start_node] = []
+	var track_data = {"points": points, "oneway": true}
+	tram_network[start_node].append(track_data)
+	
+	if not chunk_trams.has(c_id): chunk_trams[c_id] = []
+	chunk_trams[c_id].append({"start_node": start_node, "track_data": track_data})
+	
+	if not start_node in tram_nodes: tram_nodes.append(start_node)
 func unload_chunk_roads(c_id: String):
 	if chunk_roads.has(c_id):
 		for entry in chunk_roads[c_id]:
@@ -182,7 +201,7 @@ func rebuild_major_nodes():
 				major_nodes.append(node)
 				break
 
-func spawn_feature(feature, parent):
+func spawn_feature(feature, parent, c_id):
 	var props = feature["props"]
 	var type = feature["type"]
 	
@@ -205,9 +224,11 @@ func spawn_feature(feature, parent):
 		create_water(points, parent, props)
 		return
 
-	# Tory (zostawiamy tylko prawdziwe tory)
+	# Tory 
 	if props.has("railway") and props.get("railway") in ["tram", "rail", "subway"]:
 		create_railway(points, parent, props)
+		if props.get("railway") == "tram":
+			register_tram_in_network(points, props.get("oneway") == "yes", c_id) # Teraz c_id zadziała idealnie!
 		return
 
 	# Budynki i Drogi
@@ -215,6 +236,13 @@ func spawn_feature(feature, parent):
 		create_building(points, parent)
 	else:
 		create_road(points, parent, props)
+
+	# Budynki i Drogi
+	if type == "building" or props.has("building"):
+		create_building(points, parent)
+	else:
+		create_road(points, parent, props)
+	
 
 func create_building(points, parent):
 	# Podstawowa walidacja danych z OSM
@@ -528,3 +556,16 @@ func is_polygon_convex_custom(points: PackedVector2Array) -> bool:
 			elif sign_val != current_sign:
 				return false
 	return true
+# Wywołaj tę funkcję wewnątrz Twojego istniejącego update_chunks(), tam gdzie czyścisz drogi
+func unload_chunk_trams(c_id: String):
+	if chunk_trams.has(c_id):
+		for entry in chunk_trams[c_id]:
+			var start_node = entry.start_node
+			var track_data = entry.track_data
+			if tram_network.has(start_node):
+				tram_network[start_node].erase(track_data)
+				if tram_network[start_node].is_empty():
+					tram_network.erase(start_node)
+		chunk_trams.erase(c_id)
+	# Opcjonalnie przefiltruj tram_nodes, aby usunąć martwe węzły
+	tram_nodes = tram_nodes.filter(func(n): return tram_network.has(n))
