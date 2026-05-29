@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dbihrsfmcqb50"]
 
 [ext_resource type="Script" uid="uid://ki8kkhq266t4" path="res://scripts/ogien.gd" id="1_3me4k"]
-[ext_resource type="Texture2D" uid="uid://cocdw3qogt6iy" path="res://assets/Images/ogien_animacja.png" id="2_7bi8s"]
+[ext_resource type="Texture2D" uid="uid://cocdw3qogt6iy" path="res://assets/graphics/ogien_animacja.png" id="2_7bi8s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3me4k"]
 radius = 36.0

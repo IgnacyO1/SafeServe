@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dw14l67qwjmki"]
 
 [ext_resource type="Script" uid="uid://ccnub4e8bsgqw" path="res://scripts/NPCcar.gd" id="1_cp3nd"]
-[ext_resource type="Texture2D" uid="uid://cf8ocuebijd6y" path="res://assets/Images/white-modern-car-top-view-24.png" id="2_cp3nd"]
+[ext_resource type="Texture2D" uid="uid://cf8ocuebijd6y" path="res://assets/graphics/white-modern-car-top-view-24.png" id="2_cp3nd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cp3nd"]
 radius = 19.0
