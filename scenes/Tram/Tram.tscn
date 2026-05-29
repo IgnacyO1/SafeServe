@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b5qdf3evjhep7" path="res://scenes/Tram/TramController.gd" id="1_twm23"]
 [ext_resource type="Script" uid="uid://7aan0ljexgr2" path="res://scenes/Tram/TramSegment.gd" id="2_mcfro"]
-[ext_resource type="Texture2D" uid="uid://c6bht868x72p" path="res://assets/Images/segment1.png" id="3_cfis5"]
-[ext_resource type="Texture2D" uid="uid://b5mt5b8dbsb5e" path="res://assets/Images/segment2.png" id="4_uucmp"]
-[ext_resource type="Texture2D" uid="uid://hifpsjji7fsl" path="res://assets/Images/segment3.png" id="5_e3bno"]
+[ext_resource type="Texture2D" uid="uid://c6bht868x72p" path="res://assets/graphics/segment1.png" id="3_cfis5"]
+[ext_resource type="Texture2D" uid="uid://b5mt5b8dbsb5e" path="res://assets/graphics/segment2.png" id="4_uucmp"]
+[ext_resource type="Texture2D" uid="uid://hifpsjji7fsl" path="res://assets/graphics/segment3.png" id="5_e3bno"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
 size = Vector2(41, 86)
