@@ -20,5 +20,5 @@ func update_position(curve: Curve2D, master_distance: float):
 	# Matematyczny środek wagonu leży dokładnie pomiędzy wózkami
 	global_position = (f_pos + r_pos) / 2.0
 	
-	# Obrót w stronę przedniego wózka
-	rotation = (f_pos - r_pos).angle()
+	# Obrót zgodny z kierunkiem jazdy segmentu
+	rotation = (r_pos - f_pos).angle()

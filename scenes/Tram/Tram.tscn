@@ -13,19 +13,22 @@ script = ExtResource("1_twm23")
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment1" unique_id=129379051]
-scale = Vector2(0.5, 0.5)
+position = Vector2(114.999985, 10.999999)
+scale = Vector2(0.26, 0.26)
 texture = ExtResource("3_cfis5")
 
 [node name="Segment2" type="CharacterBody2D" parent="." unique_id=1174539438]
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
-scale = Vector2(0.5, 0.5)
+position = Vector2(0.99999994, 10.999999)
+scale = Vector2(0.26, 0.26)
 texture = ExtResource("4_uucmp")
 
 [node name="Segment3" type="CharacterBody2D" parent="." unique_id=650745104]
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=2022612332]
-scale = Vector2(0.5, 0.5)
+position = Vector2(-110.99999, 10.999999)
+scale = Vector2(0.26, 0.26)
 texture = ExtResource("5_e3bno")

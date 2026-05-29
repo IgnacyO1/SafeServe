@@ -136,6 +136,7 @@ polygon = PackedVector2Array(7516, 1238, 7810, 1242, 7802, 1765, 7794, 1765, 752
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1465433753]
 stream = ExtResource("2_dorrt")
+volume_db = -11.725
 autoplay = true
 
 [connection signal="area_entered" from="Gracz/StrefaInterakcji" to="Gracz" method="_on_area_entered"]

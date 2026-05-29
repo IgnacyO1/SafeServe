@@ -16,8 +16,8 @@ var current_path_points: PackedVector2Array = PackedVector2Array()
 # Segment 3: wózki na 340px i 460px
 var bogie_presets = [
 	{"front": 20.0, "rear": 140.0},
-	{"front": 180.0, "rear": 300.0},
-	{"front": 340.0, "rear": 460.0}
+	{"front": 145.0, "rear": 245.0},
+	{"front": 250.0, "rear": 375.0}
 ]
 
 var map_manager = null
