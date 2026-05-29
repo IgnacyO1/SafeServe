@@ -61,9 +61,16 @@ func spawn_random_agent():
 		var node = map_manager.road_network_nodes.pick_random()
 		var dist = node.distance_to(player.global_position)
 		if dist <= max_spawn_dist and dist >= 500.0:
-			spawn_node = node
-			found = true
-			break
+			var occupied = false
+			for agent in active_agents:
+				if is_instance_valid(agent):
+					if agent.global_position.distance_to(node) < 150.0:
+						occupied = true
+						break
+			if not occupied:
+				spawn_node = node
+				found = true
+				break
 			
 	if not found:
 		return
