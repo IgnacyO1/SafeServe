@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var speed: float = 300.0 # Prędkość tramwaju
+@export var speed: float = 400.0 # Prędkość tramwaju
 
 var master_distance: float = 0.0
 var curve: Curve2D = Curve2D.new()
@@ -22,6 +22,8 @@ var bogie_presets = [
 
 var map_manager = null
 var last_node: Vector2
+
+
 
 func _ready():
 	curve.bake_interval = 5.0 # Precyzja próbkowania zakrętów (im mniej, tym płynniej)
