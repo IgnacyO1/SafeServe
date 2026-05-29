@@ -21,6 +21,8 @@ var update_threshold = 200.0
 var loaded_chunks = {}
 var road_network = {}
 var chunk_load_queue = []
+var chunk_roads = {} # c_id -> Array of {"start_node": Vector2, "road_data": Dictionary}
+var road_network_nodes = []
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
@@ -36,6 +38,8 @@ func initialize_map(start_pos: Vector2):
 	loaded_chunks.clear()
 	chunk_load_queue.clear()
 	road_network.clear()
+	chunk_roads.clear()
+	road_network_nodes.clear()
 	
 	update_chunks()
 
@@ -57,11 +61,17 @@ func update_chunks():
 		for y in range(p_y - load_radius, p_y + load_radius + 1):
 			needed_ids.append(str(x) + "_" + str(y))
 	
-	# Usuwanie starych chunków (to jest szybkie, zostawiamy)
+	# Usuwanie starych chunków
+	var removed_any = false
 	for c_id in loaded_chunks.keys():
 		if not c_id in needed_ids:
 			loaded_chunks[c_id].queue_free()
 			loaded_chunks.erase(c_id)
+			unload_chunk_roads(c_id)
+			removed_any = true
+			
+	if removed_any:
+		rebuild_nodes_cache()
 			
 	# Zamiast ładować od razu, dodajemy do kolejki
 	for c_id in needed_ids:
@@ -108,11 +118,13 @@ func load_chunk_from_json(c_id):
 		
 		if feature["type"] != "building" and highway_type in drivable_roads:
 			var is_oneway = props.get("oneway") == "yes" # Pobieramy info z OSM
-			register_road_in_network(feature["geometry"], is_oneway)
+			register_road_in_network(feature["geometry"], is_oneway, c_id)
 		
 		spawn_feature(feature, chunk_node)
+		
+	rebuild_nodes_cache()
 
-func register_road_in_network(coords, is_oneway):
+func register_road_in_network(coords, is_oneway, c_id):
 	var points = []
 	for p in coords:
 		points.append(Vector2(p[0] * map_scale, p[1] * map_scale))
@@ -124,20 +136,40 @@ func register_road_in_network(coords, is_oneway):
 	
 	if not road_network.has(start_node): road_network[start_node] = []
 	
-	# Zapisujemy jako Słownik z metadanymi
-	road_network[start_node].append({
+	var road_data = {
 		"points": points,
 		"oneway": is_oneway
-	})
+	}
+	road_network[start_node].append(road_data)
+	
+	if not chunk_roads.has(c_id):
+		chunk_roads[c_id] = []
+	chunk_roads[c_id].append({"start_node": start_node, "road_data": road_data})
 	
 	if not is_oneway:
 		var reversed_points = points.duplicate()
 		reversed_points.reverse()
 		if not road_network.has(end_node): road_network[end_node] = []
-		road_network[end_node].append({
+		var rev_road_data = {
 			"points": reversed_points,
-			"oneway": false # Odwrócona dwukierunkowa jest traktowana jak zwykła
-		})
+			"oneway": false
+		}
+		road_network[end_node].append(rev_road_data)
+		chunk_roads[c_id].append({"start_node": end_node, "road_data": rev_road_data})
+
+func unload_chunk_roads(c_id: String):
+	if chunk_roads.has(c_id):
+		for entry in chunk_roads[c_id]:
+			var start_node = entry.start_node
+			var road_data = entry.road_data
+			if road_network.has(start_node):
+				road_network[start_node].erase(road_data)
+				if road_network[start_node].is_empty():
+					road_network.erase(start_node)
+		chunk_roads.erase(c_id)
+
+func rebuild_nodes_cache():
+	road_network_nodes = road_network.keys()
 
 
 func spawn_feature(feature, parent):
@@ -190,7 +222,11 @@ func create_building(points, parent):
 	# Rozwiązanie problemu "duchów" - Dekompozycja
 	# Dzielimy budynek (który może być wklęsły, np. w kształcie L) 
 	# na kilka mniejszych poligonów wypukłych (convex), które silnik fizyki rozumie idealnie.
-	var convex_polygons = Geometry2D.decompose_polygon_in_convex(clean_points)
+	var convex_polygons = []
+	if is_polygon_convex_custom(clean_points):
+		convex_polygons.append(clean_points)
+	else:
+		convex_polygons = Geometry2D.decompose_polygon_in_convex(clean_points)
 	
 	var body = StaticBody2D.new()
 	body.collision_layer = 1 # Warstwa ŚWIAT
@@ -275,6 +311,8 @@ func render_oneway_arrows(points, parent):
 	var arrow_spacing = 40.0 * map_scale # Strzałka co 40 metrów
 	var arrow_size = 2.0 * map_scale     # Rozmiar ramion strzałki
 	
+	var arrow_points = PackedVector2Array()
+	
 	for i in range(points.size() - 1):
 		var p1 = points[i]
 		var p2 = points[i+1]
@@ -285,20 +323,23 @@ func render_oneway_arrows(points, parent):
 		while d < segment_len:
 			var pos = p1 + dir * d
 			
-			# Rysujemy prostą strzałkę "V" wskazującą kierunek
-			var arrow = Line2D.new()
-			
 			# Obliczamy ramiona strzałki
 			var left_arm = pos - dir * arrow_size + dir.rotated(PI/2) * (arrow_size * 0.5)
 			var right_arm = pos - dir * arrow_size + dir.rotated(-PI/2) * (arrow_size * 0.5)
 			
-			arrow.points = PackedVector2Array([left_arm, pos, right_arm])
-			arrow.width = 0.5 * map_scale
-			arrow.default_color = Color(0.613, 0.613, 0.613, 1.0) # Półprzezroczysty biały
-			arrow.z_index = -1 # Nad asfaltem
+			arrow_points.append(left_arm)
+			arrow_points.append(pos)
+			arrow_points.append(right_arm)
+			arrow_points.append(pos)
 			
-			parent.add_child(arrow)
 			d += arrow_spacing
+
+	if arrow_points.size() > 0:
+		var arrows = OnewayArrows.new()
+		arrows.arrow_points = arrow_points
+		arrows.width = 0.5 * map_scale
+		arrows.z_index = -1
+		parent.add_child(arrows)
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
 	tree_node.collision_layer = 1
@@ -389,7 +430,8 @@ func render_railway_sleepers(points, parent):
 	var sleeper_spacing = 0.6 * map_scale # Podkłady co ok. 60cm
 	var sleeper_width = 2.4 * map_scale   # Szerokość podkładu
 	
-	var total_dist = 0.0
+	var sleeper_points = PackedVector2Array()
+	
 	for i in range(points.size() - 1):
 		var p1 = points[i]
 		var p2 = points[i+1]
@@ -403,14 +445,17 @@ func render_railway_sleepers(points, parent):
 			var s_p1 = pos + perp * (sleeper_width / 2)
 			var s_p2 = pos - perp * (sleeper_width / 2)
 			
-			var sleeper = Line2D.new()
-			sleeper.points = PackedVector2Array([s_p1, s_p2])
-			sleeper.width = 0.3 * map_scale
-			sleeper.default_color = Color(0.35, 0.25, 0.15) # Brązowy drewniany
-			sleeper.z_index = -2 # Pod szynami
-			parent.add_child(sleeper)
+			sleeper_points.append(s_p1)
+			sleeper_points.append(s_p2)
 			
 			d += sleeper_spacing
+
+	if sleeper_points.size() > 0:
+		var sleepers = RailwaySleepers.new()
+		sleepers.sleeper_points = sleeper_points
+		sleepers.width = 0.3 * map_scale
+		sleepers.z_index = -2
+		parent.add_child(sleepers)
 
 func create_platform(points, parent, props):
 	if points.size() < 2: return
@@ -437,3 +482,39 @@ func create_platform(points, parent, props):
 		line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 		line.z_index = -1
 		parent.add_child(line)
+
+class RailwaySleepers extends Node2D:
+	var sleeper_points = PackedVector2Array()
+	var color = Color(0.35, 0.25, 0.15)
+	var width = 6.0
+	
+	func _draw():
+		if sleeper_points.size() >= 2:
+			draw_multiline(sleeper_points, color, width)
+
+class OnewayArrows extends Node2D:
+	var arrow_points = PackedVector2Array()
+	var color = Color(0.613, 0.613, 0.613, 1.0)
+	var width = 10.0
+	
+	func _draw():
+		if arrow_points.size() >= 2:
+			draw_multiline(arrow_points, color, width)
+
+func is_polygon_convex_custom(points: PackedVector2Array) -> bool:
+	var n = points.size()
+	if n < 3:
+		return false
+	var sign_val = 0
+	for i in range(n):
+		var p1 = points[i]
+		var p2 = points[(i + 1) % n]
+		var p3 = points[(i + 2) % n]
+		var cp = (p2.x - p1.x) * (p3.y - p2.y) - (p2.y - p1.y) * (p3.x - p2.x)
+		if cp != 0:
+			var current_sign = 1 if cp > 0 else -1
+			if sign_val == 0:
+				sign_val = current_sign
+			elif sign_val != current_sign:
+				return false
+	return true
