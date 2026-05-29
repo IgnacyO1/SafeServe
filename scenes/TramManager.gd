@@ -10,7 +10,6 @@ var active_trams = []
 func _process(_delta):
 	# Despawn: usuwamy tramwaj TYLKO gdy jego pozycja startowa wypadła z załadowanych chunków
 	# lub gdy awaryjnie odjechał absurdalnie daleko (np. błąd mapy > 6000px)
-	var max_despawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.5
 	for i in range(active_trams.size() - 1, -1, -1):
 		var tram = active_trams[i]
 		if is_instance_valid(tram):
@@ -18,7 +17,7 @@ func _process(_delta):
 			var dist_to_player = tram.segments[0].global_position.distance_to(player.global_position)
 			
 			# Warunek: usuń jeśli chunk z torami przestał istnieć ALBO gdy tramwaj uciekł za daleko
-			if (not map_manager.tram_network.has(track_node) and dist_to_player > max_despawn_dist) or dist_to_player > max_despawn_dist * 1.5:
+			if (not map_manager.tram_network.has(track_node) and dist_to_player > 3500.0) or dist_to_player > 9000.0:
 				active_trams.remove_at(i)
 				tram.queue_free()
 
@@ -27,32 +26,32 @@ func _process(_delta):
 		spawn_tram()
 
 func spawn_tram():
-	var max_spawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.25
-	var tries = 8
-	var spawn_node = null
-
-	for i in range(tries):
-		var node = map_manager.tram_nodes.pick_random()
+	var valid_nodes = []
+	
+	for node in map_manager.tram_nodes:
 		var dist_to_player = node.distance_to(player.global_position)
-		if dist_to_player < 1400.0 or dist_to_player > max_spawn_dist:
-			continue
-
-		var node_occupied = false
-		for active_tram in active_trams:
-			if is_instance_valid(active_tram) and active_tram.segments[0].global_position.distance_to(node) < 1000.0:
-				node_occupied = true
-				break
-
-		if node_occupied:
-			continue
-
-		spawn_node = node
-		break
-
-	if spawn_node == null:
+		
+		# 1. Kontrola widoczności: Spawn tylko poza wzrokiem (min 1200px) i w granicach ładowania (max 3500px)
+		if dist_to_player >= 1400.0:
+			
+			# 2. Anty-kolizja: Sprawdź czy inny tramwaj nie stoi/jedzie już na tym węźle
+			var node_occupied = false
+			for active_tram in active_trams:
+				if is_instance_valid(active_tram):
+					# Jeśli środek lub przód jakiegoś tramwaju jest za blisko tego punktu, odrzucamy węzeł
+					if active_tram.segments[0].global_position.distance_to(node) < 1000.0:
+						node_occupied = true
+						break
+			
+			if not node_occupied:
+				valid_nodes.append(node)
+	
+	if valid_nodes.is_empty():
 		return
 
+	var spawn_node = valid_nodes.pick_random()
 	var tram = tram_scene.instantiate()
+	
 	map_manager.add_child(tram)
 	tram.init_tram(spawn_node, map_manager)
 	active_trams.append(tram)
