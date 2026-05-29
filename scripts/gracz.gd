@@ -66,6 +66,14 @@ func set_animation(state: String, dir_str: String):
 
 func _physics_process(delta: float) -> void:
 	var scena = get_parent()
+	if scena.get("gra_aktywna") == false:
+		velocity = Vector2.ZERO
+		if last_state != "idle":
+			last_state = "idle"
+			set_animation("idle", last_dir_str)
+		move_and_slide()
+		return
+		
 	var w_fazie_drzwi = scena.has_method("rabniecie_drzwi") and scena.get("faza") == "DRZWI"
 
 	if scena.get("minimapa_bg") != null and scena.minimapa_bg.visible:
@@ -135,9 +143,12 @@ func _process(delta: float) -> void:
 			sprite.frame = current_frame_idx
 
 func _unhandled_input(event: InputEvent) -> void:
+	var scena = get_parent()
+	if scena.get("gra_aktywna") == false:
+		return
+		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			var scena = get_parent()
 			# Nie strzelaj gaśnicą w fazie DRZWI
 			if scena.get("faza") == "DRZWI":
 				return

@@ -453,6 +453,9 @@ func przegrana():
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func przegrana_spalenie():
+	if not gra_aktywna:
+		return
+		
 	gra_aktywna = false
 	if label_czas:
 		label_czas.text = "PRZEGRANA!"
@@ -461,8 +464,11 @@ func przegrana_spalenie():
 	label_zadanie.visible = true
 	
 	_fade_out(2.0)
-	await get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	
+	if get_tree():
+		await get_tree().create_timer(3.0).timeout
+		if get_tree():
+			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 # Fade EFFECTS
 func _fade_in(duration: float):
