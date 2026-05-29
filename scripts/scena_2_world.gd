@@ -45,11 +45,11 @@ func setup_target_zone_visual():
 	target_zone_visual.polygon = points
 	# Kolor czerwony z 30% przezroczystością (RGBA)
 	target_zone_visual.color = Color(1.0, 0.0, 0.0, 0.3)
+
 	# Z-index ustawiony tak, by okrąg leżał na asfalcie, ale pod samochodem
 	target_zone_visual.z_index = -1 
 	
 	add_child(target_zone_visual)
-
 func setup_ui():
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100

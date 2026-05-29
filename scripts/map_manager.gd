@@ -167,21 +167,31 @@ func register_road_in_network(coords, is_oneway, highway_type, c_id):
 		chunk_roads[c_id].append({"start_node": end_node, "road_data": rev_road_data})
 
 func register_tram_in_network(points, is_oneway, c_id):
-	# KLUCZOWA ZMIANA: Jeśli tor nie jest jednokierunkowy, całkowicie go olewamy
 	if not is_oneway: 
 		return
 		
 	if points.size() < 2: return
-	var start_node = points[0].snapped(Vector2(0.1, 0.1))
-
-	if not tram_network.has(start_node): tram_network[start_node] = []
-	var track_data = {"points": points, "oneway": true}
-	tram_network[start_node].append(track_data)
 	
-	if not chunk_trams.has(c_id): chunk_trams[c_id] = []
-	chunk_trams[c_id].append({"start_node": start_node, "track_data": track_data})
-	
-	if not start_node in tram_nodes: tram_nodes.append(start_node)
+	# Zamiast rejestrować tylko points[0], rejestrujemy każdy punkt jako potencjalny start!
+	for i in range(points.size() - 1):
+		var current_node = points[i].snapped(Vector2(0.1, 0.1))
+		
+		# Tworzymy pod-odcinek od tego punktu do końca oryginalnej tablicy, 
+		# żeby tramwaj wiedział dokąd dalej jechać.
+		var sub_points = points.slice(i)
+		
+		if not tram_network.has(current_node): 
+			tram_network[current_node] = []
+			
+		var track_data = {"points": sub_points, "oneway": true}
+		tram_network[current_node].append(track_data)
+		
+		if not chunk_trams.has(c_id): 
+			chunk_trams[c_id] = []
+		chunk_trams[c_id].append({"start_node": current_node, "track_data": track_data})
+		
+		if not current_node in tram_nodes: 
+			tram_nodes.append(current_node)
 func unload_chunk_roads(c_id: String):
 	if chunk_roads.has(c_id):
 		for entry in chunk_roads[c_id]:
