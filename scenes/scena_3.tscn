@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="AudioStream" uid="uid://dumdvyt2mojxu" path="res://assets/Sounds/Test Your Fight - Rod Kim.mp3" id="2_dorrt"]
 [ext_resource type="Texture2D" uid="uid://wfa6e7qqn1kr" path="res://assets/graphics/safeservemap (1).png" id="2_o3ndk"]
+[ext_resource type="Texture2D" uid="uid://cocdw3qogt6iy" path="res://assets/graphics/ogien_animacja.png" id="4_dorrt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn3ug"]
 size = Vector2(30, 50)
@@ -24,6 +25,7 @@ position = Vector2(7500, 1600)
 script = ExtResource("2_axo31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gracz" unique_id=819955636]
+texture = ExtResource("4_dorrt")
 hframes = 2
 vframes = 2
 
