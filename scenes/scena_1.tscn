@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena_1.gd" id="1_exvab"]
 [ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/MapContainer.gd" id="2_t3u43"]
-[ext_resource type="Texture2D" uid="uid://pgf88xpege5b" path="res://assets/graphics/Mapa Krakow.png" id="3_so24r"]
-[ext_resource type="Texture2D" uid="uid://i1is4t07v785" path="res://assets/graphics/scena_1/HUD nowy.svg" id="4_el5c8"]
+[ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
+[ext_resource type="Texture2D" uid="uid://kbxgfhbjsjm" path="res://assets/graphics/scena_1/HUD nowy.svg" id="4_el5c8"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
+[ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
 [ext_resource type="Texture2D" uid="uid://dl1jm7xgs722u" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
 [ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
@@ -23,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="22_n24rr"]
 [ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="25_ar68y"]
 
 [sub_resource type="Theme" id="Theme_el5c8"]
 
@@ -64,9 +66,9 @@ script = ExtResource("1_exvab")
 [node name="MapView" type="Panel" parent="." unique_id=1404406384]
 layout_mode = 0
 offset_left = 80.0
-offset_top = 80.0
+offset_top = 117.0
 offset_right = 1310.0
-offset_bottom = 820.0
+offset_bottom = 857.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MapView" unique_id=182997264]
 layout_mode = 0
@@ -84,20 +86,25 @@ render_target_update_mode = 4
 script = ExtResource("2_t3u43")
 
 [node name="MapSprite" type="Sprite2D" parent="MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer" unique_id=1463073134]
-position = Vector2(1750.5, 1243.5)
-scale = Vector2(3, 3)
-texture = ExtResource("3_so24r")
+position = Vector2(1164, 904.5)
+texture = ExtResource("3_bqyrf")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1241085609]
-position = Vector2(960, 540)
+position = Vector2(960, 577)
 texture = ExtResource("4_el5c8")
+
+[node name="pasekzadań" type="Sprite2D" parent="." unique_id=249254113]
+z_index = 10
+position = Vector2(960, 1057.47)
+scale = Vector2(0.7507109, 0.750711)
+texture = ExtResource("5_cmwsu")
 
 [node name="SidePanelTop" type="Panel" parent="." unique_id=1070282638]
 layout_mode = 0
 offset_left = 1375.0
-offset_top = 107.0
+offset_top = 139.0
 offset_right = 1853.0
-offset_bottom = 441.0
+offset_bottom = 473.0
 theme = SubResource("Theme_el5c8")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
 
@@ -126,9 +133,9 @@ vertical_alignment = 1
 [node name="SidePanelBottom" type="Panel" parent="." unique_id=691123791]
 layout_mode = 0
 offset_left = 1379.0
-offset_top = 457.0
+offset_top = 489.0
 offset_right = 1857.0
-offset_bottom = 791.0
+offset_bottom = 823.0
 theme = SubResource("Theme_maknc")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0bpa3")
 
@@ -640,17 +647,17 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
 [node name="Background" type="ColorRect" parent="Notification popup" unique_id=1987654323]
 layout_mode = 0
 offset_left = -241.0
-offset_top = 691.0
-offset_right = 1118.0
-offset_bottom = 944.0
-color = Color(0.35, 0, 0, 0.8)
+offset_top = 721.0
+offset_right = 940.0
+offset_bottom = 888.0
+color = Color(0, 0, 0, 0.27450982)
 
 [node name="NotificationText" type="Label" parent="Notification popup" unique_id=1987654322]
 layout_mode = 0
-offset_left = -200.0
-offset_top = 707.0
-offset_right = 372.0
-offset_bottom = 929.0
+offset_left = -204.0
+offset_top = 695.0
+offset_right = 918.0
+offset_bottom = 917.0
 text = "Halo halo, mamy pożar w biurze w PolyServers, ulica Zielone Tulipany 82, palą nam się serwery, mamy w budynku uwięzioną 1 starszą osobę, potrzebujemy pilnie pomocy!"
 label_settings = SubResource("LabelSettings_du2nj")
 horizontal_alignment = 1
@@ -658,6 +665,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="SoundWave" type="Label" parent="Notification popup" unique_id=1987654324]
+visible = false
 layout_mode = 0
 offset_left = 466.0
 offset_top = 761.0
@@ -701,6 +709,12 @@ label_settings = SubResource("LabelSettings_ar68y")
 autowrap_mode = 2
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=834002578]
+
+[node name="okno" type="Sprite2D" parent="." unique_id=857695944]
+z_index = 10
+position = Vector2(960, 18)
+scale = Vector2(0.8376963, 0.74)
+texture = ExtResource("25_ar68y")
 
 [connection signal="pressed" from="SidePanelBottom/Send" to="." method="_send_unit"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
