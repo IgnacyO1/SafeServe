@@ -27,6 +27,7 @@ shape = SubResource("RectangleShape2D_cfis5")
 script = ExtResource("2_mcfro")
 
 [node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
+z_index = 1
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("4_uucmp")
 

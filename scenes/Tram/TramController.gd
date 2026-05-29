@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var speed: float = 350.0 # Prędkość tramwaju
+@export var speed: float = 300.0 # Prędkość tramwaju
 
 var master_distance: float = 0.0
 var curve: Curve2D = Curve2D.new()
