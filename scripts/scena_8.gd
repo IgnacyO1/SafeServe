@@ -573,6 +573,8 @@ func _rozpocznij_sweep_warning():
 	# Zamroź kraba - stop ruch
 	if krab and is_instance_valid(krab):
 		krab.ruch_zablokowany = true
+		# Włącz animację lasera (priorytet nad strzałami)
+		krab.laser_animacja_aktywna = true
 		# Wyłącz teleportację kraba na czas sweep'a
 		krab.teleportacja_aktywna = false
 		
@@ -638,6 +640,7 @@ func _zakonc_sweep():
 	# Odmroź kraba - przywróć ruch i zdolności fazy 4
 	if krab and is_instance_valid(krab):
 		krab.ruch_zablokowany = false
+		krab.laser_animacja_aktywna = false  # Wyłącz animację lasera
 		krab.ustaw_faze(4)  # Przywróć statsy fazy 4 (prędkość, strzelał, teleportacja)
 	
 	# Włącz tryb fazy 4 na parę sekund
@@ -661,6 +664,7 @@ func _wylacz_sweep():
 	# Odmroź kraba jeśli był zamrożony
 	if krab and is_instance_valid(krab):
 		krab.ruch_zablokowany = false
+		krab.laser_animacja_aktywna = false  # Wyłącz animację lasera
 
 # ============================================
 # Obrażenia Gracza

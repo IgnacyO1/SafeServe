@@ -118,6 +118,7 @@ func _shoot():
 	var mouse_pos = get_global_mouse_position()
 	var shoot_origin = punkt_strzalu.global_position if punkt_strzalu else global_position
 	pocisk.direction = (mouse_pos - shoot_origin).normalized()
+	pocisk.rotation = pocisk.direction.angle()
 	pocisk.global_position = shoot_origin
 	
 	# Zwiększ prędkość pocisku w fazie 6

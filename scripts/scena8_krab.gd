@@ -13,6 +13,11 @@ var teleport_interwal = 5.0
 var aktualna_faza = 1
 var ruch_zablokowany = false  # Blokada ruchu podczas sweep beam (Faza 5)
 
+# System animacji
+var laser_animacja_aktywna = false  # Ustawiana z scena_8 gdy sweep beam jest aktywny
+var strzal_animacja_timer = 0.0    # Timer trwania animacji strzału
+const STRZAL_ANIMACJA_CZAS = 0.3   # Jak długo gra animacja strzału (sekundy)
+
 # Referencja do gracza – boss sam go znajdzie w grupie!
 var gracz_ref = null 
 
@@ -97,9 +102,39 @@ func _physics_process(delta):
 			teleport_timer = 0.0
 			_teleportuj()
 
+	# Obracanie kraba przodem (dołem sprite'a) do gracza
+	if gracz_ref and is_instance_valid(gracz_ref):
+		var do_gracza = gracz_ref.global_position - global_position
+		rotation = do_gracza.angle() - PI / 2.0
+
+	# System animacji z priorytetem: laser > strzał > idle
+	if strzal_animacja_timer > 0.0:
+		strzal_animacja_timer -= delta
+	_aktualizuj_animacje()
+
+func _aktualizuj_animacje():
+	if not sprite or not sprite is AnimatedSprite2D:
+		return
+	# Priorytet: laser > strzał > idle
+	if laser_animacja_aktywna:
+		if sprite.animation != "laser":
+			if sprite.sprite_frames.has_animation("laser"):
+				sprite.play("laser")
+	elif strzal_animacja_timer > 0.0:
+		if sprite.animation != "strzal":
+			if sprite.sprite_frames.has_animation("strzal"):
+				sprite.play("strzal")
+	else:
+		if sprite.animation != "idle":
+			if sprite.sprite_frames.has_animation("idle"):
+				sprite.play("idle")
+
 func _strzal():
 	if not gracz_ref or not is_instance_valid(gracz_ref): 
 		return
+	
+	# Odpal animację strzału (chyba że laser ma priorytet)
+	strzal_animacja_timer = STRZAL_ANIMACJA_CZAS
 		
 	if aktualna_faza == 6:
 		# Faza 6: Maszynowa spirala pocisków (bullet hell)
