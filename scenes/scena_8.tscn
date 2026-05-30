@@ -3,19 +3,20 @@
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
 [ext_resource type="AudioStream" uid="uid://d28qbx3xivgjg" path="res://assets/Sounds/Final Boss Battle - Rod Kim.mp3" id="3_djapk"]
 [ext_resource type="Texture2D" uid="uid://dlclravlqfmjn" path="res://assets/graphics/Scena8/tło_walki.png" id="4_yr44c"]
-[ext_resource type="Texture2D" uid="uid://d1nhvuccgqfu8" path="res://assets/graphics/scena3_animacja_ruchu/idle_dol.png" id="5_q0tbp"]
+[ext_resource type="Texture2D" uid="uid://nhxhimp0ihdj" path="res://assets/graphics/scena3_animacja_ruchu/idle_dol.png" id="5_q0tbp"]
 [ext_resource type="Script" uid="uid://cg8h5mi5k3uta" path="res://scripts/scena8_gracz.gd" id="5_xxrgm"]
-[ext_resource type="Texture2D" uid="uid://dpawq2ie8yg5h" path="res://assets/graphics/scena3_animacja_ruchu/idle_gora.png" id="6_uhlf1"]
-[ext_resource type="Texture2D" uid="uid://c37v8nq3pjffw" path="res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png" id="7_5yvrr"]
-[ext_resource type="Texture2D" uid="uid://doy3njg0nj032" path="res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png" id="8_k57uq"]
-[ext_resource type="Texture2D" uid="uid://dnu4utgw685l" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_dol.png" id="9_glqrp"]
-[ext_resource type="Texture2D" uid="uid://qiar8f5o2nwr" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_gora.png" id="9_w8k0v"]
-[ext_resource type="Texture2D" uid="uid://cfxwt3cwa1pd0" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_lewo1.png" id="11_xxrgm"]
-[ext_resource type="Texture2D" uid="uid://p83b37npfshc" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_prawover1.png" id="12_yh7rx"]
-[ext_resource type="Texture2D" uid="uid://dri5itvkkrkv6" path="res://assets/graphics/scena3_animacja_ruchu/skos_dol_lewo.png" id="13_451g6"]
-[ext_resource type="Texture2D" uid="uid://cbainpyj4dl3l" path="res://assets/graphics/scena3_animacja_ruchu/skos_dol_prawo.png" id="14_a8y66"]
-[ext_resource type="Texture2D" uid="uid://byh6wuda7msvw" path="res://assets/graphics/scena3_animacja_ruchu/skos_gora_lewo.png" id="15_q24i8"]
-[ext_resource type="Texture2D" uid="uid://dgw1gklad52w5" path="res://assets/graphics/scena3_animacja_ruchu/skos_gora_prawo.png" id="16_7xr4v"]
+[ext_resource type="Texture2D" uid="uid://cqhr4qlgwavbj" path="res://assets/graphics/scena3_animacja_ruchu/idle_gora.png" id="6_uhlf1"]
+[ext_resource type="Texture2D" uid="uid://cf7maqbmlda76" path="res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png" id="7_5yvrr"]
+[ext_resource type="Texture2D" uid="uid://dcxsrl3b3t0ki" path="res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png" id="8_k57uq"]
+[ext_resource type="Texture2D" uid="uid://0mkt0vfwfhea" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_dol.png" id="9_glqrp"]
+[ext_resource type="Texture2D" uid="uid://bh5jm0k4sk7uv" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_gora.png" id="9_w8k0v"]
+[ext_resource type="Texture2D" uid="uid://blgrayo7j0krc" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_lewo1.png" id="11_xxrgm"]
+[ext_resource type="Texture2D" uid="uid://q2at8g0gv0eo" path="res://assets/graphics/scena3_animacja_ruchu/chodzenie_prawover1.png" id="12_yh7rx"]
+[ext_resource type="Texture2D" uid="uid://cydaqd7q7jah8" path="res://assets/graphics/scena3_animacja_ruchu/skos_dol_lewo.png" id="13_451g6"]
+[ext_resource type="Texture2D" uid="uid://dg6xb6g6o31pr" path="res://assets/graphics/scena3_animacja_ruchu/skos_dol_prawo.png" id="14_a8y66"]
+[ext_resource type="Texture2D" uid="uid://bort86dpr88sk" path="res://assets/graphics/scena3_animacja_ruchu/skos_gora_lewo.png" id="15_q24i8"]
+[ext_resource type="Texture2D" uid="uid://cwfuxh5mkad4e" path="res://assets/graphics/scena3_animacja_ruchu/skos_gora_prawo.png" id="16_7xr4v"]
+[ext_resource type="Texture2D" uid="uid://b0akq5tycdfub" path="res://assets/graphics/Scena8/tarcza.png" id="17_451g6"]
 [ext_resource type="Script" uid="uid://bycgofaxxgfus" path="res://scripts/scena8_krab.gd" id="18_451g6"]
 [ext_resource type="Texture2D" uid="uid://cjfhgogi711pt" path="res://assets/graphics/SPRITE+COLOR/krabkolor.png" id="18_yh7rx"]
 
@@ -260,7 +261,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_451g6"]
-size = Vector2(190, 110)
+size = Vector2(682.5, 472.5)
 
 [node name="Scena8" type="Node2D" unique_id=1730050766]
 script = ExtResource("1_scena8")
@@ -297,6 +298,7 @@ collision_mask = 3
 script = ExtResource("5_xxrgm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=276849374]
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_yh7rx")
 animation = &"idle_prawo"
 
@@ -306,16 +308,20 @@ limit_top = 0
 limit_right = 2560
 limit_bottom = 1440
 
+[node name="TarczaSprite" type="Sprite2D" parent="Gracz" unique_id=1030480855]
+visible = false
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("17_451g6")
+
 [node name="Cyberkrab" type="CharacterBody2D" parent="." unique_id=893255775]
 collision_layer = 2
 script = ExtResource("18_451g6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Cyberkrab" unique_id=1325996715]
 position = Vector2(2000, 700)
-scale = Vector2(0.4, 0.4)
 texture = ExtResource("18_yh7rx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cyberkrab" unique_id=818043411]
-position = Vector2(2002, 698)
+position = Vector2(2011.5, 654.5)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_451g6")

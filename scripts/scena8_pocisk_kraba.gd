@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed = 500.0
+var speed = 700.0
 var direction = Vector2.RIGHT
 
 func _ready():

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-var predkosc_bazowa = 120.0
-var predkosc = 120.0
+var predkosc_bazowa = 450.0
+var predkosc = 450.0
 var kierunek = Vector2(-1, 0.5).normalized()
 var czas_gry = 0.0
 var strzal_timer = 0.0
@@ -11,6 +11,7 @@ var teleportacja_aktywna = false
 var teleport_timer = 0.0
 var teleport_interwal = 5.0  
 var aktualna_faza = 1
+var ruch_zablokowany = false  # Blokada ruchu podczas sweep beam (Faza 5)
 
 # Referencja do gracza – boss sam go znajdzie w grupie!
 var gracz_ref = null 
@@ -59,10 +60,15 @@ func _physics_process(delta):
 		return
 		
 	czas_gry += delta
-	# Krab przyspiesza o 2 piksele na sekundę
-	predkosc = predkosc_bazowa + czas_gry * 2.0  
-	velocity = kierunek * predkosc
-	move_and_slide()
+	
+	# Gdy ruch zablokowany (sweep beam) - nie ruszaj się, ale strzelaj dalej
+	if not ruch_zablokowany:
+		# Krab przyspiesza o 2 piksele na sekundę
+		predkosc = predkosc_bazowa + czas_gry * 2.0  
+		velocity = kierunek * predkosc
+		move_and_slide()
+	else:
+		velocity = Vector2.ZERO
 
 	# Odbijanie od ścian lewa/prawa
 	if global_position.x <= ARENA_MIN.x or global_position.x >= ARENA_MAX.x:
@@ -95,52 +101,85 @@ func _strzal():
 	if not gracz_ref or not is_instance_valid(gracz_ref): 
 		return
 		
-	var do_gracza = gracz_ref.global_position - global_position
-	var kat_bazowy = do_gracza.angle()
-	var odchylenie = randf_range(-0.175, 0.175)
-	var kat_finalny = kat_bazowy + odchylenie
-	var dir = Vector2(cos(kat_finalny), sin(kat_finalny))
-	
-	# Budowanie pocisku - skrypt pocisk_kraba sam tworzy sobie sprite i kolizję w _ready()
-	var pocisk = Area2D.new()
-	pocisk.set_script(POCISK_ZLA_SCRIPT)
-	pocisk.direction = dir
-	pocisk.global_position = global_position
-	get_parent().add_child(pocisk)
+	if aktualna_faza == 6:
+		# Faza 6: Maszynowa spirala pocisków (bullet hell)
+		for i in range(3): # Strzela 3 pociskami na raz z przesunięciem
+			var spiral_kat = czas_gry * 8.0 + (TAU / 3) * i
+			var dir_spiral = Vector2(cos(spiral_kat), sin(spiral_kat))
+			var p = Area2D.new()
+			p.set_script(POCISK_ZLA_SCRIPT)
+			p.direction = dir_spiral
+			p.global_position = global_position
+			get_parent().add_child(p)
+	else:
+		var do_gracza = gracz_ref.global_position - global_position
+		var kat_bazowy = do_gracza.angle()
+		var odchylenie = randf_range(-0.175, 0.175)
+		var kat_finalny = kat_bazowy + odchylenie
+		var dir = Vector2(cos(kat_finalny), sin(kat_finalny))
+		
+		# Budowanie pocisku
+		var pocisk = Area2D.new()
+		pocisk.set_script(POCISK_ZLA_SCRIPT)
+		pocisk.direction = dir
+		pocisk.global_position = global_position
+		get_parent().add_child(pocisk)
 
 func _teleportuj():
 	if sprite:
 		var tw = create_tween()
-		# Mignięcie na czerwono przed teleportacją
-		tw.tween_property(sprite, "modulate", Color(1, 0, 0, 0.3), 0.15)
+		# Mignięcie przed teleportacją
+		var color_flash = Color(1, 0, 0, 0.3) if aktualna_faza < 6 else Color(5, 0, 0, 0.8)
+		tw.tween_property(sprite, "modulate", color_flash, 0.15)
 		tw.tween_callback(func():
 			global_position = Vector2(
 				randf_range(ARENA_MIN.x + 100, ARENA_MAX.x - 100),
 				randf_range(ARENA_MIN.y + 100, ARENA_MAX.y - 100)
 			)
 			kierunek = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+			
+			if aktualna_faza == 6:
+				# Ring of bullets na teleport
+				for i in range(24):
+					var kat = (TAU / 24) * i
+					var dir = Vector2(cos(kat), sin(kat))
+					var pocisk = Area2D.new()
+					pocisk.set_script(POCISK_ZLA_SCRIPT)
+					pocisk.direction = dir
+					pocisk.global_position = global_position
+					get_parent().add_child(pocisk)
 		)
-		tw.tween_property(sprite, "modulate", Color.WHITE, 0.15)
+		var color_idle = Color.WHITE if aktualna_faza < 6 else Color(5.0, 0.0, 0.0, 1.0)
+		tw.tween_property(sprite, "modulate", color_idle, 0.15)
 
 func ustaw_faze(faza: int):
 	aktualna_faza = faza
 	match faza:
 		1:
-			predkosc_bazowa = 120.0
-			strzal_interwal = 1.0
+			predkosc_bazowa = 450.0
+			strzal_interwal = 0.5
 			teleportacja_aktywna = false
 		2:  
-			predkosc_bazowa = 160.0
-			strzal_interwal = 0.9
+			predkosc_bazowa = 500.0
+			strzal_interwal = 0.4
 			teleportacja_aktywna = true
 			teleport_interwal = 5.0
 		3:  
-			predkosc_bazowa = 210.0
-			strzal_interwal = 0.8
+			predkosc_bazowa = 550.0
+			strzal_interwal = 0.3
 			teleportacja_aktywna = true
 			teleport_interwal = 3.0
 		4:  
-			predkosc_bazowa = 280.0
-			strzal_interwal = 0.6
+			predkosc_bazowa = 600.0
+			strzal_interwal = 0.2
 			teleportacja_aktywna = true
 			teleport_interwal = 2.0
+		5:  
+			predkosc_bazowa = 80.0     # Krab prawie stoi w miejscu - sweep beam robi robotę
+			strzal_interwal = 0.1     # Ale strzela szybko jako dodatkowe zagrożenie
+			teleportacja_aktywna = false # Teleportacja wyłączona - scena_8 kontroluje pozycję
+		6:
+			predkosc_bazowa = 750.0    # UNDYING! Zapierdala jak szalony
+			strzal_interwal = 0.05     # Karabin maszynowy ze spirali
+			teleportacja_aktywna = true
+			teleport_interwal = 0.9    # Teleportuje się bardzo często z wybuchem ringów
