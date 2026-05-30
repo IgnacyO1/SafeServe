@@ -339,7 +339,7 @@ func _on_dispatch_pressed() -> void:
 	var tekst = reg_input.text.to_upper().replace(" ", "").strip_edges()
 	
 	if tekst == "KR4B2137":
-		get_tree().change_scene_to_file("res://scenes/scena_6.tscn")
+		get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
 	else:
 		dispatch_btn.disabled = true
 		
