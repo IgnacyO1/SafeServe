@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://1nptvlm7lhx7"]
+
+[ext_resource type="Script" uid="uid://ch2vkvu0dm5it" path="res://scripts/uciekinier.gd" id="1_jmcos"]
+[ext_resource type="Texture2D" uid="uid://b3c7ouaobgpx5" path="res://assets/graphics/cybertruck.png" id="2_8ltu6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcu74"]
+radius = 19.0
+height = 118.0
+
+[node name="NpcCar" type="CharacterBody2D" unique_id=792379994]
+script = ExtResource("1_jmcos")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1095535104]
+rotation = 1.5707964
+scale = Vector2(0.39062482, 0.40281624)
+texture = ExtResource("2_8ltu6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1186333508]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_bcu74")

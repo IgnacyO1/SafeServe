@@ -1,6 +1,6 @@
 extends Node
 
-@export var uciekinier_scene = preload("res://scenes/uciekinier.tscn")
+@export var uciekinier_scene = preload("res://scenes/PoliceMultiplayer/uciekinier_multiplayer.tscn")
 
 @onready var map_manager = get_node("../MapManager")
 

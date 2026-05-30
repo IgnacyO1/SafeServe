@@ -67,6 +67,10 @@ position = Vector2(-71487, 79076)
 scale = Vector2(5.559322, 5.559322)
 texture = ExtResource("6_xew2h")
 
+[node name="NetworkSpawner" type="MultiplayerSpawner" parent="SubViewportContainer/SubViewport/World" unique_id=1476103662]
+_spawnable_scenes = PackedStringArray("uid://kshwap1nnjie", "")
+spawn_path = NodePath("..")
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=810173777]
 position = Vector2(1759, 919)
 scale = Vector2(0.5, 0.5)
