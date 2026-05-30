@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://dky304f4p60mo"]
+
+[ext_resource type="Script" uid="uid://bpa3ghpavygsj" path="res://scripts/scena_7_multiplayer.gd" id="1_34dss"]
+[ext_resource type="Script" uid="uid://begtm46l1wyr4" path="res://scripts/scena_7_world_multiplayer.gd" id="2_34dss"]
+[ext_resource type="Script" uid="uid://bmoi2bdjni1sp" path="res://scripts/map_manager_for_police_multiplayer.gd" id="3_jgvw7"]
+[ext_resource type="Script" uid="uid://dl82vhf3okhoi" path="res://scripts/traffic_manager_for_police_multiplayer.gd" id="4_0mhte"]
+[ext_resource type="Texture2D" uid="uid://cjhj4j2ufogf6" path="res://assets/graphics/Screenshot_20260514_144541.png" id="5_4jn2x"]
+[ext_resource type="PackedScene" uid="uid://kshwap1nnjie" path="res://scenes/PoliceMultiplayer/police_multiplayer.tscn" id="5_34dss"]
+[ext_resource type="Texture2D" uid="uid://grs7qqjo46gn" path="res://assets/graphics/Oil.png" id="6_xew2h"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bplqf"]
+[ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="8_3k3b3"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="9_xmh4c"]
+[ext_resource type="Texture2D" uid="uid://bj0hj0jnpc6vm" path="res://assets/graphics/scena_2_HUD/HUD background.svg" id="10_ni06o"]
+[ext_resource type="Texture2D" uid="uid://c4r5ogqrcqm44" path="res://assets/graphics/scena_2_HUD/Switch off.svg" id="11_y6fw0"]
+[ext_resource type="Texture2D" uid="uid://dkbcs7e6xtfl6" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_h2fln"]
+[ext_resource type="Texture2D" uid="uid://b2uq4l20msb7t" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_1bncr"]
+[ext_resource type="Texture2D" uid="uid://tkre7ikuba8g" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_30wi0"]
+[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_xxl8d"]
+[ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_730he"]
+[ext_resource type="AudioStream" uid="uid://b52jb6y30uvf1" path="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3" id="17_2rql8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
+font_size = 32
+font_color = Color(0, 0.6627451, 0, 1)
+
+[node name="RootMulti" type="Node2D" unique_id=452106287]
+script = ExtResource("1_34dss")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1994133029]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=596924865]
+handle_input_locally = false
+audio_listener_enable_2d = true
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=2106525458]
+script = ExtResource("2_34dss")
+
+[node name="MapManager" type="Node2D" parent="SubViewportContainer/SubViewport/World" unique_id=1997550378]
+script = ExtResource("3_jgvw7")
+player_path = NodePath("../Police")
+
+[node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 instance=ExtResource("5_34dss")]
+
+[node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
+script = ExtResource("4_0mhte")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=885939410]
+visible = false
+z_index = -4
+position = Vector2(-64329.668, 74395.13)
+scale = Vector2(14.431, 14.431)
+texture = ExtResource("5_4jn2x")
+
+[node name="Sprite2D2" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=581956178]
+visible = false
+position = Vector2(-55364, 69539)
+scale = Vector2(3.5974536, 3.5974534)
+texture = ExtResource("6_xew2h")
+
+[node name="Sprite2D3" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=1441417386]
+visible = false
+position = Vector2(-71487, 79076)
+scale = Vector2(5.559322, 5.559322)
+texture = ExtResource("6_xew2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=810173777]
+position = Vector2(1759, 919)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_bplqf")
+
+[node name="HUD" type="Control" parent="." unique_id=984978602]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RadioSprite" type="Sprite2D" parent="HUD" unique_id=1129654671]
+position = Vector2(89.00001, 900)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_bplqf")
+
+[node name="Radio popup" type="Control" parent="HUD" unique_id=1390080633]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_3k3b3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=1297795664]
+volume_db = 20.724
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Radio popup" unique_id=1421575649]
+position = Vector2(858.25, 967)
+scale = Vector2(0.9040134, 1)
+texture = ExtResource("9_xmh4c")
+
+[node name="Label" type="Label" parent="HUD/Radio popup" unique_id=735078912]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 869.0
+offset_right = 1509.0
+offset_bottom = 1106.0
+text = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
+label_settings = SubResource("LabelSettings_q82ln")
+autowrap_mode = 2
+
+[node name="Control" type="Control" parent="HUD" unique_id=1142380390]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/Control" unique_id=961323778]
+position = Vector2(1743.9999, 894)
+scale = Vector2(1.3072727, 1.3072728)
+texture = ExtResource("10_ni06o")
+
+[node name="TextureButton2" type="TextureButton" parent="HUD/Control" unique_id=480341529]
+layout_mode = 0
+offset_left = 1839.0
+offset_top = 731.0
+offset_right = 1896.0
+offset_bottom = 881.0
+toggle_mode = true
+texture_normal = ExtResource("11_y6fw0")
+texture_pressed = ExtResource("12_h2fln")
+
+[node name="TextureButton" type="TextureButton" parent="HUD/Control" unique_id=1228045109]
+layout_mode = 0
+offset_left = 1842.0
+offset_top = 910.0
+offset_right = 1899.0
+offset_bottom = 1060.0
+toggle_mode = true
+texture_normal = ExtResource("11_y6fw0")
+texture_pressed = ExtResource("12_h2fln")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Control" unique_id=1554899754]
+position = Vector2(1729, 813)
+texture = ExtResource("13_1bncr")
+
+[node name="Sprite2D3" type="Sprite2D" parent="HUD/Control" unique_id=898017045]
+position = Vector2(1714, 998)
+texture = ExtResource("14_30wi0")
+
+[node name="Map" type="Control" parent="." unique_id=1579625904]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 434.0
+offset_top = 144.0
+offset_right = 434.0
+offset_bottom = 144.0
+script = ExtResource("15_xxl8d")
+
+[node name="MapSprite" type="Sprite2D" parent="Map" unique_id=1534640556]
+position = Vector2(495.3, 383.175)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("16_730he")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1440221500]
+stream = ExtResource("17_2rql8")
+volume_db = -9.107
+autoplay = true
+parameters/looping = true
