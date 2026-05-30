@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c8qscps3oh5v"]
 
 [ext_resource type="Script" uid="uid://bl2ekncae61bg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
-[ext_resource type="Texture2D" uid="uid://lns6inyho2m6" path="res://assets/graphics/loading_background.png" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://k3kx4rdtujbh" path="res://assets/graphics/loading_background.png" id="2_ekxnf"]
 [ext_resource type="AudioStream" uid="uid://c58agys6x8rgl" path="res://assets/Sounds/8_Bit_Nostalgia.mp3" id="3_bqqt6"]
 
 [node name="MainMenu" type="Node2D" unique_id=622469435]

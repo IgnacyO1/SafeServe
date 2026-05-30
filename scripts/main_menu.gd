@@ -131,7 +131,7 @@ func _on_button_2_pressed(): # Kontynuacja
 	_uruchom_loading_screen(last_level)
 
 func _on_button_3_pressed(): # Ustawienia
-	pass
+	get_tree().change_scene_to_file("res://scenes/ustawienia.tscn")
 
 func _on_button_4_pressed(): # Wyjście 
 	get_tree().quit()

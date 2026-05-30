@@ -302,7 +302,10 @@ func krab_trafiony(obrazenia: int):
 	# Sprawdź śmierć
 	if krab_hp <= 0.0:
 		if not faza_6_odpalona:
-			_fake_wygrana()
+			if GameConfig.crab_mode == "cutie":
+				_prawdziwa_wygrana()
+			else:
+				_fake_wygrana()
 		else:
 			_prawdziwa_wygrana()
 
@@ -504,6 +507,9 @@ func _zarzadzaj_sweep(delta):
 	if not sweep_active and not sweep_warning_active:
 		sweep_cooldown_timer += delta
 		if sweep_cooldown_timer >= sweep_cooldown:
+			# Czekaj aż krab skończy robić falę, żeby nie przerywać umiejętności
+			if krab and is_instance_valid(krab) and krab.fala_aktywna:
+				return
 			_rozpocznij_sweep_warning()
 		return
 	
