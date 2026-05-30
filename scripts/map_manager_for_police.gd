@@ -6,6 +6,21 @@ var map_scale = 20.0
 var load_radius = 1
 var chunk_path = "res://data/map_chunks/"
 
+@export var night_mode: bool = false
+var bg_color_day = Color(0.22, 0.32, 0.22)
+var bg_color_night = Color(0.03, 0.06, 0.14)
+var road_color_day = Color.WHITE
+var road_color_night = Color(0.35, 0.45, 0.55)
+var sidewalk_color_day = Color(0.8, 0.8, 0.8)
+var sidewalk_color_night = Color(0.4, 0.5, 0.6)
+var building_color_day = Color(0.3, 0.3, 0.35)
+var building_color_night = Color(0.14, 0.16, 0.22)
+var building_outline_day = Color(0.1, 0.1, 0.1)
+var building_outline_night = Color(0.06, 0.08, 0.14)
+var tree_color_night = Color(0.25, 0.35, 0.24)
+var water_color_night = Color(0.09, 0.16, 0.30)
+var road_arrow_color_night = Color(0.6, 0.8, 0.92, 0.75)
+
 var last_update_pos = Vector2.ZERO
 var update_threshold = 200.0
 
@@ -23,9 +38,6 @@ var road_network = {}
 var chunk_load_queue = []
 var chunk_roads = {} # c_id -> Array of {"start_node": Vector2, "road_data": Dictionary}
 var major_nodes = []
-var tram_network = {}
-var tram_nodes = []
-var chunk_trams = {} # c_id -> Tablica torów do czyszczenia przy usuwaniu chunka
 
 @export var player_path: NodePath
 @onready var player = get_node(player_path)
@@ -71,7 +83,6 @@ func update_chunks():
 			loaded_chunks[c_id].queue_free()
 			loaded_chunks.erase(c_id)
 			unload_chunk_roads(c_id)
-			unload_chunk_trams(c_id)
 			removed_any = true
 			
 	if removed_any:
@@ -107,9 +118,13 @@ func load_chunk_from_json(c_id):
 	bg.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED # To włącza kafelkowanie
 	bg.region_enabled = true
 	# Region musi być w pikselach (rozmiar chunka), wtedy tekstura wypełni go kafelkami
-	bg.region_rect = Rect2(0, 0, chunk_size_px, chunk_size_px) 
+	bg.region_rect = Rect2(0, 0, chunk_size_px, chunk_size_px)
 	bg.position = Vector2(cx * chunk_size_px, cy * chunk_size_px)
 	bg.z_index = -10
+	if night_mode:
+		bg.modulate = Color(0.35, 0.45, 0.5, 1.0)
+	else:
+		bg.modulate = Color(1, 1, 1, 1)
 	chunk_node.add_child(bg)
 	
 	for feature in data:
@@ -172,32 +187,6 @@ func register_road_in_network(coords, is_oneway, props: Dictionary, c_id: String
 		road_network[end_node].append(rev_road_data)
 		chunk_roads[c_id].append({"start_node": end_node, "road_data": rev_road_data})
 
-func register_tram_in_network(points, is_oneway, c_id):
-	if not is_oneway: 
-		return
-		
-	if points.size() < 2: return
-	
-	# Zamiast rejestrować tylko points[0], rejestrujemy każdy punkt jako potencjalny start!
-	for i in range(points.size() - 1):
-		var current_node = points[i].snapped(Vector2(0.1, 0.1))
-		
-		# Tworzymy pod-odcinek od tego punktu do końca oryginalnej tablicy, 
-		# żeby tramwaj wiedział dokąd dalej jechać.
-		var sub_points = points.slice(i)
-		
-		if not tram_network.has(current_node): 
-			tram_network[current_node] = []
-			
-		var track_data = {"points": sub_points, "oneway": true}
-		tram_network[current_node].append(track_data)
-		
-		if not chunk_trams.has(c_id): 
-			chunk_trams[c_id] = []
-		chunk_trams[c_id].append({"start_node": current_node, "track_data": track_data})
-		
-		if not current_node in tram_nodes: 
-			tram_nodes.append(current_node)
 func unload_chunk_roads(c_id: String):
 	if chunk_roads.has(c_id):
 		for entry in chunk_roads[c_id]:
@@ -243,8 +232,6 @@ func spawn_feature(feature, parent, c_id):
 	# Tory 
 	if props.has("railway") and props.get("railway") in ["tram", "rail", "subway"]:
 		create_railway(points, parent, props)
-		if props.get("railway") == "tram":
-			register_tram_in_network(points, props.get("oneway") == "yes", c_id) # Teraz c_id zadziała idealnie!
 		return
 
 	# Budynki i Drogi
@@ -289,20 +276,27 @@ func create_building(points, parent):
 	# WIZUALIZACJA (Dach)
 	var visual = Polygon2D.new()
 	visual.polygon = clean_points
-	visual.color = Color(0.3, 0.3, 0.35)
+	visual.color = night_mode ? building_color_night : building_color_day
 	visual.z_index = 2
 	body.add_child(visual)
 
 	# WIZUALIZACJA (Cień)
 	var shadow = Polygon2D.new()
 	shadow.polygon = clean_points
-	shadow.color = Color(0, 0, 0, 0.3)
+	shadow.color = Color(0, 0, 0, 0.35)
 	shadow.position = Vector2(5, 5) # Lekkie przesunięcie dla efektu 3D
 	shadow.z_index = 1
 	body.add_child(shadow)
 
 	# WIZUALIZACJA (Obrys)
 	var outline = Line2D.new()
+	var opoints = clean_points
+	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
+	outline.points = opoints
+	outline.width = 2.0
+	outline.default_color = night_mode ? building_outline_night : building_outline_day
+	outline.z_index = 3
+	body.add_child(outline)
 	var opoints = clean_points
 	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
 	outline.points = opoints
@@ -336,11 +330,13 @@ func create_road(points, parent, props: Dictionary):
 	if is_sidewalk:
 		road.texture = sidewalk_tex
 		road.z_index = -3
-		road.default_color = Color(0.8, 0.8, 0.8)
+		road.default_color = night_mode ? sidewalk_color_night : sidewalk_color_day
 	else:
 		road.texture = asphalt_tex
 		road.z_index = -2
-		road.default_color = Color.WHITE
+		road.default_color = night_mode ? road_color_night : road_color_day
+		if night_mode:
+			road.modulate = Color(0.65, 0.75, 0.85, 1.0)
 	
 	road.texture_mode = Line2D.LINE_TEXTURE_TILE
 	road.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -402,16 +398,7 @@ func create_tree(pos, parent):
 	# Korona drzewa
 	var visual = Sprite2D.new()
 	visual.texture = tree_tex
-	visual.scale = Vector2(0.1, 0.1) * map_scale
-	visual.z_index = 4 # Wyżej niż dachy budynków (opcjonalnie)
-	
-	# Kolizja (okrągła, żeby auto mogło się obetrzeć o drzewo)
-	var col = CollisionShape2D.new()
-	var circle = CircleShape2D.new()
-	circle.radius = 0.4 * map_scale # Promień pnia/kolizji
-	col.shape = circle
-	
-	tree_node.add_child(shadow)
+	visual.modulate = night_mode ? tree_color_night : Color(1, 1, 1, 1)
 	tree_node.add_child(visual)
 	tree_node.add_child(col)
 	parent.add_child(tree_node)
@@ -436,10 +423,8 @@ func create_water(points, parent, props):
 	# Ustawienia tekstury (AnimatedTexture)
 	water_node.texture = water_tex
 	water_node.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	water_node.texture_scale = Vector2(2.0, 2.0) 
-	
-	# Ustawienia warstw
-	water_node.z_index = -5
+	water_node.texture_scale = Vector2(2.0, 2.0)
+	water_node.modulate = night_mode ? water_color_night : Color(1, 1, 1, 1)
 	
 	# Naprawa ewentualnych błędów geometrii (częste w OSM przy wodzie)
 	# offset_polygon z wartością 0 naprawia strukturę punktów
@@ -563,19 +548,6 @@ func is_polygon_convex_custom(points: PackedVector2Array) -> bool:
 			elif sign_val != current_sign:
 				return false
 	return true
-# Wywołaj tę funkcję wewnątrz Twojego istniejącego update_chunks(), tam gdzie czyścisz drogi
-func unload_chunk_trams(c_id: String):
-	if chunk_trams.has(c_id):
-		for entry in chunk_trams[c_id]:
-			var start_node = entry.start_node
-			var track_data = entry.track_data
-			if tram_network.has(start_node):
-				tram_network[start_node].erase(track_data)
-				if tram_network[start_node].is_empty():
-					tram_network.erase(start_node)
-		chunk_trams.erase(c_id)
-	# Opcjonalnie przefiltruj tram_nodes, aby usunąć martwe węzły
-	tram_nodes = tram_nodes.filter(func(n): return tram_network.has(n))
 
 func calculate_road_width(props: Dictionary) -> float:
 	var highway = props.get("highway", "")
