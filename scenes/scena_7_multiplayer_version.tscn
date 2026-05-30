@@ -41,6 +41,7 @@ script = ExtResource("2_34dss")
 
 [node name="MapManager" type="Node2D" parent="SubViewportContainer/SubViewport/World" unique_id=1997550378]
 script = ExtResource("3_jgvw7")
+player_path = NodePath("../Police")
 
 [node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 instance=ExtResource("5_34dss")]
 
