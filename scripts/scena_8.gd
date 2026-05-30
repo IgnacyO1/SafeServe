@@ -887,7 +887,7 @@ func _fake_wygrana():
 	krab_max_hp = 350.0
 	krab_hp = 350.0
 	aktualna_faza = 6
-	gracz_zycia = 10 # Ustawiamy HP gracza na 10!
+	gracz_zycia = 20 # Ustawiamy HP gracza na 10!
 	
 	if krab and is_instance_valid(krab) and krab.has_method("ustaw_faze"):
 		krab.ustaw_faze(6)
