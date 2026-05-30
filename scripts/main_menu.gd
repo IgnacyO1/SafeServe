@@ -58,12 +58,12 @@ func _uruchom_loading_screen(scene_path: String):
 	tip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tip_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	
-	tip_label.offset_top = -180 
-	tip_label.offset_bottom = -140
+	tip_label.offset_top = -220 
+	tip_label.offset_bottom = -160
 	
-	tip_label.set("theme_override_font_sizes/font_size", 24)
+	tip_label.set("theme_override_font_sizes/font_size", 36)
 	tip_label.set("theme_override_colors/font_outline_color", Color.BLACK)
-	tip_label.set("theme_override_constants/outline_size", 5)
+	tip_label.set("theme_override_constants/outline_size", 8)
 	loading_layer.add_child(tip_label)
 
 	# Start
