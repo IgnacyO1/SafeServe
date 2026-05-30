@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://cdyw537h4t5fn" path="res://scripts/scena_7_world.gd" id="2_tc0r3"]
 [ext_resource type="Script" uid="uid://biq5prfp00bux" path="res://scripts/map_manager_for_police.gd" id="3_ohnw0"]
 [ext_resource type="PackedScene" uid="uid://dpu65mdptiq8b" path="res://scenes/Police/police.tscn" id="4_u6ham"]
-[ext_resource type="Script" uid="uid://c0mjmoxa2yyk4" path="res://scripts/traffic_manager_for_police.gd" id="5_5d6c7"]
 [ext_resource type="Texture2D" uid="uid://cjhj4j2ufogf6" path="res://assets/graphics/Screenshot_20260514_144541.png" id="6_am5di"]
 [ext_resource type="Texture2D" uid="uid://grs7qqjo46gn" path="res://assets/graphics/Oil.png" id="7_re4pb"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="8_iybjg"]
@@ -18,7 +17,121 @@
 [ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_ohnw0"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_u6ham"]
 [ext_resource type="AudioStream" uid="uid://b52jb6y30uvf1" path="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3" id="18_5d6c7"]
-[ext_resource type="Script" uid="uid://hrsaxsrw6xu0" path="res://scenes/TramManager.gd" id="19_xzc7p"]
+
+[sub_resource type="GDScript" id="GDScript_u6ham"]
+script/source = "extends Node
+
+@export var max_agents = 0
+@export var npc_scene = preload(\"res://scenes/NPCCar.tscn\")
+@export var uciekinier_scene = preload(\"res://scenes/uciekinier.tscn\") # <--- DODAJ TO
+
+@onready var map_manager = get_node(\"../MapManager\")
+@onready var player = get_node(\"../Police\")
+
+var active_agents = []
+var is_pursuit_mode = false # <--- Zmienna sterująca trybem
+
+var uciekinier_spawned = false
+
+func setup_mode(pursuit_active: bool):
+	is_pursuit_mode = pursuit_active
+	print(\"TRYB POŚCIGU USTAWIONY NA: \", pursuit_active)
+	
+	if is_pursuit_mode:
+		# Czyścimy wszystko co zdążyło się zespawnować
+		for agent in active_agents:
+			if is_instance_valid(agent): agent.queue_free()
+		active_agents.clear()
+		uciekinier_spawned = false # Pozwalamy na spawn bossa
+
+func _process(_delta):
+	if is_pursuit_mode:
+		# Spawnuje bossa TYLKO RAZ, gdy tylko map_manager będzie gotowy (będzie miał skalę itp.)
+		if not uciekinier_spawned and map_manager:
+			spawn_boss_car()
+			uciekinier_spawned = true
+		return # KLUCZOWE: Nie idź dalej do spawnowania NPC!
+	# Reszta kodu spawnowania cywilów...
+	for agent in active_agents:
+		if is_instance_valid(agent):
+			var dist = agent.global_position.distance_to(player.global_position)
+			if dist > map_manager.load_radius * map_manager.chunk_size_px * 1.5:
+				despawn_agent(agent)
+
+	if active_agents.size() < max_agents and map_manager.road_network.size() > 0:
+		spawn_random_agent()
+
+func spawn_boss_car():
+	var boss = uciekinier_scene.instantiate()
+	add_child(boss)
+	# Boss nie potrzebuje losowych punktów z sieci, bo ma je wbudowane w skrypcie
+	boss.setup([], map_manager, false) 
+	active_agents.append(boss)
+	print(\"SPAWNED: Cyberkrab gotowy do ucieczki!\")
+
+func spawn_random_agent():
+	if map_manager.major_nodes.is_empty():
+		return
+
+	# Spróbuj do 5 razy znaleźć węzeł w odpowiedniej odległości od gracza
+	var spawn_node = Vector2.ZERO
+	var found = false
+	var max_spawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.25
+	
+	for i in range(5):
+		var node = map_manager.major_nodes.pick_random()
+		var dist = node.distance_to(player.global_position)
+		if dist <= max_spawn_dist and dist >= 500.0:
+			var occupied = false
+			for agent in active_agents:
+				if is_instance_valid(agent):
+					if agent.global_position.distance_to(node) < 150.0:
+						occupied = true
+						break
+			if not occupied:
+				spawn_node = node
+				found = true
+				break
+			
+	if not found:
+		return
+
+	# Sprawdź czy miejsce jest wolne (używając fizyki)
+	var space_state = get_viewport().find_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	
+	# Używamy małego koła do sprawdzenia czy droga jest wolna
+	var circle = CircleShape2D.new()
+	circle.radius = 50.0 # rozmiar auta w skali
+	query.shape = circle
+	query.transform = Transform2D(0, spawn_node)
+	query.collision_mask = 1 | 2 # Sprawdzamy czy nie ma tam budynku lub innego auta
+	
+	var result = space_state.intersect_shape(query)
+	if not result.is_empty():
+		return # Miejsce zajęte, spróbuj w następnej klatce
+	
+	var road_data = map_manager.road_network[spawn_node].pick_random()
+	var npc = npc_scene.instantiate()
+	add_child(npc)
+	
+	# Przekazujemy punkty ORAZ status oneway do setup
+	npc.setup(road_data.points, map_manager, road_data.oneway)
+	var original_mask = npc.collision_mask
+	npc.collision_mask = 0
+	
+	get_tree().create_timer(1.0).timeout.connect(func():
+		if is_instance_valid(npc):
+			npc.collision_mask = original_mask
+	)
+	
+	active_agents.append(npc)
+	
+
+func despawn_agent(agent):
+	active_agents.erase(agent)
+	agent.queue_free()
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
 font_size = 32
@@ -47,11 +160,7 @@ player_path = NodePath("../Police")
 [node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 groups=["police"] instance=ExtResource("4_u6ham")]
 
 [node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
-script = ExtResource("5_5d6c7")
-
-[node name="TramManager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1891234567]
-script = ExtResource("19_xzc7p")
-player_path = NodePath("../Police")
+script = SubResource("GDScript_u6ham")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=885939410]
 visible = false
