@@ -10,12 +10,15 @@ var cutscene_path = "res://assets/Videos/spin.ogv" # to trzeba zmienić tzn doda
 var coords_label: Label
 var arrow_sprite: Polygon2D
 var fade_rect: ColorRect
+var night_overlay: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
 var uciekinier = true
 
 func _ready():
 	if not player: return
+	if map_manager:
+		map_manager.night_mode = true
 	setup_level()
 	setup_ui()
 
@@ -64,11 +67,19 @@ func setup_ui():
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100
 	add_child(canvas)
+
+	night_overlay = ColorRect.new()
+	night_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	night_overlay.color = Color(0.04, 0.10, 0.18, 0.36)
+	night_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	night_overlay.z_index = -5
+	canvas.add_child(night_overlay)
 	
 	# [KOD LABELA I STRZAŁKI BEZ ZMIAN]
 	coords_label = Label.new()
 	coords_label.position = Vector2(20, 20)
 	coords_label.add_theme_font_size_override("font_size", 24)
+	coords_label.modulate = Color(0.8, 0.95, 1.0, 1.0)
 	canvas.add_child(coords_label)
 	
 	var arrow_container = Marker2D.new()
@@ -77,7 +88,7 @@ func setup_ui():
 	
 	arrow_sprite = Polygon2D.new()
 	arrow_sprite.polygon = PackedVector2Array([Vector2(0, -25), Vector2(15, 15), Vector2(0, 5), Vector2(-15, 15)])
-	arrow_sprite.color = Color.RED
+	arrow_sprite.color = Color(0.8, 0.9, 1.0, 1.0)
 	arrow_container.add_child(arrow_sprite)
 
 	video_player = VideoStreamPlayer.new()

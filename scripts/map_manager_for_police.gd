@@ -239,12 +239,6 @@ func spawn_feature(feature, parent, c_id):
 		create_building(points, parent)
 	else:
 		create_road(points, parent, props)
-
-	# Budynki i Drogi
-	if type == "building" or props.has("building"):
-		create_building(points, parent)
-	else:
-		create_road(points, parent, props)
 	
 
 func create_building(points, parent):
@@ -276,7 +270,7 @@ func create_building(points, parent):
 	# WIZUALIZACJA (Dach)
 	var visual = Polygon2D.new()
 	visual.polygon = clean_points
-	visual.color = night_mode ? building_color_night : building_color_day
+	visual.color = building_color_night if night_mode else building_color_day
 	visual.z_index = 2
 	body.add_child(visual)
 
@@ -294,14 +288,7 @@ func create_building(points, parent):
 	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
 	outline.points = opoints
 	outline.width = 2.0
-	outline.default_color = night_mode ? building_outline_night : building_outline_day
-	outline.z_index = 3
-	body.add_child(outline)
-	var opoints = clean_points
-	opoints.append(clean_points[0]) # Zamknięcie pętli obrysu
-	outline.points = opoints
-	outline.width = 2.0
-	outline.default_color = Color(0.1, 0.1, 0.1)
+	outline.default_color = building_outline_night if night_mode else building_outline_day
 	outline.z_index = 3
 	body.add_child(outline)
 
@@ -330,11 +317,11 @@ func create_road(points, parent, props: Dictionary):
 	if is_sidewalk:
 		road.texture = sidewalk_tex
 		road.z_index = -3
-		road.default_color = night_mode ? sidewalk_color_night : sidewalk_color_day
+		road.default_color = sidewalk_color_night if night_mode else sidewalk_color_day
 	else:
 		road.texture = asphalt_tex
 		road.z_index = -2
-		road.default_color = night_mode ? road_color_night : road_color_day
+		road.default_color = road_color_night if night_mode else road_color_day
 		if night_mode:
 			road.modulate = Color(0.65, 0.75, 0.85, 1.0)
 	
@@ -380,6 +367,8 @@ func render_oneway_arrows(points, parent):
 		arrows.arrow_points = arrow_points
 		arrows.width = 0.5 * map_scale
 		arrows.z_index = -1
+		if night_mode:
+			arrows.color = road_arrow_color_night
 		parent.add_child(arrows)
 func create_tree(pos, parent):
 	var tree_node = StaticBody2D.new()
@@ -398,7 +387,17 @@ func create_tree(pos, parent):
 	# Korona drzewa
 	var visual = Sprite2D.new()
 	visual.texture = tree_tex
-	visual.modulate = night_mode ? tree_color_night : Color(1, 1, 1, 1)
+	visual.modulate = tree_color_night if night_mode else Color(1, 1, 1, 1)
+	visual.scale = Vector2(0.1, 0.1) * map_scale
+	visual.z_index = 4 # Wyżej niż dachy budynków (opcjonalnie)
+
+	# Kolizja (okrągła, żeby auto mogło się obetrzeć o drzewo)
+	var col = CollisionShape2D.new()
+	var circle = CircleShape2D.new()
+	circle.radius = 0.4 * map_scale # Promień pnia/kolizji
+	col.shape = circle
+
+	tree_node.add_child(shadow)
 	tree_node.add_child(visual)
 	tree_node.add_child(col)
 	parent.add_child(tree_node)
@@ -424,7 +423,7 @@ func create_water(points, parent, props):
 	water_node.texture = water_tex
 	water_node.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	water_node.texture_scale = Vector2(2.0, 2.0)
-	water_node.modulate = night_mode ? water_color_night : Color(1, 1, 1, 1)
+	water_node.modulate = water_color_night if night_mode else Color(1, 1, 1, 1)
 	
 	# Naprawa ewentualnych błędów geometrii (częste w OSM przy wodzie)
 	# offset_polygon z wartością 0 naprawia strukturę punktów
