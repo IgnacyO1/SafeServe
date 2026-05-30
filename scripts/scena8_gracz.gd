@@ -53,7 +53,7 @@ func _physics_process(delta):
 
 func _update_animations(dir: Vector2):
 	if dir == Vector2.ZERO:
-		anim_sprite.play("idle_" + ostatni_kierunek_idle)
+		anim_sprite.play("policjant_idle_" + ostatni_kierunek_idle)
 		return
 
 	# Matematyczne zaokrąglenie kąta do najbliższych 45 stopni (PI / 4)
@@ -61,28 +61,28 @@ func _update_animations(dir: Vector2):
 	
 	match angle:
 		0.0: 
-			anim_sprite.play("walk_prawo")
+			anim_sprite.play("policjant_walk_prawo")
 			ostatni_kierunek_idle = "prawo"
 		PI / 4.0: 
-			anim_sprite.play("walk_skos_dol_prawo")
+			anim_sprite.play("policjant_skos_dol_prawo")
 			ostatni_kierunek_idle = "prawo"
 		PI / 2.0: 
-			anim_sprite.play("walk_dol")
+			anim_sprite.play("policjant_walk_dol")
 			ostatni_kierunek_idle = "dol"
 		3.0 * PI / 4.0: 
-			anim_sprite.play("walk_skos_dol_lewo")
+			anim_sprite.play("policjant_skos_dol_lewo")
 			ostatni_kierunek_idle = "lewo"
 		PI, -PI: 
-			anim_sprite.play("walk_lewo")
+			anim_sprite.play("policjant_walk_lewo")
 			ostatni_kierunek_idle = "lewo"
 		-3.0 * PI / 4.0: 
-			anim_sprite.play("walk_skos_gora_lewo")
+			anim_sprite.play("policjant_skos_gora_lewo")
 			ostatni_kierunek_idle = "lewo"
 		-PI / 2.0: 
-			anim_sprite.play("walk_gora")
+			anim_sprite.play("policjant_walk_gora")
 			ostatni_kierunek_idle = "gora"
 		-PI / 4.0: 
-			anim_sprite.play("walk_skos_gora_prawo")
+			anim_sprite.play("policjant_skos_gora_prawo")
 			ostatni_kierunek_idle = "prawo"
 
 func _unhandled_input(event):
