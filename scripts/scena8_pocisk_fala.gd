@@ -6,14 +6,13 @@ var direction = Vector2.RIGHT
 func _ready():
 	# Sprite pocisku fali
 	var spr = Sprite2D.new()
-	var tex = load("res://assets/graphics/Scena8/pocisk_zla.png")
+	var tex = load("res://assets/graphics/SPRITE+COLOR/sruba.png")
 	if tex:
 		spr.texture = tex
-		spr.scale = Vector2(0.8, 0.8) # Troche wiekszy
-		spr.modulate = Color(0.5, 0.0, 1.0) # Lekko zmieniony kolor zeby sie odroznial (fioletowawy)
+		spr.scale = Vector2(0.2, 0.2) 
 	else:
 		var cr = ColorRect.new()
-		cr.color = Color(0.5, 0.0, 1.0, 1.0)
+		cr.color = Color(0.482, 0.5, 0.521, 1.0)
 		cr.size = Vector2(16, 8)
 		cr.position = Vector2(-8, -4)
 		add_child(cr)
