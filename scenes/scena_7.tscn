@@ -5,19 +5,20 @@
 [ext_resource type="Script" uid="uid://biq5prfp00bux" path="res://scripts/map_manager_for_police.gd" id="3_ohnw0"]
 [ext_resource type="PackedScene" uid="uid://dpu65mdptiq8b" path="res://scenes/Police/police.tscn" id="4_u6ham"]
 [ext_resource type="Script" uid="uid://c0mjmoxa2yyk4" path="res://scripts/traffic_manager_for_police.gd" id="5_5d6c7"]
-[ext_resource type="Texture2D" uid="uid://dk6aer576omjf" path="res://assets/graphics/Screenshot_20260514_144541.png" id="6_am5di"]
-[ext_resource type="Texture2D" uid="uid://yyr47gbb1gym" path="res://assets/graphics/Oil.png" id="7_re4pb"]
-[ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="8_iybjg"]
-[ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="9_rqlin"]
+[ext_resource type="Texture2D" uid="uid://cjhj4j2ufogf6" path="res://assets/graphics/Screenshot_20260514_144541.png" id="6_am5di"]
+[ext_resource type="Texture2D" uid="uid://grs7qqjo46gn" path="res://assets/graphics/Oil.png" id="7_re4pb"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="8_iybjg"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="9_rqlin"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="9_u6ham"]
-[ext_resource type="Texture2D" uid="uid://dehwh8wy0223d" path="res://assets/graphics/scena_2_HUD/HUD background.svg" id="10_p8hvv"]
-[ext_resource type="Texture2D" uid="uid://e6jxgjwwd13k" path="res://assets/graphics/scena_2_HUD/Switch off.svg" id="11_r15gd"]
-[ext_resource type="Texture2D" uid="uid://diiovhg0my5gj" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_074bb"]
-[ext_resource type="Texture2D" uid="uid://c8hlloie2j8d" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_h7kjp"]
-[ext_resource type="Texture2D" uid="uid://c4y42yfmmhfvg" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_mdnec"]
+[ext_resource type="Texture2D" uid="uid://bj0hj0jnpc6vm" path="res://assets/graphics/scena_2_HUD/HUD background.svg" id="10_p8hvv"]
+[ext_resource type="Texture2D" uid="uid://c4r5ogqrcqm44" path="res://assets/graphics/scena_2_HUD/Switch off.svg" id="11_r15gd"]
+[ext_resource type="Texture2D" uid="uid://dkbcs7e6xtfl6" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_074bb"]
+[ext_resource type="Texture2D" uid="uid://b2uq4l20msb7t" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_h7kjp"]
+[ext_resource type="Texture2D" uid="uid://tkre7ikuba8g" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_mdnec"]
 [ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_ohnw0"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_u6ham"]
 [ext_resource type="AudioStream" uid="uid://b52jb6y30uvf1" path="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3" id="18_5d6c7"]
+[ext_resource type="Script" uid="uid://hrsaxsrw6xu0" path="res://scenes/TramManager.gd" id="19_xzc7p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
 font_size = 32
@@ -47,6 +48,10 @@ player_path = NodePath("../Police")
 
 [node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
 script = ExtResource("5_5d6c7")
+
+[node name="TramManager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1891234567]
+script = ExtResource("19_xzc7p")
+player_path = NodePath("../Police")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World" unique_id=885939410]
 visible = false

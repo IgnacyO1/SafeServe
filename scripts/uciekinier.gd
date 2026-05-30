@@ -48,7 +48,7 @@ var is_oneway = false
 var current_road_points = []
 
 # --- USTAWIENIA NIEUCHWYTNOŚCI I POLA WIDZENIA ---
-@export var max_allowed_speed: float = 750.0 # Maksymalny limit prędkości uciekiniera, by nie odskoczył za daleko na zakrętach
+@export var max_allowed_speed: float = 850.0 # Maksymalny limit prędkości uciekiniera, by nie odskoczył za daleko na zakrętach
 var reached_end: bool = false
 
 func setup(_unused_points, manager, oneway_status):
@@ -90,9 +90,9 @@ func _physics_process(delta):
 		if distance_meters < 10.0:
 			# Gracz jest za blisko (< 10m): Uciekinier gwałtownie ucieka przed zablokowaniem
 			speed = police_speed + 250.0
-		elif distance_meters > 35.0:
+		elif distance_meters > 36.0:
 			# Gracz zostaje w tyle (> 35m): Uciekinier zwalnia, by nie spaść z ekranu (ekran to zwykle ok. 15m)
-			speed = police_speed * 0.7
+			speed = police_speed * 0.8
 		elif distance_meters <25.0:
 			# Gracz w bezpiecznym przedziale (5m - 35m): Uciekinier utrzymuje idealnie tempo radiowozu
 			speed = police_speed + 50.0

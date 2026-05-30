@@ -2,12 +2,15 @@ extends Node
 
 @export var max_trams = 3
 @export var tram_scene = preload("res://scenes/Tram/Tram.tscn")
+@export var player_path: NodePath = NodePath("../Car")
 @onready var map_manager = get_node("../MapManager")
-@onready var player = get_node("../Car")
+@onready var player = get_node_or_null(player_path)
 
 var active_trams = []
 
 func _process(_delta):
+	if not player:
+		return
 	# Despawn: usuwamy tramwaj TYLKO gdy jego pozycja startowa wypadła z załadowanych chunków
 	# lub gdy awaryjnie odjechał absurdalnie daleko (np. błąd mapy > 6000px)
 	var max_despawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.5

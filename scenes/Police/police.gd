@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var max_speed: float = 500.0
+@export var max_speed: float = 700.0
 @export var acceleration: float = 200.0
 @export var brake_force: float = 400.0
 @export var friction: float = 50.0
@@ -19,6 +19,8 @@ var lights_active: bool = false
 var steer_angle: float = 0.0
 var _throttle: float = 0.0
 var _steer_input: float = 0.0
+var map_manager: Node2D = null
+var is_on_grass: bool = false
 
 # Dodaj to na końcu car.gd
 func _ready():
@@ -33,6 +35,9 @@ func _ready():
 		# Opcjonalnie zerujemy prędkość, by zapobiec nagłemu skokowi
 		velocity = Vector2.ZERO 
 	)
+	
+	# Szukamy managera w scenie
+	map_manager = get_tree().current_scene.find_child("MapManager", true, false)
 
 func _process(delta: float) -> void:
 	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
@@ -42,6 +47,11 @@ func _process(delta: float) -> void:
 		turn_emergency_lights(lights_active)
 
 func _physics_process(delta: float) -> void:
+	if map_manager and map_manager.has_method("is_point_on_road"):
+		is_on_grass = not map_manager.is_point_on_road(global_position)
+	else:
+		is_on_grass = false
+
 	apply_engine(delta)
 	apply_friction(delta)
 	apply_steering(delta)
@@ -60,6 +70,11 @@ func apply_engine(delta: float) -> void:
 	var forward = transform.x
 	var forward_speed = velocity.dot(forward)
 	
+	# Słabsze przyspieszenie na trawie
+	var current_acceleration = acceleration
+	if is_on_grass:
+		current_acceleration *= 0.5
+	
 	if _throttle != 0:
 		var is_braking = sign(_throttle) != sign(forward_speed) and abs(forward_speed) > 10.0
 		
@@ -67,16 +82,23 @@ func apply_engine(delta: float) -> void:
 			velocity = velocity.move_toward(Vector2.ZERO, brake_force * delta)
 		else:
 			if _throttle > 0:
-				velocity += forward * acceleration * _throttle * delta
+				velocity += forward * current_acceleration * _throttle * delta
 			elif _throttle < 0:
-				velocity += forward * acceleration * _throttle * 0.6 * delta
+				velocity += forward * current_acceleration * _throttle * 0.6 * delta
 
 
 func apply_friction(delta: float) -> void:
 	if _throttle == 0:
-		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+		# Trawa stawia opór i szybciej zatrzymuje auto (tarcie x3)
+		var current_friction = friction * (3.0 if is_on_grass else 1.0)
+		velocity = velocity.move_toward(Vector2.ZERO, current_friction * delta)
 
-	velocity = velocity.limit_length(max_speed)
+	# 2x niższa prędkość maksymalna na trawie
+	var current_max_speed = max_speed
+	if is_on_grass:
+		current_max_speed = max_speed * 0.6
+
+	velocity = velocity.limit_length(current_max_speed)
 
 func apply_steering(delta: float) -> void:
 	var speed = velocity.length()

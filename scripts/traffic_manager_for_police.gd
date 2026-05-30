@@ -49,7 +49,7 @@ func spawn_boss_car():
 	print("SPAWNED: Cyberkrab gotowy do ucieczki!")
 
 func spawn_random_agent():
-	if map_manager.road_network_nodes.is_empty():
+	if map_manager.major_nodes.is_empty():
 		return
 
 	# Spróbuj do 5 razy znaleźć węzeł w odpowiedniej odległości od gracza
@@ -58,7 +58,7 @@ func spawn_random_agent():
 	var max_spawn_dist = map_manager.load_radius * map_manager.chunk_size_px * 1.25
 	
 	for i in range(5):
-		var node = map_manager.road_network_nodes.pick_random()
+		var node = map_manager.major_nodes.pick_random()
 		var dist = node.distance_to(player.global_position)
 		if dist <= max_spawn_dist and dist >= 500.0:
 			var occupied = false
