@@ -17,7 +17,6 @@ var is_changing_scene = false
 
 func _ready():
 	# AUTOMATYCZNE WYKRYWANIE CONFIGU (SERWER VS KLIENT)
-	# Jeśli uruchamiamy projekt z flgą --headless (np. na serwerze Linux VPS)
 	if DisplayServer.get_name() == "headless":
 		run_as_dedicated_server()
 	else:
@@ -29,31 +28,26 @@ func _ready():
 func run_as_dedicated_server():
 	print("--- URUCHAMIANIE SERWERA DEDYKOWANEGO ---")
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(10567, 32) # Port 10567, max 32 graczy
+	var error = peer.create_server(10567, 32)
 	
 	if error != OK:
 		print("Błąd startu serwera: ", error)
 		return
 		
 	multiplayer.multiplayer_peer = peer
-	
-	# Podpinamy zdarzenia sieciowe serwera
 	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	
-	# Serwer odpala uciekiniera (Bossa)
 	if traffic_manager:
 		traffic_manager.setup_mode(true)
 
 func _on_player_connected(id: int):
 	print("Gracz połączony z ID: ", id)
-	# Spawnowanie radiowozu na serwerze dla nowego gracza
 	var police_scene = load("res://scenes/PoliceMultiplayer/police_multiplayer.tscn")
 	var car = police_scene.instantiate()
-	car.name = str(id) # Nazwa węzła to ID sieciowe gracza
+	car.name = str(id)
 	add_child(car)
 	
-	# Nadajemy autorytet nad fizyką autka temu konkretnemu klientowi
 	car.set_multiplayer_authority(id)
 	car.global_position = start_pos_px
 
@@ -74,21 +68,51 @@ func run_as_client():
 		map_manager.night_mode = true
 
 	var peer = ENetMultiplayerPeer.new()
-	# Zmień "127.0.0.1" na adres IP swojego VPS, gdy wrzucisz serwer w sieć
 	peer.create_client("127.0.0.1", 10567) 
 	multiplayer.multiplayer_peer = peer
 
+# =============================================================================
+# GŁÓWNA PĘTLA PROCESU (ROZDZIELONA NA SERWER I KLIENTA)
+# =============================================================================
 func _process(_delta):
-	# Jeśli to serwer headless, nie przetwarzamy interfejsu ani kamery
-	if DisplayServer.get_name() == "headless": return
+	# -------------------------------------------------------------------------
+	# A. SERWER: To on kalkuluje warunki zwycięstwa/porażki i zarządza stanem gry
+	# -------------------------------------------------------------------------
+	if DisplayServer.get_name() == "headless":
+		if is_changing_scene: return
+		
+		var boss = get_tree().get_first_node_in_group("uciekinier")
+		if is_instance_valid(boss):
+			var reached_end_of_path = boss.reached_end
+			var is_close_and_blocked = false
+			
+			# Przeszukujemy wszystkie połączone z serwerem radiowozy
+			var police_cars = get_tree().get_nodes_in_group("police")
+			for police in police_cars:
+				if is_instance_valid(police):
+					var dist_m = boss.global_position.distance_to(police.global_position) / 20.0
+					
+					# SPRAWDZENIE ZŁAPANIA: Najbliższy gracz jest blisko (< 7m) i zablokował bossa (< 30 prędkości)
+					if dist_m < 7.0 and boss.real_speed < 30.0:
+						is_close_and_blocked = true
+						break
+			
+			# Jeśli boss uciekł na koniec trasy LUB został skutecznie zablokowany przez kogokolwiek
+			if is_close_and_blocked or reached_end_of_path:
+				is_changing_scene = true
+				print("[SERWER] Warunek końca gry spełniony! Wysyłam RPC do klientów.")
+				rpc("trigger_end_game")
+		return
+
+	# -------------------------------------------------------------------------
+	# B. KLIENT: Zajmuje się wyłącznie renderowaniem i odświeżaniem HUDu
+	# -------------------------------------------------------------------------
 	if is_changing_scene: return
 	
-	# Szukamy naszego własnego pojazdu na scenie
 	if not is_instance_valid(local_player):
 		var my_id = multiplayer.get_unique_id()
 		local_player = get_node_or_null(str(my_id))
 		
-		# Gdy serwer zreplikuje nasze auto, aktywujemy pod nie MapManager
 		if is_instance_valid(local_player) and map_manager:
 			map_manager.player = local_player
 			map_manager.initialize_map(start_pos_px)
@@ -100,24 +124,23 @@ func _process(_delta):
 		var dist_to_boss = local_player.global_position.distance_to(boss.global_position)
 		var dist_m = dist_to_boss / 20.0
 		
-		# Aktualizacja radaru w HUD
 		if get_tree().current_scene.get("map") != null:
 			get_tree().current_scene.map.set_player(local_player.global_position, local_player.rotation)
 			get_tree().current_scene.map.set_target(boss.global_position)
 
-		# Strzałka kierunkowa HUD
 		var dist_vec = boss.global_position - local_player.global_position
 		arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
 		coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
-
-		# Każdy klient lokalnie sprawdza zreplikowane dane bosa, żeby odpalić cutscenę
-		var is_close_and_blocked = (dist_m < 7.0 and boss.real_speed < 30.0)
-		var reached_end_of_path = (boss.reached_end or boss.speed == 0.0)
-
-		if is_close_and_blocked or reached_end_of_path:
-			play_cutscene_sequence()
 	else:
 		coords_label.text = "OCZEKIWANIE NA SYGNAŁ CYBERKRABA..."
+
+# =============================================================================
+# ZDALNE WYWOŁANIE (RPC) - Serwer oznajmia koniec wyścigu
+# =============================================================================
+@rpc("authority", "call_local", "reliable")
+func trigger_end_game():
+	print("[KLIENT] Otrzymano sygnał RPC z serwera. Odpalam sekwencję końcową.")
+	play_cutscene_sequence()
 
 # =============================================================================
 # FUNKCJE UI I CUTSCENKI (Tylko dla klientów)
