@@ -6,11 +6,13 @@ extends Node2D
 
 # Stan gry
 var gra_aktywna = false
-var krab_hp = 150.0
-var krab_max_hp = 150.0
+var krab_hp = 250.0
+var krab_max_hp = 250.0
 var aktualna_faza = 1
-var gracz_zycia = 3
+var faza_6_odpalona = false
+var gracz_zycia = 99
 var gracz_niezniszczalny_timer = 0.0
+var tarcza_cooldown = 0.0
 
 # Referencje do węzłów w scenie (ułożone w edytorze)
 @onready var gracz: CharacterBody2D = $Gracz
@@ -41,6 +43,25 @@ var laser_warning_duration = 0.6   # Czas ostrzeżenia (cienka linia)
 var laser_attack_timer = 0.0
 var laser_beam_line1: Line2D = null # Zewnętrzna warstwa (glowing orange-red)
 var laser_beam_line2: Line2D = null # Wewnętrzny rdzeń (white-yellow)
+
+# Zmienne mechaniki sweep beam (Faza 5)
+var sweep_active = false
+var sweep_timer = 0.0
+var sweep_cooldown_timer = 0.0
+var sweep_cooldown = 1.5            # Czas przed pierwszym sweep'em po wejściu w fazę 5
+var sweep_angle_start = PI * 0.15   # Kąt startowy (lewa strona, w dół)
+var sweep_angle_end = PI * 0.85     # Kąt końcowy (prawa strona, w dół)
+var sweep_current_angle = 0.0
+var sweep_duration = 1.2            # Czas trwania sweep'a (szybki swipe)
+var sweep_warning_active = false
+var sweep_warning_timer = 0.0
+var sweep_warning_duration = 1.0    # Czas ostrzeżenia przed sweep'em
+var sweep_beam_line1: Line2D = null
+var sweep_beam_line2: Line2D = null
+var sweep_beam_line3: Line2D = null # Dodatkowa warstwa glow
+var sweep_phase4_mode = false       # Tryb powrotu do fazy 4 między sweep'ami
+var sweep_phase4_timer = 0.0
+var sweep_phase4_duration = 5.0     # Ile sekund fazy 4 między sweep'ami
 
 func _ready():
 	# Zapisz poziom w konfiguracji gry
@@ -133,8 +154,42 @@ func _process(delta):
 	if not gra_aktywna:
 		return
 		
+	# Obsługa tarczy w fazie 6
+	if tarcza_cooldown > 0.0:
+		tarcza_cooldown -= delta
+	
+	if faza_6_odpalona and gra_aktywna and gracz_niezniszczalny_timer <= 0.0 and tarcza_cooldown <= 0.0:
+		if Input.is_action_just_pressed("tarcza"):
+			gracz_niezniszczalny_timer = 0.5
+			tarcza_cooldown = 1.0
+			
+			# Wizualny efekt tarczy jako tekstura
+			if gracz and is_instance_valid(gracz):
+				var tarcza_spr = gracz.get_node_or_null("TarczaSprite")
+				if not tarcza_spr:
+					tarcza_spr.visible = true
+					tarcza_spr.modulate.a = 1.0
+					var tex = load("res://assets/graphics/Scena8/tarcza.png")
+					if tex:
+						tarcza_spr.texture = tex
+					else:
+						# Zapasowy prostokąt, na wypadek gdyby pliku jeszcze nie było
+						var img = PlaceholderTexture2D.new()
+						img.size = Vector2(100, 100)
+						tarcza_spr.texture = img
+					tarcza_spr.z_index = 11
+					gracz.add_child(tarcza_spr)
+				
+				tarcza_spr.visible = true
+				tarcza_spr.modulate.a = 1.0
+				
+				var tw = create_tween()
+				tw.tween_property(tarcza_spr, "modulate:a", 0.0, 0.5)
+				tw.tween_callback(func(): tarcza_spr.visible = false)
+		
 	_aktualizuj_pasek_hp()
 	_zarzadzaj_laserem(delta)
+	_zarzadzaj_sweep(delta)
 
 func _stworz_hud():
 	hud = CanvasLayer.new()
@@ -246,12 +301,20 @@ func krab_trafiony(obrazenia: int):
 	
 	# Sprawdź śmierć
 	if krab_hp <= 0.0:
-		_wygrana()
+		if not faza_6_odpalona:
+			_fake_wygrana()
+		else:
+			_prawdziwa_wygrana()
 
 func _sprawdz_faze():
+	if faza_6_odpalona:
+		return # W fazie 6 nie obniżamy z powrotem do 5
+		
 	var procent = krab_hp / krab_max_hp
 	var nowa_faza = 1
-	if procent <= 0.25:
+	if procent <= 0.10:
+		nowa_faza = 5
+	elif procent <= 0.25:
 		nowa_faza = 4
 	elif procent <= 0.50:
 		nowa_faza = 3
@@ -276,6 +339,12 @@ func _sprawdz_faze():
 			4:
 				_pokaz_info("OSTATNIA FAZA! (MOCNIEJSZY LASER!)", 1.5)
 				label_faza.set("theme_override_colors/font_color", Color.RED)
+			5:
+				_pokaz_info("⚠️ PROMIEŃ ZAGŁADY! ⚠️", 2.0)
+				label_faza.set("theme_override_colors/font_color", Color(0.8, 0.0, 1.0, 1.0))
+				# Wyłącz zwykły laser gdy włącza się sweep
+				_wylacz_laser()
+				sweep_cooldown_timer = 1.5 # Krótka pauza przed pierwszym sweep'em
 				
 		_screen_shake(12.0)
 
@@ -291,15 +360,24 @@ func _aktualizuj_pasek_hp():
 		pasek_hp.color = Color(0.9, 0.9, 0.0, 1.0) # Żółty
 	elif procent > 0.25:
 		pasek_hp.color = Color(0.9, 0.5, 0.0, 1.0) # Pomarańczowy
-	else:
-		# Pulsowanie na czerwono w ostatniej fazie
+	elif procent > 0.10:
+		# Pulsowanie na czerwono w fazie 4
 		var pulse = abs(sin(Time.get_ticks_msec() * 0.01))
 		pasek_hp.color = Color(0.95, pulse * 0.15, 0.0, 1.0)
+	else:
+		# Pulsowanie fioletowo-czerwone w fazie 5 i 6
+		var pulse = abs(sin(Time.get_ticks_msec() * 0.015))
+		if faza_6_odpalona:
+			pasek_hp.color = Color(1.0, 0.0, pulse * 0.2, 1.0) # Bardziej czerwony dla fazy 6
+		else:
+			pasek_hp.color = Color(0.8, pulse * 0.1, 0.9 * pulse + 0.2, 1.0)
 
 # Zarządzanie maszyną stanów lasera
 func _zarzadzaj_laserem(delta):
-	# Laser aktywny jest tylko w fazach 3 oraz 4
+	# Laser aktywny w fazach 3-4, oraz w fazie 5 gdy jest tryb powrotu do fazy 4
 	if aktualna_faza < 3:
+		return
+	if aktualna_faza >= 5 and not sweep_phase4_mode:
 		return
 		
 	if not laser_warning and not laser_active:
@@ -404,6 +482,187 @@ func _wylacz_laser():
 		laser_beam_line2.queue_free()
 
 # ============================================
+# System Sweep Beam (Faza 5)
+# ============================================
+
+func _zarzadzaj_sweep(delta):
+	# Sweep beam aktywny jest tylko w fazie 5
+	if aktualna_faza < 5:
+		return
+	
+	# Tryb powrotu do fazy 4 - krab się rusza, strzela, laser działa
+	if sweep_phase4_mode:
+		sweep_phase4_timer += delta
+		if sweep_phase4_timer >= sweep_phase4_duration:
+			# Koniec trybu fazy 4 - wyłącz laser i rozpocznij nowy sweep
+			sweep_phase4_mode = false
+			_wylacz_laser()
+			_rozpocznij_sweep_warning()
+		return
+	
+	# Cooldown przed pierwszym sweep'em (tylko na początku fazy 5)
+	if not sweep_active and not sweep_warning_active:
+		sweep_cooldown_timer += delta
+		if sweep_cooldown_timer >= sweep_cooldown:
+			_rozpocznij_sweep_warning()
+		return
+	
+	# Faza ostrzeżenia - cienka linia skanuje szybko od lewej do prawej
+	if sweep_warning_active:
+		sweep_warning_timer += delta
+		
+		var warning_progress = sweep_warning_timer / sweep_warning_duration
+		var warning_angle = lerp(sweep_angle_start, sweep_angle_end, warning_progress)
+		
+		if krab and is_instance_valid(krab):
+			var start_pos = krab.global_position
+			var beam_dir = Vector2(cos(warning_angle), sin(warning_angle))
+			var end_pos = start_pos + beam_dir * 3500.0
+			
+			if is_instance_valid(sweep_beam_line1):
+				sweep_beam_line1.points = [start_pos, end_pos]
+				var pulse = abs(sin(Time.get_ticks_msec() * 0.03))
+				sweep_beam_line1.default_color = Color(1.0, 0.0, 0.0, 0.3 + pulse * 0.4)
+		
+		if sweep_warning_timer >= sweep_warning_duration:
+			_aktywuj_sweep_beam()
+		return
+	
+	# Aktywny sweep beam - szybki swipe od lewej do prawej
+	if sweep_active:
+		sweep_timer += delta
+		var progress = sweep_timer / sweep_duration
+		
+		if progress >= 1.0:
+			_zakonc_sweep()
+			return
+		
+		# Kąt promienia - prosta liniowa interpolacja (szybki swipe, bez ease)
+		sweep_current_angle = lerp(sweep_angle_start, sweep_angle_end, progress)
+		
+		if krab and is_instance_valid(krab):
+			var start_pos = krab.global_position
+			var beam_dir = Vector2(cos(sweep_current_angle), sin(sweep_current_angle))
+			var end_pos = start_pos + beam_dir * 3500.0
+			
+			if is_instance_valid(sweep_beam_line1):
+				sweep_beam_line1.points = [start_pos, end_pos]
+			if is_instance_valid(sweep_beam_line2):
+				sweep_beam_line2.points = [start_pos, end_pos]
+			if is_instance_valid(sweep_beam_line3):
+				sweep_beam_line3.points = [start_pos, end_pos]
+			
+			var core_pulse = abs(sin(Time.get_ticks_msec() * 0.02))
+			if is_instance_valid(sweep_beam_line2):
+				sweep_beam_line2.default_color = Color(1.0, 0.8 + core_pulse * 0.2, 0.9, 1.0)
+			
+			# Kolizja z graczem
+			if gracz and is_instance_valid(gracz):
+				var closest_point = Geometry2D.get_closest_point_to_segment(gracz.global_position, start_pos, end_pos)
+				var dist = gracz.global_position.distance_to(closest_point)
+				if dist < (20.0 + 50.0 / 2.0):
+					gracz_trafiony()
+			
+			_screen_shake(4.0)
+
+func _rozpocznij_sweep_warning():
+	sweep_warning_active = true
+	sweep_warning_timer = 0.0
+	sweep_cooldown_timer = 0.0
+	
+	# Zamroź kraba - stop ruch
+	if krab and is_instance_valid(krab):
+		krab.ruch_zablokowany = true
+		# Wyłącz teleportację kraba na czas sweep'a
+		krab.teleportacja_aktywna = false
+		
+		var sprite_krab = krab.get_node_or_null("Sprite2D")
+		if sprite_krab:
+			var tw_tp = create_tween()
+			tw_tp.tween_property(sprite_krab, "modulate", Color(0.8, 0.0, 1.0, 0.3), 0.15)
+			tw_tp.tween_callback(func():
+				if is_instance_valid(krab):
+					krab.global_position = Vector2(1250, 100)
+			)
+			tw_tp.tween_property(sprite_krab, "modulate", Color.WHITE, 0.15)
+		else:
+			krab.global_position = Vector2(1250, 100)
+	
+	sweep_beam_line1 = Line2D.new()
+	sweep_beam_line1.width = 4.0
+	sweep_beam_line1.default_color = Color(1.0, 0.0, 0.0, 0.5)
+	sweep_beam_line1.z_index = 5
+	add_child(sweep_beam_line1)
+	
+	_screen_shake(10.0)
+
+func _aktywuj_sweep_beam():
+	sweep_warning_active = false
+	sweep_active = true
+	sweep_timer = 0.0
+	
+	if is_instance_valid(sweep_beam_line1):
+		sweep_beam_line1.queue_free()
+	
+	_screen_shake(20.0)
+	
+	sweep_beam_line1 = Line2D.new()
+	sweep_beam_line1.width = 80.0
+	sweep_beam_line1.default_color = Color(0.6, 0.0, 0.8, 0.4)
+	sweep_beam_line1.z_index = 5
+	add_child(sweep_beam_line1)
+	
+	sweep_beam_line2 = Line2D.new()
+	sweep_beam_line2.width = 50.0
+	sweep_beam_line2.default_color = Color(1.0, 0.6, 1.0, 0.9)
+	sweep_beam_line2.z_index = 6
+	add_child(sweep_beam_line2)
+	
+	sweep_beam_line3 = Line2D.new()
+	sweep_beam_line3.width = 18.0
+	sweep_beam_line3.default_color = Color(1.0, 1.0, 1.0, 1.0)
+	sweep_beam_line3.z_index = 7
+	add_child(sweep_beam_line3)
+
+# Koniec sweep'a - przejście do trybu fazy 4 na parę sekund
+func _zakonc_sweep():
+	# Wyczyść linie promienia
+	sweep_active = false
+	if is_instance_valid(sweep_beam_line1):
+		sweep_beam_line1.queue_free()
+	if is_instance_valid(sweep_beam_line2):
+		sweep_beam_line2.queue_free()
+	if is_instance_valid(sweep_beam_line3):
+		sweep_beam_line3.queue_free()
+	
+	# Odmroź kraba - przywróć ruch i zdolności fazy 4
+	if krab and is_instance_valid(krab):
+		krab.ruch_zablokowany = false
+		krab.ustaw_faze(4)  # Przywróć statsy fazy 4 (prędkość, strzelał, teleportacja)
+	
+	# Włącz tryb fazy 4 na parę sekund
+	sweep_phase4_mode = true
+	sweep_phase4_timer = 0.0
+	laser_timer = 0.0  # Reset timera lasera żeby od razu mógł strzelić
+
+func _wylacz_sweep():
+	sweep_active = false
+	sweep_warning_active = false
+	sweep_phase4_mode = false
+	sweep_cooldown_timer = 0.0
+	
+	if is_instance_valid(sweep_beam_line1):
+		sweep_beam_line1.queue_free()
+	if is_instance_valid(sweep_beam_line2):
+		sweep_beam_line2.queue_free()
+	if is_instance_valid(sweep_beam_line3):
+		sweep_beam_line3.queue_free()
+	
+	# Odmroź kraba jeśli był zamrożony
+	if krab and is_instance_valid(krab):
+		krab.ruch_zablokowany = false
+
+# ============================================
 # Obrażenia Gracza
 # ============================================
 
@@ -436,6 +695,7 @@ func gracz_trafiony():
 		# Przegrana
 		gra_aktywna = false
 		_wylacz_laser()
+		_wylacz_sweep()
 		
 		# Zatrzymanie muzyki z fade outem
 		if muzyka and muzyka.playing:
@@ -466,11 +726,184 @@ func gracz_trafiony():
 # Śmierć Bossa = Wygrana (Super Wybuchowa)
 # ============================================
 
-func _wygrana():
+func _fake_wygrana():
 	if not gra_aktywna:
 		return
 	gra_aktywna = false
 	_wylacz_laser()
+	_wylacz_sweep()
+	
+	# Fading HUD
+	var tw_hud = create_tween()
+	if pasek_hp: tw_hud.tween_property(pasek_hp, "modulate:a", 0.0, 0.5)
+	if pasek_hp_bg: tw_hud.parallel().tween_property(pasek_hp_bg, "modulate:a", 0.0, 0.5)
+	if label_hp: tw_hud.parallel().tween_property(label_hp, "modulate:a", 0.0, 0.5)
+	if label_faza: tw_hud.parallel().tween_property(label_faza, "modulate:a", 0.0, 0.5)
+	if panel_zycia: tw_hud.parallel().tween_property(panel_zycia, "modulate:a", 0.0, 0.5)
+	
+	# Zapamiętaj pozycję Cyberkraba
+	var krab_pos = Vector2(960, 540)
+	if krab and is_instance_valid(krab):
+		krab_pos = krab.global_position
+		krab.set_physics_process(false)
+		krab.ruch_zablokowany = true
+		
+	# Wyłączenie muzyki
+	if muzyka and muzyka.playing:
+		var tw_music = create_tween()
+		tw_music.tween_property(muzyka, "volume_db", -80.0, 1.0)
+		tw_music.tween_callback(func(): muzyka.stop())
+		
+	if smierc_kraba_dzwiek:
+		smierc_kraba_dzwiek.play()
+		
+	# === FAZA 1: SILNA AGONIA (1.5s) ===
+	if krab and is_instance_valid(krab):
+		var spr = krab.get_node_or_null("Sprite2D")
+		if spr:
+			var tw_agonia = create_tween()
+			for i in range(25): # Drgawki
+				var offset = Vector2(randf_range(-20.0, 20.0), randf_range(-15.0, 15.0))
+				tw_agonia.tween_property(krab, "position", krab_pos + offset, 0.04)
+				if i % 2 == 0:
+					tw_agonia.parallel().tween_property(spr, "modulate", Color(6, 0.1, 0.1, 1), 0.04)
+				else:
+					tw_agonia.parallel().tween_property(spr, "modulate", Color(1, 1, 1, 1), 0.04)
+			tw_agonia.tween_property(krab, "position", krab_pos, 0.05)
+			tw_agonia.tween_property(spr, "modulate", Color(4, 0.0, 0.0, 1), 0.2)
+			await tw_agonia.finished
+			
+	# === FAZA 2: SLOW-MOTION + GIGANTYCZNE EKSPLOZJE (2.0s) ===
+	Engine.time_scale = 0.4
+	for i in range(8):
+		var exp_offset = Vector2(randf_range(-130, 130), randf_range(-90, 90))
+		_spawn_eksplozja(krab_pos + exp_offset, randf_range(45.0, 80.0))
+		_screen_shake(18.0)
+		await get_tree().create_timer(0.12).timeout
+		
+	# === FAZA 3: CENTRALNY ULTRA-BLAST ===
+	Engine.time_scale = 0.15 
+	
+	var white_flash = ColorRect.new()
+	white_flash.color = Color(1, 1, 1, 0)
+	white_flash.size = Vector2(1920, 1080)
+	white_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	white_flash.z_index = 95
+	hud.add_child(white_flash)
+	
+	var tw_flash = create_tween().set_ease(Tween.EASE_OUT)
+	tw_flash.tween_property(white_flash, "color:a", 1.0, 0.1)
+	
+	# SCHOWAJ kraba zamiast go usuwać
+	if krab and is_instance_valid(krab):
+		var spr = krab.get_node_or_null("Sprite2D")
+		if spr:
+			spr.modulate.a = 0.0
+			
+	await get_tree().create_timer(0.12).timeout
+	_spawn_eksplozja(krab_pos, 220.0)
+	_screen_shake(55.0) 
+	
+	# Zaciemnienie całego ekranu by przejść w ciszę
+	Engine.time_scale = 1.0
+	
+	var black_screen = ColorRect.new()
+	black_screen.color = Color(0, 0, 0, 1)
+	black_screen.size = Vector2(1920, 1080)
+	black_screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	black_screen.z_index = 96
+	black_screen.modulate.a = 0.0
+	hud.add_child(black_screen)
+	
+	var tw_black = create_tween()
+	tw_black.tween_property(black_screen, "modulate:a", 1.0, 1.0)
+	await tw_black.finished
+	
+	# Usunięcie białego flasha pod spodem
+	if is_instance_valid(white_flash):
+		white_flash.queue_free()
+		
+	# === BUT HE REFUSED ===
+	await get_tree().create_timer(2.0).timeout
+	
+	var label_refused = Label.new()
+	label_refused.text = "BUT HE REFUSED."
+	label_refused.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label_refused.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label_refused.size = Vector2(1920, 1080)
+	label_refused.set("theme_override_font_sizes/font_size", 48)
+	label_refused.set("theme_override_colors/font_color", Color.WHITE)
+	label_refused.z_index = 97
+	label_refused.modulate.a = 0.0
+	hud.add_child(label_refused)
+	
+	var tw_refused = create_tween()
+	tw_refused.tween_property(label_refused, "modulate:a", 1.0, 0.5)
+	
+	# Odtwórz nową muzykę
+	if muzyka:
+		var stream = load("res://assets/sounds/butherefused.mp3")
+		if stream:
+			muzyka.stream = stream
+			muzyka.volume_db = 0.0
+			muzyka.play()
+			
+	await get_tree().create_timer(3.0).timeout
+	
+	# Fading out refused text and black screen
+	var tw_back = create_tween()
+	tw_back.tween_property(label_refused, "modulate:a", 0.0, 0.5)
+	tw_back.parallel().tween_property(black_screen, "modulate:a", 0.0, 0.5)
+	tw_back.tween_callback(func():
+		if is_instance_valid(label_refused): label_refused.queue_free()
+		if is_instance_valid(black_screen): black_screen.queue_free()
+	)
+	
+	# Zmień tło areny na mroczne
+	if tlo:
+		tlo.modulate = Color(0.2, 0.0, 0.0, 1.0) # Krwisto czarne
+		
+	# Reanimacja Kraba
+	if krab and is_instance_valid(krab):
+		krab.global_position = Vector2(960, 540)
+		var spr = krab.get_node_or_null("Sprite2D")
+		if spr:
+			spr.modulate = Color(5.0, 0.0, 0.0, 1.0) # Glowing red
+		krab.set_physics_process(true)
+		krab.ruch_zablokowany = false
+		
+	# Przywrócenie HUD z nowymi statami
+	faza_6_odpalona = true
+	krab_max_hp = 350.0
+	krab_hp = 350.0
+	aktualna_faza = 6
+	gracz_zycia = 10 # Ustawiamy HP gracza na 10!
+	
+	if krab and is_instance_valid(krab) and krab.has_method("ustaw_faze"):
+		krab.ustaw_faze(6)
+		
+	label_hp.text = "CYBERKRAB THE UNDYING"
+	label_hp.set("theme_override_colors/font_color", Color(0.467, 0.001, 0.565, 1.0))
+	label_faza.text = "FAZA ???: UNDYING"
+	label_faza.set("theme_override_colors/font_color", Color.RED)
+	if label_zycia:
+		label_zycia.text = "❤️ ŻYCIA: " + str(gracz_zycia)
+	
+	var tw_hud_back = create_tween()
+	if pasek_hp: tw_hud_back.tween_property(pasek_hp, "modulate:a", 1.0, 1.0)
+	if pasek_hp_bg: tw_hud_back.parallel().tween_property(pasek_hp_bg, "modulate:a", 1.0, 1.0)
+	if label_hp: tw_hud_back.parallel().tween_property(label_hp, "modulate:a", 1.0, 1.0)
+	if label_faza: tw_hud_back.parallel().tween_property(label_faza, "modulate:a", 1.0, 1.0)
+	if panel_zycia: tw_hud_back.parallel().tween_property(panel_zycia, "modulate:a", 1.0, 1.0)
+	
+	gra_aktywna = true
+
+func _prawdziwa_wygrana():
+	if not gra_aktywna:
+		return
+	gra_aktywna = false
+	_wylacz_laser()
+	_wylacz_sweep()
 	
 	# Fading HUD
 	var tw_hud = create_tween()
@@ -610,7 +1043,7 @@ func _wygrana():
 		tw_i.parallel().tween_property(spark, "modulate:a", 0.0, randf_range(0.4, 1.0))
 		tw_i.tween_callback(func(): if is_instance_valid(spark): spark.queue_free())
 		
-	# Usuń kraba z gry
+	# Usuń kraba z gry całkowicie
 	if krab and is_instance_valid(krab):
 		krab.queue_free()
 		

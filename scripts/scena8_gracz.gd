@@ -34,9 +34,12 @@ func _physics_process(delta):
 	_update_animations(direction)
 
 	var spd = SPEED
+	if scena and scena.get("faza_6_odpalona"):
+		spd = 400.0 # Szybsze poruszanie się w fazie 6
+		
 	# Przyspieszenie (Sprint) pod klawiszem Accept (np. Spacja / Enter)
 	if Input.is_action_pressed("ui_accept"): 
-		spd = SPEED * 1.5
+		spd *= 1.5
 
 	velocity = direction * spd
 	move_and_slide()
@@ -116,5 +119,10 @@ func _shoot():
 	var shoot_origin = punkt_strzalu.global_position if punkt_strzalu else global_position
 	pocisk.direction = (mouse_pos - shoot_origin).normalized()
 	pocisk.global_position = shoot_origin
+	
+	# Zwiększ prędkość pocisku w fazie 6
+	var scena = get_tree().current_scene
+	if scena and scena.get("faza_6_odpalona"):
+		pocisk.speed = 1000.0 # Szybsze pociski w fazie 6
 	
 	get_parent().add_child(pocisk)

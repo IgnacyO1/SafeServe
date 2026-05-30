@@ -1,6 +1,6 @@
 extends Area2D
 
-const SPEED = 500.0
+var speed = 1000.0
 var direction = Vector2.ZERO
 
 func _ready():
@@ -15,7 +15,7 @@ func _ready():
 		if is_instance_valid(self): queue_free())
 
 func _physics_process(delta):
-	global_position += direction * SPEED * delta
+	global_position += direction * speed * delta
 	if global_position.length() > 5000:
 		queue_free()
 
@@ -23,5 +23,8 @@ func _on_body_entered(body: Node2D):
 	if body.is_in_group("krab"):
 		var scena = get_tree().current_scene
 		if scena and scena.has_method("krab_trafiony"):
-			scena.krab_trafiony(10)
+				if scena.faza_6_odpalona:
+					scena.krab_trafiony(10) 
+				else:
+					scena.krab_trafiony(5)
 		queue_free()
