@@ -4,6 +4,7 @@ var speed = 1000.0
 var direction = Vector2.ZERO
 
 func _ready():
+	scale = Vector2(0.07, 0.07)
 	# Collision mask = 3 (warstwy 1 i 2) żeby wykrywać kraba na warstwie 2
 	collision_mask = 3
 	monitoring = true

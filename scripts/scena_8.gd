@@ -882,7 +882,7 @@ func _fake_wygrana():
 		krab.set_physics_process(true)
 		krab.ruch_zablokowany = false
 		
-	# Przywrócenie HUD z nowymi statami
+	# Przywrócenie HUD z nowymi statami W FAZIE 6 !!! ZEBY SZYBKO SIE TA CZESC ZNAJDOWALO: HP FAZA 6
 	faza_6_odpalona = true
 	krab_max_hp = 350.0
 	krab_hp = 350.0
