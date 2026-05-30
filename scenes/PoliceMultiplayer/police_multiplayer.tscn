@@ -585,6 +585,17 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhs2g"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Car" type="CharacterBody2D" unique_id=1069412395]
 script = ExtResource("1_qhs2g")
 
@@ -620,3 +631,6 @@ frame_progress = 0.6028169
 
 [node name="SirenPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1397137812]
 stream = ExtResource("5_os3mu")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1964122987]
+replication_config = SubResource("SceneReplicationConfig_qhs2g")

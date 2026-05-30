@@ -4,49 +4,53 @@ extends CharacterBody2D
 @export var acceleration: float = 200.0
 @export var brake_force: float = 400.0
 @export var friction: float = 50.0
-
 @export var steer_speed: float = 5.0
 @export var steer_limit: float = 0.6
-
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
+
 @onready var horn_player: AudioStreamPlayer2D = $HornPlayer
 @onready var lights: AnimatedSprite2D = $EmergencyLights
 @onready var siren_player: AudioStreamPlayer2D = $SirenPlayer
-var lights_active: bool = false
-# ZMIENNA velocity została usunięta - CharacterBody2D ma ją wbudowaną!
 
+var lights_active: bool = false
 var steer_angle: float = 0.0
 var _throttle: float = 0.0
 var _steer_input: float = 0.0
 var map_manager: Node2D = null
 var is_on_grass: bool = false
 
-# Dodaj to na końcu car.gd
 func _ready():
-	# Zapamiętujemy oryginalną maskę (co auto widzi)
-	var original_mask = collision_mask
-	# Wyłączamy maskę (auto przenika przez wszystko)
-	collision_mask = 0
+	add_to_group("police") # Każdy zreplikowany wóz ląduje w grupie pościgu
 	
-	# Po 1 sekundzie przywracamy kolizje
+	# Wyłączenie kolizji na start (ochrona przed zablokowaniem w teksturach)
+	var original_mask = collision_mask
+	collision_mask = 0
 	get_tree().create_timer(1.0).timeout.connect(func():
 		collision_mask = original_mask
-		# Opcjonalnie zerujemy prędkość, by zapobiec nagłemu skokowi
 		velocity = Vector2.ZERO 
 	)
 	
-	# Szukamy managera w scenie
 	map_manager = get_tree().current_scene.find_child("MapManager", true, false)
 
 func _process(delta: float) -> void:
-	_throttle = Input.get_axis("ui_down", "ui_up") # przód/tył
+	# KLUCZOWE ZABEZPIECZENIE: Czytamy klawiaturę tylko u gracza, który kontroluje ten wóz!
+	if not is_multiplayer_authority(): return
+	
+	_throttle = Input.get_axis("ui_down", "ui_up") 
 	_steer_input = Input.get_axis("ui_left", "ui_right")
-	# Obsługa włączania/wyłączania świateł
+	
 	if Input.is_action_just_pressed("toggle_lights"):
-		turn_emergency_lights(lights_active)
+		# Wysyłamy sygnał RPC do serwera, żeby zsynchronizował koguty u wszystkich
+		rpc("sync_emergency_lights", !lights_active)
+
+	if Input.is_action_just_pressed("horn"):
+		play_horn_sound()
 
 func _physics_process(delta: float) -> void:
+	# Tylko właściciel pojazdu liczy fizykę jazdy
+	if not is_multiplayer_authority(): return
+
 	if map_manager and map_manager.has_method("is_point_on_road"):
 		is_on_grass = not map_manager.is_point_on_road(global_position)
 	else:
@@ -57,12 +61,16 @@ func _physics_process(delta: float) -> void:
 	apply_steering(delta)
 	apply_lateral_friction()
 
-	# USUNIĘTO: position += velocity * delta 
-	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
 	move_and_slide()
-	# Wewnątrz _physics_process lub _input w car.gd
-	if Input.is_action_just_pressed("horn"): # Musisz dodać "horn" w Input Map
-		play_horn_sound() # Opcjonalnie
+
+# RPC: Każdy gracz wysyła informację o zmianie świateł, serwer przekazuje ją wszystkim klientom
+@rpc("any_peer", "call_local", "reliable")
+func sync_emergency_lights(mode: bool):
+	lights_active = mode
+	if lights:
+		lights.visible = mode
+		if mode: lights.play()
+		else: lights.stop()
 	
 	
 func apply_engine(delta: float) -> void:

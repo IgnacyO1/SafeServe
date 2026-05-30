@@ -39,9 +39,7 @@ var chunk_load_queue = []
 var chunk_roads = {} # c_id -> Array of {"start_node": Vector2, "road_data": Dictionary}
 var major_nodes = []
 
-@export var player_path: NodePath
-# Bezpieczne pobranie gracza — nie wywołuj `get_node` dla pustej ścieżki
-@onready var player = get_node(player_path)
+var player: CharacterBody2D = null
 
 # NOWE: Funkcja inicjalizująca, wywoływana przez scenę trasy
 func initialize_map(start_pos: Vector2):

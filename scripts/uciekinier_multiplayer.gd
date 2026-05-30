@@ -47,8 +47,7 @@ var current_lane_offset = 0.0
 var is_oneway = false
 var current_road_points = []
 
-# --- USTAWIENIA NIEUCHWYTNOŚCI I POLA WIDZENIA ---
-@export var max_allowed_speed: float = 850.0 # Maksymalny limit prędkości uciekiniera, by nie odskoczył za daleko na zakrętach
+@export var max_allowed_speed: float = 850.0 
 var reached_end: bool = false
 
 func setup(_unused_points, manager, oneway_status):
@@ -63,9 +62,11 @@ func _ready():
 	add_to_group("uciekinier")
 
 func _physics_process(delta):
+	# KLUCZOWE: Klienci nie przetwarzają fizyki uciekiniera! 
+	# Oni tylko pobierają pozycję od serwera przez MultiplayerSynchronizer.
+	if not multiplayer.is_server(): return
 	if current_road_points.is_empty(): return
 	
-	# Jeśli dojechaliśmy do końca – zatrzymujemy auto całkowicie
 	if reached_end or target_index >= current_road_points.size():
 		speed = 0.0
 		velocity = Vector2.ZERO
@@ -73,50 +74,44 @@ func _physics_process(delta):
 		real_speed = get_real_velocity().length()
 		return
 
-	# Pobieramy instancję oraz aktualną prędkość policji
-	var police = get_tree().get_first_node_in_group("police")
+	# SYSTEM WYSZUKIWANIA NAJBLIŻSZEGO RADIOWOZU (Dla wielu graczy)
+	var police_cars = get_tree().get_nodes_in_group("police")
+	var closest_police = null
+	var min_dist_px = INF
 	
-	if is_instance_valid(police):
-		var distance_px = global_position.distance_to(police.global_position)
-		var distance_meters = distance_px / 20.0
-		
-		var police_speed = 0.0
-		if "velocity" in police:
-			police_speed = police.velocity.length()
-		elif police is RigidBody2D:
-			police_speed = police.linear_velocity.length()
+	for police in police_cars:
+		if is_instance_valid(police):
+			var dist = global_position.distance_to(police.global_position)
+			if dist < min_dist_px:
+				min_dist_px = dist
+				closest_police = police
 
-		# --- DYNAMICZNY RUBBER-BANDING (ZALEŻNY OD DYSTANSU I PRĘDKOŚCI GRACZA) ---
+	if closest_police != null:
+		var distance_meters = min_dist_px / 20.0
+		var police_speed = closest_police.velocity.length()
+
+		# --- AKTYWNY RUBBER-BANDING DOPASOWANY DO NAJBLIŻSZEGO GRACZA ---
 		if distance_meters < 10.0:
-			# Gracz jest za blisko (< 10m): Uciekinier gwałtownie ucieka przed zablokowaniem
 			speed = police_speed + 250.0
 		elif distance_meters > 36.0:
-			# Gracz zostaje w tyle (> 35m): Uciekinier zwalnia, by nie spaść z ekranu (ekran to zwykle ok. 15m)
 			speed = police_speed * 0.8
-		elif distance_meters <25.0:
-			# Gracz w bezpiecznym przedziale (5m - 35m): Uciekinier utrzymuje idealnie tempo radiowozu
+		elif distance_meters < 25.0:
 			speed = police_speed + 50.0
 			
-		# Zabezpieczenie przed ujemną prędkością oraz absurdalnymi wartościami
 		speed = clamp(speed, 50.0, max_allowed_speed)
 	else:
-		# Brak policji na mapie (fallback)
-		speed = 500.0
+		speed = 300.0
 
-	# --- LOGIKA RUCHU PO TRASIE ---
 	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
 	
 	velocity = dir * speed
-	
 	if velocity.length() > 0:
-		var target_angle = velocity.angle()
-		rotation = lerp_angle(rotation, target_angle, 10.0 * delta)
+		rotation = lerp_angle(rotation, velocity.angle(), 10.0 * delta)
 	
 	move_and_slide()
 	real_speed = get_real_velocity().length()
 	
-	# Warunek przejścia do następnego punktu trasy
 	if global_position.distance_to(target_pos) < 60.0:
 		advance_path()
 
@@ -133,4 +128,3 @@ func advance_path():
 		reached_end = true
 		target_index = current_road_points.size() - 1
 		speed = 0.0
-		print("Uciekinier dotarł do punktu końcowego i wyhamował!")

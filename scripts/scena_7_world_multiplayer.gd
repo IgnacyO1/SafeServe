@@ -1,11 +1,12 @@
 extends Node2D
 
-# Unikalne USTAWIENIA TEJ TRASY
 var start_pos_px = Vector2(-40671, 98832)
-var cutscene_path = "res://assets/Videos/spin.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
+var cutscene_path = "res://assets/Videos/spin.ogv"
 
-@onready var player = $Police
+var local_player: CharacterBody2D = null 
+
 @onready var map_manager = $MapManager
+@onready var traffic_manager = $"Traffic Manager"
 
 var coords_label: Label
 var arrow_sprite: Polygon2D
@@ -13,56 +14,114 @@ var fade_rect: ColorRect
 var night_overlay: ColorRect
 var video_player: VideoStreamPlayer
 var is_changing_scene = false
-var uciekinier = true
 
 func _ready():
-	if not player: return
+	# AUTOMATYCZNE WYKRYWANIE CONFIGU (SERWER VS KLIENT)
+	# Jeśli uruchamiamy projekt z flgą --headless (np. na serwerze Linux VPS)
+	if DisplayServer.get_name() == "headless":
+		run_as_dedicated_server()
+	else:
+		run_as_client()
+
+# =============================================================================
+# LOGIKA SERWERA DEDYKOWANEGO
+# =============================================================================
+func run_as_dedicated_server():
+	print("--- URUCHAMIANIE SERWERA DEDYKOWANEGO ---")
+	var peer = ENetMultiplayerPeer.new()
+	var error = peer.create_server(10567, 32) # Port 10567, max 32 graczy
+	
+	if error != OK:
+		print("Błąd startu serwera: ", error)
+		return
+		
+	multiplayer.multiplayer_peer = peer
+	
+	# Podpinamy zdarzenia sieciowe serwera
+	multiplayer.peer_connected.connect(_on_player_connected)
+	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+	
+	# Serwer odpala uciekiniera (Bossa)
+	if traffic_manager:
+		traffic_manager.setup_mode(true)
+
+func _on_player_connected(id: int):
+	print("Gracz połączony z ID: ", id)
+	# Spawnowanie radiowozu na serwerze dla nowego gracza
+	var police_scene = load("res://scenes/PoliceMultiplayer/police_multiplayer.tscn")
+	var car = police_scene.instantiate()
+	car.name = str(id) # Nazwa węzła to ID sieciowe gracza
+	add_child(car)
+	
+	# Nadajemy autorytet nad fizyką autka temu konkretnemu klientowi
+	car.set_multiplayer_authority(id)
+	car.global_position = start_pos_px
+
+func _on_player_disconnected(id: int):
+	print("Gracz rozłączony: ", id)
+	var car = get_node_or_null(str(id))
+	if car:
+		car.queue_free()
+
+# =============================================================================
+# LOGIKA KLIENTA (GRACZA)
+# =============================================================================
+func run_as_client():
+	print("--- URUCHAMIANIE KLIENTA ---")
+	setup_ui()
+	
 	if map_manager:
 		map_manager.night_mode = true
-	setup_level()
-	setup_ui()
 
-	
-func setup_level():
-	if map_manager:
-		map_manager.initialize_map(start_pos_px)
-	
-	var tm = get_node_or_null("Traffic Manager")
-	if tm:
-		# Ważne: setup_mode wywołujemy po initialize_map
-		tm.setup_mode(true)
+	var peer = ENetMultiplayerPeer.new()
+	# Zmień "127.0.0.1" na adres IP swojego VPS, gdy wrzucisz serwer w sieć
+	peer.create_client("127.0.0.1", 10567) 
+	multiplayer.multiplayer_peer = peer
 
 func _process(_delta):
+	# Jeśli to serwer headless, nie przetwarzamy interfejsu ani kamery
+	if DisplayServer.get_name() == "headless": return
 	if is_changing_scene: return
 	
+	# Szukamy naszego własnego pojazdu na scenie
+	if not is_instance_valid(local_player):
+		var my_id = multiplayer.get_unique_id()
+		local_player = get_node_or_null(str(my_id))
+		
+		# Gdy serwer zreplikuje nasze auto, aktywujemy pod nie MapManager
+		if is_instance_valid(local_player) and map_manager:
+			map_manager.player = local_player
+			map_manager.initialize_map(start_pos_px)
+		return
+
 	var boss = get_tree().get_first_node_in_group("uciekinier")
 	
 	if is_instance_valid(boss):
-		var dist_to_boss = player.global_position.distance_to(boss.global_position)
+		var dist_to_boss = local_player.global_position.distance_to(boss.global_position)
 		var dist_m = dist_to_boss / 20.0
-		get_tree().current_scene.map.set_player(player.global_position, player.rotation)
-		get_tree().current_scene.map.set_target(boss.global_position)
-
-		# Strzałka na uciekiniera
-		var dist_vec = boss.global_position - player.global_position
-		arrow_sprite.rotation = dist_vec.angle() - player.rotation
 		
-		coords_label.text = "POŚCIG ZA CYBERKRABEM\nDYSTANS: %d m" % int(dist_m)
+		# Aktualizacja radaru w HUD
+		if get_tree().current_scene.get("map") != null:
+			get_tree().current_scene.map.set_player(local_player.global_position, local_player.rotation)
+			get_tree().current_scene.map.set_target(boss.global_position)
 
-		# Nowy WARUNEK ZŁAPANIA (NA PODSTAWIE REAL_SPEED)
-		# Przerywnik odpali się, jeśli:
-		# a) Jesteś blisko (< 7m) I uciekinier fizycznie utknął / stoi (real_speed < 30.0)
-		# b) LUB uciekinier dojechał do samego końca trasy (boss.speed == 0)
-		
+		# Strzałka kierunkowa HUD
+		var dist_vec = boss.global_position - local_player.global_position
+		arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
+		coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
+
+		# Każdy klient lokalnie sprawdza zreplikowane dane bosa, żeby odpalić cutscenę
 		var is_close_and_blocked = (dist_m < 7.0 and boss.real_speed < 30.0)
-		var reached_end_of_path = (boss.speed == 0.0)
+		var reached_end_of_path = (boss.reached_end or boss.speed == 0.0)
 
 		if is_close_and_blocked or reached_end_of_path:
 			play_cutscene_sequence()
 	else:
-		coords_label.text = "SZUKANIE SYGNAŁU..."
-		# Jeśli bossa nie ma, strzałka może się kręcić albo być ukryta
+		coords_label.text = "OCZEKIWANIE NA SYGNAŁ CYBERKRABA..."
 
+# =============================================================================
+# FUNKCJE UI I CUTSCENKI (Tylko dla klientów)
+# =============================================================================
 func setup_ui():
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100
@@ -75,7 +134,6 @@ func setup_ui():
 	night_overlay.z_index = -5
 	canvas.add_child(night_overlay)
 	
-	# [KOD LABELA I STRZAŁKI BEZ ZMIAN]
 	coords_label = Label.new()
 	coords_label.position = Vector2(20, 20)
 	coords_label.add_theme_font_size_override("font_size", 24)
@@ -95,55 +153,30 @@ func setup_ui():
 	video_player.stream = load(cutscene_path)
 	video_player.expand = true
 	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	video_player.modulate.a = 0 # Ukryty na początku
+	video_player.modulate.a = 0
 	canvas.add_child(video_player)
 	
-	# Czarny ekran (na samej górze, layer 100 i ostatni child w canvas)
 	fade_rect = ColorRect.new()
 	fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	fade_rect.color = Color(0, 0, 0, 0)
 	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	canvas.add_child(fade_rect)
 
-
-
 func play_cutscene_sequence():
 	is_changing_scene = true
-	
-	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
+	await tween.finished
 	
-	await tween.finished # Czekamy aż zgaśnie
-	
-	# Przygotowanie wideo pod czarną zasłoną
 	video_player.modulate.a = 1.0
 	video_player.play()
 	
-	# Rozjaśnienie wideo (Fade In wideo)
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
 	
-	# Czekamy aż film się skończy (lub używamy timer na 2s)
 	await get_tree().create_timer(2.0).timeout
 	
-	# Ściemnienie wideo (Fade Out przed zmianą sceny)
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
-	
 	await tween_out.finished
 	get_tree().change_scene_to_file("res://scenes/scena_8.tscn")
-
-# func _input(event):
-	# # Zmieniono z is_action_just_pressed na is_action_pressed
-	# # Dodajemy 'false' jako drugi argument, aby ignorowało przytrzymanie klawisza (echo)
-	# if event.is_action_pressed("ui_accept", false):
-		# log_current_coordinates()
-#
-# func log_current_coordinates():
-	# if is_instance_valid(player):
-		# var pos = player.global_position
-		# # round() sprawi, że koordynaty będą czyste i gotowe do wklejenia
-		# var clean_x = round(pos.x)
-		# var clean_y = round(pos.y)
-		# print("Vector2(%d, %d)," % [clean_x, clean_y])
