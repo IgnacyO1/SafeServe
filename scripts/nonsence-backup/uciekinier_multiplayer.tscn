@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1nptvlm7lhx7"]
 
-[ext_resource type="Script" uid="uid://dvqonwpycyon3" path="res://scripts/uciekinier_multiplayer.gd" id="1_mar6j"]
+[ext_resource type="Script" uid="uid://ch2vkvu0dm5it" path="res://scripts/uciekinier.gd" id="1_jmcos"]
 [ext_resource type="Texture2D" uid="uid://b3c7ouaobgpx5" path="res://assets/graphics/cybertruck.png" id="2_8ltu6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcu74"]
@@ -18,8 +18,8 @@ properties/2/path = NodePath(".:velocity")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Uciekinier" type="CharacterBody2D" unique_id=792379994]
-script = ExtResource("1_mar6j")
+[node name="Uciekinier" type="CharacterBody2D" unique_id=792379994 groups=["uciekinier"]]
+script = ExtResource("1_jmcos")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1095535104]
 rotation = 1.5707964
