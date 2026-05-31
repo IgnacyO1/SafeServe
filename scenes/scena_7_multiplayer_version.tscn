@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://bmoi2bdjni1sp" path="res://scripts/map_manager_for_police_multiplayer.gd" id="3_jgvw7"]
 [ext_resource type="Script" uid="uid://dl82vhf3okhoi" path="res://scripts/traffic_manager_for_police_multiplayer.gd" id="4_0mhte"]
 [ext_resource type="Texture2D" uid="uid://cjhj4j2ufogf6" path="res://assets/graphics/Screenshot_20260514_144541.png" id="5_4jn2x"]
-[ext_resource type="PackedScene" uid="uid://kshwap1nnjie" path="res://scenes/PoliceMultiplayer/police_multiplayer.tscn" id="5_34dss"]
 [ext_resource type="Texture2D" uid="uid://grs7qqjo46gn" path="res://assets/graphics/Oil.png" id="6_xew2h"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="7_bplqf"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="8_3k3b3"]
@@ -41,8 +40,6 @@ script = ExtResource("2_34dss")
 
 [node name="MapManager" type="Node2D" parent="SubViewportContainer/SubViewport/World" unique_id=1997550378]
 script = ExtResource("3_jgvw7")
-
-[node name="Police" parent="SubViewportContainer/SubViewport/World" unique_id=1069412395 instance=ExtResource("5_34dss")]
 
 [node name="Traffic Manager" type="Node" parent="SubViewportContainer/SubViewport/World" unique_id=1846529582]
 script = ExtResource("4_0mhte")

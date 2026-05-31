@@ -45,12 +45,15 @@ func _on_player_connected(id: int):
 	print("Gracz połączony z ID: ", id)
 	var police_scene = load("res://scenes/PoliceMultiplayer/police_multiplayer.tscn")
 	var car = police_scene.instantiate()
+	
+	# Serwer nazywa węzeł numerem ID klienta. 
+	# Ta nazwa zostanie automatycznie zreplikowana przez MultiplayerSpawner do klienta!
 	car.name = str(id)
+	
+	# Wrzucamy do drzewa, MultiplayerSpawner zajmie się resztą
 	add_child(car)
 	
-	car.set_multiplayer_authority(id)
 	car.global_position = start_pos_px
-
 func _on_player_disconnected(id: int):
 	print("Gracz rozłączony: ", id)
 	var car = get_node_or_null(str(id))

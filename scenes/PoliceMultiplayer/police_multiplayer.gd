@@ -151,3 +151,10 @@ func turn_siren( mode : bool ):
 		siren_player.play() # Uruchamia dźwięk
 	else:
 		siren_player.stop() # Zatrzymuje dźwięk
+func _enter_tree() -> void:
+	# Jeśli nazwa węzła to tekstowa liczba (np. "1899499609"), 
+	# oznacza to, że to auto należy do gracza o takim ID sieciowym.
+	if name.is_valid_int():
+		var player_id = name.to_int()
+		set_multiplayer_authority(player_id)
+		print("[SIEĆ] Przypisano autorytet dla auta ", name, " do gracza: ", player_id)
