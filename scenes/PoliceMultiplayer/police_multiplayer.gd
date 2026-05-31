@@ -23,6 +23,16 @@ var is_on_grass: bool = false
 func _ready():
 	add_to_group("police") # Każdy zreplikowany wóz ląduje w grupie pościgu
 	
+	# --- POPRAWKA KAMERY MULTIPLAYER ---
+	# Sprawdzamy, czy to auto należy do lokalnego gracza
+	if is_multiplayer_authority():
+		$Camera2D.enabled = true
+		$Camera2D.make_current() # Wymuszamy, aby ta kamera była główną dla tego okna
+		print("[KAMERA] Aktywowano kamerę dla lokalnego gracza: ", name)
+	else:
+		$Camera2D.enabled = false # Wyłączamy kamerę w autach innych graczy
+	# -----------------------------------
+
 	# Wyłączenie kolizji na start (ochrona przed zablokowaniem w teksturach)
 	var original_mask = collision_mask
 	collision_mask = 0
