@@ -26,8 +26,10 @@ func _ready():
 # LOGIKA SERWERA DEDYKOWANEGO
 # =============================================================================
 func run_as_dedicated_server():
-	print("--- URUCHAMIANIE SERWERA DEDYKOWANEGO ---")
+	print("\n=== [SERWER] URUCHAMIANIE SERWERA DEDYKOWANEGO ===")
 	var peer = ENetMultiplayerPeer.new()
+	
+	# Klasyczne uruchomienie serwera na porcie 10567 na wszystkich kartach sieciowych
 	var error = peer.create_server(10567, 32)
 	
 	if error != OK:
@@ -38,6 +40,8 @@ func run_as_dedicated_server():
 	multiplayer.peer_connected.connect(_on_player_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	
+	print("[SERWER] Sukces! Serwer działa i nasłuchuje na porcie 10567.")
+	
 	if traffic_manager:
 		traffic_manager.setup_mode(true)
 
@@ -46,14 +50,10 @@ func _on_player_connected(id: int):
 	var police_scene = load("res://scenes/PoliceMultiplayer/police_multiplayer.tscn")
 	var car = police_scene.instantiate()
 	
-	# Serwer nazywa węzeł numerem ID klienta. 
-	# Ta nazwa zostanie automatycznie zreplikowana przez MultiplayerSpawner do klienta!
 	car.name = str(id)
-	
-	# Wrzucamy do drzewa, MultiplayerSpawner zajmie się resztą
 	add_child(car)
-	
 	car.global_position = start_pos_px
+
 func _on_player_disconnected(id: int):
 	print("Gracz rozłączony: ", id)
 	var car = get_node_or_null(str(id))
@@ -64,52 +64,60 @@ func _on_player_disconnected(id: int):
 # LOGIKA KLIENTA (GRACZA)
 # =============================================================================
 func run_as_client():
-	print("--- URUCHAMIANIE KLIENTA ---")
+	print("\n=== [KLIENT] URUCHAMIANIE KLIENTA ===")
 	setup_ui()
 	
 	if map_manager:
 		map_manager.night_mode = true
 
 	var peer = ENetMultiplayerPeer.new()
-	peer.create_client("127.0.0.1", 10567) 
+	var target_ip = "83.168.89.116"
+	
+	print("[KLIENT] Łączenie z IP: ", target_ip, " na porcie 10567")
+	peer.create_client(target_ip, 10567) 
 	multiplayer.multiplayer_peer = peer
 
+	# Proste logi statusu połączenia u klienta
+	multiplayer.connected_to_server.connect(func(): 
+		print("[KLIENT] Połączono z serwerem!")
+		if coords_label: coords_label.text = "POŁĄCZONO PRAWIDŁOWO!"
+	)
+	multiplayer.connection_failed.connect(func(): 
+		print("[KLIENT] BŁĄD: Nie można nawiązać połączenia.")
+		if coords_label: coords_label.text = "BŁĄD POŁĄCZENIA"
+	)
+
 # =============================================================================
-# GŁÓWNA PĘTLA PROCESU (ROZDZIELONA NA SERWER I KLIENTA)
+# GŁÓWNA PĘTLA PROCESU
 # =============================================================================
 func _process(_delta):
-	# -------------------------------------------------------------------------
-	# A. SERWER: To on kalkuluje warunki zwycięstwa/porażki i zarządza stanem gry
-	# -------------------------------------------------------------------------
 	if DisplayServer.get_name() == "headless":
-		if is_changing_scene: return
-		
-		var boss = get_tree().get_first_node_in_group("uciekinier")
-		if is_instance_valid(boss):
-			var reached_end_of_path = boss.reached_end
-			var is_close_and_blocked = false
-			
-			# Przeszukujemy wszystkie połączone z serwerem radiowozy
-			var police_cars = get_tree().get_nodes_in_group("police")
-			for police in police_cars:
-				if is_instance_valid(police):
-					var dist_m = boss.global_position.distance_to(police.global_position) / 20.0
-					
-					# SPRAWDZENIE ZŁAPANIA: Najbliższy gracz jest blisko (< 7m) i zablokował bossa (< 30 prędkości)
-					if dist_m < 7.0 and boss.real_speed < 30.0:
-						is_close_and_blocked = true
-						break
-			
-			# Jeśli boss uciekł na koniec trasy LUB został skutecznie zablokowany przez kogokolwiek
-			if is_close_and_blocked or reached_end_of_path:
-				is_changing_scene = true
-				print("[SERWER] Warunek końca gry spełniony! Wysyłam RPC do klientów.")
-				rpc("trigger_end_game")
-		return
+		_process_server()
+	else:
+		_process_client()
 
-	# -------------------------------------------------------------------------
-	# B. KLIENT: Zajmuje się wyłącznie renderowaniem i odświeżaniem HUDu
-	# -------------------------------------------------------------------------
+func _process_server():
+	if is_changing_scene: return
+	
+	var boss = get_tree().get_first_node_in_group("uciekinier")
+	if is_instance_valid(boss):
+		var reached_end_of_path = boss.reached_end
+		var is_close_and_blocked = false
+		
+		var police_cars = get_tree().get_nodes_in_group("police")
+		for police in police_cars:
+			if is_instance_valid(police):
+				var dist_m = boss.global_position.distance_to(police.global_position) / 20.0
+				if dist_m < 7.0 and boss.real_speed < 30.0:
+					is_close_and_blocked = true
+					break
+		
+		if is_close_and_blocked or reached_end_of_path:
+			is_changing_scene = true
+			print("[SERWER] Koniec gry. Wysyłam RPC.")
+			rpc("trigger_end_game")
+
+func _process_client():
 	if is_changing_scene: return
 	
 	if not is_instance_valid(local_player):
@@ -135,18 +143,17 @@ func _process(_delta):
 		arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
 		coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
 	else:
-		coords_label.text = "OCZEKIWANIE NA SYGNAŁ CYBERKRABA..."
+		coords_label.text = "OCZEKIWANIE NA SYGNAŁ..."
 
 # =============================================================================
-# ZDALNE WYWOŁANIE (RPC) - Serwer oznajmia koniec wyścigu
+# ZDALNE WYWOŁANIE (RPC)
 # =============================================================================
 @rpc("authority", "call_local", "reliable")
 func trigger_end_game():
-	print("[KLIENT] Otrzymano sygnał RPC z serwera. Odpalam sekwencję końcową.")
 	play_cutscene_sequence()
 
 # =============================================================================
-# FUNKCJE UI I CUTSCENKI (Tylko dla klientów)
+# FUNKCJE UI I CUTSCENKI
 # =============================================================================
 func setup_ui():
 	var canvas = CanvasLayer.new()
@@ -164,6 +171,7 @@ func setup_ui():
 	coords_label.position = Vector2(20, 20)
 	coords_label.add_theme_font_size_override("font_size", 24)
 	coords_label.modulate = Color(0.8, 0.95, 1.0, 1.0)
+	coords_label.text = "ŁĄCZENIE Z SERWEREM..."
 	canvas.add_child(coords_label)
 	
 	var arrow_container = Marker2D.new()
