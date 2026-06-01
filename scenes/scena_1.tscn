@@ -7,23 +7,23 @@
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
 [ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
-[ext_resource type="Texture2D" uid="uid://dl1jm7xgs722u" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
+[ext_resource type="Texture2D" uid="uid://dd8v1brsx6x76" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
 [ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
-[ext_resource type="Texture2D" uid="uid://f36x640l8460" path="res://assets/graphics/scena_1/wykrzyknik.svg" id="9_8cvow"]
-[ext_resource type="Texture2D" uid="uid://bk1wyjg43npsc" path="res://assets/graphics/scena_1/Arrow_icon_orange.svg" id="9_el5c8"]
-[ext_resource type="Texture2D" uid="uid://eknwd41pgfgu" path="res://assets/graphics/scena_1/Arrow_icon_black.svg" id="10_el5c8"]
-[ext_resource type="Texture2D" uid="uid://b64vgysho6bc0" path="res://assets/graphics/scena_1/zlodziej.svg" id="11_da6gn"]
-[ext_resource type="Texture2D" uid="uid://dncfkyrggv8ub" path="res://assets/graphics/scena_1/Arrow_icon_blue.svg" id="12_maknc"]
-[ext_resource type="Texture2D" uid="uid://buwc6fwhaet7r" path="res://assets/graphics/scena_1/police.svg" id="13_0bpa3"]
-[ext_resource type="Texture2D" uid="uid://cdbr8pagdurd0" path="res://assets/graphics/scena_1/Arrow_icon_dark_red.svg" id="14_bqyrf"]
-[ext_resource type="Texture2D" uid="uid://dynjxkt5affec" path="res://assets/graphics/scena_1/fire_truck.svg" id="15_n24rr"]
-[ext_resource type="Texture2D" uid="uid://2oatsvtkffan" path="res://assets/graphics/scena_1/Arrow_icon_white.svg" id="16_cmwsu"]
-[ext_resource type="Texture2D" uid="uid://bl44xpieoapfj" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
+[ext_resource type="Texture2D" uid="uid://byv7kjm3ahrty" path="res://assets/graphics/scena_1/wykrzyknik.svg" id="9_8cvow"]
+[ext_resource type="Texture2D" uid="uid://dg4el2vwcvv81" path="res://assets/graphics/scena_1/Arrow_icon_orange.svg" id="9_el5c8"]
+[ext_resource type="Texture2D" uid="uid://2hjcj7826c1s" path="res://assets/graphics/scena_1/Arrow_icon_black.svg" id="10_el5c8"]
+[ext_resource type="Texture2D" uid="uid://drpxmcv2rj756" path="res://assets/graphics/scena_1/zlodziej.svg" id="11_da6gn"]
+[ext_resource type="Texture2D" uid="uid://dh4lqglgia2xt" path="res://assets/graphics/scena_1/Arrow_icon_blue.svg" id="12_maknc"]
+[ext_resource type="Texture2D" uid="uid://bk3y6psw153h" path="res://assets/graphics/scena_1/police.svg" id="13_0bpa3"]
+[ext_resource type="Texture2D" uid="uid://dkgfsqfw4s8qj" path="res://assets/graphics/scena_1/Arrow_icon_dark_red.svg" id="14_bqyrf"]
+[ext_resource type="Texture2D" uid="uid://bio2pd3aqp4op" path="res://assets/graphics/scena_1/fire_truck.svg" id="15_n24rr"]
+[ext_resource type="Texture2D" uid="uid://caspmwry8eag6" path="res://assets/graphics/scena_1/Arrow_icon_white.svg" id="16_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://corjwbf8i64pu" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
 [ext_resource type="AudioStream" uid="uid://brw24n8b477jg" path="res://assets/Sounds/pozar_w_polyservers.wav" id="20_da6gn"]
 [ext_resource type="Texture2D" uid="uid://lyal5gxrpo0l" path="res://assets/graphics/scena_1/Button.png" id="21_0bpa3"]
-[ext_resource type="Texture2D" uid="uid://dtfdv5mujek5w" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="22_n24rr"]
-[ext_resource type="Texture2D" uid="uid://dmshinlwslsue" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="25_ar68y"]
 
 [sub_resource type="Theme" id="Theme_el5c8"]
@@ -392,62 +392,7 @@ offset_bottom = 253.99997
 text = "Rozumiem."
 label_settings = SubResource("LabelSettings_maknc")
 
-[node name="Fail modal" type="Panel" parent="." unique_id=1341358468]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -330.0
-offset_top = -81.0
-offset_right = 322.0
-offset_bottom = 182.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
-
-[node name="Sprite2D" type="Sprite2D" parent="Fail modal" unique_id=1730813827]
-position = Vector2(359, 122)
-scale = Vector2(0.5, 0.583)
-texture = ExtResource("8_maknc")
-
-[node name="Label" type="Label" parent="Fail modal" unique_id=1173885687]
-layout_mode = 0
-offset_left = -52.0
-offset_top = 8.0
-offset_right = 787.0
-offset_bottom = 77.0
-text = "Ups! Źle przydzielona jednostka!"
-label_settings = SubResource("LabelSettings_du2nj")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureButton" type="TextureButton" parent="Fail modal" unique_id=634199202]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 127.0
-offset_right = 1396.0
-offset_bottom = 332.0
-scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("21_0bpa3")
-texture_pressed = ExtResource("21_0bpa3")
-texture_hover = ExtResource("21_0bpa3")
-texture_disabled = ExtResource("21_0bpa3")
-texture_focused = ExtResource("21_0bpa3")
-script = ExtResource("5_atxpi")
-
-[node name="Label" type="Label" parent="Fail modal/TextureButton" unique_id=648725539]
-layout_mode = 0
-offset_left = 468.0
-offset_top = 45.0
-offset_right = 873.0
-offset_bottom = 253.99997
-text = "Rozumiem."
-label_settings = SubResource("LabelSettings_maknc")
-
-[node name="Success modal" type="Panel" parent="." unique_id=556690621]
+[node name="General purpose modal" type="Panel" parent="." unique_id=556690621]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -463,12 +408,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
 
-[node name="Sprite2D" type="Sprite2D" parent="Success modal" unique_id=1732626861]
+[node name="Background" type="Sprite2D" parent="General purpose modal" unique_id=1732626861]
 position = Vector2(349, 181)
 scale = Vector2(0.5, 0.583)
 texture = ExtResource("8_maknc")
 
-[node name="Label" type="Label" parent="Success modal" unique_id=1943317274]
+[node name="Label" type="Label" parent="General purpose modal" unique_id=1943317274]
 layout_mode = 0
 offset_left = -77.0
 offset_top = 72.0
@@ -479,7 +424,7 @@ label_settings = SubResource("LabelSettings_du2nj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureButton" type="TextureButton" parent="Success modal" unique_id=151140849]
+[node name="TextureButton" type="TextureButton" parent="General purpose modal" unique_id=151140849]
 layout_mode = 0
 offset_left = 49.0
 offset_top = 183.0
@@ -493,62 +438,7 @@ texture_disabled = ExtResource("21_0bpa3")
 texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
 
-[node name="Label" type="Label" parent="Success modal/TextureButton" unique_id=1045552010]
-layout_mode = 0
-offset_left = 468.0
-offset_top = 45.0
-offset_right = 873.0
-offset_bottom = 253.99997
-text = "Przyjąłem"
-label_settings = SubResource("LabelSettings_maknc")
-
-[node name="New emergency modal" type="Panel" parent="." unique_id=1939458738]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -140.0
-offset_right = 280.0
-offset_bottom = 160.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
-
-[node name="Sprite2D" type="Sprite2D" parent="New emergency modal" unique_id=1295612627]
-position = Vector2(299, 162)
-scale = Vector2(0.5, 0.583)
-texture = ExtResource("8_maknc")
-
-[node name="Label" type="Label" parent="New emergency modal" unique_id=10407431]
-layout_mode = 0
-offset_left = -143.0
-offset_top = 45.0
-offset_right = 696.0
-offset_bottom = 114.0
-text = "Nowe zgłoszenie!"
-label_settings = SubResource("LabelSettings_du2nj")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureButton" type="TextureButton" parent="New emergency modal" unique_id=281658479]
-layout_mode = 0
-offset_left = -4.0
-offset_top = 160.0
-offset_right = 1336.0
-offset_bottom = 365.0
-scale = Vector2(0.45, 0.45)
-texture_normal = ExtResource("21_0bpa3")
-texture_pressed = ExtResource("21_0bpa3")
-texture_hover = ExtResource("21_0bpa3")
-texture_disabled = ExtResource("21_0bpa3")
-texture_focused = ExtResource("21_0bpa3")
-script = ExtResource("5_atxpi")
-
-[node name="Label" type="Label" parent="New emergency modal/TextureButton" unique_id=1566890538]
+[node name="Label" type="Label" parent="General purpose modal/TextureButton" unique_id=1045552010]
 layout_mode = 0
 offset_left = 468.0
 offset_top = 45.0
@@ -719,9 +609,7 @@ texture = ExtResource("25_ar68y")
 [connection signal="pressed" from="SidePanelBottom/Send" to="." method="_send_unit"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_begin_game"]
-[connection signal="pressed" from="Fail modal/TextureButton" to="Fail modal/TextureButton" method="_on_press"]
-[connection signal="pressed" from="Success modal/TextureButton" to="." method="_main_event"]
-[connection signal="pressed" from="Success modal/TextureButton" to="Success modal/TextureButton" method="_on_press"]
-[connection signal="pressed" from="New emergency modal/TextureButton" to="New emergency modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="General purpose modal/TextureButton" to="." method="_main_event"]
+[connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]

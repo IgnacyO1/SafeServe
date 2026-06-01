@@ -2,16 +2,20 @@ extends Node
 class_name scena1
 var unit
 var emergency 
-var top_panel
-var bottom_panel
 var main_event = false
-var map_container : MapContainer 
 
+@onready var top_panel = $"SidePanelTop"
+@onready var bottom_panel = $"SidePanelBottom"
+@onready var map_container : MapContainer = $"MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer"
 @onready var radio = $"HUD/Radio popup"
 
+func show_modal(content : String, buttonText : String = "Przyjąłem."):
+	var modal = find_child("General purpose modal")
+	modal.find_child("Label").text = content
+	modal.find_child("TextureButton").find_child("Label").text = buttonText
+	modal.visible = true
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_1.tscn")
-	map_container = self.find_child("MapContainer")
 	var arr = []
 	for i in range(3):
 		#arr.append(randi_range(2,4))
@@ -28,8 +32,6 @@ func _ready() -> void:
 		map_container.spawn_event("Emergency")
 	for i in range(arr[2]):
 		map_container.spawn_event("Fire")
-	top_panel = find_child("SidePanelTop")
-	bottom_panel = find_child("SidePanelBottom")
 func generate_description(event : MapEvent) -> String:
 	var desc : String = ""
 	if event.type == "Fire":
@@ -99,7 +101,7 @@ func _send_unit():
 	if emergency.type == unit_to_emergency[unit.type]:
 		unit.delete()
 		emergency.delete()
-		find_child("Success modal").visible = true
+		show_modal("Jednostka wysłana")
 		unit = null
 		emergency = null
 		bottom_panel.find_child("Send").visible = false
@@ -109,12 +111,11 @@ func _send_unit():
 		bottom_panel.find_child("Label").text = ""
 		bottom_panel.find_child("Icon").texture = null
 	else:
-		find_child("Fail modal").visible = true
-
+		show_modal("Ups! Źle przydzielona jednostka")
 func _main_event():
 	if map_container.any_emergencies:
 		return
 	main_event = true
-	find_child("New emergency modal").visible = true
+	show_modal("Uwaga! Nowe zgłoszenie!")
 	map_container.spawn_event("Fire", Vector2(200, 818))
 	
