@@ -2,39 +2,39 @@
   "contacts": [
     {
       "id": 1,
-      "first_name": "Jan",
-      "last_name": "Kowalski",
-      "email": "jan.kowalski@police.gov.pl",
+      "first_name": "Robert",
+      "last_name": "Masło",
+      "email": "robertmaslo@straz.krakow.pl",
       "profile_image": "res://assets/graphics/profile_placeholder.png",
-      "description": "Komendant Policji, odpowiada za operacje w mieście",
-      "phone": "+48 12 345 6789"
+      "description": "Strażak w remizie nr 13.",
+      "phone": "+48 12 345 679"
     },
     {
       "id": 2,
-      "first_name": "Maria",
-      "last_name": "Nowak",
-      "email": "maria.nowak@dispatch.gov.pl",
+      "first_name": "Irena",
+      "last_name": "Warchocka",
+      "email": "irenawarchocka@polyservers.com",
       "profile_image": "res://assets/graphics/profile_placeholder.png",
-      "description": "Dyspozytorka, koordynuje działania na terenie",
-      "phone": "+48 12 345 6790"
+      "description": "Sprzątaczka w Polyservers",
+      "phone": "+48 120 442 670"
     },
     {
       "id": 3,
-      "first_name": "Piotr",
-      "last_name": "Wójcik",
-      "email": "piotr.wojcik@police.gov.pl",
+      "first_name": "Katarzyna",
+      "last_name": "Słubicka",
+      "email": "ceo@polyservers.com",
       "profile_image": "res://assets/graphics/profile_placeholder.png",
-      "description": "Funkcjonariusz ruchu drogowego, specjalista od zdarzeń",
-      "phone": "+48 12 345 6791"
+      "description": "CEO Polyservers Poland",
+      "phone": "+48 562 345 791"
     },
     {
       "id": 4,
-      "first_name": "Anna",
-      "last_name": "Szymańska",
-      "email": "anna.szymanska@headquarters.gov.pl",
+      "first_name": "Bartłomiej",
+      "last_name": "Głuś",
+      "email": "bartlomiejglus@polyservers.com",
       "profile_image": "res://assets/graphics/profile_placeholder.png",
-      "description": "Szef centralnego zespołu bezpieczeństwa",
-      "phone": "+48 12 345 6792"
+      "description": "Administrator Polyservers Poland",
+      "phone": "+48 601 247 347"
     }
   ]
 }

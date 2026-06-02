@@ -110,24 +110,28 @@ offset_bottom = 498.0
 [node name="TreśćMaila" type="RichTextLabel" parent="CanvasLayer/OknoMail/TreśćPanel" unique_id=1562309516]
 layout_mode = 2
 
-[node name="NowaWiadomośćPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=1174354717]
+[node name="NowaWiadomośćPanel" type="HBoxContainer" parent="CanvasLayer/OknoMail" unique_id=1174354717]
 layout_mode = 0
 offset_left = 49.0
 offset_top = 529.0
 offset_right = 1219.0
 offset_bottom = 736.0
+alignment = 1
 
-[node name="OdbiorcaLista" type="OptionButton" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=883760425]
+[node name="OpcjaBtn1" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=883760425]
+custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
+text = "Opcja 1"
 
-[node name="TematLista" type="OptionButton" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1319045775]
+[node name="OpcjaBtn2" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1319045775]
+custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
+text = "Opcja 2"
 
-[node name="TreśćInput" type="TextEdit" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1616734694]
+[node name="OpcjaBtn3" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1616734694]
+custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
-
-[node name="BtnWyślij" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=2000973103]
-layout_mode = 2
+text = "Opcja 3"
 
 [node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
 visible = false

@@ -4,10 +4,9 @@ extends Control
 @onready var kontakty_vbox = $KontaktyPanel/KontaktyScroll/KontaktyVBox
 @onready var maile_vbox = $MailePanel/MaileScroll/MaileVBox
 @onready var tresci_label = $TreśćPanel/TreśćMaila
-@onready var odbiorcy_button = $NowaWiadomośćPanel/OdbiorcaLista
-@onready var temat_button = $NowaWiadomośćPanel/TematLista
-@onready var tresc_input = $NowaWiadomośćPanel/TreśćInput
-@onready var btn_wyslij = $NowaWiadomośćPanel/BtnWyślij
+@onready var opcja_btn1 = $NowaWiadomośćPanel/OpcjaBtn1
+@onready var opcja_btn2 = $NowaWiadomośćPanel/OpcjaBtn2
+@onready var opcja_btn3 = $NowaWiadomośćPanel/OpcjaBtn3
 
 # Dane
 var contacts: Array = []
@@ -16,16 +15,21 @@ var received_mails: Array = []
 var sent_mails: Array = []
 var current_selected_mail: Dictionary = {}
 var current_response_tree: Dictionary = {}
+var current_recipient: Dictionary = {}
+var message_options: Array = []  # Przechowuje dostępne opcje wiadomości
+var is_sending_mode: bool = false  # True gdy wysyłamy mail, False gdy odzyskujemy
 
-# Style dla przycisków
-#var contact_button_scene = preload("res://scenes/modal_button.tscn")
 
 func _ready() -> void:
 	_load_data()
 	_initialize_ui()
 	_create_contact_buttons()
 	_load_initial_mails()
-	btn_wyslij.pressed.connect(_send_reply)
+	
+	# Podłącz przyciski opcji
+	opcja_btn1.pressed.connect(_on_option_button_pressed.bindv([0]))
+	opcja_btn2.pressed.connect(_on_option_button_pressed.bindv([1]))
+	opcja_btn3.pressed.connect(_on_option_button_pressed.bindv([2]))
 
 func _load_data() -> void:
 	# Załaduj kontakty
@@ -46,10 +50,10 @@ func _load_data() -> void:
 				received_mails.append(email)
 
 func _initialize_ui() -> void:
-	# Ukryj przyciski wysyłania, póki nie ma wybranego maila
-	temat_button.visible = false
-	tresc_input.visible = false
-	btn_wyslij.visible = false
+	# Ukryj przyciski opcji na starcie
+	opcja_btn1.visible = false
+	opcja_btn2.visible = false
+	opcja_btn3.visible = false
 	
 	# Pokaż powitanie
 	tresci_label.clear()
@@ -77,16 +81,18 @@ func _refresh_mail_list() -> void:
 	for child in maile_vbox.get_children():
 		child.queue_free()
 	
-	# Wyczyść przycisk powrotu i opcje jeśli są
-	for child in tresc_input.get_parent().get_children():
-		if child.name.begins_with("OpcjaBtn") or child.name == "BtnPowrot":
+	# Wyczyść dynamiczne przyciski powrotu
+	for child in opcja_btn1.get_parent().get_children():
+		if child.name == "BtnPowrot":
 			child.queue_free()
+	
+	# Ukryj przyciski opcji
+	opcja_btn1.visible = false
+	opcja_btn2.visible = false
+	opcja_btn3.visible = false
 	
 	# Pokaż okno listy maili
 	tresci_label.clear()
-	temat_button.visible = false
-	tresc_input.visible = false
-	btn_wyslij.visible = false
 	
 	# Wyświetl wszystkie otrzymane maile
 	for mail in received_mails:
@@ -140,35 +146,83 @@ func _display_mail_content(mail: Dictionary) -> void:
 		tresci_label.append_text("[Brak dostępnych opcji odpowiedzi]")
 
 func _show_response_options() -> void:
-	# Wyczyść poprzednie przyciski opcji
-	for child in tresc_input.get_parent().get_children():
-		if child.name.begins_with("OpcjaBtn"):
-			child.queue_free()
-	
-	temat_button.visible = false
-	tresc_input.visible = false
-	btn_wyslij.visible = false
-	
-	# Utwórz przyciski dla każdej opcji odpowiedzi
+	# Pokaż przyciski z opcjami odpowiedzi
 	var options = current_response_tree.get("options", {})
-	var index = 0
-	var parent_container = tresc_input.get_parent()
-	for option_key in options:
-		var option = options[option_key]
-		var btn = Button.new()
-		btn.name = "OpcjaBtn_%d" % index
-		btn.text = option.get("text", "")
-		btn.custom_minimum_size = Vector2(650, 50)
-		btn.pressed.connect(_on_response_option_selected.bindv([option_key, option]))
-		parent_container.add_child(btn)
-		parent_container.move_child(btn, parent_container.get_child_count() - 1)
-		index += 1
+	var options_keys = options.keys()
+	message_options = options_keys
+	is_sending_mode = false
+	
+	# Przypisz opcje do przycisków
+	if options_keys.size() >= 1:
+		opcja_btn1.text = options[options_keys[0]].get("text", "Opcja 1")
+		opcja_btn1.visible = true
+	else:
+		opcja_btn1.visible = false
+	
+	if options_keys.size() >= 2:
+		opcja_btn2.text = options[options_keys[1]].get("text", "Opcja 2")
+		opcja_btn2.visible = true
+	else:
+		opcja_btn2.visible = false
+	
+	if options_keys.size() >= 3:
+		opcja_btn3.text = options[options_keys[2]].get("text", "Opcja 3")
+		opcja_btn3.visible = true
+	else:
+		opcja_btn3.visible = false
 
-func _on_response_option_selected(option_key: String, option: Dictionary) -> void:
-	# Wyczyść poprzednie przyciski opcji
-	for child in tresc_input.get_parent().get_children():
-		if child.name.begins_with("OpcjaBtn"):
-			child.queue_free()
+func _on_option_button_pressed(option_index: int) -> void:
+	if is_sending_mode:
+		_send_mail_with_option(option_index)
+	else:
+		_respond_to_mail_with_option(option_index)
+
+func _send_mail_with_option(option_index: int) -> void:
+	if option_index >= message_options.size():
+		return
+	
+	var option_data = message_options[option_index]
+	var topic = option_data.get("topic", "")
+	
+	# Utwórz nowy mail
+	var new_mail = {
+		"id": sent_mails.size() + 1,
+		"to_id": current_recipient.get("id", 0),
+		"to_name": "%s %s" % [current_recipient.first_name, current_recipient.last_name],
+		"subject": topic,
+		"date": _get_current_date(),
+		"time": _get_current_time(),
+		"is_sent": true
+	}
+	sent_mails.append(new_mail)
+	
+	# Pokaż potwierdzenie
+	tresci_label.clear()
+	tresci_label.append_text("[b]Wiadomość wysłana![/b]\n\n")
+	tresci_label.append_text("Do: %s\n" % new_mail.to_name)
+	tresci_label.append_text("Temat: %s\n" % new_mail.subject)
+	
+	# Ukryj przyciski opcji
+	opcja_btn1.visible = false
+	opcja_btn2.visible = false
+	opcja_btn3.visible = false
+	
+	# Pokaż przycisk powrotu do listy kontaktów
+	var btn_powrot = Button.new()
+	btn_powrot.name = "BtnPowrotKontakty"
+	btn_powrot.text = "Powrót do listy kontaktów"
+	btn_powrot.custom_minimum_size = Vector2(350, 60)
+	btn_powrot.pressed.connect(_on_back_to_contacts)
+	opcja_btn1.add_sibling(btn_powrot)
+	opcja_btn1.get_parent().move_child(btn_powrot, opcja_btn1.get_parent().get_child_count() - 1)
+
+func _respond_to_mail_with_option(option_index: int) -> void:
+	if option_index >= message_options.size():
+		return
+	
+	var options_keys = message_options
+	var option_key = options_keys[option_index]
+	var option = current_response_tree.get("options", {}).get(option_key, {})
 	
 	# Pokaż odpowiedź NPC
 	tresci_label.clear()
@@ -189,83 +243,70 @@ func _on_response_option_selected(option_key: String, option: Dictionary) -> voi
 		"is_response": true
 	}
 	received_mails.append(response_mail)
-	_refresh_mail_list()
 	
-	# Pokaż przycisk powrotu
+	# Ukryj przyciski opcji
+	opcja_btn1.visible = false
+	opcja_btn2.visible = false
+	opcja_btn3.visible = false
+	
+	# Pokaż przyciski powrotu
 	var btn_powrot = Button.new()
 	btn_powrot.name = "BtnPowrot"
 	btn_powrot.text = "Powrót do listy maili"
+	btn_powrot.custom_minimum_size = Vector2(350, 60)
 	btn_powrot.pressed.connect(_refresh_mail_list)
-	var parent_container = tresc_input.get_parent()
-	parent_container.add_child(btn_powrot)
+	opcja_btn1.add_sibling(btn_powrot)
+	opcja_btn1.get_parent().move_child(btn_powrot, opcja_btn1.get_parent().get_child_count() - 1)
 
 func _set_current_recipient(contact: Dictionary) -> void:
-	# Wyczyść opcje wysyłania i przycisk powrotu jeśli są
-	for child in tresc_input.get_parent().get_children():
-		if child.name.begins_with("OpcjaBtn") or child.name == "BtnPowrot" or child.name == "BtnNowyMail":
-			child.queue_free()
+	# Ustaw bieżącego odbiorcę
+	current_recipient = contact
+	is_sending_mode = true
 	
-	# Ustaw odbiorcę i pokaż opcje wysyłania
-	odbiorcy_button.clear()
-	odbiorcy_button.add_item("%s %s" % [contact.first_name, contact.last_name])
-	odbiorcy_button.set_item_metadata(0, contact)
-	
-	# Pokaż opcje tematu (możemy je pobrać z drzewa)
-	temat_button.clear()
-	temat_button.visible = true
-	
+	# Przygotuj opcje wysyłania z mail_tree
+	var options_list = []
 	for tree_key in mail_tree:
 		var tree = mail_tree[tree_key]
-		var topic = tree.get("topic", "")
-		temat_button.add_item(topic)
-		temat_button.set_item_metadata(temat_button.get_item_count() - 1, tree_key)
+		options_list.append({
+			"topic": tree.get("topic", ""),
+			"tree_key": tree_key
+		})
+	message_options = options_list
 	
-	tresc_input.visible = true
-	tresc_input.clear()
-	btn_wyslij.visible = true
-
-func _send_reply() -> void:
-	var recipient_index = odbiorcy_button.get_selected()
-	var recipient = odbiorcy_button.get_item_metadata(recipient_index)
+	# Przypisz opcje do przycisków
+	if options_list.size() >= 1:
+		opcja_btn1.text = "[1] " + options_list[0].get("topic", "Opcja 1")
+		opcja_btn1.visible = true
+	else:
+		opcja_btn1.visible = false
 	
-	var topic_index = temat_button.get_selected()
-	var topic = temat_button.get_item_text(topic_index)
+	if options_list.size() >= 2:
+		opcja_btn2.text = "[2] " + options_list[1].get("topic", "Opcja 2")
+		opcja_btn2.visible = true
+	else:
+		opcja_btn2.visible = false
 	
-	var content = tresc_input.text
-	
-	if content.is_empty():
-		return
-	
-	# Utwórz nowy mail
-	var new_mail = {
-		"id": sent_mails.size() + 1,
-		"to_id": recipient.get("id", 0),
-		"to_name": "%s %s" % [recipient.first_name, recipient.last_name],
-		"subject": topic,
-		"content": content,
-		"date": _get_current_date(),
-		"time": _get_current_time(),
-		"is_sent": true
-	}
-	sent_mails.append(new_mail)
-	
-	# Wyczyść formularz
-	tresc_input.clear()
-	temat_button.visible = false
-	tresc_input.visible = false
-	btn_wyslij.visible = false
-	
-	# Pokaż potwierdzenie
-	tresci_label.clear()
-	tresci_label.append_text("[b]Wiadomość wysłana![/b]\n\n")
-	tresci_label.append_text("Do: %s\n" % new_mail.to_name)
-	tresci_label.append_text("Temat: %s\n" % new_mail.subject)
+	if options_list.size() >= 3:
+		opcja_btn3.text = "[3] " + options_list[2].get("topic", "Opcja 3")
+		opcja_btn3.visible = true
+	else:
+		opcja_btn3.visible = false
 
 func _find_contact_by_name(name: String) -> Dictionary:
 	for contact in contacts:
 		if contact.get("first_name", "") + " " + contact.get("last_name", "") == name:
 			return contact
 	return {}
+
+func _on_back_to_contacts() -> void:
+	# Wyczyść przycisk powrotu
+	for child in opcja_btn1.get_parent().get_children():
+		if child.name == "BtnPowrotKontakty":
+			child.queue_free()
+	
+	# Pokaż listę kontaktów
+	tresci_label.clear()
+	_create_contact_buttons()
 
 func _get_current_date() -> String:
 	var now = Time.get_datetime_dict_from_system()
