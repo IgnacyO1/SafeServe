@@ -102,7 +102,7 @@ Poniżej znajduje się architektura przejść i celów dla całego kręgosłupa 
 *   **Kluczowe pliki:** `scena_4.gd`.
 
 ### Scena 5: Monitoring Policyjny i Rozpoznanie
-*   **Gameplay:** Interfejs śledczy. Gracz ogląda wideo z suwakiem i musi wpisać poszukiwany numer rejestracyjny "KR4B2137". Sukces lokalizuje uciekiniera na mapie OSM i pozwala wysłać policyjny patrol w pościg.
+*   **Gameplay:** Interfejs śledczy. Gracz ogląda wideo z suwakiem i musi wpisać poszukiwany numer rejestracyjny "KR4B2137", gdyż nagranie to film z parkingu z nałożonym YOLO gdzie etykiety to nr rejestracyjne, a podejrzany samochód Cyberkraba ma właśnie taki numer. Sukces lokalizuje uciekiniera na mapie OSM i pozwala wysłać policyjny patrol w pościg.
 *   **Kluczowe pliki:** `scena_5.gd`.
 
 ### Scena 6: Pościg (Dojazd na miejsce)

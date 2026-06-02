@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://d1falslb55lk8"]
+
+[ext_resource type="Script" uid="uid://bhi7me2pijjjy" path="res://scenes/scena_4.gd" id="1_7r3tw"]
+[ext_resource type="Texture2D" uid="uid://c8clmty7stdyi" path="res://assets/graphics/scena4/mailicon.png" id="2_nn3ug"]
+[ext_resource type="Texture2D" uid="uid://dt80rkd1bve34" path="res://assets/graphics/scena4/smsicon.png" id="3_4hk0s"]
+[ext_resource type="Texture2D" uid="uid://b7wy2ldooa1og" path="res://assets/graphics/scena4/cctv.png" id="4_wb72h"]
+
+[sub_resource type="Gradient" id="Gradient_7r3tw"]
+colors = PackedColorArray(0.41960785, 0.44313726, 0.11764706, 1, 0, 0.37254903, 0.74509805, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nn3ug"]
+gradient = SubResource("Gradient_7r3tw")
+width = 60
+fill_from = Vector2(0.018233618, 0.02991453)
+fill_to = Vector2(1, 1)
+
+[node name="Scena4 (Control)" type="Control" unique_id=1058100813]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_7r3tw")
+
+[node name="Tło" type="TextureRect" parent="." unique_id=891507488]
+layout_mode = 0
+offset_right = 1927.0
+offset_bottom = 1079.0
+texture = SubResource("GradientTexture2D_nn3ug")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=314574686]
+
+[node name="Pasek Górny" type="HBoxContainer" parent="CanvasLayer" unique_id=475347970]
+offset_right = 1926.0
+offset_bottom = 68.0
+alignment = 1
+
+[node name="Tytuł" type="Label" parent="CanvasLayer/Pasek Górny" unique_id=1540250979]
+layout_mode = 2
+text = "Motorola Solutions Investigation Managment Center"
+
+[node name="Zegar" type="Label" parent="CanvasLayer/Pasek Górny" unique_id=426343306]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "13:56"
+
+[node name="Menu Aplikacji" type="VBoxContainer" parent="CanvasLayer" unique_id=1891849312]
+offset_left = 67.0
+offset_top = 200.0
+offset_right = 397.0
+offset_bottom = 424.0
+
+[node name="BtnMail" type="Button" parent="CanvasLayer/Menu Aplikacji" unique_id=1960325763]
+layout_mode = 2
+text = "Poczta e-mail"
+icon = ExtResource("2_nn3ug")
+
+[node name="BtnSMS" type="Button" parent="CanvasLayer/Menu Aplikacji" unique_id=169204104]
+layout_mode = 2
+text = "Wiadomości"
+icon = ExtResource("3_4hk0s")
+
+[node name="BtnMonitoring" type="Button" parent="CanvasLayer/Menu Aplikacji" unique_id=1879534263]
+layout_mode = 2
+text = "Pliki video"
+icon = ExtResource("4_wb72h")
+
+[node name="OknoMail" type="Control" parent="CanvasLayer" unique_id=1034318404]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 508.0
+offset_top = 198.0
+offset_right = 1752.0
+offset_bottom = 898.0
+
+[node name="KontaktyPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=2074817804]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="KontaktyScroll" type="ScrollContainer" parent="CanvasLayer/OknoMail/KontaktyPanel" unique_id=814051789]
+layout_mode = 2
+
+[node name="KontaktyVBox" type="VBoxContainer" parent="CanvasLayer/OknoMail/KontaktyPanel/KontaktyScroll" unique_id=921051678]
+layout_mode = 2
+
+[node name="MailePanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=975129050]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MaileScroll" type="ScrollContainer" parent="CanvasLayer/OknoMail/MailePanel" unique_id=554732588]
+layout_mode = 2
+
+[node name="MaileVBox" type="VBoxContainer" parent="CanvasLayer/OknoMail/MailePanel/MaileScroll" unique_id=1906610118]
+layout_mode = 2
+
+[node name="TreśćPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=890664079]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TreśćMaila" type="RichTextLabel" parent="CanvasLayer/OknoMail/TreśćPanel" unique_id=1562309516]
+layout_mode = 2
+
+[node name="NowaWiadomośćPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=1174354717]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OdbiorcaLista" type="OptionButton" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=883760425]
+layout_mode = 2
+
+[node name="TematLista" type="OptionButton" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1319045775]
+layout_mode = 2
+
+[node name="TreśćInput" type="TextEdit" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1616734694]
+layout_mode = 2
+
+[node name="BtnWyślij" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=2000973103]
+layout_mode = 2
+
+[node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ListaNumerówPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1578462936]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NumeryVBox" type="VBoxContainer" parent="CanvasLayer/OknoSMS/ListaNumerówPanel" unique_id=113142705]
+layout_mode = 2
+
+[node name="KonwersjacjaPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1865818557]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HistoriaSMS" type="RichTextLabel" parent="CanvasLayer/OknoSMS/KonwersjacjaPanel" unique_id=639026883]
+layout_mode = 2
+
+[node name="DolnyPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1920669227]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NumerInput" type="LineEdit" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=751208166]
+layout_mode = 2
+
+[node name="WiadomośćInput" type="LineEdit" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=2064261496]
+layout_mode = 2
+
+[node name="BtnWyślijSMS" type="Button" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=250535002]
+layout_mode = 2
+
+[node name="OknoMonitoring" type="Control" parent="CanvasLayer" unique_id=2011637223]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
