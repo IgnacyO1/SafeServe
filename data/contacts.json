@@ -1,0 +1,40 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "first_name": "Jan",
+      "last_name": "Kowalski",
+      "email": "jan.kowalski@police.gov.pl",
+      "profile_image": "res://assets/graphics/profile_placeholder.png",
+      "description": "Komendant Policji, odpowiada za operacje w mieście",
+      "phone": "+48 12 345 6789"
+    },
+    {
+      "id": 2,
+      "first_name": "Maria",
+      "last_name": "Nowak",
+      "email": "maria.nowak@dispatch.gov.pl",
+      "profile_image": "res://assets/graphics/profile_placeholder.png",
+      "description": "Dyspozytorka, koordynuje działania na terenie",
+      "phone": "+48 12 345 6790"
+    },
+    {
+      "id": 3,
+      "first_name": "Piotr",
+      "last_name": "Wójcik",
+      "email": "piotr.wojcik@police.gov.pl",
+      "profile_image": "res://assets/graphics/profile_placeholder.png",
+      "description": "Funkcjonariusz ruchu drogowego, specjalista od zdarzeń",
+      "phone": "+48 12 345 6791"
+    },
+    {
+      "id": 4,
+      "first_name": "Anna",
+      "last_name": "Szymańska",
+      "email": "anna.szymanska@headquarters.gov.pl",
+      "profile_image": "res://assets/graphics/profile_placeholder.png",
+      "description": "Szef centralnego zespołu bezpieczeństwa",
+      "phone": "+48 12 345 6792"
+    }
+  ]
+}
