@@ -102,10 +102,10 @@ layout_mode = 2
 
 [node name="TreśćPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=890664079]
 layout_mode = 0
-offset_left = 784.0
-offset_top = 5.0
-offset_right = 1214.0
-offset_bottom = 498.0
+offset_left = 786.0
+offset_top = 1.0
+offset_right = 1256.0
+offset_bottom = 489.0
 
 [node name="TreśćMaila" type="RichTextLabel" parent="CanvasLayer/OknoMail/TreśćPanel" unique_id=1562309516]
 layout_mode = 2

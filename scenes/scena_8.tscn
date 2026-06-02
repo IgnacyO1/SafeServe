@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
 [ext_resource type="AudioStream" uid="uid://d28qbx3xivgjg" path="res://assets/Sounds/Final Boss Battle - Rod Kim.mp3" id="3_djapk"]
 [ext_resource type="Texture2D" uid="uid://dlclravlqfmjn" path="res://assets/graphics/Scena8/tło_walki.png" id="4_yr44c"]
-[ext_resource type="Texture2D" uid="uid://c2xjt6l5s3fjk" path="res://assets/graphics/POLICJANTSPRITESHEET/police_dol.png" id="5_451g6"]
+[ext_resource type="Texture2D" uid="uid://mupfqlxng5mh" path="res://assets/graphics/POLICJANTSPRITESHEET/police_dol.png" id="5_451g6"]
 [ext_resource type="Script" uid="uid://cg8h5mi5k3uta" path="res://scripts/scena8_gracz.gd" id="5_xxrgm"]
-[ext_resource type="Texture2D" uid="uid://blpktklrlq37j" path="res://assets/graphics/POLICJANTSPRITESHEET/police_gora.png" id="6_a8y66"]
-[ext_resource type="Texture2D" uid="uid://d3pe6da5lfesn" path="res://assets/graphics/POLICJANTSPRITESHEET/police_lewa.png" id="7_q24i8"]
-[ext_resource type="Texture2D" uid="uid://iroybx4dhkty" path="res://assets/graphics/POLICJANTSPRITESHEET/police_prawa.png" id="8_7xr4v"]
+[ext_resource type="Texture2D" uid="uid://deohfygqm6w6q" path="res://assets/graphics/POLICJANTSPRITESHEET/police_gora.png" id="6_a8y66"]
+[ext_resource type="Texture2D" uid="uid://b66ihgn3tkrps" path="res://assets/graphics/POLICJANTSPRITESHEET/police_lewa.png" id="7_q24i8"]
+[ext_resource type="Texture2D" uid="uid://blqlhnbqvla0o" path="res://assets/graphics/POLICJANTSPRITESHEET/police_prawa.png" id="8_7xr4v"]
 [ext_resource type="Texture2D" uid="uid://w68xqp5gp3kc" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0000.png" id="9_h64ow"]
 [ext_resource type="Texture2D" uid="uid://bhcikw2xkmbvx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0000.png" id="9_s437g"]
 [ext_resource type="Texture2D" uid="uid://do7oku06etiy3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0001.png" id="10_2utqm"]
@@ -1589,7 +1589,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_451g6"]
-size = Vector2(682.5, 472.5)
+size = Vector2(682.5, 595)
 
 [node name="Scena8" type="Node2D" unique_id=1730050766]
 script = ExtResource("1_scena8")
@@ -1604,6 +1604,7 @@ parameters/looping = true
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=447920397]
 z_index = -10
+position = Vector2(-28, -144)
 texture = ExtResource("4_yr44c")
 centered = false
 
@@ -1652,6 +1653,6 @@ sprite_frames = SubResource("SpriteFrames_s437g")
 animation = &"fala"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cyberkrab" unique_id=818043411]
-position = Vector2(2011.5, 654.5)
+position = Vector2(2011.5, 630)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_451g6")
