@@ -4,6 +4,7 @@ var speed = 1000.0 # Szybsze niż podstawowe
 var direction = Vector2.RIGHT
 
 func _ready():
+	add_to_group("pocisk")
 	# Sprite pocisku fali
 	var spr = Sprite2D.new()
 	var tex = load("res://assets/graphics/SPRITE+COLOR/sruba.png")
@@ -36,8 +37,13 @@ func _physics_process(delta):
 	position += direction * speed * delta
 
 func _on_body_entered(body):
+	if body.is_in_group("tramwaj"):
+		queue_free()
+		return
+		
 	if body.is_in_group("gracz"):
 		var scena = get_tree().current_scene
 		if scena and scena.has_method("gracz_trafiony"):
 			scena.gracz_trafiony()
 		queue_free()
+

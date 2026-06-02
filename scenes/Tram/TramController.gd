@@ -23,7 +23,10 @@ var bogie_presets = [
 var map_manager = null
 var last_node: Vector2
 
-
+# Specyficzne dla sceny 8 (Boss Fight)
+var is_scene8_mode: bool = false
+var direction: Vector2 = Vector2.RIGHT
+var hit_cooldowns = {}
 
 func _ready():
 	curve.bake_interval = 5.0 # Precyzja próbkowania zakrętów (im mniej, tym płynniej)
@@ -43,19 +46,110 @@ func init_tram(start_node: Vector2, manager):
 	# Zacznij z przesunięciem, aby cały tramwaj od razu zespawnował się na torach
 	master_distance = 480.0 
 
+func init_straight_line(p_start: Vector2, p_end: Vector2, p_speed: float = 600.0):
+	is_scene8_mode = true
+	speed = p_speed
+	direction = (p_end - p_start).normalized()
+	
+	current_path_points.append(p_start)
+	current_path_points.append(p_end)
+	
+	rebuild_curve()
+	master_distance = 480.0
+	
+	setup_collisions_scene8()
+
 func _physics_process(delta):
 	if current_path_points.size() < 2: return
 	
 	master_distance += speed * delta
 	
-	# Jeśli przód tramwaju zbliża się do końca obecnej krzywej, doklej kolejne tory
-	if master_distance > curve.get_baked_length() - 600.0:
-		if extend_path():
-			rebuild_curve()
+	if is_scene8_mode:
+		for segment in segments:
+			segment.update_position(curve, master_distance)
 			
-	# Aktualizacja pozycji każdego członu
+			# Dopasowanie kierunku i zapobieganie obracaniu "do góry nogami"
+			var sprite = segment.get_node_or_null("Sprite2D")
+			if sprite:
+				if direction.x > 0:
+					segment.rotation = direction.angle()
+					sprite.flip_h = true
+				else:
+					segment.rotation = direction.angle() + PI
+					sprite.flip_h = false
+			
+		# Obsługa cooldownu kolizji
+		for body in hit_cooldowns.keys():
+			hit_cooldowns[body] -= delta
+			if hit_cooldowns[body] <= 0.0:
+				hit_cooldowns.erase(body)
+				
+		# Usunięcie po przejechaniu całej krzywej
+		if master_distance > curve.get_baked_length() + 500.0:
+			queue_free()
+	else:
+		# Jeśli przód tramwaju zbliża się do końca obecnej krzywej, doklej kolejne tory
+		if master_distance > curve.get_baked_length() - 600.0:
+			if extend_path():
+				rebuild_curve()
+				
+		# Aktualizacja pozycji każdego członu
+		for segment in segments:
+			segment.update_position(curve, master_distance)
+
+func setup_collisions_scene8():
 	for segment in segments:
-		segment.update_position(curve, master_distance)
+		segment.add_to_group("tramwaj")
+		
+		# Dodaj Area2D do segmentu
+		var area = Area2D.new()
+		area.name = "Area2D"
+		area.collision_layer = 3
+		area.collision_mask = 3
+		segment.add_child(area)
+		
+		# Dodaj CollisionShape2D do Area2D
+		var col_shape = CollisionShape2D.new()
+		var rect = RectangleShape2D.new()
+		rect.size = Vector2(48, 92)
+		col_shape.shape = rect
+		col_shape.rotation = 1.5707964 # 90 stopni
+		area.add_child(col_shape)
+		
+		area.body_entered.connect(func(body): _on_segment_body_entered(body, segment))
+
+func _on_segment_body_entered(body: Node2D, segment: Node2D):
+	if not is_scene8_mode:
+		return
+	if body in hit_cooldowns:
+		return
+		
+	if body.is_in_group("gracz"):
+		hit_cooldowns[body] = 1.5 # 1.5s cooldown
+		
+		var push_dir = (body.global_position - segment.global_position).normalized()
+		if push_dir == Vector2.ZERO:
+			push_dir = Vector2.UP if direction.x > 0 else Vector2.DOWN
+			
+		if body.has_method("apply_knockback"):
+			body.apply_knockback(push_dir * 1300.0)
+			
+		var scena = get_tree().current_scene
+		if scena and scena.has_method("_screen_shake"):
+			scena._screen_shake(25.0)
+			
+		if scena and scena.has_method("gracz_trafiony"):
+			scena.gracz_trafiony()
+			
+	elif body.is_in_group("krab"):
+		hit_cooldowns[body] = 1.0 # 1s cooldown
+		
+		var push_dir = (body.global_position - segment.global_position).normalized()
+		if push_dir == Vector2.ZERO:
+			push_dir = Vector2.UP if direction.x > 0 else Vector2.DOWN
+			
+		if body.has_method("apply_knockback"):
+			body.apply_knockback(push_dir * 1600.0)
 
 func extend_path() -> bool:
 	if not map_manager.tram_network.has(last_node):

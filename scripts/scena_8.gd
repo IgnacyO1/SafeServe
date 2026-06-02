@@ -14,9 +14,16 @@ var gracz_zycia = 99
 var gracz_niezniszczalny_timer = 0.0
 var tarcza_cooldown = 0.0
 
+# Tory tramwajowe
+var tor_dolny = [Vector2(-2000, 724), Vector2(4600, 892)]
+var tor_gorny = [Vector2(4600, 999), Vector2(-2000, 814)]
+var tram_timer = 0.0
+var TRAM_SCENE = preload("res://scenes/Tram/Tram.tscn")
+
 # Referencje do węzłów w scenie (ułożone w edytorze)
 @onready var gracz: CharacterBody2D = $Gracz
 @onready var krab: CharacterBody2D = $Cyberkrab
+
 @onready var tlo: Sprite2D = $Tlo
 @onready var granice_areny: StaticBody2D = $GraniceAreny
 @onready var muzyka: AudioStreamPlayer2D = $Muzyka
@@ -153,6 +160,12 @@ func _process(delta):
 
 	if not gra_aktywna:
 		return
+		
+	# Odliczanie czasu spawnu tramwaju
+	tram_timer += delta
+	if tram_timer >= 30.0:
+		tram_timer = 0.0
+		_spawn_tram_scene8()
 		
 	# Obsługa tarczy w fazie 6
 	if tarcza_cooldown > 0.0:
@@ -1158,3 +1171,13 @@ func _screen_shake(intensity: float = 5.0):
 			var offset = Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
 			tw.tween_property(self, "position", original_pos + offset, 0.03)
 		tw.tween_property(self, "position", original_pos, 0.03)
+
+func _spawn_tram_scene8():
+	var tram = TRAM_SCENE.instantiate()
+	add_child(tram)
+	
+	# Losowy wybór toru (dolny lub górny)
+	if randf() > 0.5:
+		tram.init_straight_line(tor_dolny[0], tor_dolny[1], 600.0)
+	else:
+		tram.init_straight_line(tor_gorny[0], tor_gorny[1], 600.0)

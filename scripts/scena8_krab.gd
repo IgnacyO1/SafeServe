@@ -6,6 +6,7 @@ var kierunek = Vector2(-1, 0.5).normalized()
 var czas_gry = 0.0
 var strzal_timer = 0.0
 var strzal_interwal = 1.0  
+var knockback_velocity = Vector2.ZERO
 
 var teleportacja_aktywna = false
 var teleport_timer = 0.0
@@ -74,9 +75,18 @@ func _physics_process(delta):
 		# Krab przyspiesza o 2 piksele na sekundę
 		predkosc = predkosc_bazowa + czas_gry * 2.0  
 		velocity = kierunek * predkosc
-		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
+
+	# Zastosuj knockback
+	if knockback_velocity.length() > 10.0:
+		velocity += knockback_velocity
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, delta * 3000.0)
+	else:
+		knockback_velocity = Vector2.ZERO
+
+	move_and_slide()
+
 
 	# Odbijanie od ścian lewa/prawa
 	if global_position.x <= ARENA_MIN.x or global_position.x >= ARENA_MAX.x:
@@ -297,5 +307,8 @@ func ustaw_faze(faza: int):
 			predkosc_bazowa = 750.0    # UNDYING! Zapierdala jak szalony
 			strzal_interwal = 0.05     # Karabin maszynowy ze spirali
 			teleportacja_aktywna = true
-			teleport_interwal = 0.9    # Teleportuje się bardzo często z wybuchem ringów
+			teleport_interwal = 0.9    # Teleportuje się very często z wybuchem ringów
 			fala_interwal = 1.5
+
+func apply_knockback(force: Vector2):
+	knockback_velocity = force

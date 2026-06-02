@@ -3,9 +3,10 @@ extends CharacterBody2D
 const SPEED = 300.0
 const COOLDOWN_TIME = 0.5
 var cooldown = 0.0
+var knockback_velocity = Vector2.ZERO
 
 @onready var anim_sprite = $AnimatedSprite2D
-@onready var punkt_strzalu = $PunktStrzalu
+@onready var punkt_strzalu = get_node_or_null("PunktStrzalu")
 
 # Zapamiętujemy kierunek, aby strażak stał (idle) w odpowiednią stronę po puszczeniu klawiszy
 var ostatni_kierunek_idle = "dol" 
@@ -42,6 +43,14 @@ func _physics_process(delta):
 		spd *= 1.5
 
 	velocity = direction * spd
+	
+	# Zastosowanie knockbacku
+	if knockback_velocity.length() > 10.0:
+		velocity += knockback_velocity
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, delta * 3000.0)
+	else:
+		knockback_velocity = Vector2.ZERO
+		
 	move_and_slide()
 
 	# Blokada, żeby strażak nie uciekł poza nową arenę (2560x1440)
@@ -50,6 +59,10 @@ func _physics_process(delta):
 
 	if cooldown > 0: 
 		cooldown -= delta
+
+func apply_knockback(force: Vector2):
+	knockback_velocity = force
+
 
 func _update_animations(dir: Vector2):
 	if dir == Vector2.ZERO:
