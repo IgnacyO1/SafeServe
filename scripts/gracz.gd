@@ -1,86 +1,34 @@
 extends CharacterBody2D
 
 @onready var label_skrzynka = get_parent().get_node_or_null("HUD/LabelSkrzynka")
-@onready var sprite = $Sprite2D
+@onready var anim_sprite = $AnimatedSprite2D
 
 const SPEED = 320.0
 const POCISK = preload("res://scenes/pocisk.tscn")
 var ma_skrzynke = false
 var przy_npc = null
 
-var anim_timer = 0.0
-var anim_speed = 0.15
-var current_anim_frames = 1
-var current_frame_idx = 0
-var last_dir_str = "down"
-var last_state = "idle"
-
-var textures = {
-	"idle": {
-		"up": preload("res://assets/graphics/scena3_animacja_ruchu/idle_gora.png"),
-		"down": preload("res://assets/graphics/scena3_animacja_ruchu/idle_dol.png"),
-		"left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
-		"right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png"),
-		"up_left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
-		"up_right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png"),
-		"down_left": preload("res://assets/graphics/scena3_animacja_ruchu/idle_lewo.png"),
-		"down_right": preload("res://assets/graphics/scena3_animacja_ruchu/idle_prawo.png")
-	},
-	"walk": {
-		"up": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_gora.png"),
-		"down": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_dol.png"),
-		"left": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_lewo1.png"),
-		"right": preload("res://assets/graphics/scena3_animacja_ruchu/chodzenie_prawover1.png"),
-		"up_left": preload("res://assets/graphics/scena3_animacja_ruchu/skos_gora_lewo.png"),
-		"up_right": preload("res://assets/graphics/scena3_animacja_ruchu/skos_gora_prawo.png"),
-		"down_left": preload("res://assets/graphics/scena3_animacja_ruchu/skos_dol_lewo.png"),
-		"down_right": preload("res://assets/graphics/scena3_animacja_ruchu/skos_dol_prawo.png")
-	}
-}
-
-var frame_counts = {
-	"idle": 1,
-	"walk_up": 4, "walk_down": 4,
-	"walk_left": 3, "walk_right": 3,
-	"walk_up_left": 2, "walk_up_right": 2,
-	"walk_down_left": 2, "walk_down_right": 2
-}
+var ostatni_kierunek_idle = "dol"
 
 func _ready():
 	z_index = 10
-	set_animation("idle", "down")
-
-func set_animation(state: String, dir_str: String):
-	var tex = textures[state][dir_str]
-	if sprite.texture != tex:
-		sprite.texture = tex
-		var frames_count = 1
-		if state == "walk":
-			frames_count = frame_counts["walk_" + dir_str]
-		sprite.hframes = frames_count
-		sprite.vframes = 1
-		current_anim_frames = frames_count
-		current_frame_idx = 0
-		sprite.frame = 0
-		anim_timer = 0.0
+	anim_sprite.scale = Vector2(0.5, 0.5)
+	anim_sprite.speed_scale = 3.0
+	anim_sprite.play("strazak_idle_dol")
 
 func _physics_process(delta: float) -> void:
 	var scena = get_parent()
 	if scena.get("gra_aktywna") == false:
 		velocity = Vector2.ZERO
-		if last_state != "idle":
-			last_state = "idle"
-			set_animation("idle", last_dir_str)
+		_update_animations(Vector2.ZERO)
 		move_and_slide()
 		return
 		
 	var w_fazie_drzwi = scena.has_method("rabniecie_drzwi") and scena.get("faza") == "DRZWI"
 
 	if scena.get("minimapa_bg") != null and scena.minimapa_bg.visible:
-		if last_state != "idle":
-			last_state = "idle"
-			set_animation("idle", last_dir_str)
 		velocity = Vector2.ZERO
+		_update_animations(Vector2.ZERO)
 		move_and_slide()
 		return
 
@@ -96,37 +44,11 @@ func _physics_process(delta: float) -> void:
 
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-
-	var state = "idle"
-	var dir_str = last_dir_str
-
-	if direction != Vector2.ZERO:
-		state = "walk"
-		var move_dir = direction.normalized()
 		# Wydłużony offset, tak aby poziome i pionowe kierunki oraz skosy
 		# startowały poza kolizją gracza i nie blokowały strzału.
-		$PunktStrzalu.position = move_dir * 40.0
-		if move_dir.x < -0.1 and move_dir.y < -0.1:
-			dir_str = "up_left"
-		elif move_dir.x > 0.1 and move_dir.y < -0.1:
-			dir_str = "up_right"
-		elif move_dir.x < -0.1 and move_dir.y > 0.1:
-			dir_str = "down_left"
-		elif move_dir.x > 0.1 and move_dir.y > 0.1:
-			dir_str = "down_right"
-		elif move_dir.x < -0.1:
-			dir_str = "left"
-		elif move_dir.x > 0.1:
-			dir_str = "right"
-		elif move_dir.y < -0.1:
-			dir_str = "up"
-		elif move_dir.y > 0.1:
-			dir_str = "down"
+		$PunktStrzalu.position = direction * 40.0
 
-	if state != last_state or dir_str != last_dir_str:
-		set_animation(state, dir_str)
-		last_state = state
-		last_dir_str = dir_str
+	_update_animations(direction)
 
 	var aktualna_predkosc = SPEED
 	if Input.is_action_pressed("ui_accept"):
@@ -134,13 +56,42 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * aktualna_predkosc
 	move_and_slide()
 
-func _process(delta: float) -> void:
-	if current_anim_frames > 1:
-		anim_timer += delta
-		if anim_timer >= anim_speed:
-			anim_timer -= anim_speed
-			current_frame_idx = (current_frame_idx + 1) % current_anim_frames
-			sprite.frame = current_frame_idx
+func _update_animations(dir: Vector2):
+	var anim_name = ""
+	if dir == Vector2.ZERO:
+		anim_name = "strazak_idle_" + ostatni_kierunek_idle
+	else:
+		# Matematyczne zaokrąglenie kąta do najbliższych 45 stopni (PI / 4)
+		var angle = snappedf(dir.angle(), PI / 4)
+		
+		match angle:
+			0.0: 
+				anim_name = "strazak_chodzenie_prawo"
+				ostatni_kierunek_idle = "prawo"
+			PI / 4.0: 
+				anim_name = "strazak_skos_dol_prawo"
+				ostatni_kierunek_idle = "prawo"
+			PI / 2.0: 
+				anim_name = "strazak_chodzenie_dol"
+				ostatni_kierunek_idle = "dol"
+			3.0 * PI / 4.0: 
+				anim_name = "strazak_skos_dol_lewo"
+				ostatni_kierunek_idle = "lewo"
+			PI, -PI: 
+				anim_name = "strazak_chodzenie_lewo"
+				ostatni_kierunek_idle = "lewo"
+			-3.0 * PI / 4.0: 
+				anim_name = "strazak_skos_gora_lewo"
+				ostatni_kierunek_idle = "lewo"
+			-PI / 2.0: 
+				anim_name = "strazak_chodzenie_gora"
+				ostatni_kierunek_idle = "gora"
+			-PI / 4.0: 
+				anim_name = "strazak_skos_gora_prawo"
+				ostatni_kierunek_idle = "prawo"
+
+	if anim_sprite.animation != anim_name or not anim_sprite.is_playing():
+		anim_sprite.play(anim_name)
 
 func _unhandled_input(event: InputEvent) -> void:
 	var scena = get_parent()
