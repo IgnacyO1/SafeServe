@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://nahlfbqoxfln"]
+
+[ext_resource type="PackedScene" uid="uid://b8xeg4m1d1p0y" path="res://scenes/Tram/Tram.tscn" id="1_tqek8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss"]
+size = Vector2(48, 92)
+
+[node name="Tram" instance=ExtResource("1_tqek8")]
+scale = Vector2(1.15, 1.15)
+
+[node name="Segment1" parent="." index="0"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Area2D" type="Area2D" parent="Segment1" index="2"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment1/Area2D" index="0"]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_boss")
+
+[node name="Segment2" parent="." index="1"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Area2D" type="Area2D" parent="Segment2" index="2"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment2/Area2D" index="0"]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_boss")
+
+[node name="Segment3" parent="." index="2"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Area2D" type="Area2D" parent="Segment3" index="2"]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3/Area2D" index="0"]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_boss")

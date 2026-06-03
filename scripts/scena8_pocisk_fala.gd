@@ -28,6 +28,9 @@ func _ready():
 
 	rotation = randf_range(0.0, TAU)
 
+	collision_mask = 5 # Warstwa 1 (gracz) i 3 (tramwaj)
+	monitoring = true
+
 	body_entered.connect(_on_body_entered)
 
 	get_tree().create_timer(4.0).timeout.connect(func():

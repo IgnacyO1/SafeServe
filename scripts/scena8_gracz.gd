@@ -59,6 +59,13 @@ func _physics_process(delta):
 
 	if cooldown > 0: 
 		cooldown -= delta
+		
+	# Ciągłe strzelanie przy trzymaniu lewego przycisku myszki (autofire)
+	if cooldown <= 0 and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		var main_scena = get_tree().current_scene
+		if main_scena and main_scena.get("gra_aktywna") == true:
+			_shoot()
+			cooldown = COOLDOWN_TIME
 
 func apply_knockback(force: Vector2):
 	knockback_velocity = force
@@ -112,7 +119,7 @@ func _unhandled_input(event):
 func _shoot():
 	# Dynamiczne budowanie węzła pocisku
 	var pocisk = Area2D.new()
-	pocisk.collision_mask = 3  # Warstwy 1+2 żeby trafić kraba na warstwie 2
+	pocisk.collision_mask = 7  # Warstwy 1+2+3 żeby trafić kraba na warstwie 2 i tramwaj na warstwie 3
 	pocisk.monitoring = true
 	pocisk.set_script(POCISK_SCRIPT)
 	

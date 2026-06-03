@@ -57,7 +57,12 @@ func init_straight_line(p_start: Vector2, p_end: Vector2, p_speed: float = 600.0
 	rebuild_curve()
 	master_distance = 480.0
 	
-	setup_collisions_scene8()
+	# Podłączamy sygnały dla Area2D, jeśli istnieją w tej wersji sceny (np. TramBoss)
+	for segment in segments:
+		segment.add_to_group("tramwaj")
+		var area = segment.get_node_or_null("Area2D")
+		if area:
+			area.body_entered.connect(func(body): _on_segment_body_entered(body, segment))
 
 func _physics_process(delta):
 	if current_path_points.size() < 2: return
@@ -97,26 +102,7 @@ func _physics_process(delta):
 		for segment in segments:
 			segment.update_position(curve, master_distance)
 
-func setup_collisions_scene8():
-	for segment in segments:
-		segment.add_to_group("tramwaj")
-		
-		# Dodaj Area2D do segmentu
-		var area = Area2D.new()
-		area.name = "Area2D"
-		area.collision_layer = 3
-		area.collision_mask = 3
-		segment.add_child(area)
-		
-		# Dodaj CollisionShape2D do Area2D
-		var col_shape = CollisionShape2D.new()
-		var rect = RectangleShape2D.new()
-		rect.size = Vector2(48, 92)
-		col_shape.shape = rect
-		col_shape.rotation = 1.5707964 # 90 stopni
-		area.add_child(col_shape)
-		
-		area.body_entered.connect(func(body): _on_segment_body_entered(body, segment))
+
 
 func _on_segment_body_entered(body: Node2D, segment: Node2D):
 	if not is_scene8_mode:
@@ -185,7 +171,7 @@ func rebuild_curve():
 		var points_to_remove = 0
 		for i in range(current_path_points.size()):
 			if current_path_points[i].distance_to(curve.sample_baked(0)) < offset_baked:
-				points_to_remove = i
+				points_to_remove = i + 1
 			else:
 				break
 				
