@@ -188,7 +188,7 @@ func _on_reply_clicked() -> void:
 	if available_count >= 1:
 		var option_key = katarzyna_available_options[0]
 		var option_data = dialogue_tree[active_recipient][option_key]
-		opcja_btn_1.text = option_data["button_text"]
+		opcja_btn_1.text = option_data["button_text"] + "\n" + option_data["player_mail"]
 		opcja_btn_1.visible = true
 		opcja_btn_1.set_meta("option_key", option_key)
 		opcja_btn_1.remove_meta("is_reply_button")
@@ -196,14 +196,14 @@ func _on_reply_clicked() -> void:
 	if available_count >= 2:
 		var option_key = katarzyna_available_options[1]
 		var option_data = dialogue_tree[active_recipient][option_key]
-		opcja_btn_2.text = option_data["button_text"]
+		opcja_btn_2.text = option_data["button_text"] + "\n" + option_data["player_mail"]
 		opcja_btn_2.visible = true
 		opcja_btn_2.set_meta("option_key", option_key)
 	
 	if available_count >= 3:
 		var option_key = katarzyna_available_options[2]
 		var option_data = dialogue_tree[active_recipient][option_key]
-		opcja_btn_3.text = option_data["button_text"]
+		opcja_btn_3.text = option_data["button_text"] + "\n" + option_data["player_mail"]
 		opcja_btn_3.visible = true
 		opcja_btn_3.set_meta("option_key", option_key)
 
