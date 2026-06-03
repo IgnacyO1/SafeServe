@@ -5,7 +5,9 @@ extends Control
 @onready var maile_vbox = $MailePanel/MaileScroll/MaileVBox
 @onready var tresc_maila = $TreśćPanel/TreśćMaila
 @onready var btn_odpowiedz = $BtnOdpowiedz
+@onready var btn_new_message = $BtnNewMessage # Nowy przycisk do tworzenia nowej wiadomości
 
+@onready var nowa_wiadomosc_root = $NowaWiadomość # Cały kontener nadrzędny
 @onready var wybieranie_odbiorcy = $NowaWiadomość/WybieranieOdbiorcy
 @onready var nowa_wiadomosc_panel = $NowaWiadomość/NowaWiadomośćPanel
 @onready var wyslij_btn = $"NowaWiadomość/Wyślij Btn"
@@ -28,10 +30,10 @@ const AVATARS = {
 	"glus":  "res://assets/graphics/Scena4/robert_maslo.png",
 	"rumian":  "res://assets/graphics/Scena4/radek_rumian.png",
 	"pingwin":  "res://assets/graphics/Scena4/marta_pingwin.png",
-	"default":  "res://assets/graphics/Scena4/awaria.jpeg" # Awatar awaryjny
+	"default":  "res://assets/graphics/Scena4/awaria.jpeg"
 }
 
-const AVATAR_SIZE = Vector2(32, 32) # Rozmiar kółka awatara w pikselach
+const AVATAR_SIZE = Vector2(32, 32)
 
 const EMAILS = {
 	# NPC Maile (Litery)
@@ -72,12 +74,11 @@ const EMAILS = {
 
 # --- Dynamiczny Stan Gry ---
 var active_contacts = ["pulaski", "maslo", "slubicka", "glus", "rumian", "pingwin"]
-var conversation_histories = {} # contact_id : Array of mail_ids
-var global_mailbox_history = [] # Chronologiczna lista WSZYSTKICH odebranych/wysłanych maili
+var conversation_histories = {}
+var global_mailbox_history = []
 var current_contact = ""
 var current_selected_reply_id = ""
 
-# Zmienne śledzące postęp w śledztwie
 var rumian_answered = [] 
 var glus_sent_mails = [] 
 var seen_j_mail = false  
@@ -86,7 +87,6 @@ func _ready():
 	for contact in active_contacts:
 		conversation_histories[contact] = []
 	
-	# Maile początkowe w skrzynce
 	receive_npc_mail("A")
 	receive_npc_mail("B")
 	
@@ -94,16 +94,18 @@ func _ready():
 	setup_recipient_dropdown()
 	rebuild_global_mailbox_ui()
 	
-	# Połączenia sygnałów dla przycisków wyboru odpowiedzi w HBox
+	# Domyślnie ukrywamy okno nowej wiadomości na starcie gry
+	nowa_wiadomosc_root.visible = false
+	
 	for button in nowa_wiadomosc_panel.get_children():
 		if button is Button:
 			button.pressed.connect(_on_reply_option_button_pressed.bind(button))
 			
 	wyslij_btn.pressed.connect(_on_wyslij_btn_pressed)
 	btn_odpowiedz.pressed.connect(_on_btn_odpowiedz_pressed)
+	btn_new_message.pressed.connect(_on_btn_new_message_pressed)
 	wybieranie_odbiorcy.item_selected.connect(_on_recipient_dropdown_changed)
 	
-	# Wybierz pierwszego kontaktu na starcie
 	select_contact("pulaski")
 
 # --- Zarządzanie UI ---
@@ -113,11 +115,9 @@ func setup_contacts_ui():
 		child.queue_free()
 		
 	for contact_id in active_contacts:
-		# 1. Tworzymy poziomy kontener dla awatara i przycisku
 		var hbox = HBoxContainer.new()
-		hbox.add_theme_constant_override("separation", 8) # Odstęp między awatarem a tekstem
+		hbox.add_theme_constant_override("separation", 8)
 		
-		# 2. Tworzymy i konfigurujemy TextureRect dla awatara
 		var avatar_rect = TextureRect.new()
 		var texture_path = AVATARS.get(contact_id, AVATARS["default"])
 		
@@ -130,17 +130,11 @@ func setup_contacts_ui():
 		avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		
-		# Opcjonalne: Jeśli chcesz, aby silnik sam przyciął kwadrat do kółka, 
-		# najprościej zrobić to za pomocą gotowej małej okrągłej maski/tekstury, 
-		# ale dobre wyskalowanie załatwia 90% estetyki.
-		
-		# 3. Tworzymy przycisk z tekstem
 		var btn = Button.new()
 		btn.text = CONTACTS[contact_id]["name"]
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.pressed.connect(select_contact.bind(contact_id))
 		
-		# 4. Składamy wszystko razem
 		hbox.add_child(avatar_rect)
 		hbox.add_child(btn)
 		kontakty_vbox.add_child(hbox)
@@ -159,7 +153,9 @@ func select_contact(contact_id: String):
 	tresc_maila.text = ""
 	btn_odpowiedz.visible = false
 	
-	# Aktualizacja dropdownu odbiorcy
+	# Zamykamy okno nowej wiadomości przy zmianie kontaktu (kontekst się resetuje)
+	nowa_wiadomosc_root.visible = false
+	
 	for i in range(wybieranie_odbiorcy.item_count):
 		if wybieranie_odbiorcy.get_item_metadata(i) == contact_id:
 			wybieranie_odbiorcy.selected = i
@@ -167,12 +163,10 @@ func select_contact(contact_id: String):
 			
 	update_reply_buttons_ui()
 
-# Odświeża cały panel MaileVBox zachowując nową chronologię (najnowsze na górze)
 func rebuild_global_mailbox_ui():
 	for child in maile_vbox.get_children():
 		child.queue_free()
 		
-	# Iterujemy od tyłu, aby najświeższe dodane elementy były generowane jako pierwsze
 	for i in range(global_mailbox_history.size() - 1, -1, -1):
 		var mail_id = global_mailbox_history[i]
 		var mail_data = EMAILS[mail_id]
@@ -189,6 +183,9 @@ func rebuild_global_mailbox_ui():
 		maile_vbox.add_child(btn)
 
 func display_email_content(mail_id: String):
+	# Gracz kliknął w maila z listy – zamykamy okno komponowania
+	nowa_wiadomosc_root.visible = false
+	
 	var mail_data = EMAILS[mail_id]
 	var sender_name = "Ty" if mail_data.has("target") else CONTACTS[mail_data["sender"]]["name"]
 	
@@ -216,11 +213,14 @@ func update_reply_buttons_ui():
 	for child in nowa_wiadomosc_panel.get_children():
 		if child is Button:
 			buttons.append(child)
-			child.modulate = Color.WHITE # Reset podświetlenia przycisków
+			child.modulate = Color.WHITE
 			
 	for i in range(min(available_p_mails.size(), buttons.size())):
 		var p_mail_id = available_p_mails[i]
-		buttons[i].text = "%s: %s" % [p_mail_id, EMAILS[p_mail_id]["subject"]]
+		var mail_data = EMAILS[p_mail_id]
+		
+		buttons[i].text = "%s\n\"%s\"" % [mail_data["subject"], mail_data["body"]]
+		buttons[i].autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		buttons[i].set_meta("p_mail_id", p_mail_id)
 		buttons[i].visible = true
 
@@ -265,18 +265,15 @@ func get_available_replies_for_contact(contact_id: String) -> Array:
 
 # --- Obsługa Akcji Gracza ---
 
-# Usprawnienie 1: Wybranie przycisku natychmiast wyświetla treść w oknie głównym
 func _on_reply_option_button_pressed(button: Button):
 	if button.has_meta("p_mail_id"):
 		current_selected_reply_id = button.get_meta("p_mail_id")
 		
-		# Podświetlenie przycisku wyboru
 		for child in nowa_wiadomosc_panel.get_children():
 			if child is Button:
 				child.modulate = Color.WHITE
 		button.modulate = Color.GREEN_YELLOW
 		
-		# Wyświetlenie pełnego podglądu maila przed wysłaniem
 		var mail_data = EMAILS[current_selected_reply_id]
 		tresc_maila.text = "[b]Do:[/b] %s (Podgląd wiadomości)\n[b]Temat:[/b] %s\n\n%s" % [CONTACTS[mail_data["target"]]["name"], mail_data["subject"], mail_data["body"]]
 		btn_odpowiedz.visible = false
@@ -288,12 +285,21 @@ func _on_wyslij_btn_pressed():
 	send_player_mail(current_selected_reply_id)
 
 func _on_btn_odpowiedz_pressed():
+	# Pokazujemy cały kontener nowej wiadomości
+	nowa_wiadomosc_root.visible = true
 	nowa_wiadomosc_panel.grab_focus()
+
+func _on_btn_new_message_pressed():
+	# Wymuszenie otwarcia czystego panelu nowej wiadomości
+	nowa_wiadomosc_root.visible = true
+	update_reply_buttons_ui()
 
 func _on_recipient_dropdown_changed(index: int):
 	if index == 0: return
 	var selected_contact_id = wybieranie_odbiorcy.get_item_metadata(index)
 	select_contact(selected_contact_id)
+	# Po wybraniu nowego odbiorcy z menu, zostawiamy okno otwarte
+	nowa_wiadomosc_root.visible = true
 
 # --- Przetwarzanie wiadomości ---
 
@@ -302,13 +308,15 @@ func send_player_mail(p_mail_id: String):
 	var contact_id = mail_data["target"]
 	
 	conversation_histories[contact_id].append(p_mail_id)
-	global_mailbox_history.append(p_mail_id) # Zapis do globalnej skrzynki
+	global_mailbox_history.append(p_mail_id)
 	
 	if contact_id == "glus":
 		glus_sent_mails.append(p_mail_id)
 		
-	# Aktualizacja UI skrzynki i czyszczenie tekstu po wysłaniu
 	rebuild_global_mailbox_ui()
+	
+	# Po udanym wysłaniu ukrywamy okno, zanim przejdziemy do odświeżenia kontaktu
+	nowa_wiadomosc_root.visible = false
 	select_contact(contact_id)
 	
 	wyslij_btn.disabled = true
@@ -344,6 +352,6 @@ func receive_npc_mail(mail_id: String):
 	var mail_data = EMAILS[mail_id]
 	var sender = mail_data["sender"]
 	conversation_histories[sender].append(mail_id)
-	global_mailbox_history.append(mail_id) # Zapis do globalnej skrzynki
+	global_mailbox_history.append(mail_id)
 	
-	rebuild_global_mailbox_ui() # Natychmiastowe odświeżenie listy z nowym mailem na górze
+	rebuild_global_mailbox_ui()

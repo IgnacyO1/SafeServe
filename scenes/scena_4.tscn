@@ -153,6 +153,14 @@ offset_right = 1142.0
 offset_bottom = 551.0
 text = "Odpowiedz"
 
+[node name="BtnNewMessage" type="Button" parent="CanvasLayer/OknoMail" unique_id=673131800]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 567.0
+offset_right = 264.0
+offset_bottom = 609.0
+text = "Nowa Wiadomość"
+
 [node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
 visible = false
 layout_mode = 3
