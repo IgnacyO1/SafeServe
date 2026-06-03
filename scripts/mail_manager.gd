@@ -20,6 +20,19 @@ const CONTACTS = {
 	"pingwin": {"name": "Marta Pingwin", "email": "mpingwin@polyservers.com"}
 }
 
+# --- Ścieżki do awatarów kontaktów ---
+const AVATARS = {
+	"pulaski": "res://assets/graphics/Scena4/mateusz_pułaski.png",
+	"maslo": "res://assets/graphics/Scena4/robert_maslo.png",
+	"slubicka": "res://assets/graphics/Scena4/katarzyna_słubicka.png",
+	"glus":  "res://assets/graphics/Scena4/robert_maslo.png",
+	"rumian":  "res://assets/graphics/Scena4/radek_rumian.png",
+	"pingwin":  "res://assets/graphics/Scena4/marta_pingwin.png",
+	"default":  "res://assets/graphics/Scena4/awaria.jpeg" # Awatar awaryjny
+}
+
+const AVATAR_SIZE = Vector2(32, 32) # Rozmiar kółka awatara w pikselach
+
 const EMAILS = {
 	# NPC Maile (Litery)
 	"A": {"sender": "pulaski", "subject": "Zerknij na to.", "body": "Daliśmy ci dostęp do centrum inwestygacyjnego, możesz tutaj się kontaktować ze świadkami. Dostaliśmy też kontakty do Polyservers, przepytaj ludzi i znajdź jaka była przyczyna tego piekielnego pożaru. Chciałbym zamknąć śledztwo w przyszłym tygodniu, bo mamy mnóstwo papierkologii.\n\nMateusz Puławski, Komisarz Policji w Krakowie"},
@@ -39,8 +52,8 @@ const EMAILS = {
 	"SUGESTIA_BARTEK": {"sender": "glus", "subject": "Automatyczna odpowiedź / Sugestia", "body": "*Bartłomiej Głuś jest na urlopie, spróbuj innej metody kontaktu (np. telefonicznie, jeśli zdobędziesz numer)*"},
 
 	# Player Maile (Liczby)
-	"1": {"sender": "player", "target": "pulaski", "subject": "Re: Zerknij na to.", "body": "Dobrze, już się za to zabieram.\n\nGreg, Gracz", "unlocks": []},
-	"2": {"sender": "player", "target": "maslo", "subject": "Re: Pożar", "body": "Ok, wartościowa informacja. Pracuję nad tym.\nDziękuję za pomoc przy akcji gaśniczej.\n\nGreg", "unlocks": []},
+	"1": {"sender": "player", "target": "pulaski", "subject": "Re: Zerknij na to.", "body": "Dobrze, już się za to zabieram.\n\nGreg, Gracz"},
+	"2": {"sender": "player", "target": "maslo", "subject": "Re: Pożar", "body": "Ok, wartościowa informacja. Pracuję nad tym.\nDziękuję za pomoc przy akcji gaśniczej.\n\nGreg"},
 	"3": {"sender": "player", "target": "slubicka", "subject": "Okoliczności pożaru", "body": "Dzień dobry. Prowadzimy analizę zdarzeń związanych z pożarem Państwa biurowca. Czy posiada Pani informacje, które mogłyby pomóc ustalić przyczynę zdarzenia\n\nGreg, śledczy sprawy nr 6721", "reply": "C"},
 	"4": {"sender": "player", "target": "slubicka", "subject": "Monitoring budynku", "body": "Dzień dobry, \nCzy posiada Pani dostęp do nagrań monitoringu z dnia pożaru?\n\nGreg, śledczy sprawy nr 6721", "reply": "D"},
 	"5": {"sender": "player", "target": "slubicka", "subject": "Administrator budynku", "body": "Dzień dobry, \nKto odpowiada za systemy techniczne budynku?\n\nGreg, śledczy sprawy nr 6721", "reply": "E"},
@@ -60,16 +73,16 @@ const EMAILS = {
 # --- Dynamiczny Stan Gry ---
 var active_contacts = ["pulaski", "maslo", "slubicka", "glus", "rumian", "pingwin"]
 var conversation_histories = {} # contact_id : Array of mail_ids
+var global_mailbox_history = [] # Chronologiczna lista WSZYSTKICH odebranych/wysłanych maili
 var current_contact = ""
 var current_selected_reply_id = ""
 
 # Zmienne śledzące postęp w śledztwie
-var rumian_answered = [] # Tablica przechowująca udzielone odpowiedzi przez Rumiana (H, I, J)
-var glus_sent_mails = [] # Tablica przechowująca wysłane maile do Głusia (9, 10)
-var seen_j_mail = false  # Czy gracz przeczytał mail J od Radosława
+var rumian_answered = [] 
+var glus_sent_mails = [] 
+var seen_j_mail = false  
 
 func _ready():
-	# Inicjalizacja historii dla każdego kontaktu
 	for contact in active_contacts:
 		conversation_histories[contact] = []
 	
@@ -79,6 +92,7 @@ func _ready():
 	
 	setup_contacts_ui()
 	setup_recipient_dropdown()
+	rebuild_global_mailbox_ui()
 	
 	# Połączenia sygnałów dla przycisków wyboru odpowiedzi w HBox
 	for button in nowa_wiadomosc_panel.get_children():
@@ -95,15 +109,41 @@ func _ready():
 # --- Zarządzanie UI ---
 
 func setup_contacts_ui():
-	# Czyszczenie listy kontaktów
 	for child in kontakty_vbox.get_children():
 		child.queue_free()
 		
 	for contact_id in active_contacts:
+		# 1. Tworzymy poziomy kontener dla awatara i przycisku
+		var hbox = HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 8) # Odstęp między awatarem a tekstem
+		
+		# 2. Tworzymy i konfigurujemy TextureRect dla awatara
+		var avatar_rect = TextureRect.new()
+		var texture_path = AVATARS.get(contact_id, AVATARS["default"])
+		
+		if ResourceLoader.exists(texture_path):
+			avatar_rect.texture = load(texture_path)
+		else:
+			avatar_rect.texture = load(AVATARS["default"])
+			
+		avatar_rect.custom_minimum_size = AVATAR_SIZE
+		avatar_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		avatar_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		
+		# Opcjonalne: Jeśli chcesz, aby silnik sam przyciął kwadrat do kółka, 
+		# najprościej zrobić to za pomocą gotowej małej okrągłej maski/tekstury, 
+		# ale dobre wyskalowanie załatwia 90% estetyki.
+		
+		# 3. Tworzymy przycisk z tekstem
 		var btn = Button.new()
 		btn.text = CONTACTS[contact_id]["name"]
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.pressed.connect(select_contact.bind(contact_id))
-		kontakty_vbox.add_child(btn)
+		
+		# 4. Składamy wszystko razem
+		hbox.add_child(avatar_rect)
+		hbox.add_child(btn)
+		kontakty_vbox.add_child(hbox)
 
 func setup_recipient_dropdown():
 	wybieranie_odbiorcy.clear()
@@ -119,19 +159,7 @@ func select_contact(contact_id: String):
 	tresc_maila.text = ""
 	btn_odpowiedz.visible = false
 	
-	# Odświeżenie listy maili dla wybranego kontaktu
-	for child in maile_vbox.get_children():
-		child.queue_free()
-		
-	for mail_id in conversation_histories[contact_id]:
-		var mail_data = EMAILS[mail_id]
-		var btn = Button.new()
-		var prefix = "[JA] " if mail_data.has("target") else ""
-		btn.text = prefix + mail_data["subject"]
-		btn.pressed.connect(display_email_content.bind(mail_id))
-		maile_vbox.add_child(btn)
-		
-	# Aktualizacja dropdownu odbiorcy na aktualnego kontaktu i pokazanie opcji pisania
+	# Aktualizacja dropdownu odbiorcy
 	for i in range(wybieranie_odbiorcy.item_count):
 		if wybieranie_odbiorcy.get_item_metadata(i) == contact_id:
 			wybieranie_odbiorcy.selected = i
@@ -139,30 +167,47 @@ func select_contact(contact_id: String):
 			
 	update_reply_buttons_ui()
 
+# Odświeża cały panel MaileVBox zachowując nową chronologię (najnowsze na górze)
+func rebuild_global_mailbox_ui():
+	for child in maile_vbox.get_children():
+		child.queue_free()
+		
+	# Iterujemy od tyłu, aby najświeższe dodane elementy były generowane jako pierwsze
+	for i in range(global_mailbox_history.size() - 1, -1, -1):
+		var mail_id = global_mailbox_history[i]
+		var mail_data = EMAILS[mail_id]
+		var btn = Button.new()
+		
+		var sender_name = ""
+		if mail_data.has("target"):
+			sender_name = "Ja -> " + CONTACTS[mail_data["target"]]["name"]
+		else:
+			sender_name = CONTACTS[mail_data["sender"]]["name"]
+			
+		btn.text = "[%s] %s" % [sender_name, mail_data["subject"]]
+		btn.pressed.connect(display_email_content.bind(mail_id))
+		maile_vbox.add_child(btn)
+
 func display_email_content(mail_id: String):
 	var mail_data = EMAILS[mail_id]
 	var sender_name = "Ty" if mail_data.has("target") else CONTACTS[mail_data["sender"]]["name"]
 	
 	tresc_maila.text = "[b]Od:[/b] %s\n[b]Temat:[/b] %s\n\n%s" % [sender_name, mail_data["subject"], mail_data["body"]]
 	
-	# Jeśli to był mail J od Rumiana, oznacz jako zobaczony (potrzebne dla Marty)
 	if mail_id == "J":
 		seen_j_mail = true
-		update_reply_buttons_ui() # Odśwież opcje dla Marty, jeśli akurat u niej jesteśmy
+		update_reply_buttons_ui()
 		
-	# Pokazuj przycisk "Odpowiedz" tylko przy mailach od NPC, które nie są sugestiami
 	if not mail_data.has("target") and mail_id != "SUGESTIA_BARTEK":
 		btn_odpowiedz.visible = true
 	else:
 		btn_odpowiedz.visible = false
 
 func update_reply_buttons_ui():
-	# Czyszczenie i ukrywanie przycisków 1-3 w HBox
 	for child in nowa_wiadomosc_panel.get_children():
 		if child is Button:
 			child.visible = false
 			child.text = ""
-			child.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	
 	current_selected_reply_id = ""
 	var available_p_mails = get_available_replies_for_contact(current_contact)
@@ -171,8 +216,8 @@ func update_reply_buttons_ui():
 	for child in nowa_wiadomosc_panel.get_children():
 		if child is Button:
 			buttons.append(child)
+			child.modulate = Color.WHITE # Reset podświetlenia przycisków
 			
-	# Przypisywanie dostępnych opcji pod przyciski 1-3
 	for i in range(min(available_p_mails.size(), buttons.size())):
 		var p_mail_id = available_p_mails[i]
 		buttons[i].text = "%s: %s" % [p_mail_id, EMAILS[p_mail_id]["subject"]]
@@ -193,7 +238,6 @@ func get_available_replies_for_contact(contact_id: String) -> Array:
 			if "B" in history and not "2" in history:
 				options.append("2")
 		"slubicka":
-			# Jeśli dopiero zaczynamy pisać wątek z Katarzyną
 			if history.is_empty():
 				options = ["3", "4", "5"]
 			else:
@@ -201,12 +245,10 @@ func get_available_replies_for_contact(contact_id: String) -> Array:
 				if last_mail == "C": options = ["4", "5", "6"]
 				elif last_mail == "D": options = ["5", "6", "7"]
 				elif last_mail == "F": options = ["4", "8"]
-				# Maile E oraz G i P-Mail 5, 7, 8 kończą swoje gałęzie grafu (brak opcji)
 		"glus":
 			if not "9" in glus_sent_mails: options.append("9")
 			if not "10" in glus_sent_mails: options.append("10")
 		"rumian":
-			# Równoległa logika: gracz wybiera opcje, dopóki nie wyczerpie wszystkich trzech
 			if rumian_answered.size() < 3:
 				if not "11" in history: options.append("11")
 				if not "12" in history: options.append("12")
@@ -216,35 +258,37 @@ func get_available_replies_for_contact(contact_id: String) -> Array:
 				options.append("14")
 			if seen_j_mail and not "15" in history:
 				options.append("15")
-			
-			# Odpowiedź 16 aktywuje się po przeczytaniu L lub M
 			if ("L" in history or "M" in history) and not "16" in history:
-				# P-Mail 16 powinien być jedynym logicznym krokiem w przód
 				options = ["16"]
 				
 	return options
 
 # --- Obsługa Akcji Gracza ---
 
+# Usprawnienie 1: Wybranie przycisku natychmiast wyświetla treść w oknie głównym
 func _on_reply_option_button_pressed(button: Button):
 	if button.has_meta("p_mail_id"):
 		current_selected_reply_id = button.get_meta("p_mail_id")
-		# Podświetlenie wybranego przycisku (opcjonalny feedback wizualny)
+		
+		# Podświetlenie przycisku wyboru
 		for child in nowa_wiadomosc_panel.get_children():
 			if child is Button:
 				child.modulate = Color.WHITE
 		button.modulate = Color.GREEN_YELLOW
+		
+		# Wyświetlenie pełnego podglądu maila przed wysłaniem
+		var mail_data = EMAILS[current_selected_reply_id]
+		tresc_maila.text = "[b]Do:[/b] %s (Podgląd wiadomości)\n[b]Temat:[/b] %s\n\n%s" % [CONTACTS[mail_data["target"]]["name"], mail_data["subject"], mail_data["body"]]
+		btn_odpowiedz.visible = false
 
 func _on_wyslij_btn_pressed():
 	if current_selected_reply_id == "":
-		return # Gracz nic nie wybrał
+		return 
 		
 	send_player_mail(current_selected_reply_id)
 
 func _on_btn_odpowiedz_pressed():
-	# Kliknięcie "Odpowiedz" przenosi wizualnie focus na panel pisania wiadomości
 	nowa_wiadomosc_panel.grab_focus()
-	# Możesz dodać efekt animacji mignięcia panelu wiadomości
 
 func _on_recipient_dropdown_changed(index: int):
 	if index == 0: return
@@ -257,22 +301,20 @@ func send_player_mail(p_mail_id: String):
 	var mail_data = EMAILS[p_mail_id]
 	var contact_id = mail_data["target"]
 	
-	# Dodaj do historii rozmowy z danym NPC
 	conversation_histories[contact_id].append(p_mail_id)
+	global_mailbox_history.append(p_mail_id) # Zapis do globalnej skrzynki
 	
-	# Logika specyficzna dla postaci przy wysyłaniu
 	if contact_id == "glus":
 		glus_sent_mails.append(p_mail_id)
 		
-	# Odśwież widok
+	# Aktualizacja UI skrzynki i czyszczenie tekstu po wysłaniu
+	rebuild_global_mailbox_ui()
 	select_contact(contact_id)
 	
-	# Symulacja opóźnienia odpowiedzi świadka (np. 1.2 sekundy) dla realizmu
 	wyslij_btn.disabled = true
 	await get_tree().create_timer(1.2).timeout
 	wyslij_btn.disabled = false
 	
-	# Wyzwalanie odpowiedzi NPC
 	trigger_npc_response(p_mail_id, contact_id)
 
 func trigger_npc_response(p_mail_id: String, contact_id: String):
@@ -280,7 +322,6 @@ func trigger_npc_response(p_mail_id: String, contact_id: String):
 	
 	match contact_id:
 		"glus":
-			# Sprawdzenie warunku dla Bartłomieja: wysłane oba maile, brak normalnej odpowiedzi
 			if glus_sent_mails.has("9") and glus_sent_mails.has("10"):
 				receive_npc_mail("SUGESTIA_BARTEK")
 		"rumian":
@@ -289,16 +330,13 @@ func trigger_npc_response(p_mail_id: String, contact_id: String):
 			if not reply_letter in rumian_answered:
 				rumian_answered.append(reply_letter)
 			
-			# Jeśli udzielił już 3 odpowiedzi (H, I, J), automatycznie dosyła mail K
 			if rumian_answered.size() == 3:
 				await get_tree().create_timer(1.5).timeout
 				receive_npc_mail("K")
 		_:
-			# Standardowa liniowa odpowiedź z grafu
 			if p_mail_data.has("reply") and p_mail_data["reply"] != "":
 				receive_npc_mail(p_mail_data["reply"])
 
-	# Aktualizacja UI po otrzymaniu odpowiedzi
 	if current_contact == contact_id:
 		select_contact(contact_id)
 
@@ -306,3 +344,6 @@ func receive_npc_mail(mail_id: String):
 	var mail_data = EMAILS[mail_id]
 	var sender = mail_data["sender"]
 	conversation_histories[sender].append(mail_id)
+	global_mailbox_history.append(mail_id) # Zapis do globalnej skrzynki
+	
+	rebuild_global_mailbox_ui() # Natychmiastowe odświeżenie listy z nowym mailem na górze
