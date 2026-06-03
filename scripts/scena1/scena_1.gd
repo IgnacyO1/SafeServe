@@ -4,16 +4,13 @@ var unit
 var emergency 
 var main_event = false
 
-@onready var top_panel = $"SidePanelTop"
-@onready var bottom_panel = $"SidePanelBottom"
+@onready var bottom_panel : Scena1BottomPanel = $"BottomPanel"
+@onready var side_panel = $"SidePanel"
 @onready var map_container : MapContainer = $"MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer"
 @onready var radio = $"HUD/Radio popup"
+@onready var modal = $"General purpose modal"
 
-func show_modal(content : String, buttonText : String = "Przyjąłem."):
-	var modal = find_child("General purpose modal")
-	modal.find_child("Label").text = content
-	modal.find_child("TextureButton").find_child("Label").text = buttonText
-	modal.visible = true
+
 
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_1.tscn")
@@ -70,30 +67,19 @@ func generate_description(event : MapEvent) -> String:
 	return desc
 
 func message( event : MapEvent ) -> void:
-
-	const localization : Dictionary = {
-		"Fire" : "Ogień",
-		"Police" : "Policja",
-		"Fire rescue" : "Straż pożarna",
-		"Ambulance" : "Karetka",
-		"Emergency" : "Wypadek",
-		"Crime" : "Przestępstwo"
-	}
 	
 	if event.type in ["Crime", "Emergency", "Fire"]:
-		top_panel.find_child("Label").text = localization[event.type]
-		top_panel.find_child("Icon").texture = event.marker.texture_normal
-		top_panel.find_child("Desc").text = generate_description(event)
+		bottom_panel.display_event(event)
 		emergency = event
 		if main_event:
 			map_container.map_locked = true
 			find_child("Message modal").visible = true
 	else:
-		bottom_panel.find_child("Label").text = localization[event.type]
-		bottom_panel.find_child("Icon").texture = event.marker.texture_normal
+		#side_panel.find_child("Label").text = localization[event.type]
+		#side_panel.find_child("Icon").texture = event.marker.texture_normal
 		unit = event
-	if not bottom_panel.find_child("Send").visible and not unit == null and not emergency == null:
-		bottom_panel.find_child("Send").visible = true
+	if not side_panel.find_child("Send").visible and not unit == null and not emergency == null:
+		side_panel.find_child("Send").visible = true
 
 func _send_unit():
 	const unit_to_emergency = {
@@ -104,22 +90,22 @@ func _send_unit():
 	if emergency.type == unit_to_emergency[unit.type]:
 		unit.delete()
 		emergency.delete()
-		show_modal("Jednostka wysłana")
+		modal.show_message("Jednostka wysłana")
 		unit = null
 		emergency = null
-		bottom_panel.find_child("Send").visible = false
-		top_panel.find_child("Label").text = ""
-		top_panel.find_child("Icon").texture = null
-		top_panel.find_child("Desc").text = ""
+		side_panel.find_child("Send").visible = false
 		bottom_panel.find_child("Label").text = ""
 		bottom_panel.find_child("Icon").texture = null
+		bottom_panel.find_child("Desc").text = ""
+		side_panel.find_child("Label").text = ""
+		side_panel.find_child("Icon").texture = null
 	else:
-		show_modal("Ups! Źle przydzielona jednostka")
+		modal.show_message("Ups! Źle przydzielona jednostka")
 
 func _main_event():
 	if map_container.any_emergencies:
 		return
 	main_event = true
-	show_modal("Uwaga! Nowe zgłoszenie!")
+	modal.show_message("Uwaga! Nowe zgłoszenie!")
 	map_container.spawn_event("Fire", Vector2(200, 818))
 	

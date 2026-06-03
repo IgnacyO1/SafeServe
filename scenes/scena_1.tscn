@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://cpv6vbvmdefnx"]
 
-[ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena_1.gd" id="1_exvab"]
-[ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/MapContainer.gd" id="2_t3u43"]
+[ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena1/scena_1.gd" id="1_exvab"]
+[ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/scena1/MapContainer.gd" id="2_qjgc2"]
 [ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
 [ext_resource type="Texture2D" uid="uid://i1is4t07v785" path="res://assets/graphics/scena_1/HUD nowy.svg" id="4_el5c8"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
-[ext_resource type="Texture2D" uid="uid://dn52leh6bgbqd" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
+[ext_resource type="Script" uid="uid://dbhixobuaj6b" path="res://scripts/scena1/bottom_panel.gd" id="6_qjgc2"]
+[ext_resource type="Script" uid="uid://i231op5alp5j" path="res://scripts/scena1/side_panel.gd" id="7_7ealu"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
 [ext_resource type="Texture2D" uid="uid://dd8v1brsx6x76" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
 [ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
@@ -21,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://corjwbf8i64pu" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
 [ext_resource type="AudioStream" uid="uid://brw24n8b477jg" path="res://assets/Sounds/pozar_w_polyservers.wav" id="20_da6gn"]
 [ext_resource type="Texture2D" uid="uid://lyal5gxrpo0l" path="res://assets/graphics/scena_1/Button.png" id="21_0bpa3"]
+[ext_resource type="Script" uid="uid://bl5w6mqlgpxf4" path="res://scripts/scena1/modal.gd" id="21_ar68y"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="22_n24rr"]
 [ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
@@ -37,10 +40,10 @@ font_size = 48
 
 [sub_resource type="Theme" id="Theme_maknc"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bpa3"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmwsu"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_maknc"]
-font_size = 75
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cmwsu"]
+texture = ExtResource("8_maknc")
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ktn7"]
 font_size = 42
@@ -48,7 +51,16 @@ font_size = 42
 [sub_resource type="LabelSettings" id="LabelSettings_du2nj"]
 font_size = 30
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_maknc"]
+[sub_resource type="LabelSettings" id="LabelSettings_maknc"]
+font_size = 75
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ar68y"]
+texture = ExtResource("8_maknc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qjgc2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ealu"]
+texture = ExtResource("8_maknc")
 
 [sub_resource type="LabelSettings" id="LabelSettings_ar68y"]
 font_size = 32
@@ -83,7 +95,7 @@ render_target_update_mode = 4
 [node name="MapRoot" type="Node2D" parent="MapView/SubViewportContainer/SubViewport" unique_id=1191415807]
 
 [node name="MapContainer" type="Node2D" parent="MapView/SubViewportContainer/SubViewport/MapRoot" unique_id=648824321]
-script = ExtResource("2_t3u43")
+script = ExtResource("2_qjgc2")
 
 [node name="MapSprite" type="Sprite2D" parent="MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer" unique_id=1463073134]
 position = Vector2(1164, 904.5)
@@ -99,16 +111,17 @@ position = Vector2(960, 1057.47)
 scale = Vector2(0.7507109, 0.750711)
 texture = ExtResource("5_cmwsu")
 
-[node name="SidePanelTop" type="Panel" parent="." unique_id=1070282638]
+[node name="BottomPanel" type="Panel" parent="." unique_id=1070282638]
 layout_mode = 0
-offset_left = 1375.0
-offset_top = 139.0
-offset_right = 1853.0
-offset_bottom = 473.0
+offset_left = 259.0
+offset_top = 875.0
+offset_right = 1462.0
+offset_bottom = 1019.0
 theme = SubResource("Theme_el5c8")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
+script = ExtResource("6_qjgc2")
 
-[node name="Label" type="Label" parent="SidePanelTop" unique_id=2120738279]
+[node name="Label" type="Label" parent="BottomPanel" unique_id=2120738279]
 layout_mode = 0
 offset_left = 146.0
 offset_top = 24.0
@@ -117,65 +130,39 @@ offset_bottom = 144.0
 label_settings = SubResource("LabelSettings_2fvm5")
 vertical_alignment = 1
 
-[node name="Icon" type="Sprite2D" parent="SidePanelTop" unique_id=1746933715]
+[node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
 position = Vector2(74, 74)
 scale = Vector2(2, 2)
 
-[node name="Desc" type="Label" parent="SidePanelTop" unique_id=613711265]
+[node name="Desc" type="Label" parent="BottomPanel" unique_id=613711265]
+visible = false
 layout_mode = 0
-offset_left = 20.0
-offset_top = 150.0
-offset_right = 470.0
-offset_bottom = 320.0
+offset_left = 454.0
+offset_top = -13.0
+offset_right = 904.0
+offset_bottom = 157.0
 label_settings = SubResource("LabelSettings_3epbs")
 vertical_alignment = 1
 
-[node name="SidePanelBottom" type="Panel" parent="." unique_id=691123791]
+[node name="SidePanel" type="Panel" parent="." unique_id=691123791]
 layout_mode = 0
-offset_left = 1379.0
-offset_top = 489.0
-offset_right = 1857.0
-offset_bottom = 823.0
+offset_left = 1367.0
+offset_top = 158.0
+offset_right = 1868.0
+offset_bottom = 820.0
 theme = SubResource("Theme_maknc")
-theme_override_styles/panel = SubResource("StyleBoxEmpty_0bpa3")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cmwsu")
+script = ExtResource("7_7ealu")
 
-[node name="Label" type="Label" parent="SidePanelBottom" unique_id=222729260]
+[node name="ScrollContainer" type="ScrollContainer" parent="SidePanel" unique_id=1409309134]
 layout_mode = 0
-offset_left = 165.0
-offset_top = 22.0
-offset_right = 469.0
-offset_bottom = 142.0
-label_settings = SubResource("LabelSettings_2fvm5")
-vertical_alignment = 1
+offset_left = 9.0
+offset_top = -23.0
+offset_right = 505.0
+offset_bottom = 676.0
 
-[node name="Icon" type="Sprite2D" parent="SidePanelBottom" unique_id=235968142]
-position = Vector2(74, 74)
-scale = Vector2(2, 2)
-
-[node name="Send" type="TextureButton" parent="SidePanelBottom" unique_id=663895100]
-visible = false
-layout_mode = 0
-offset_left = -6.0
-offset_top = 235.0
-offset_right = 1334.0
-offset_bottom = 440.0
-scale = Vector2(0.37, 0.37)
-texture_normal = ExtResource("21_0bpa3")
-texture_pressed = ExtResource("21_0bpa3")
-texture_hover = ExtResource("21_0bpa3")
-texture_disabled = ExtResource("21_0bpa3")
-texture_focused = ExtResource("21_0bpa3")
-script = ExtResource("5_atxpi")
-
-[node name="Label" type="Label" parent="SidePanelBottom/Send" unique_id=993634051]
-layout_mode = 0
-offset_left = 468.0
-offset_top = 45.0
-offset_right = 873.0
-offset_bottom = 253.99997
-text = "Wyślij"
-label_settings = SubResource("LabelSettings_maknc")
-horizontal_alignment = 1
+[node name="Control" type="Control" parent="SidePanel/ScrollContainer" unique_id=419631721]
+layout_mode = 2
 
 [node name="Tutorial modal" type="Panel" parent="." unique_id=1116195531]
 layout_mode = 1
@@ -184,22 +171,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -520.0
-offset_top = -350.0
+offset_left = -646.0
+offset_top = -304.0
 offset_right = 520.0
-offset_bottom = 155.0
+offset_bottom = 289.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal" unique_id=1613760775]
-position = Vector2(548.00006, 270)
-scale = Vector2(0.95559704, 1.2449999)
-texture = ExtResource("8_maknc")
+theme_override_styles/panel = SubResource("StyleBoxTexture_cmwsu")
 
 [node name="Label" type="Label" parent="Tutorial modal" unique_id=223030600]
 layout_mode = 0
-offset_right = 1079.0
-offset_bottom = 70.0
+offset_left = 43.0
+offset_top = 43.0
+offset_right = 1122.0
+offset_bottom = 113.0
 text = "Podsumowanie szkolenia"
 label_settings = SubResource("LabelSettings_6ktn7")
 horizontal_alignment = 1
@@ -207,10 +192,10 @@ vertical_alignment = 1
 
 [node name="Text" type="Label" parent="Tutorial modal" unique_id=807487684]
 layout_mode = 0
-offset_left = 80.0
-offset_top = 89.0
-offset_right = 600.0
-offset_bottom = 388.0
+offset_left = 114.0
+offset_top = 109.0
+offset_right = 634.0
+offset_bottom = 408.0
 text = "- Przeciągaj mapę
 - Wybierz jednocześnie zdarzenie i odpowiadającą jednostkę, potem kliknij \"Wyślij\", aby ją wysłać "
 label_settings = SubResource("LabelSettings_du2nj")
@@ -371,10 +356,10 @@ texture = ExtResource("17_ar68y")
 
 [node name="TextureButton" type="TextureButton" parent="Tutorial modal" unique_id=1786378780]
 layout_mode = 0
-offset_left = 31.0
-offset_top = 376.0
-offset_right = 1371.0
-offset_bottom = 581.0
+offset_left = 65.0
+offset_top = 396.0
+offset_right = 1405.0
+offset_bottom = 601.0
 scale = Vector2(0.45, 0.45)
 texture_normal = ExtResource("21_0bpa3")
 texture_pressed = ExtResource("21_0bpa3")
@@ -402,16 +387,12 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -320.0
 offset_top = -140.0
-offset_right = 280.0
-offset_bottom = 160.0
+offset_right = 374.0
+offset_bottom = 209.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
-
-[node name="Background" type="Sprite2D" parent="General purpose modal" unique_id=1732626861]
-position = Vector2(349, 181)
-scale = Vector2(0.5, 0.583)
-texture = ExtResource("8_maknc")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ar68y")
+script = ExtResource("21_ar68y")
 
 [node name="Label" type="Label" parent="General purpose modal" unique_id=1943317274]
 layout_mode = 0
@@ -444,6 +425,7 @@ offset_left = 468.0
 offset_top = 45.0
 offset_right = 873.0
 offset_bottom = 253.99997
+theme_override_styles/normal = SubResource("StyleBoxTexture_qjgc2")
 text = "Przyjąłem"
 label_settings = SubResource("LabelSettings_maknc")
 
@@ -457,23 +439,18 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -360.0
 offset_top = -171.0
-offset_right = -360.0
-offset_bottom = -171.0
+offset_right = 286.0
+offset_bottom = 143.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_maknc")
-
-[node name="Sprite2D" type="Sprite2D" parent="Message modal" unique_id=1881991181]
-position = Vector2(322, 169)
-scale = Vector2(0.5, 0.583)
-texture = ExtResource("8_maknc")
+theme_override_styles/panel = SubResource("StyleBoxTexture_7ealu")
 
 [node name="Label" type="Label" parent="Message modal" unique_id=1289796101]
 layout_mode = 0
-offset_left = -102.0
-offset_top = 69.0
-offset_right = 737.0
-offset_bottom = 138.0
+offset_left = -82.0
+offset_top = 72.0
+offset_right = 757.0
+offset_bottom = 141.0
 text = "[Nowa wiadomość]"
 label_settings = SubResource("LabelSettings_du2nj")
 horizontal_alignment = 1
@@ -481,10 +458,10 @@ vertical_alignment = 1
 
 [node name="TextureButton" type="TextureButton" parent="Message modal" unique_id=879481681]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 160.0
-offset_right = 1355.0
-offset_bottom = 365.0
+offset_left = 29.0
+offset_top = 166.0
+offset_right = 1369.0
+offset_bottom = 371.0
 scale = Vector2(0.45, 0.45)
 texture_normal = ExtResource("21_0bpa3")
 texture_pressed = ExtResource("21_0bpa3")
@@ -606,10 +583,9 @@ position = Vector2(960, 18)
 scale = Vector2(0.8376963, 0.74)
 texture = ExtResource("25_ar68y")
 
-[connection signal="pressed" from="SidePanelBottom/Send" to="." method="_send_unit"]
-[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_begin_game"]
+[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="General purpose modal/TextureButton" to="." method="_main_event"]
 [connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
-[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
+[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
