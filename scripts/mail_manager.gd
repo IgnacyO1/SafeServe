@@ -187,6 +187,11 @@ func display_email_content(mail_id: String):
 	nowa_wiadomosc_root.visible = false
 	
 	var mail_data = EMAILS[mail_id]
+	
+	# Zapisujemy, kto jest nadawcą tego maila, żeby przycisk "Odpowiedz" wiedział komu odpisać
+	if mail_data.has("sender"):
+		current_contact = mail_data["sender"]
+		
 	var sender_name = "Ty" if mail_data.has("target") else CONTACTS[mail_data["sender"]]["name"]
 	
 	tresc_maila.text = "[b]Od:[/b] %s\n[b]Temat:[/b] %s\n\n%s" % [sender_name, mail_data["subject"], mail_data["body"]]
@@ -287,6 +292,16 @@ func _on_wyslij_btn_pressed():
 func _on_btn_odpowiedz_pressed():
 	# Pokazujemy cały kontener nowej wiadomości
 	nowa_wiadomosc_root.visible = true
+	
+	# AUTOMATYCZNE WYBIERANIE ODBIORCY:
+	# Szukamy w dropdownie indeksu, który pasuje do current_contact
+	for i in range(wybieranie_odbiorcy.item_count):
+		if wybieranie_odbiorcy.get_item_metadata(i) == current_contact:
+			wybieranie_odbiorcy.selected = i
+			break
+			
+	# Odświeżamy przyciski wyboru opcji dla tego kontaktu
+	update_reply_buttons_ui()
 	nowa_wiadomosc_panel.grab_focus()
 
 func _on_btn_new_message_pressed():
