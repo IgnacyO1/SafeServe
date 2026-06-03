@@ -900,7 +900,6 @@ size = Vector2(30, 60)
 script = ExtResource("1_2a01s")
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=921566932]
-position = Vector2(28, -8)
 texture = ExtResource("2_o3ndk")
 centered = false
 
