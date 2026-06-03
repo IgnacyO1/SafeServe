@@ -69,9 +69,9 @@ icon = ExtResource("4_wb72h")
 layout_mode = 3
 anchors_preset = 0
 offset_left = 508.0
-offset_top = 198.0
-offset_right = 1752.0
-offset_bottom = 898.0
+offset_top = 85.0
+offset_right = 1799.0
+offset_bottom = 1033.0
 script = ExtResource("5_2a01s")
 
 [node name="KontaktyPanel" type="PanelContainer" parent="CanvasLayer/OknoMail" unique_id=2074817804]
@@ -91,8 +91,8 @@ layout_mode = 2
 layout_mode = 0
 offset_left = 50.0
 offset_top = 2.0
-offset_right = 754.0
-offset_bottom = 492.0
+offset_right = 755.0
+offset_bottom = 566.0
 
 [node name="MaileScroll" type="ScrollContainer" parent="CanvasLayer/OknoMail/MailePanel" unique_id=554732588]
 layout_mode = 2
@@ -104,34 +104,46 @@ layout_mode = 2
 layout_mode = 0
 offset_left = 786.0
 offset_top = 1.0
-offset_right = 1256.0
-offset_bottom = 489.0
+offset_right = 1257.0
+offset_bottom = 566.0
 
 [node name="TreśćMaila" type="RichTextLabel" parent="CanvasLayer/OknoMail/TreśćPanel" unique_id=1562309516]
 layout_mode = 2
 
-[node name="NowaWiadomośćPanel" type="HBoxContainer" parent="CanvasLayer/OknoMail" unique_id=1174354717]
+[node name="NowaWiadomość" type="VBoxContainer" parent="CanvasLayer/OknoMail" unique_id=500646432]
 layout_mode = 0
-offset_left = 49.0
-offset_top = 529.0
-offset_right = 1219.0
-offset_bottom = 736.0
+offset_left = 51.0
+offset_top = 613.0
+offset_right = 1259.0
+offset_bottom = 944.0
+
+[node name="WybieranieOdbiorcy" type="OptionButton" parent="CanvasLayer/OknoMail/NowaWiadomość" unique_id=802248173]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="NowaWiadomośćPanel" type="HBoxContainer" parent="CanvasLayer/OknoMail/NowaWiadomość" unique_id=1174354717]
+layout_mode = 2
 alignment = 1
 
-[node name="OpcjaBtn1" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=883760425]
+[node name="OpcjaBtn1" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomość/NowaWiadomośćPanel" unique_id=883760425]
 custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
 text = "Opcja 1"
 
-[node name="OpcjaBtn2" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1319045775]
+[node name="OpcjaBtn2" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomość/NowaWiadomośćPanel" unique_id=1319045775]
 custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
 text = "Opcja 2"
 
-[node name="OpcjaBtn3" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomośćPanel" unique_id=1616734694]
+[node name="OpcjaBtn3" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomość/NowaWiadomośćPanel" unique_id=1616734694]
 custom_minimum_size = Vector2(400, 180)
 layout_mode = 2
 text = "Opcja 3"
+
+[node name="Wyślij Btn" type="Button" parent="CanvasLayer/OknoMail/NowaWiadomość" unique_id=924373220]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Wyślij wiadomość"
 
 [node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
 visible = false
