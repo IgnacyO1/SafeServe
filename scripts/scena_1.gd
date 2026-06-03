@@ -14,6 +14,7 @@ func show_modal(content : String, buttonText : String = "Przyjąłem."):
 	modal.find_child("Label").text = content
 	modal.find_child("TextureButton").find_child("Label").text = buttonText
 	modal.visible = true
+
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_1.tscn")
 	var arr = []
@@ -32,13 +33,14 @@ func _ready() -> void:
 		map_container.spawn_event("Emergency")
 	for i in range(arr[2]):
 		map_container.spawn_event("Fire")
+
 func generate_description(event : MapEvent) -> String:
 	var desc : String = ""
 	if event.type == "Fire":
 		desc += "Kategoria: Niekontrolowany ogień w budynku" 
 		desc += '\n'
 		desc += "Identyfikator budynku: " 
-		desc += str(10000 * event.id % 20 + 20000 + 100  * event.id % 30 + 300 + event.id)    
+		desc += str(10000 * (event.id % 20 + 2) + 100 * (event.id % 30 + 3) + event.id)    
 		desc += '\n'
 		desc += "Status: Potrzebna pomoc straży pożarnej"
 	elif event.type == "Emergency":
@@ -66,6 +68,7 @@ func generate_description(event : MapEvent) -> String:
 	else:
 		print("Wrong event type!")
 	return desc
+
 func message( event : MapEvent ) -> void:
 
 	const localization : Dictionary = {
@@ -112,6 +115,7 @@ func _send_unit():
 		bottom_panel.find_child("Icon").texture = null
 	else:
 		show_modal("Ups! Źle przydzielona jednostka")
+
 func _main_event():
 	if map_container.any_emergencies:
 		return
