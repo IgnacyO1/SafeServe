@@ -4,9 +4,10 @@ var speed = 1000.0
 var direction = Vector2.ZERO
 
 func _ready():
+	add_to_group("pocisk")
 	scale = Vector2(0.07, 0.07)
-	# Collision mask = 3 (warstwy 1 i 2) żeby wykrywać kraba na warstwie 2
-	collision_mask = 3
+	# Collision mask = 7 (warstwy 1, 2 i 3) żeby wykrywać kraba na warstwie 2 i tramwaj na warstwie 3
+	collision_mask = 7
 	monitoring = true
 	
 	body_entered.connect(_on_body_entered)
@@ -21,6 +22,10 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_body_entered(body: Node2D):
+	if body.is_in_group("tramwaj"):
+		queue_free()
+		return
+		
 	if body.is_in_group("krab"):
 		var scena = get_tree().current_scene
 		if scena and scena.has_method("krab_trafiony"):

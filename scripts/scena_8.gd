@@ -14,9 +14,20 @@ var gracz_zycia = 99
 var gracz_niezniszczalny_timer = 0.0
 var tarcza_cooldown = 0.0
 
+# Tory tramwajowe
+@export var tram_scene: PackedScene
+@export var tram_speed: float = 200.0
+
+# Tory tramwajowe (pozycje pobierane z edytora)
+@onready var tor_dolny_start: Node2D = $Marker2D/TorDolnyStart
+@onready var tor_dolny_end: Node2D = $Marker2D/TorDolnyEnd
+@onready var tor_gorny_start: Node2D = $Marker2D/TorGornyStart
+@onready var tor_gorny_end: Node2D = $Marker2D/TorGornyEnd
+
 # Referencje do węzłów w scenie (ułożone w edytorze)
 @onready var gracz: CharacterBody2D = $Gracz
 @onready var krab: CharacterBody2D = $Cyberkrab
+
 @onready var tlo: Sprite2D = $Tlo
 @onready var granice_areny: StaticBody2D = $GraniceAreny
 @onready var muzyka: AudioStreamPlayer2D = $Muzyka
@@ -64,6 +75,7 @@ var sweep_phase4_timer = 0.0
 var sweep_phase4_duration = 5.0     # Ile sekund fazy 4 między sweep'ami
 
 func _ready():
+	Engine.time_scale = 1.0 # Resetujemy spowolnienie czasu z poprzednich gier
 	# Zapisz poziom w konfiguracji gry
 	GameConfig.save_level("res://scenes/scena_8.tscn")
 	
@@ -154,6 +166,8 @@ func _process(delta):
 	if not gra_aktywna:
 		return
 		
+
+		
 	# Obsługa tarczy w fazie 6
 	if tarcza_cooldown > 0.0:
 		tarcza_cooldown -= delta
@@ -167,8 +181,8 @@ func _process(delta):
 			if gracz and is_instance_valid(gracz):
 				var tarcza_spr = gracz.get_node_or_null("TarczaSprite")
 				if not tarcza_spr:
-					tarcza_spr.visible = true
-					tarcza_spr.modulate.a = 1.0
+					tarcza_spr = Sprite2D.new()
+					tarcza_spr.name = "TarczaSprite"
 					var tex = load("res://assets/graphics/Scena8/tarcza.png")
 					if tex:
 						tarcza_spr.texture = tex
@@ -392,8 +406,17 @@ func _zarzadzaj_laserem(delta):
 		laser_attack_timer += delta
 		# Aktualizuj pozycję i kierunek linii ostrzegawczej z Cyberkraba do gracza
 		if krab and is_instance_valid(krab) and gracz and is_instance_valid(gracz):
-			var start_pos = krab.global_position
+			var start_pos = krab.global_position + laser_target_dir * 100.0
 			var end_pos = start_pos + laser_target_dir * 3000.0
+			
+			# Ostrzeżenie również zatrzymuje się na tramwaju
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
+			query.collision_mask = 4 # Warstwa 3 (tramwaj)
+			var result = space_state.intersect_ray(query)
+			if not result.is_empty():
+				end_pos = result.position
+				
 			if is_instance_valid(laser_beam_line1):
 				laser_beam_line1.points = [start_pos, end_pos]
 				
@@ -404,7 +427,7 @@ func _zarzadzaj_laserem(delta):
 		laser_attack_timer += delta
 		
 		if krab and is_instance_valid(krab) and gracz and is_instance_valid(gracz):
-			var start_pos = krab.global_position
+			var start_pos = krab.global_position + laser_target_dir * 100.0
 			# Oblicz kierunek do gracza i powoli go koryguj (namierzanie)
 			var target_now = (gracz.global_position - start_pos).normalized()
 			# W fazie 4 namierza szybciej (slerp 2.5) niż w fazie 3 (slerp 1.5)
@@ -412,6 +435,14 @@ func _zarzadzaj_laserem(delta):
 			laser_target_dir = laser_target_dir.slerp(target_now, slerp_speed * delta).normalized()
 			
 			var end_pos = start_pos + laser_target_dir * 3000.0
+			
+			# Blokowanie aktywnego lasera przez tramwaj
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
+			query.collision_mask = 4 # Warstwa 3 (tramwaj)
+			var result = space_state.intersect_ray(query)
+			if not result.is_empty():
+				end_pos = result.position
 			
 			# Aktualizacja linii sprita lasera
 			if is_instance_valid(laser_beam_line1):
@@ -521,10 +552,18 @@ func _zarzadzaj_sweep(delta):
 		var warning_angle = lerp(sweep_angle_start, sweep_angle_end, warning_progress)
 		
 		if krab and is_instance_valid(krab):
-			var start_pos = krab.global_position
+			var start_pos = krab.global_position + Vector2(cos(warning_angle), sin(warning_angle)) * 100.0
 			var beam_dir = Vector2(cos(warning_angle), sin(warning_angle))
 			var end_pos = start_pos + beam_dir * 3500.0
 			
+			# Ostrzeżenie przed sweepem również zatrzymuje się na tramwaju
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
+			query.collision_mask = 4 # Warstwa 3 (tramwaj)
+			var result = space_state.intersect_ray(query)
+			if not result.is_empty():
+				end_pos = result.position
+				
 			if is_instance_valid(sweep_beam_line1):
 				sweep_beam_line1.points = [start_pos, end_pos]
 				var pulse = abs(sin(Time.get_ticks_msec() * 0.03))
@@ -547,9 +586,17 @@ func _zarzadzaj_sweep(delta):
 		sweep_current_angle = lerp(sweep_angle_start, sweep_angle_end, progress)
 		
 		if krab and is_instance_valid(krab):
-			var start_pos = krab.global_position
+			var start_pos = krab.global_position + Vector2(cos(sweep_current_angle), sin(sweep_current_angle)) * 100.0
 			var beam_dir = Vector2(cos(sweep_current_angle), sin(sweep_current_angle))
 			var end_pos = start_pos + beam_dir * 3500.0
+			
+			# Przeszkoda fizyczna (tramwaj) dla sweep beam
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
+			query.collision_mask = 4 # Warstwa 3 (tramwaj)
+			var result = space_state.intersect_ray(query)
+			if not result.is_empty():
+				end_pos = result.position
 			
 			if is_instance_valid(sweep_beam_line1):
 				sweep_beam_line1.points = [start_pos, end_pos]
@@ -852,7 +899,7 @@ func _fake_wygrana():
 	
 	# Odtwórz nową muzykę
 	if muzyka:
-		var stream = load("res://assets/sounds/butherefused.mp3")
+		var stream = load("res://assets/Sounds/butherefused.mp3")
 		if stream:
 			muzyka.stream = stream
 			muzyka.volume_db = 0.0
@@ -1158,3 +1205,20 @@ func _screen_shake(intensity: float = 5.0):
 			var offset = Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
 			tw.tween_property(self, "position", original_pos + offset, 0.03)
 		tw.tween_property(self, "position", original_pos, 0.03)
+
+func _spawn_tram_scene8():
+	if not tram_scene:
+		return
+	var tram = tram_scene.instantiate()
+	add_child(tram)
+	
+	# Losowy wybór toru (dolny lub górny)
+	if randf() > 0.5:
+		tram.init_straight_line(tor_dolny_start.global_position, tor_dolny_end.global_position, tram_speed)
+	else:
+		tram.init_straight_line(tor_gorny_start.global_position, tor_gorny_end.global_position, tram_speed)
+
+
+func _on_tram_timer_timeout() -> void:
+	if gra_aktywna:
+		_spawn_tram_scene8()
