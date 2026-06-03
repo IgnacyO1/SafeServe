@@ -1,85 +1,83 @@
 extends Control
 
-# Referencje do węzłów UI z Twojego drzewa sceny
+# Referencje do węzłów UI
 @onready var kontakty_vbox = $KontaktyPanel/KontaktyScroll/KontaktyVBox
 @onready var maile_vbox = $MailePanel/MaileScroll/MaileVBox
 @onready var tresci_label = $TreśćPanel/TreśćMaila
-@onready var wybieranie_odbiorcy = $NowaWiadomość/WybieranieOdbiorcy
+@onready var tresci_panel = $TreśćPanel
 @onready var opcja_panel = $NowaWiadomość/NowaWiadomośćPanel
 
-# Bezpośrednie referencje do stałych przycisków opcji i wysyłania
+# Bezpośrednie referencje do stałych przycisków opcji
 @onready var opcja_btn_1 = $NowaWiadomość/NowaWiadomośćPanel/OpcjaBtn1
 @onready var opcja_btn_2 = $NowaWiadomość/NowaWiadomośćPanel/OpcjaBtn2
 @onready var opcja_btn_3 = $NowaWiadomość/NowaWiadomośćPanel/OpcjaBtn3
-@onready var wyslij_btn = $"NowaWiadomość/Wyślij Btn" # Uwzględniona spacja w nazwie węzła
+@onready var wyslij_btn = $"NowaWiadomość/Wyślij Btn"
 
-# --- SZTYWNE DANE DRZEWA DIALOGOWEGO (Zamiast śmieciowych JSONów) ---
-var contacts_data = {
-	"boss": {
-		"name": "Mateusz Puławski",
-		"title": "Komisarz Policji w Krakowie",
-		"email": "m.pulawski@kp.krakow.pl"
-	},
-	"katarzyna": {
-		"name": "Katarzyna Słubicka",
-		"title": "CEO PolyServers",
-		"email": "k.slubicka@polyservers.com"
-	}
-}
-
+# --- DRZEWO DIALOGOWE KATARZYNA SŁUBICKA ---
 var dialogue_tree = {
 	"katarzyna": {
-		"pozary": {
-			"button_text": "Okoliczności pożaru",
-			"player_mail": "Dzień dobry. Prowadzimy analizę zdarzeń związanych z pożarem Państwa biurowca. Czy posiada Pani informacje, które mogłyby pomóc ustalić przyczynę zdarzenia?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Odpowiedź: Okoliczności pożaru",
-			"reply_text": "Dzień dobry. Niestety nie wiem nic ponad to, co przekazały służby. To był tragiczny dzień dla całej firmy. Straciliśmy część infrastruktury, chociaż przynajmniej mieliśmy kopie zapasowe. Nadal próbujemy oszacować skalę strat.\n\nKatarzyna Słubicka, CEO PolyServers",
-			"unlocks": "lokalizacja"
-		},
-		"lokalizacja": {
-			"button_text": "Pytaj o lokalizację",
-			"player_mail": "Czy pani była w Krakowie gdy to się działo?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Odpowiedź: Lokalizacja",
-			"reply_text": "Nie, ja rzadko jestem w biurze. Byłam wtedy podczas podróży służbowej na Tajwan, na konferencji związanej z AI.\n\nKatarzyna Słubicka, CEO PolyServers",
-			"unlocks": "podejrzane"
-		},
-		"podejrzane": {
-			"button_text": "Pytaj o podejrzane zachowania",
-			"player_mail": "Czy w firmie ostatnio działo się coś podejrzanego?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Ostatni raz odpowiadam",
-			"reply_text": "Powtarzałam już panu, że nic dziwnego nie obserwowałam!!! Już więcej panu odpowiadać nie będę, nie mam na to czasu, bo widzę że jest pan niepoważny.\n\nKatarzyna Słubicka, CEO PolyServers",
-			"unlocks": ""
+		"initial_fire": {
+			"subject": "Okoliczności pożaru",
+			"content": "Dzień dobry. Prowadzimy analizę zdarzeń związanych z pożarem Państwa biurowca. Czy posiada Pani informacje, które mogłyby pomóc ustalić przyczynę zdarzenia?\n\nGreg, śledczy sprawy nr 6721",
+			"from": "Greg",
+			"can_reply": true,
+			"reply_options": ["monitoring", "administrator", "lokalizacja"]  # 3 pytania dostępne po tym mailu
 		},
 		"monitoring": {
 			"button_text": "Monitoring budynku",
-			"player_mail": "Dzień dobry. Czy posiada Pani dostęp do nagrań monitoringu z dnia pożaru?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Odpowiedź: Monitoring",
-			"reply_text": "Nie. System monitoringu jest zarządzany przez administratora budynku. Ja nie mam uprawnień do odszyfrowywania ani eksportowania nagrań.\n\nCEO PolyServers",
-			"unlocks": "uprawnienia"
+			"player_mail": "Czy posiada Pani dostęp do nagrań monitoringu z dnia pożaru?",
+			"npc_reply": {
+				"subject": "RE: Monitoring budynku",
+				"content": "Nie. System monitoringu jest zarządzany przez administratora budynku. Ja nie mam uprawnień do odszyfrowywania ani eksportowania nagrań.\n\nKatarzyna Słubicka, CEO PolyServers"
+			},
+			"unlocks": ["pytanie_uprawnienia"]
 		},
-		"uprawnienia": {
+		"pytanie_uprawnienia": {
 			"button_text": "Kto ma uprawnienia?",
-			"player_mail": "A kto w firmie ma takie uprawnienia?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Odpowiedź: Uprawnienia",
-			"reply_text": "Administratorem jest Bartłomiej Głuś. Obecnie przebywa na urlopie poza krajem. Nie odpowiada ostatnio na maile, ale w tej sytuacji mogę przekazać jego prywatny numer telefonu:\n\n+48 601 247 447\n\nProszę powołać się na mnie podczas kontaktu.\n\nKatarzyna Słubicka, CEO PolyServers",
-			"unlocks": ""
+			"player_mail": "A kto w firmie ma takie uprawnienia?",
+			"npc_reply": {
+				"subject": "RE: Uprawnienia",
+				"content": "Administratorem jest Bartłomiej Głuś. Obecnie przebywa na urlopie poza krajem. Nie odpowiada ostatnio na maile, ale w tej sytuacji mogę przekazać jego prywatny numer telefonu:\n\n+48 601 247 447\n\nProszę powołać się na mnie podczas kontaktu.\n\nKatarzyna Słubicka, CEO PolyServers"
+			},
+			"unlocks": []
 		},
 		"administrator": {
 			"button_text": "Administrator budynku",
-			"player_mail": "Dzień dobry. Kto odpowiada za systemy techniczne budynku?\n\nGreg, śledczy sprawy nr 6721",
-			"reply_subject": "Odpowiedź: Administrator",
-			"reply_text": "Administratorem jest Bartłomiej Głuś. Obecnie przebywa na urlopie poza krajem. Nie odpowiada ostatnio na maile, ale w tej sytuacji mogę przekazać jego prywatny numer telefonu:\n\n+48 601 247 447\n\nProszę powołać się na mnie podczas kontaktu.\n\nKatarzyna Słubicka, CEO PolyServers",
-			"unlocks": ""
+			"player_mail": "Kto odpowiada za systemy techniczne budynku?",
+			"npc_reply": {
+				"subject": "RE: Administrator",
+				"content": "Administratorem jest Bartłomiej Głuś. Obecnie przebywa na urlopie poza krajem. Nie odpowiada ostatnio na maile, ale w tej sytuacji mogę przekazać jego prywatny numer telefonu:\n\n+48 601 247 447\n\nProszę powołać się na mnie podczas kontaktu.\n\nKatarzyna Słubicka, CEO PolyServers"
+			},
+			"unlocks": []
+		},
+		"lokalizacja": {
+			"button_text": "Lokalizacja",
+			"player_mail": "Czy pani była w Krakowie gdy to się działo?",
+			"npc_reply": {
+				"subject": "RE: Lokalizacja",
+				"content": "Nie, ja rzadko jestem w biurze. Byłam wtedy podczas podróży służbowej na Tajwan, na konferencji związanej z AI.\n\nKatarzyna Słubicka, CEO PolyServers"
+			},
+			"unlocks": ["pytanie_podejrzane"]
+		},
+		"pytanie_podejrzane": {
+			"button_text": "Czy działo się coś podejrzanego?",
+			"player_mail": "Czy w firmie ostatnio działo się coś podejrzanego?",
+			"npc_reply": {
+				"subject": "Ostatni raz odpowiadam",
+				"content": "Powtarzałam już panu, że nic dziwnego nie obserwowałam!!!! Już więcej panu odpowiadać nie będę, nie mam na to czasu, bo widzę że jest pan niepoważny.\n\nKatarzyna Słubicka, CEO PolyServers"
+			},
+			"unlocks": []
 		}
 	}
 }
 
-# Stan Gry
+# Stan gry
 var received_mails: Array = []
-var active_recipient_id: String = ""
+var current_viewed_mail: Dictionary = {}
+var active_recipient: String = ""
 var selected_option_key: String = ""
-# Pula aktualnie dostępnych dla gracza tematów (zmienia się wraz z postępem śledztwa)
-var katarzyna_pool: Array = ["pozary", "monitoring", "administrator"]
+var katarzyna_available_options: Array = []  # Opcje dostępne dla Katarzyny
+var waiting_for_reply: bool = false
 
 func _ready() -> void:
 	_setup_initial_state()
@@ -88,18 +86,26 @@ func _ready() -> void:
 	_refresh_mail_list()
 
 func _setup_initial_state() -> void:
-	# Mail startowy od Szefa (Screen 2)
-	received_mails.append({
-		"from_id": "boss",
-		"from_name": "Mateusz Puławski",
-		"subject": "Zerknij na to.",
-		"content": "Daliśmy ci dostęp do centrum inwestygacyjnego, możesz tutaj się kontaktować ze świadkami. Dostaliśmy też kontakty do Polyservers, przepytaj ludzi i znajdź jaka była przyczyna tego piekielnego pożaru. Chciałbym zamknąć śledztwo w przyszłym tygodniu, bo mamy mnóstwo papierkologii.\n\nMateusz Puławski, Komisarz Policji w Krakowie"
-	})
+	# Mail initial od Grega - to jest pierwszy mail w grze
+	var initial_mail = {
+		"id": "initial_fire",
+		"from": "Greg",
+		"from_name": "Greg, śledczy sprawy nr 6721",
+		"subject": dialogue_tree["katarzyna"]["initial_fire"]["subject"],
+		"content": dialogue_tree["katarzyna"]["initial_fire"]["content"],
+		"can_reply": true,
+		"recipient": "katarzyna",
+		"node_key": "initial_fire"
+	}
+	received_mails.append(initial_mail)
+	
+	# Na starcie dostępne są 3 opcje odpowiedzi
+	katarzyna_available_options = dialogue_tree["katarzyna"]["initial_fire"]["reply_options"]
+	
 	opcja_panel.visible = false
-	tresci_label.text = "Wybierz mail z listy lub kontakt z lewej strony, aby rozpocząć interakcję."
+	tresci_label.text = "Wybierz mail, aby go przeczytać. Jeśli możesz odpowiedzieć, pojawi się przycisk 'Odpowiedz'."
 
 func _connect_ui_signals() -> void:
-	# Podpięcie stałych przycisków wyboru tematów
 	opcja_btn_1.pressed.connect(_on_option_selected.bind(1))
 	opcja_btn_2.pressed.connect(_on_option_selected.bind(2))
 	opcja_btn_3.pressed.connect(_on_option_selected.bind(3))
@@ -108,19 +114,18 @@ func _connect_ui_signals() -> void:
 func _create_contact_buttons() -> void:
 	for child in kontakty_vbox.get_children():
 		child.queue_free()
-		
-	for key in contacts_data.keys():
-		var contact = contacts_data[key]
-		var btn = Button.new()
-		btn.text = contact["name"]
-		btn.custom_minimum_size = Vector2(250, 50)
-		btn.pressed.connect(_on_contact_clicked.bind(key))
-		kontakty_vbox.add_child(btn)
+	
+	# Tylko Katarzyna jest dostępna
+	var btn = Button.new()
+	btn.text = "Katarzyna Słubicka"
+	btn.custom_minimum_size = Vector2(250, 50)
+	btn.pressed.connect(_on_contact_clicked.bind("katarzyna"))
+	kontakty_vbox.add_child(btn)
 
 func _refresh_mail_list() -> void:
 	for child in maile_vbox.get_children():
 		child.queue_free()
-		
+	
 	for mail in received_mails:
 		var btn = Button.new()
 		btn.text = "[%s] %s" % [mail["from_name"], mail["subject"]]
@@ -131,76 +136,76 @@ func _refresh_mail_list() -> void:
 # --- OBSŁUGA KLIKNIĘĆ ---
 
 func _on_mail_clicked(mail: Dictionary) -> void:
-	# Wyłącza panel pisania nowej wiadomości podczas czytania skrzynki odbiorczej
-	opcja_panel.visible = false
-	wybieranie_odbiorcy.visible = false
+	current_viewed_mail = mail
+	wyslij_btn.visible = false
 	
+	# Wyświetl zawartość maila
 	tresci_label.clear()
 	tresci_label.append_text("[b]Od:[/b] %s\n" % mail["from_name"])
 	tresci_label.append_text("[b]Temat:[/b] %s\n" % mail["subject"])
 	tresci_label.append_text("---------------------------------------------\n\n")
 	tresci_label.append_text(mail["content"])
+	
+	# Jeśli mail można odpowiedzieć, pokaż przycisk "Odpowiedz" w opcja_panel
+	if mail.get("can_reply", false):
+		opcja_panel.visible = true
+		opcja_btn_1.visible = true
+		opcja_btn_1.text = "Odpowiedz"
+		opcja_btn_1.set_meta("is_reply_button", true)
+		opcja_btn_2.visible = false
+		opcja_btn_3.visible = false
+	else:
+		opcja_panel.visible = false
 
-func _on_contact_clicked(contact_id: String) -> void:
-	active_recipient_id = contact_id
+func _show_reply_button() -> void:
+	# Funkcja więcej nie potrzebna - logika przeniesiona do _on_mail_clicked
+	pass
+
+func _on_reply_clicked() -> void:
+	# Pokaż opcje odpowiedzi
+	active_recipient = current_viewed_mail.get("recipient", "katarzyna")
 	selected_option_key = ""
+	wyslij_btn.visible = true
 	wyslij_btn.disabled = true
 	
-	var contact = contacts_data[contact_id]
-	wybierancy_odbiorcy_update(contact["name"])
+	# Tekst w panelu treści powinien być minimalny - opcje są na przyciskach
+	tresci_label.clear()
+	tresci_label.append_text("[b]Wybierz temat wiadomości:[/b]")
 	
-	if contact_id == "boss":
-		tresci_label.text = "Komisarz Puławski nie przyjmuje pytań. Czeka na raport końcowy z Twojego śledztwa."
-		opcja_panel.visible = false
-		return
-		
-	_update_writing_options()
-
-func wybierancy_odbiorcy_update(name_text: String) -> void:
-	wybieranie_odbiorcy.visible = true
-	if wybieranie_odbiorcy is Label:
-		wybieranie_odbiorcy.text = "Do: " + name_text
-	elif wybieranie_odbiorcy is OptionButton:
-		wybieranie_odbiorcy.clear()
-		wybieranie_odbiorcy.add_item(name_text)
-
-func _update_writing_options() -> void:
-	opcja_panel.visible = true
-	
-	# Ukrywamy na start wszystkie przyciski
+	# Ukryj wszystkie przyciski opcji
 	opcja_btn_1.visible = false
 	opcja_btn_2.visible = false
 	opcja_btn_3.visible = false
 	
-	# Pobierz pulę opcji dla wybranej osoby
-	var current_pool = katarzyna_pool
-	var available_count = current_pool.size()
-	
+	# Pobierz dostępne opcje
+	var available_count = katarzyna_available_options.size()
 	if available_count == 0:
-		tresci_label.text = "Brak nowych tematów do rozmowy z tym świadkiem."
+		tresci_label.append_text("\n\nBrak dostępnych opcji.")
 		opcja_panel.visible = false
 		return
-		
-	tresci_label.text = "Wybierz temat wiadomości, którą chcesz sformułować i wysłać:"
 	
-	# Przypisujemy teksty do przycisków w zależności od tego ile ich zostało w puli
+	# Przypisz opcje do przycisków - tekst będzie bezpośrednio na przyciskach
 	if available_count >= 1:
-		var opt1 = dialogue_tree["katarzyna"][current_pool[0]]
-		opcja_btn_1.text = opt1["button_text"]
+		var option_key = katarzyna_available_options[0]
+		var option_data = dialogue_tree[active_recipient][option_key]
+		opcja_btn_1.text = option_data["button_text"]
 		opcja_btn_1.visible = true
-		opcja_btn_1.set_meta("option_key", current_pool[0])
-		
+		opcja_btn_1.set_meta("option_key", option_key)
+		opcja_btn_1.remove_meta("is_reply_button")
+	
 	if available_count >= 2:
-		var opt2 = dialogue_tree["katarzyna"][current_pool[1]]
-		opcja_btn_2.text = opt2["button_text"]
+		var option_key = katarzyna_available_options[1]
+		var option_data = dialogue_tree[active_recipient][option_key]
+		opcja_btn_2.text = option_data["button_text"]
 		opcja_btn_2.visible = true
-		opcja_btn_2.set_meta("option_key", current_pool[1])
-		
+		opcja_btn_2.set_meta("option_key", option_key)
+	
 	if available_count >= 3:
-		var opt3 = dialogue_tree["katarzyna"][current_pool[2]]
-		opcja_btn_3.text = opt3["button_text"]
+		var option_key = katarzyna_available_options[2]
+		var option_data = dialogue_tree[active_recipient][option_key]
+		opcja_btn_3.text = option_data["button_text"]
 		opcja_btn_3.visible = true
-		opcja_btn_3.set_meta("option_key", current_pool[2])
+		opcja_btn_3.set_meta("option_key", option_key)
 
 func _on_option_selected(btn_index: int) -> void:
 	var target_btn: Button
@@ -208,50 +213,64 @@ func _on_option_selected(btn_index: int) -> void:
 		1: target_btn = opcja_btn_1
 		2: target_btn = opcja_btn_2
 		3: target_btn = opcja_btn_3
-		
+	
+	# Jeśli to przycisk "Odpowiedz", obsłuż inaczej
+	if target_btn and target_btn.has_meta("is_reply_button"):
+		_on_reply_clicked()
+		return
+	
+	# Normalna obsługa wyboru opcji
 	if target_btn and target_btn.has_meta("option_key"):
 		selected_option_key = target_btn.get_meta("option_key")
-		var node_data = dialogue_tree[active_recipient_id][selected_option_key]
-		
-		# Podgląd maila w głównym oknie przed wysłaniem
-		tresci_label.clear()
-		tresci_label.append_text("[b]Podgląd wiadomości do wysłania:[/b]\n\n")
-		tresci_label.append_text(node_data["player_mail"])
-		
 		wyslij_btn.disabled = false
 
+func _on_contact_clicked(contact_id: String) -> void:
+	pass  # Nie trzeba, bo interakcje odbywają się przez maile
+
 func _on_send_pressed() -> void:
-	if selected_option_key == "" or active_recipient_id == "":
+	if selected_option_key == "" or waiting_for_reply:
 		return
-		
-	var node_data = dialogue_tree[active_recipient_id][selected_option_key]
 	
-	# Zablokuj UI na czas "wysyłania i oczekiwania"
+	waiting_for_reply = true
 	wyslij_btn.disabled = true
 	opcja_panel.visible = false
-	tresci_label.text = "Wysyłanie wiadomości...\nCzekam na odpowiedź od: %s..." % contacts_data[active_recipient_id]["name"]
 	
-	# Usunięcie zużytej opcji z puli aktywnego wyboru (żeby gracz nie pytał o to samo)
-	katarzyna_pool.erase(selected_option_key)
+	var option_data = dialogue_tree[active_recipient][selected_option_key]
 	
-	# Symulacja czasu dostarczenia maila (np. 2 sekundy zamiast nudnych 10)
-	await get_tree().create_timer(2.0).timeout
+	# Pokaż wiadomość czekania
+	tresci_label.clear()
+	tresci_label.append_text("[b]Wysyłanie wiadomości...[/b]\n\n")
+	tresci_label.append_text(option_data["player_mail"])
+	tresci_label.append_text("\n\n[i]Czekam na odpowiedź od Katarzyny (10 sekund)...[/i]")
 	
-	# Generowanie odpowiedzi od NPC i dodanie jej do skrzynki odbiorczej
-	var incoming_mail = {
-		"from_id": active_recipient_id,
-		"from_name": contacts_data[active_recipient_id]["name"],
-		"subject": node_data["reply_subject"],
-		"content": node_data["reply_text"]
+	# Czekaj 10 sekund
+	await get_tree().create_timer(10.0).timeout
+	
+	# Usuń opcję z dostępnych (aby gracz nie wysyłał tego samego pytania)
+	katarzyna_available_options.erase(selected_option_key)
+	
+	# Dodaj nowe odblokowane opcje
+	for unlocked in option_data["unlocks"]:
+		if not katarzyna_available_options.has(unlocked):
+			katarzyna_available_options.append(unlocked)
+	
+	# Utwórz mail z odpowiedzią NPC
+	var npc_reply = {
+		"id": selected_option_key + "_reply",
+		"from": "Katarzyna",
+		"from_name": "Katarzyna Słubicka, CEO PolyServers",
+		"subject": option_data["npc_reply"]["subject"],
+		"content": option_data["npc_reply"]["content"],
+		"can_reply": katarzyna_available_options.size() > 0,
+		"recipient": "katarzyna",
+		"node_key": selected_option_key
 	}
-	received_mails.append(incoming_mail)
+	received_mails.append(npc_reply)
 	
-	# Odblokowanie nowej gałęzi w drzewie (jeśli istnieje)
-	if node_data["unlocks"] != "" and not katarzyna_pool.has(node_data["unlocks"]):
-		katarzyna_pool.append(node_data["unlocks"])
-		
-	# Odświeżenie widoku skrzynki mailowej
+	# Odśwież listę maili i wyświetl odpowiedź
 	_refresh_mail_list()
+	_on_mail_clicked(npc_reply)
 	
-	# Automatyczne wyświetlenie nowo otrzymanej wiadomości w oknie głównym
-	_on_mail_clicked(incoming_mail)
+	waiting_for_reply = false
+	selected_option_key = ""
+	wyslij_btn.disabled = true
