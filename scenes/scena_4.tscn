@@ -145,6 +145,14 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Wyślij wiadomość"
 
+[node name="BtnOdpowiedz" type="Button" parent="CanvasLayer/OknoMail" unique_id=1423957619]
+layout_mode = 0
+offset_left = 904.0
+offset_top = 486.0
+offset_right = 1142.0
+offset_bottom = 551.0
+text = "Odpowiedz"
+
 [node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
 visible = false
 layout_mode = 3
