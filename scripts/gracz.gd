@@ -156,6 +156,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_parent().add_child(pocisk)
 			pocisk.global_position = $PunktStrzalu.global_position
 			pocisk.direction = (get_global_mouse_position() - pocisk.global_position).normalized()
+			# Sprawdź czy pocisk nie spawnuje się w ścianie
+			var space = get_world_2d().direct_space_state
+			var ray = PhysicsRayQueryParameters2D.create(global_position, pocisk.global_position)
+			ray.collide_with_areas = false
+			ray.collide_with_bodies = true
+			ray.collision_mask = 1
+			if space.intersect_ray(ray):
+				pocisk.queue_free()
 
 	if event is InputEventKey:
 		if event.keycode == KEY_E and event.pressed:

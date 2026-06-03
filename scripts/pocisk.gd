@@ -16,6 +16,7 @@ func _physics_process(delta: float) -> void:
 	var query = PhysicsRayQueryParameters2D.create(global_position, global_position + move_vec)
 	query.collide_with_areas = false
 	query.collide_with_bodies = true
+	query.collision_mask = 1  # Tylko ściany (layer 1), ignoruj NPC (layer 2)
 	var result = space_state.intersect_ray(query)
 	
 	if result:

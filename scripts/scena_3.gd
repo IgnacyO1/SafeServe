@@ -332,6 +332,11 @@ func _rozpocznij_faze_pozary():
 				ognie.append(ogien)
 				spakowane_w_tej_strefie += 1
 
+	# Aktywuj NPC strażaka-pomocnika
+	var strazak_npc = get_node_or_null("StrazakNPC")
+	if strazak_npc:
+		strazak_npc.aktywuj()
+
 func zgaszono_ogien(ogien):
 	if ognie.has(ogien):
 		ognie.erase(ogien)
