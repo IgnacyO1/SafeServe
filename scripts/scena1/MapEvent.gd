@@ -16,11 +16,20 @@ func _init(container_node_i : MapContainer, marker_texture : Texture2D, arrow_te
 	map_margin = container_node.map_margin
 	if position_i ==  Vector2(-1, -1):
 		@warning_ignore("integer_division", "narrowing_conversion")
-		marker.position.x = randi_range(marker_texture.get_width() / 2 + map_margin.x, container_node.MapSprite.texture.get_size().x * container_node.MapSprite.scale.x - marker_texture.get_width() / 2 - map_margin.x)
+		marker.position.x = randi_range(
+			marker_texture.get_width() / 2 + map_margin.x,
+			container_node.MapSprite.texture.get_size().x * container_node.MapSprite.scale.x - marker_texture.get_width() / 2 - map_margin.x
+		)
 		@warning_ignore("integer_division", "narrowing_conversion")
-		marker.position.y = randi_range(marker_texture.get_height() / 2 + map_margin.y, container_node.MapSprite.texture.get_size().y * container_node.MapSprite.scale.y - marker_texture.get_height() / 2 - map_margin.y)
+		marker.position.y = randi_range(
+			marker_texture.get_height() / 2 + map_margin.y,
+			container_node.MapSprite.texture.get_size().y * container_node.MapSprite.scale.y - marker_texture.get_height() / 2 - map_margin.y
+		)
 	else: 
-		marker.position = position_i
+		marker.position = Vector2(
+			position_i.x * container_node.MapSprite.scale.x,
+			position_i.y * container_node.MapSprite.scale.y
+		)
 	marker.pressed.connect(on_press)
 	marker.name = type + " Icon"
 

@@ -78,8 +78,8 @@ func message( event : MapEvent ) -> void:
 		#side_panel.find_child("Label").text = localization[event.type]
 		#side_panel.find_child("Icon").texture = event.marker.texture_normal
 		unit = event
-	if not side_panel.find_child("Send").visible and not unit == null and not emergency == null:
-		side_panel.find_child("Send").visible = true
+	if unit and emergency:
+		bottom_panel.find_child("Send").visible = true
 
 func _send_unit():
 	const unit_to_emergency = {
@@ -106,6 +106,6 @@ func _main_event():
 	if map_container.any_emergencies:
 		return
 	main_event = true
-	modal.show_message("Uwaga! Nowe zgłoszenie!")
-	map_container.spawn_event("Fire", Vector2(200, 818))
+	show_modal("Uwaga! Nowe zgłoszenie!")
+	map_container.spawn_event("Fire", Vector2(230, 2300))
 	
