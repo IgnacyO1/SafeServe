@@ -3,214 +3,214 @@
 [ext_resource type="Script" uid="uid://dnjj1dcd2ss5n" path="res://scripts/scena_8.gd" id="1_scena8"]
 [ext_resource type="AudioStream" uid="uid://d28qbx3xivgjg" path="res://assets/Sounds/Final Boss Battle - Rod Kim.mp3" id="3_djapk"]
 [ext_resource type="Texture2D" uid="uid://dlclravlqfmjn" path="res://assets/graphics/Scena8/tło_walki.png" id="4_yr44c"]
-[ext_resource type="Texture2D" uid="uid://mupfqlxng5mh" path="res://assets/graphics/POLICJANTSPRITESHEET/police_dol.png" id="5_451g6"]
 [ext_resource type="Script" uid="uid://cg8h5mi5k3uta" path="res://scripts/scena8_gracz.gd" id="5_xxrgm"]
-[ext_resource type="Texture2D" uid="uid://deohfygqm6w6q" path="res://assets/graphics/POLICJANTSPRITESHEET/police_gora.png" id="6_a8y66"]
-[ext_resource type="Texture2D" uid="uid://b66ihgn3tkrps" path="res://assets/graphics/POLICJANTSPRITESHEET/police_lewa.png" id="7_q24i8"]
-[ext_resource type="Texture2D" uid="uid://blqlhnbqvla0o" path="res://assets/graphics/POLICJANTSPRITESHEET/police_prawa.png" id="8_7xr4v"]
-[ext_resource type="Texture2D" uid="uid://w68xqp5gp3kc" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0000.png" id="9_h64ow"]
-[ext_resource type="Texture2D" uid="uid://bhcikw2xkmbvx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0000.png" id="9_s437g"]
-[ext_resource type="Texture2D" uid="uid://do7oku06etiy3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0001.png" id="10_2utqm"]
-[ext_resource type="Texture2D" uid="uid://dgwds7c12q6jc" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0001.png" id="10_am8v3"]
-[ext_resource type="Texture2D" uid="uid://bgkpw37agywx3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0002.png" id="11_34401"]
-[ext_resource type="Texture2D" uid="uid://dhbxo0548acrj" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0002.png" id="11_vbclp"]
-[ext_resource type="Texture2D" uid="uid://g6md40avx0iq" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0003.png" id="12_c1rrp"]
-[ext_resource type="Texture2D" uid="uid://kcx071dec1ng" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0003.png" id="12_jisr7"]
-[ext_resource type="Texture2D" uid="uid://cbhuakbuljqvk" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0004.png" id="13_keo02"]
-[ext_resource type="Texture2D" uid="uid://bsw4ovy0gck6l" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0004.png" id="13_ydi13"]
-[ext_resource type="Texture2D" uid="uid://bioend5txxqln" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0005.png" id="14_384qg"]
-[ext_resource type="Texture2D" uid="uid://dj7kiy7swtiyv" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0005.png" id="14_k66al"]
-[ext_resource type="Texture2D" uid="uid://dmfqpxt5bnqof" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0006.png" id="15_kj1w4"]
-[ext_resource type="Texture2D" uid="uid://cub5arvqqfvmy" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0006.png" id="15_xgpas"]
-[ext_resource type="Texture2D" uid="uid://dqfrbs1juuede" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0007.png" id="16_mjtya"]
-[ext_resource type="Texture2D" uid="uid://dv0owhlf0ueo2" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0007.png" id="16_um8ro"]
+[ext_resource type="Texture2D" uid="uid://vs4x4ys5xwes" path="res://assets/graphics/police_SPRITE_F/IDLE/POLICE_F0.png" id="6_2y2t6"]
+[ext_resource type="Texture2D" uid="uid://dyxjuvgaq5hh0" path="res://assets/graphics/police_SPRITE_F/IDLE/POLICE_F180.png" id="7_xf27y"]
+[ext_resource type="Texture2D" uid="uid://6vybva2dv1xw" path="res://assets/graphics/police_SPRITE_F/IDLE/POLICE_F270.png" id="8_6kgad"]
+[ext_resource type="Texture2D" uid="uid://bfmsn6cslsjox" path="res://assets/graphics/police_SPRITE_F/IDLE/POLICE_F90.png" id="9_fg4mj"]
+[ext_resource type="Texture2D" uid="uid://dqc3drhkp4c74" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150000.png" id="10_ipd7u"]
+[ext_resource type="Texture2D" uid="uid://dnuo6bnnvh8gw" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150001.png" id="11_k4qdu"]
+[ext_resource type="Texture2D" uid="uid://qxpncn653rk2" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150002.png" id="12_itl6y"]
+[ext_resource type="Texture2D" uid="uid://ff80uvw1giew" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150003.png" id="13_8mgb0"]
+[ext_resource type="Texture2D" uid="uid://k6ked8of3lyb" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150004.png" id="14_qn042"]
+[ext_resource type="Texture2D" uid="uid://elt1goslpmrg" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150005.png" id="15_3npyd"]
+[ext_resource type="Texture2D" uid="uid://dsfy1unj4omm1" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150006.png" id="16_gklcc"]
 [ext_resource type="Texture2D" uid="uid://b0akq5tycdfub" path="res://assets/graphics/Scena8/tarcza.png" id="17_451g6"]
-[ext_resource type="Texture2D" uid="uid://boqktfbo1dxj7" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0008.png" id="17_oqgg0"]
-[ext_resource type="Texture2D" uid="uid://dpkwuy0gokaha" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0008.png" id="17_pxn8y"]
-[ext_resource type="Texture2D" uid="uid://bcx634d7j75ag" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0009.png" id="18_3jmvo"]
-[ext_resource type="Texture2D" uid="uid://dvkghxsi0k8et" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0009.png" id="18_3m820"]
+[ext_resource type="Texture2D" uid="uid://cya2age1o8dxo" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150007.png" id="17_fdnwl"]
 [ext_resource type="Script" uid="uid://bycgofaxxgfus" path="res://scripts/scena8_krab.gd" id="18_451g6"]
+[ext_resource type="Texture2D" uid="uid://1ebviyc0e2ps" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150008.png" id="18_s7763"]
 [ext_resource type="Texture2D" uid="uid://cjfhgogi711pt" path="res://assets/graphics/SPRITE+COLOR/krabkolor.png" id="18_yh7rx"]
-[ext_resource type="Texture2D" uid="uid://cdmvwwp30u22v" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0010.png" id="19_ootyp"]
-[ext_resource type="Texture2D" uid="uid://bar1im2anwrtp" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0010.png" id="19_sj8cq"]
-[ext_resource type="Texture2D" uid="uid://b0hpo8rdalc6y" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0011.png" id="20_8wbnu"]
-[ext_resource type="Texture2D" uid="uid://ddbdlb4yif2cn" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0011.png" id="20_juodv"]
-[ext_resource type="Texture2D" uid="uid://b0ofer11gibaa" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0012.png" id="21_3s8ij"]
-[ext_resource type="Texture2D" uid="uid://bieli6gq1q3ao" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0012.png" id="21_246s8"]
-[ext_resource type="Texture2D" uid="uid://cjvm57ceswepx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0013.png" id="22_0i4fy"]
-[ext_resource type="Texture2D" uid="uid://dv33sgluabn4o" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0013.png" id="22_sxmuj"]
-[ext_resource type="Texture2D" uid="uid://ucwtg6x0tbnb" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0014.png" id="23_e5w3y"]
-[ext_resource type="Texture2D" uid="uid://csw2b3rql8eg8" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0014.png" id="23_po0qy"]
-[ext_resource type="Texture2D" uid="uid://cldm1ypos3qbo" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0015.png" id="24_33uh4"]
-[ext_resource type="Texture2D" uid="uid://dwongnff8uied" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0015.png" id="24_41gok"]
-[ext_resource type="Texture2D" uid="uid://ctiyxdl53ovpu" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0016.png" id="25_82nfj"]
-[ext_resource type="Texture2D" uid="uid://23y2akyjb4x1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0016.png" id="25_bssoc"]
-[ext_resource type="Texture2D" uid="uid://86su21kiy3f1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0017.png" id="26_3wd3o"]
-[ext_resource type="Texture2D" uid="uid://bebjdgwaeh26e" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0017.png" id="26_l1ot1"]
-[ext_resource type="Texture2D" uid="uid://clhsllwrwx8na" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0018.png" id="27_misf2"]
-[ext_resource type="Texture2D" uid="uid://blwogtay50osn" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0018.png" id="27_ogpx8"]
-[ext_resource type="Texture2D" uid="uid://cx23fhoe574sd" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0019.png" id="28_1ccoh"]
-[ext_resource type="Texture2D" uid="uid://buyghf8e00vfw" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0019.png" id="28_xa50p"]
-[ext_resource type="Texture2D" uid="uid://vqyggx5k81pm" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0020.png" id="29_d1slt"]
-[ext_resource type="Texture2D" uid="uid://115ej2vlec45" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0020.png" id="29_t1tsb"]
-[ext_resource type="Texture2D" uid="uid://cpcn2w5ygt7ie" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0021.png" id="30_ow5eo"]
-[ext_resource type="Texture2D" uid="uid://cbdi112kk4xgx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0021.png" id="30_x3oe5"]
-[ext_resource type="Texture2D" uid="uid://bm0g8mpw2h3w1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0022.png" id="31_jjjtk"]
-[ext_resource type="Texture2D" uid="uid://c1xttwklwh14s" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0022.png" id="31_s83rd"]
-[ext_resource type="Texture2D" uid="uid://1en55cls0bxc" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0023.png" id="32_10o6f"]
-[ext_resource type="Texture2D" uid="uid://8g4s1g65pnqm" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0023.png" id="32_qyol7"]
-[ext_resource type="Texture2D" uid="uid://dbkg8gopc8kka" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT45/0024.png" id="33_1iywc"]
-[ext_resource type="Texture2D" uid="uid://b23y8sro7jdjt" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT0/0024.png" id="33_6xkyn"]
-[ext_resource type="Texture2D" uid="uid://cqyvrslt0v7kr" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0000.png" id="34_nhe3d"]
-[ext_resource type="Texture2D" uid="uid://dh130caceo8p0" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0001.png" id="35_lubs5"]
-[ext_resource type="Texture2D" uid="uid://bx314i6sytljv" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0002.png" id="36_gr1ig"]
-[ext_resource type="Texture2D" uid="uid://b6vjgwsu01a6p" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0003.png" id="37_wsbgl"]
-[ext_resource type="Texture2D" uid="uid://cx847ggm76kns" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0004.png" id="38_3peuy"]
-[ext_resource type="Texture2D" uid="uid://seyo4tvrhw0d" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0005.png" id="39_lamj5"]
-[ext_resource type="Texture2D" uid="uid://df5thibfavp0s" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0006.png" id="40_wwyb3"]
-[ext_resource type="Texture2D" uid="uid://dywujtw82iqch" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0007.png" id="41_vqktb"]
-[ext_resource type="Texture2D" uid="uid://cl2500cgp3sxx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0008.png" id="42_guqyr"]
-[ext_resource type="Texture2D" uid="uid://ddyedehtnandp" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0009.png" id="43_bemia"]
-[ext_resource type="Texture2D" uid="uid://dsqef1egcuko" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0010.png" id="44_40bpd"]
-[ext_resource type="Texture2D" uid="uid://dsmdq03v1o0ud" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0011.png" id="45_nf470"]
-[ext_resource type="Texture2D" uid="uid://updtggokmlk6" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0012.png" id="46_x0qx3"]
-[ext_resource type="Texture2D" uid="uid://dwidkn7jaha6m" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0013.png" id="47_4aupg"]
-[ext_resource type="Texture2D" uid="uid://bqbqdhtki0m83" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0014.png" id="48_to35c"]
-[ext_resource type="Texture2D" uid="uid://crnmm6v7vprb5" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0015.png" id="49_ec5gc"]
-[ext_resource type="Texture2D" uid="uid://bpvk8wlf247qn" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0016.png" id="50_jvyvi"]
-[ext_resource type="Texture2D" uid="uid://b8uf3bwrm653o" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0017.png" id="51_vel80"]
-[ext_resource type="Texture2D" uid="uid://bs7p53hpglpvg" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0018.png" id="52_thhr2"]
-[ext_resource type="Texture2D" uid="uid://cquyvs61hccj" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0019.png" id="53_st4a1"]
-[ext_resource type="Texture2D" uid="uid://b7xhr4e5uynr8" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0020.png" id="54_q1nny"]
-[ext_resource type="Texture2D" uid="uid://v61hj7me3uor" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0021.png" id="55_rwhvn"]
-[ext_resource type="Texture2D" uid="uid://caausoixg88st" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0022.png" id="56_4i6bs"]
-[ext_resource type="Texture2D" uid="uid://b8l5mru8na4ro" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0023.png" id="57_npyhy"]
-[ext_resource type="Texture2D" uid="uid://su1oxgnw5i2n" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT135/0024.png" id="58_qvaml"]
-[ext_resource type="Texture2D" uid="uid://cvuyt28h8d8yg" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0000.png" id="59_iuo0a"]
-[ext_resource type="Texture2D" uid="uid://127eobv2c35y" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0001.png" id="60_l7qip"]
-[ext_resource type="Texture2D" uid="uid://cq84t7rkiosba" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0002.png" id="61_48uvp"]
-[ext_resource type="Texture2D" uid="uid://bj4xurg4simkh" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0003.png" id="62_5i8gs"]
-[ext_resource type="Texture2D" uid="uid://h1igmlwdk42f" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0004.png" id="63_p7y66"]
-[ext_resource type="Texture2D" uid="uid://ynan6post3um" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0005.png" id="64_uvqnd"]
-[ext_resource type="Texture2D" uid="uid://bwlpwvytisugb" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0006.png" id="65_b8ofc"]
-[ext_resource type="Texture2D" uid="uid://doitopsxff3oh" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0007.png" id="66_hl6a6"]
-[ext_resource type="Texture2D" uid="uid://dwmp8ofrkhl1p" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0008.png" id="67_yvm8m"]
-[ext_resource type="Texture2D" uid="uid://b4jiicuw5idf2" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0009.png" id="68_6q6lw"]
-[ext_resource type="Texture2D" uid="uid://b3bbd7b1gan6k" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0010.png" id="69_g81ig"]
-[ext_resource type="Texture2D" uid="uid://bxl7b8he08bik" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0011.png" id="70_ejpcq"]
-[ext_resource type="Texture2D" uid="uid://nodwj3jrk1j2" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0012.png" id="71_05iy4"]
-[ext_resource type="Texture2D" uid="uid://dxqpcrhxgq4t1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0013.png" id="72_xtq5p"]
-[ext_resource type="Texture2D" uid="uid://c6xmgpq8fmls" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0014.png" id="73_boekw"]
-[ext_resource type="Texture2D" uid="uid://b50eg3mj8lbl0" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0015.png" id="74_rrfx7"]
-[ext_resource type="Texture2D" uid="uid://wjg1xt5xrwil" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0016.png" id="75_ytmmu"]
-[ext_resource type="Texture2D" uid="uid://bprujeha6byso" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0017.png" id="76_622pr"]
-[ext_resource type="Texture2D" uid="uid://c2ymyhpjkyrf8" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0018.png" id="77_r5uff"]
-[ext_resource type="Texture2D" uid="uid://q0lmnvhgp63s" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0019.png" id="78_vvf7p"]
-[ext_resource type="Texture2D" uid="uid://gto6ehctroh4" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0020.png" id="79_prmxe"]
-[ext_resource type="Texture2D" uid="uid://b78x7rgrtssaw" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0021.png" id="80_mi36n"]
-[ext_resource type="Texture2D" uid="uid://uxqjanb3su5u" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0022.png" id="81_dvrm1"]
-[ext_resource type="Texture2D" uid="uid://ceiqp01c20nc1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0023.png" id="82_xgpqn"]
-[ext_resource type="Texture2D" uid="uid://bokshs0sjoafw" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT315/0024.png" id="83_neai4"]
-[ext_resource type="Texture2D" uid="uid://d2lqs3xkh340b" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0000.png" id="84_yitmi"]
-[ext_resource type="Texture2D" uid="uid://divbc0hny5tfo" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0001.png" id="85_1utp8"]
-[ext_resource type="Texture2D" uid="uid://bt6n88ivdtn8f" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0002.png" id="86_328ws"]
-[ext_resource type="Texture2D" uid="uid://cnlvrdkdmpmm1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0003.png" id="87_0v3bo"]
-[ext_resource type="Texture2D" uid="uid://c3m7jll4jw60j" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0004.png" id="88_o5gfa"]
-[ext_resource type="Texture2D" uid="uid://808mpvdw0u1d" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0005.png" id="89_j36tx"]
-[ext_resource type="Texture2D" uid="uid://bs2fqnf6i8dix" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0006.png" id="90_ryjlx"]
-[ext_resource type="Texture2D" uid="uid://bio1yxvt5w0i2" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0007.png" id="91_x8764"]
-[ext_resource type="Texture2D" uid="uid://dsvtkvfputkdb" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0008.png" id="92_wrvl2"]
-[ext_resource type="Texture2D" uid="uid://b3gs287nmb3u3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0009.png" id="93_iktw7"]
-[ext_resource type="Texture2D" uid="uid://bend71o3s1eob" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0010.png" id="94_0epfm"]
-[ext_resource type="Texture2D" uid="uid://bmigbrbxc3x41" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0011.png" id="95_6kbhr"]
-[ext_resource type="Texture2D" uid="uid://bcmjff75myi6w" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0012.png" id="96_kx0gs"]
-[ext_resource type="Texture2D" uid="uid://c3ng1r6gs0vqf" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0013.png" id="97_lkrst"]
-[ext_resource type="Texture2D" uid="uid://b3jiuvop4aa4t" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0014.png" id="98_4dx3s"]
-[ext_resource type="Texture2D" uid="uid://kqgeotr0qye4" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0015.png" id="99_j5t2v"]
-[ext_resource type="Texture2D" uid="uid://csywt851qncq1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0016.png" id="100_3x1fc"]
-[ext_resource type="Texture2D" uid="uid://cq73f0ft0rm6e" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0017.png" id="101_vu180"]
-[ext_resource type="Texture2D" uid="uid://btp6ht621q3gi" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0018.png" id="102_hgbxd"]
-[ext_resource type="Texture2D" uid="uid://c82ic61jnsosy" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0019.png" id="103_4jagd"]
-[ext_resource type="Texture2D" uid="uid://bge3jlbg427ee" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0020.png" id="104_x01tf"]
-[ext_resource type="Texture2D" uid="uid://bxk0d1toc2u83" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0021.png" id="105_em6xy"]
-[ext_resource type="Texture2D" uid="uid://bicobf0l2ww1s" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0022.png" id="106_edcav"]
-[ext_resource type="Texture2D" uid="uid://b8ubowmcdr45f" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0023.png" id="107_lnq4a"]
-[ext_resource type="Texture2D" uid="uid://cgur8ol0ikpjp" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT225/0024.png" id="108_qjpte"]
-[ext_resource type="Texture2D" uid="uid://khybkwd4qgwm" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0000.png" id="109_bb4i5"]
-[ext_resource type="Texture2D" uid="uid://bbienffyupc3x" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0001.png" id="110_jbl03"]
-[ext_resource type="Texture2D" uid="uid://d31nxbj3bxfrx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0002.png" id="111_mryu3"]
-[ext_resource type="Texture2D" uid="uid://cq4ugvfaky4bk" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0003.png" id="112_812h3"]
-[ext_resource type="Texture2D" uid="uid://bqdbtkef6x3vx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0004.png" id="113_6j4hm"]
-[ext_resource type="Texture2D" uid="uid://bffd4go5h23lt" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0005.png" id="114_n7lbu"]
-[ext_resource type="Texture2D" uid="uid://dfawmikh5wm5c" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0006.png" id="115_m8hns"]
-[ext_resource type="Texture2D" uid="uid://b5iccvc3r5rjg" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0007.png" id="116_rj70v"]
-[ext_resource type="Texture2D" uid="uid://cs6yxh56fx2qs" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0008.png" id="117_d66up"]
-[ext_resource type="Texture2D" uid="uid://d4dumgy4isu6v" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0009.png" id="118_dlftg"]
-[ext_resource type="Texture2D" uid="uid://b211i1o76ebbm" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0010.png" id="119_4cvqi"]
-[ext_resource type="Texture2D" uid="uid://b4en1eiiroyfa" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0011.png" id="120_y4o27"]
-[ext_resource type="Texture2D" uid="uid://c0koiavdarsls" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0012.png" id="121_uoy0w"]
-[ext_resource type="Texture2D" uid="uid://xl1pjkld0dwp" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0013.png" id="122_77bl6"]
-[ext_resource type="Texture2D" uid="uid://b4g5tfaonl30c" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0014.png" id="123_tnw0w"]
-[ext_resource type="Texture2D" uid="uid://d3uar6udqhba1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0015.png" id="124_fmgda"]
-[ext_resource type="Texture2D" uid="uid://lbuxa8vhkr0i" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0016.png" id="125_ithij"]
-[ext_resource type="Texture2D" uid="uid://bh0ij6tfeykst" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0017.png" id="126_l2box"]
-[ext_resource type="Texture2D" uid="uid://rvabck7wdv5x" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0018.png" id="127_uoemu"]
-[ext_resource type="Texture2D" uid="uid://drurocw17kvel" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0019.png" id="128_kvvv3"]
-[ext_resource type="Texture2D" uid="uid://cngf2xg1ds16o" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0020.png" id="129_tjnog"]
-[ext_resource type="Texture2D" uid="uid://b2x8wvnqojbg3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0021.png" id="130_o0xq8"]
-[ext_resource type="Texture2D" uid="uid://b0c5lco4iij1w" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0022.png" id="131_m4ppj"]
-[ext_resource type="Texture2D" uid="uid://cv28ng311i0a3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0023.png" id="132_2f3k1"]
-[ext_resource type="Texture2D" uid="uid://x10c0n4rbfoe" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT90/0024.png" id="133_3woyk"]
-[ext_resource type="Texture2D" uid="uid://55q0h4ut5dt1" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0000.png" id="134_8xoy6"]
-[ext_resource type="Texture2D" uid="uid://b5mh6agwk0tmh" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0001.png" id="135_uxy0r"]
-[ext_resource type="Texture2D" uid="uid://bdhwjbdn36i5h" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0002.png" id="136_53qjp"]
-[ext_resource type="Texture2D" uid="uid://6s7p04jlqyj3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0003.png" id="137_63jhh"]
-[ext_resource type="Texture2D" uid="uid://bmg1bqmonaxw4" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0004.png" id="138_no7xy"]
-[ext_resource type="Texture2D" uid="uid://bvkky4cdvliaj" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0005.png" id="139_isytq"]
-[ext_resource type="Texture2D" uid="uid://dmmggm688dmrt" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0006.png" id="140_lo16v"]
-[ext_resource type="Texture2D" uid="uid://den0px71c2q85" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0007.png" id="141_ffbwh"]
-[ext_resource type="Texture2D" uid="uid://cg7a81g2b3q8y" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0008.png" id="142_e3ogo"]
-[ext_resource type="Texture2D" uid="uid://dumthsh1nyvgd" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0009.png" id="143_ss3uf"]
-[ext_resource type="Texture2D" uid="uid://dvfrjcgg03mx4" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0010.png" id="144_h68n0"]
-[ext_resource type="Texture2D" uid="uid://b5l6ocni57gki" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0011.png" id="145_y04d4"]
-[ext_resource type="Texture2D" uid="uid://bv5ian3xa7mmp" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0012.png" id="146_3fb76"]
-[ext_resource type="Texture2D" uid="uid://dxvjiknojw0hn" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0013.png" id="147_54ci7"]
-[ext_resource type="Texture2D" uid="uid://cbpeim8negnua" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0014.png" id="148_0nvcw"]
-[ext_resource type="Texture2D" uid="uid://cc1mhnng2f7di" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0015.png" id="149_qvol7"]
-[ext_resource type="Texture2D" uid="uid://ce3rj88bx184w" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0016.png" id="150_kpmn4"]
-[ext_resource type="Texture2D" uid="uid://bmbm4b815b1ty" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0017.png" id="151_grjtu"]
-[ext_resource type="Texture2D" uid="uid://cb37ohlcapwpe" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0018.png" id="152_mpud8"]
-[ext_resource type="Texture2D" uid="uid://kfkjkvisl7d3" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0019.png" id="153_mbndg"]
-[ext_resource type="Texture2D" uid="uid://bfkwc0o6qhvwy" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0020.png" id="154_nosrt"]
-[ext_resource type="Texture2D" uid="uid://bt1vapfuxs3om" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0021.png" id="155_xo2kv"]
-[ext_resource type="Texture2D" uid="uid://3loxjdu32fnt" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0022.png" id="156_jfd3l"]
-[ext_resource type="Texture2D" uid="uid://bk7obpee5ml5i" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0023.png" id="157_f5400"]
-[ext_resource type="Texture2D" uid="uid://cp22v53kfprpa" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT270/0024.png" id="158_vnquy"]
-[ext_resource type="Texture2D" uid="uid://2euthmvpcdw7" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0000.png" id="184_mntii"]
-[ext_resource type="Texture2D" uid="uid://bt5qau7xnktuj" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0001.png" id="185_di6lc"]
-[ext_resource type="Texture2D" uid="uid://b1jxm55ohuhxr" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0002.png" id="186_4mfd4"]
-[ext_resource type="Texture2D" uid="uid://otijri06t1bm" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0003.png" id="187_cko2t"]
-[ext_resource type="Texture2D" uid="uid://dovbvrxqbajc0" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0004.png" id="188_flifg"]
-[ext_resource type="Texture2D" uid="uid://d0w1upawcj7bj" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0005.png" id="189_2l05p"]
-[ext_resource type="Texture2D" uid="uid://c8v808dofcros" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0006.png" id="190_kbwb4"]
-[ext_resource type="Texture2D" uid="uid://cdve3vx3edjff" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0007.png" id="191_7xi2w"]
-[ext_resource type="Texture2D" uid="uid://6hghsshhb1lo" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0008.png" id="192_ukwl8"]
-[ext_resource type="Texture2D" uid="uid://di17qv3xd1qfy" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0009.png" id="193_dckcl"]
-[ext_resource type="Texture2D" uid="uid://c8lkj5ygus0fh" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0010.png" id="194_2ccvj"]
-[ext_resource type="Texture2D" uid="uid://dud014ulkt5vt" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0011.png" id="195_3nf0j"]
-[ext_resource type="Texture2D" uid="uid://bjxou0lsj0r26" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0012.png" id="196_v7i2g"]
-[ext_resource type="Texture2D" uid="uid://dv1wlll1hfbwf" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0013.png" id="197_a4yop"]
-[ext_resource type="Texture2D" uid="uid://c4d2w7ti4hk8i" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0014.png" id="198_om27k"]
-[ext_resource type="Texture2D" uid="uid://de1mcpbll7swx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0015.png" id="199_k2nsb"]
-[ext_resource type="Texture2D" uid="uid://bhon3eshkp2ok" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0016.png" id="200_8uf51"]
-[ext_resource type="Texture2D" uid="uid://bm2fsxv8y5j1q" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0017.png" id="201_2y2t6"]
-[ext_resource type="Texture2D" uid="uid://dqxu46n0gsd8e" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0018.png" id="202_xf27y"]
-[ext_resource type="Texture2D" uid="uid://d1fwm6r0rmdb5" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0019.png" id="203_6kgad"]
-[ext_resource type="Texture2D" uid="uid://ltk8luti1d75" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0020.png" id="204_fg4mj"]
-[ext_resource type="Texture2D" uid="uid://d1aqp6h11t6cu" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0021.png" id="205_ipd7u"]
-[ext_resource type="Texture2D" uid="uid://dyh0334n2iy56" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0022.png" id="206_k4qdu"]
-[ext_resource type="Texture2D" uid="uid://b04qomnp8xhdx" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0023.png" id="207_itl6y"]
-[ext_resource type="Texture2D" uid="uid://b4vd1o44c0ieo" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0024.png" id="208_8mgb0"]
+[ext_resource type="Texture2D" uid="uid://c8r54dj7l6b6l" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150009.png" id="19_4xjee"]
+[ext_resource type="Texture2D" uid="uid://c84h7151lioqx" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150010.png" id="20_8nvxt"]
+[ext_resource type="Texture2D" uid="uid://by2gtjnjoit5t" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150011.png" id="21_q07ty"]
+[ext_resource type="Texture2D" uid="uid://cwhnfbhgrc5bc" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150012.png" id="22_vc6vm"]
+[ext_resource type="Texture2D" uid="uid://b52suy6qos0ix" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150013.png" id="23_u2ij5"]
+[ext_resource type="Texture2D" uid="uid://l4duy6txw82x" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150014.png" id="24_ridxj"]
+[ext_resource type="Texture2D" uid="uid://dgbf54gwbmd4y" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150015.png" id="25_epliw"]
+[ext_resource type="Texture2D" uid="uid://cmi7t4rjhalld" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150016.png" id="26_4c80m"]
+[ext_resource type="Texture2D" uid="uid://dneg1ivb3v3y5" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150017.png" id="27_ct2go"]
+[ext_resource type="Texture2D" uid="uid://fit7w8is1rl" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150018.png" id="28_v6uam"]
+[ext_resource type="Texture2D" uid="uid://2ndpc3gd3rp2" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150019.png" id="29_v5qd0"]
+[ext_resource type="Texture2D" uid="uid://ijymoxdtv7sc" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150020.png" id="30_m4he7"]
+[ext_resource type="Texture2D" uid="uid://bnpvkwarfi1f7" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150021.png" id="31_mh0js"]
+[ext_resource type="Texture2D" uid="uid://q0buag2g1wrw" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150022.png" id="32_w88jx"]
+[ext_resource type="Texture2D" uid="uid://cjykpistwg2dt" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150023.png" id="33_daony"]
+[ext_resource type="Texture2D" uid="uid://b2m5s5w4wno1d" path="res://assets/graphics/police_SPRITE_F/police_F315/POLICE_F3150024.png" id="34_4tcpe"]
+[ext_resource type="Texture2D" uid="uid://4wh33nsvyrte" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450000.png" id="35_nnljf"]
+[ext_resource type="Texture2D" uid="uid://b7tr2rxfpryry" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450001.png" id="36_ymxq3"]
+[ext_resource type="Texture2D" uid="uid://dqk3cfwvtxt5f" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450002.png" id="37_cqc1y"]
+[ext_resource type="Texture2D" uid="uid://c5iqwad1nanhv" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450003.png" id="38_5evb3"]
+[ext_resource type="Texture2D" uid="uid://b456c1ar72517" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450004.png" id="39_uyv3s"]
+[ext_resource type="Texture2D" uid="uid://4wwmifwr2w6g" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450005.png" id="40_0gdeb"]
+[ext_resource type="Texture2D" uid="uid://d3igk8xx0vsnn" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450006.png" id="41_d0tu2"]
+[ext_resource type="Texture2D" uid="uid://d4iiuh3b23gpu" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450007.png" id="42_uwqmm"]
+[ext_resource type="Texture2D" uid="uid://c65ookp3m56w7" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450008.png" id="43_7svwm"]
+[ext_resource type="Texture2D" uid="uid://cgpnjtarf6xpq" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450009.png" id="44_34hip"]
+[ext_resource type="Texture2D" uid="uid://djvp5br7wptre" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450010.png" id="45_rmr0f"]
+[ext_resource type="Texture2D" uid="uid://chikfqn8ur0ke" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450011.png" id="46_8x7il"]
+[ext_resource type="Texture2D" uid="uid://c3seol3hyq40b" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450012.png" id="47_0pew1"]
+[ext_resource type="Texture2D" uid="uid://xqjb01dvh5l0" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450013.png" id="48_qeau3"]
+[ext_resource type="Texture2D" uid="uid://kjdi0q76or2k" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450014.png" id="49_gxlkf"]
+[ext_resource type="Texture2D" uid="uid://eiwelp3o4n4u" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450015.png" id="50_krmdg"]
+[ext_resource type="Texture2D" uid="uid://dr6witwxftxfl" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450016.png" id="51_a6lkr"]
+[ext_resource type="Texture2D" uid="uid://bbptl43mqdjft" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450017.png" id="52_2e5no"]
+[ext_resource type="Texture2D" uid="uid://cfbrmbh2a6hu2" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450018.png" id="53_6a13e"]
+[ext_resource type="Texture2D" uid="uid://34txyl5w0ogv" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450019.png" id="54_42p1c"]
+[ext_resource type="Texture2D" uid="uid://cp3d8r68om8s4" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450020.png" id="55_0vewb"]
+[ext_resource type="Texture2D" uid="uid://bmue2aa6173oc" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450021.png" id="56_jrgv6"]
+[ext_resource type="Texture2D" uid="uid://b3jnwsmdh8gna" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450022.png" id="57_bclgb"]
+[ext_resource type="Texture2D" uid="uid://dcs8xtfm3nf15" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450023.png" id="58_tini5"]
+[ext_resource type="Texture2D" uid="uid://bihne4v0khbfu" path="res://assets/graphics/police_SPRITE_F/police_F45/POLICE_F450024.png" id="59_ks67n"]
+[ext_resource type="Texture2D" uid="uid://byqultmxs4q8j" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150000.png" id="60_r0fef"]
+[ext_resource type="Texture2D" uid="uid://beiiq7egbfx0" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150001.png" id="61_fwe1j"]
+[ext_resource type="Texture2D" uid="uid://drcwr8gngjigq" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150002.png" id="62_tyxw2"]
+[ext_resource type="Texture2D" uid="uid://bah2tqvpl8s5e" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150003.png" id="63_b2x2f"]
+[ext_resource type="Texture2D" uid="uid://ciobcpib2mxew" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150004.png" id="64_y4v2w"]
+[ext_resource type="Texture2D" uid="uid://bajabkk0dkhm6" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150005.png" id="65_ikh3j"]
+[ext_resource type="Texture2D" uid="uid://4wyb0htqa1ev" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150006.png" id="66_agy2u"]
+[ext_resource type="Texture2D" uid="uid://cnfooces4krmk" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150007.png" id="67_qdaka"]
+[ext_resource type="Texture2D" uid="uid://occfau1wv55j" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150008.png" id="68_2g0bb"]
+[ext_resource type="Texture2D" uid="uid://ckesqattnivkc" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150009.png" id="69_7oypu"]
+[ext_resource type="Texture2D" uid="uid://dywkl53d55fn7" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150010.png" id="70_m7v4x"]
+[ext_resource type="Texture2D" uid="uid://dy7eu6f6xd0na" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150011.png" id="71_w5fn2"]
+[ext_resource type="Texture2D" uid="uid://dee02x4gk4wk0" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150012.png" id="72_hkxig"]
+[ext_resource type="Texture2D" uid="uid://dxga8frnfj1c5" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150013.png" id="73_dkp03"]
+[ext_resource type="Texture2D" uid="uid://ge8n106tjt33" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150014.png" id="74_4kt1n"]
+[ext_resource type="Texture2D" uid="uid://bqggfuvh3pkkl" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150015.png" id="75_7j0ht"]
+[ext_resource type="Texture2D" uid="uid://dol6wh8y58snn" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150016.png" id="76_3plf7"]
+[ext_resource type="Texture2D" uid="uid://r0n3ghtbe1k5" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150017.png" id="77_3chv6"]
+[ext_resource type="Texture2D" uid="uid://bu7x5gp4grprq" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150018.png" id="78_tkx0p"]
+[ext_resource type="Texture2D" uid="uid://bk8agby07gsdg" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150019.png" id="79_7k07p"]
+[ext_resource type="Texture2D" uid="uid://bow6ueh0apy4n" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150020.png" id="80_jrhfq"]
+[ext_resource type="Texture2D" uid="uid://c77ofbuea6bf8" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150021.png" id="81_n7my6"]
+[ext_resource type="Texture2D" uid="uid://b6uu4wa7dnsap" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150022.png" id="82_a0wmi"]
+[ext_resource type="Texture2D" uid="uid://g2excehi0cyw" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150023.png" id="83_vssac"]
+[ext_resource type="Texture2D" uid="uid://b7ns8vdn82scq" path="res://assets/graphics/police_SPRITE_F/police_F215/POLICE_F2150024.png" id="84_ya1c3"]
+[ext_resource type="Texture2D" uid="uid://ft0ymlu0k0xr" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350000.png" id="85_ryqgj"]
+[ext_resource type="Texture2D" uid="uid://c6b1s0qx36hg5" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350001.png" id="86_l2np2"]
+[ext_resource type="Texture2D" uid="uid://dvr65o22p1q30" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350002.png" id="87_u7h4o"]
+[ext_resource type="Texture2D" uid="uid://jalsa8hddo0t" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350003.png" id="88_ap8l4"]
+[ext_resource type="Texture2D" uid="uid://d16u5i3rfq1p1" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350004.png" id="89_us3u4"]
+[ext_resource type="Texture2D" uid="uid://y3x07khli78a" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350005.png" id="90_wm72h"]
+[ext_resource type="Texture2D" uid="uid://b4ph1km2jbf66" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350006.png" id="91_sdclh"]
+[ext_resource type="Texture2D" uid="uid://capqp1jhnft50" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350007.png" id="92_t6ynv"]
+[ext_resource type="Texture2D" uid="uid://c71i45imieswq" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350008.png" id="93_cn013"]
+[ext_resource type="Texture2D" uid="uid://bd4qrnhusirk5" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350009.png" id="94_7keb6"]
+[ext_resource type="Texture2D" uid="uid://dkfljhjvonk5t" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350010.png" id="95_kw023"]
+[ext_resource type="Texture2D" uid="uid://c4nfjcbp45klk" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350011.png" id="96_eqkrj"]
+[ext_resource type="Texture2D" uid="uid://cdd2lfswcardc" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350012.png" id="97_45lru"]
+[ext_resource type="Texture2D" uid="uid://cqqwp3jxpyaa7" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350013.png" id="98_a47tw"]
+[ext_resource type="Texture2D" uid="uid://ch2y5as0g2fc3" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350014.png" id="99_tdcfg"]
+[ext_resource type="Texture2D" uid="uid://c6hpju0dqp8cq" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350015.png" id="100_2cmlb"]
+[ext_resource type="Texture2D" uid="uid://b7jia70g2rqlk" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350016.png" id="101_a8hfr"]
+[ext_resource type="Texture2D" uid="uid://qork3ilsv24j" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350017.png" id="102_bcnfd"]
+[ext_resource type="Texture2D" uid="uid://q1algq2slabi" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350018.png" id="103_ans2d"]
+[ext_resource type="Texture2D" uid="uid://c7cf0cqtlln47" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350019.png" id="104_txmew"]
+[ext_resource type="Texture2D" uid="uid://dy1mxv1cy18v1" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350020.png" id="105_rnbcg"]
+[ext_resource type="Texture2D" uid="uid://bxt3fvreigly2" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350021.png" id="106_q3brl"]
+[ext_resource type="Texture2D" uid="uid://bt7ng36n5joxd" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350022.png" id="107_spbvt"]
+[ext_resource type="Texture2D" uid="uid://yj4lqb7qormt" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350023.png" id="108_w23qi"]
+[ext_resource type="Texture2D" uid="uid://d31nliepud8cp" path="res://assets/graphics/police_SPRITE_F/police_F135/POLICE_F1350024.png" id="109_s3fw7"]
+[ext_resource type="Texture2D" uid="uid://3267au6g7lh" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00000.png" id="110_5apbg"]
+[ext_resource type="Texture2D" uid="uid://bmvesgfxrbly8" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00001.png" id="111_ytacs"]
+[ext_resource type="Texture2D" uid="uid://dh0csmmoinn38" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00002.png" id="112_1wkhj"]
+[ext_resource type="Texture2D" uid="uid://d3b3v3axu1lrk" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00003.png" id="113_cnjh5"]
+[ext_resource type="Texture2D" uid="uid://k0vht3pvcelb" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00004.png" id="114_vswio"]
+[ext_resource type="Texture2D" uid="uid://cbtco5w7qftc2" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00005.png" id="115_13ypl"]
+[ext_resource type="Texture2D" uid="uid://dlbef4uk264ga" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00006.png" id="116_gwnik"]
+[ext_resource type="Texture2D" uid="uid://cvmnx0cedi3wf" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00007.png" id="117_qn1le"]
+[ext_resource type="Texture2D" uid="uid://ccdg1vavbr0u3" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00008.png" id="118_p7qqm"]
+[ext_resource type="Texture2D" uid="uid://bh53cmy0loqe6" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00009.png" id="119_d2wa7"]
+[ext_resource type="Texture2D" uid="uid://cy7yile2bk4c1" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00010.png" id="120_bcijh"]
+[ext_resource type="Texture2D" uid="uid://cuw1qlpqs5n7l" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00011.png" id="121_rkcvn"]
+[ext_resource type="Texture2D" uid="uid://dl7ohrm8wk3rh" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00012.png" id="122_4as13"]
+[ext_resource type="Texture2D" uid="uid://b5dtw8srggwbb" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00013.png" id="123_x7jsu"]
+[ext_resource type="Texture2D" uid="uid://d0rp8bwvvnjs4" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00014.png" id="124_iy3gv"]
+[ext_resource type="Texture2D" uid="uid://c7glbj1cpolqn" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00015.png" id="125_h4slt"]
+[ext_resource type="Texture2D" uid="uid://c16a6qboxit07" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00016.png" id="126_skpdm"]
+[ext_resource type="Texture2D" uid="uid://i8stodamcfcl" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00017.png" id="127_s0bl7"]
+[ext_resource type="Texture2D" uid="uid://bturdmgsyeqal" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00018.png" id="128_mbu4w"]
+[ext_resource type="Texture2D" uid="uid://15cu3cicaqxx" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00019.png" id="129_r6lue"]
+[ext_resource type="Texture2D" uid="uid://bcpcey8uncuj5" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00020.png" id="130_00afc"]
+[ext_resource type="Texture2D" uid="uid://uhhsdiq76xcg" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00021.png" id="131_lejy8"]
+[ext_resource type="Texture2D" uid="uid://3ggmfjpgsrqn" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00022.png" id="132_ag232"]
+[ext_resource type="Texture2D" uid="uid://dhxjkjhlj72bq" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00023.png" id="133_6hxio"]
+[ext_resource type="Texture2D" uid="uid://d1dduo0xt45y8" path="res://assets/graphics/police_SPRITE_F/police_F0/POLICE_F00024.png" id="134_wdptj"]
+[ext_resource type="Texture2D" uid="uid://h3cdbd1pc0wy" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800000.png" id="135_juhf4"]
+[ext_resource type="Texture2D" uid="uid://12751f0okiwx" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800001.png" id="136_ifk7n"]
+[ext_resource type="Texture2D" uid="uid://dj23paoqgbkm8" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800002.png" id="137_x5pyr"]
+[ext_resource type="Texture2D" uid="uid://meoaqc3eqqji" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800003.png" id="138_w2eit"]
+[ext_resource type="Texture2D" uid="uid://da70q2ss28q00" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800004.png" id="139_ae86k"]
+[ext_resource type="Texture2D" uid="uid://dppg6hjjq630s" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800005.png" id="140_qvnog"]
+[ext_resource type="Texture2D" uid="uid://dryk72j4cipf0" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800006.png" id="141_xkmvp"]
+[ext_resource type="Texture2D" uid="uid://bbub8ogdpoji5" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800007.png" id="142_26hac"]
+[ext_resource type="Texture2D" uid="uid://batwmp46s5ied" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800008.png" id="143_3f1rp"]
+[ext_resource type="Texture2D" uid="uid://jcep01q6pwod" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800009.png" id="144_av8lt"]
+[ext_resource type="Texture2D" uid="uid://bdd208wc2m6ko" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800010.png" id="145_qt0rj"]
+[ext_resource type="Texture2D" uid="uid://cwtqllr8trkgo" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800011.png" id="146_oenpd"]
+[ext_resource type="Texture2D" uid="uid://d2rhsjylgypw7" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800012.png" id="147_6ta73"]
+[ext_resource type="Texture2D" uid="uid://b3fjsiby4smhq" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800013.png" id="148_fdbxp"]
+[ext_resource type="Texture2D" uid="uid://mt8ppj6x6b7d" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800014.png" id="149_velve"]
+[ext_resource type="Texture2D" uid="uid://bqmp6n223j6jf" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800015.png" id="150_2bhvq"]
+[ext_resource type="Texture2D" uid="uid://bogvtjevwoqe8" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800016.png" id="151_45gte"]
+[ext_resource type="Texture2D" uid="uid://c03wnb0adxqp4" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800017.png" id="152_xxekr"]
+[ext_resource type="Texture2D" uid="uid://c1g2jddkumb8j" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800018.png" id="153_hscxj"]
+[ext_resource type="Texture2D" uid="uid://cvqw31kmg6yg5" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800019.png" id="154_m36ld"]
+[ext_resource type="Texture2D" uid="uid://hfur0vr8q1tt" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800020.png" id="155_tfrdh"]
+[ext_resource type="Texture2D" uid="uid://d3osvp4m2sk2c" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800021.png" id="156_y4tla"]
+[ext_resource type="Texture2D" uid="uid://b27xr5l2vfoko" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800022.png" id="157_s4a28"]
+[ext_resource type="Texture2D" uid="uid://boyla678udr43" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800023.png" id="158_5ol8n"]
+[ext_resource type="Texture2D" uid="uid://c8n6nek2iihhq" path="res://assets/graphics/police_SPRITE_F/police_F180/POLICE_F1800024.png" id="159_raliu"]
+[ext_resource type="Texture2D" uid="uid://dybnso3vohbep" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700000.png" id="160_46r14"]
+[ext_resource type="Texture2D" uid="uid://cctyec8cjl83r" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700001.png" id="161_k8gp4"]
+[ext_resource type="Texture2D" uid="uid://c6gb6wpnqtbh8" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700002.png" id="162_8slu3"]
+[ext_resource type="Texture2D" uid="uid://dj7jw1bdv4p6e" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700003.png" id="163_u1iok"]
+[ext_resource type="Texture2D" uid="uid://ba8cpnckt6bir" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700004.png" id="164_n4k8f"]
+[ext_resource type="Texture2D" uid="uid://uhgabk4oggfw" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700005.png" id="165_fopn3"]
+[ext_resource type="Texture2D" uid="uid://bb66picy7ufr" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700006.png" id="166_fsy61"]
+[ext_resource type="Texture2D" uid="uid://4q50ycy56rk3" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700007.png" id="167_jw65x"]
+[ext_resource type="Texture2D" uid="uid://br48fqwq2r22t" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700008.png" id="168_xrmi2"]
+[ext_resource type="Texture2D" uid="uid://bfxmovntgwavx" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700009.png" id="169_1cy1t"]
+[ext_resource type="Texture2D" uid="uid://dgcnmhayjbb4l" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700010.png" id="170_jl5oj"]
+[ext_resource type="Texture2D" uid="uid://bwui7ny1ct8xo" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700011.png" id="171_5gyo1"]
+[ext_resource type="Texture2D" uid="uid://docqc07v8xue0" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700012.png" id="172_poa3d"]
+[ext_resource type="Texture2D" uid="uid://drryahhw1foyv" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700013.png" id="173_uqoty"]
+[ext_resource type="Texture2D" uid="uid://csohvso7384l3" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700014.png" id="174_6co85"]
+[ext_resource type="Texture2D" uid="uid://c6okqmuvidnmk" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700015.png" id="175_lyl11"]
+[ext_resource type="Texture2D" uid="uid://bq0ox58fm2tm3" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700016.png" id="176_6ddhw"]
+[ext_resource type="Texture2D" uid="uid://c1g608w77sm75" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700017.png" id="177_civwc"]
+[ext_resource type="Texture2D" uid="uid://bynggxaamrxuv" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700018.png" id="178_q8wdr"]
+[ext_resource type="Texture2D" uid="uid://bwgqli5a7fy8u" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700019.png" id="179_bv2vm"]
+[ext_resource type="Texture2D" uid="uid://ct15eghmdmy1t" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700020.png" id="180_bwt8h"]
+[ext_resource type="Texture2D" uid="uid://70i7plmb2j6t" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700021.png" id="181_17tan"]
+[ext_resource type="Texture2D" uid="uid://coe63lx1b36lg" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700022.png" id="182_tiimf"]
+[ext_resource type="Texture2D" uid="uid://4foplf3qh3do" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700023.png" id="183_htjjq"]
+[ext_resource type="Texture2D" uid="uid://djj5ftrria1h" path="res://assets/graphics/police_SPRITE_F/police_F270/POLICE_F2700024.png" id="184_78fht"]
+[ext_resource type="Texture2D" uid="uid://r7mexpbjlrb4" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900000.png" id="185_7x6cq"]
+[ext_resource type="Texture2D" uid="uid://dhbkkey263r1j" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900001.png" id="186_q274g"]
+[ext_resource type="Texture2D" uid="uid://i7couuca10cj" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900002.png" id="187_jksrq"]
+[ext_resource type="Texture2D" uid="uid://fgnka3m3gqc6" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900003.png" id="188_dwp43"]
+[ext_resource type="Texture2D" uid="uid://c5hyhnmmb40ej" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900004.png" id="189_wxocg"]
+[ext_resource type="Texture2D" uid="uid://bwp45gbf06pbx" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900005.png" id="190_2vfaa"]
+[ext_resource type="Texture2D" uid="uid://c8td2ckymgbjq" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900006.png" id="191_pbdbd"]
+[ext_resource type="Texture2D" uid="uid://b8l5su7wmdxvv" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900007.png" id="192_pmv1m"]
+[ext_resource type="Texture2D" uid="uid://b0lm78pqpv6sb" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900008.png" id="193_lpm1x"]
+[ext_resource type="Texture2D" uid="uid://bukbiev4ac0mf" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900009.png" id="194_rewiy"]
+[ext_resource type="Texture2D" uid="uid://capfbqjyp1k2n" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900010.png" id="195_tadax"]
+[ext_resource type="Texture2D" uid="uid://dfsih62rv6vuf" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900011.png" id="196_kiok7"]
+[ext_resource type="Texture2D" uid="uid://c3fbjsc14vvtb" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900012.png" id="197_1vvc6"]
+[ext_resource type="Texture2D" uid="uid://owqqh7gxjkev" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900013.png" id="198_wwgey"]
+[ext_resource type="Texture2D" uid="uid://dph8wdaoeg4bp" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900014.png" id="199_01y24"]
+[ext_resource type="Texture2D" uid="uid://i0nv75cee1qs" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900015.png" id="200_6mqg6"]
+[ext_resource type="Texture2D" uid="uid://bt4lhch10wd5e" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900016.png" id="201_7402c"]
+[ext_resource type="Texture2D" uid="uid://c38locofw1cxu" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900017.png" id="202_fbqsd"]
+[ext_resource type="Texture2D" uid="uid://i1gohd3ggeyd" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900018.png" id="203_cxfsp"]
+[ext_resource type="Texture2D" uid="uid://bq8uudrqdbywn" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900019.png" id="204_7h5ax"]
+[ext_resource type="Texture2D" uid="uid://cjt055crfav67" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900020.png" id="205_ivjkv"]
+[ext_resource type="Texture2D" uid="uid://de4do08rnwr8w" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900021.png" id="206_ixnbv"]
+[ext_resource type="Texture2D" uid="uid://dlcf04ownrq08" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900022.png" id="207_av2mm"]
+[ext_resource type="Texture2D" uid="uid://cm0h23rbar1rh" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900023.png" id="208_58alo"]
+[ext_resource type="Texture2D" uid="uid://54xx2r6tkku2" path="res://assets/graphics/police_SPRITE_F/police_F90/POLICE_F900024.png" id="209_68dcc"]
 [ext_resource type="Texture2D" uid="uid://bydpvdvfj7xwq" path="res://assets/graphics/SPRITE+COLOR/laser_kolor_sprite/laser_kolor0120.png0001.png" id="212_mntii"]
 [ext_resource type="Texture2D" uid="uid://8382wnyty2g1" path="res://assets/graphics/SPRITE+COLOR/laser_kolor_sprite/laser_kolor0120.png0002.png" id="213_di6lc"]
 [ext_resource type="Texture2D" uid="uid://kbw8ownb26cf" path="res://assets/graphics/SPRITE+COLOR/laser_kolor_sprite/laser_kolor0120.png0003.png" id="214_4mfd4"]
@@ -394,7 +394,7 @@ data = PackedByteArray("//vQxAADwAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVV
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_451g6")
+"texture": ExtResource("6_2y2t6")
 }],
 "loop": true,
 "name": &"policjant_idle_dol",
@@ -402,7 +402,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_a8y66")
+"texture": ExtResource("7_xf27y")
 }],
 "loop": true,
 "name": &"policjant_idle_gora",
@@ -410,7 +410,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_q24i8")
+"texture": ExtResource("8_6kgad")
 }],
 "loop": true,
 "name": &"policjant_idle_lewo",
@@ -418,7 +418,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_7xr4v")
+"texture": ExtResource("9_fg4mj")
 }],
 "loop": true,
 "name": &"policjant_idle_prawo",
@@ -426,79 +426,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_s437g")
+"texture": ExtResource("10_ipd7u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_am8v3")
+"texture": ExtResource("11_k4qdu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_34401")
+"texture": ExtResource("12_itl6y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_jisr7")
+"texture": ExtResource("13_8mgb0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_keo02")
+"texture": ExtResource("14_qn042")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_384qg")
+"texture": ExtResource("15_3npyd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_xgpas")
+"texture": ExtResource("16_gklcc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_um8ro")
+"texture": ExtResource("17_fdnwl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_pxn8y")
+"texture": ExtResource("18_s7763")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_3m820")
+"texture": ExtResource("19_4xjee")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_ootyp")
+"texture": ExtResource("20_8nvxt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_8wbnu")
+"texture": ExtResource("21_q07ty")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_3s8ij")
+"texture": ExtResource("22_vc6vm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_sxmuj")
+"texture": ExtResource("23_u2ij5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_e5w3y")
+"texture": ExtResource("24_ridxj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_41gok")
+"texture": ExtResource("25_epliw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_82nfj")
+"texture": ExtResource("26_4c80m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_3wd3o")
+"texture": ExtResource("27_ct2go")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_misf2")
+"texture": ExtResource("28_v6uam")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_1ccoh")
+"texture": ExtResource("29_v5qd0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_d1slt")
+"texture": ExtResource("30_m4he7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_ow5eo")
+"texture": ExtResource("31_mh0js")
 }, {
 "duration": 1.0,
-"texture": ExtResource("31_s83rd")
+"texture": ExtResource("32_w88jx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("32_10o6f")
+"texture": ExtResource("33_daony")
 }, {
 "duration": 1.0,
-"texture": ExtResource("33_1iywc")
+"texture": ExtResource("34_4tcpe")
 }],
 "loop": true,
 "name": &"policjant_skos_dol_lewo",
@@ -506,79 +506,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("34_nhe3d")
+"texture": ExtResource("35_nnljf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("35_lubs5")
+"texture": ExtResource("36_ymxq3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("36_gr1ig")
+"texture": ExtResource("37_cqc1y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("37_wsbgl")
+"texture": ExtResource("38_5evb3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("38_3peuy")
+"texture": ExtResource("39_uyv3s")
 }, {
 "duration": 1.0,
-"texture": ExtResource("39_lamj5")
+"texture": ExtResource("40_0gdeb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("40_wwyb3")
+"texture": ExtResource("41_d0tu2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("41_vqktb")
+"texture": ExtResource("42_uwqmm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("42_guqyr")
+"texture": ExtResource("43_7svwm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("43_bemia")
+"texture": ExtResource("44_34hip")
 }, {
 "duration": 1.0,
-"texture": ExtResource("44_40bpd")
+"texture": ExtResource("45_rmr0f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("45_nf470")
+"texture": ExtResource("46_8x7il")
 }, {
 "duration": 1.0,
-"texture": ExtResource("46_x0qx3")
+"texture": ExtResource("47_0pew1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("47_4aupg")
+"texture": ExtResource("48_qeau3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("48_to35c")
+"texture": ExtResource("49_gxlkf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("49_ec5gc")
+"texture": ExtResource("50_krmdg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("50_jvyvi")
+"texture": ExtResource("51_a6lkr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("51_vel80")
+"texture": ExtResource("52_2e5no")
 }, {
 "duration": 1.0,
-"texture": ExtResource("52_thhr2")
+"texture": ExtResource("53_6a13e")
 }, {
 "duration": 1.0,
-"texture": ExtResource("53_st4a1")
+"texture": ExtResource("54_42p1c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("54_q1nny")
+"texture": ExtResource("55_0vewb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("55_rwhvn")
+"texture": ExtResource("56_jrgv6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("56_4i6bs")
+"texture": ExtResource("57_bclgb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("57_npyhy")
+"texture": ExtResource("58_tini5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("58_qvaml")
+"texture": ExtResource("59_ks67n")
 }],
 "loop": true,
 "name": &"policjant_skos_dol_prawo",
@@ -586,79 +586,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("59_iuo0a")
+"texture": ExtResource("60_r0fef")
 }, {
 "duration": 1.0,
-"texture": ExtResource("60_l7qip")
+"texture": ExtResource("61_fwe1j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("61_48uvp")
+"texture": ExtResource("62_tyxw2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("62_5i8gs")
+"texture": ExtResource("63_b2x2f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("63_p7y66")
+"texture": ExtResource("64_y4v2w")
 }, {
 "duration": 1.0,
-"texture": ExtResource("64_uvqnd")
+"texture": ExtResource("65_ikh3j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("65_b8ofc")
+"texture": ExtResource("66_agy2u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("66_hl6a6")
+"texture": ExtResource("67_qdaka")
 }, {
 "duration": 1.0,
-"texture": ExtResource("67_yvm8m")
+"texture": ExtResource("68_2g0bb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("68_6q6lw")
+"texture": ExtResource("69_7oypu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("69_g81ig")
+"texture": ExtResource("70_m7v4x")
 }, {
 "duration": 1.0,
-"texture": ExtResource("70_ejpcq")
+"texture": ExtResource("71_w5fn2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("71_05iy4")
+"texture": ExtResource("72_hkxig")
 }, {
 "duration": 1.0,
-"texture": ExtResource("72_xtq5p")
+"texture": ExtResource("73_dkp03")
 }, {
 "duration": 1.0,
-"texture": ExtResource("73_boekw")
+"texture": ExtResource("74_4kt1n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("74_rrfx7")
+"texture": ExtResource("75_7j0ht")
 }, {
 "duration": 1.0,
-"texture": ExtResource("75_ytmmu")
+"texture": ExtResource("76_3plf7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("76_622pr")
+"texture": ExtResource("77_3chv6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("77_r5uff")
+"texture": ExtResource("78_tkx0p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("78_vvf7p")
+"texture": ExtResource("79_7k07p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("79_prmxe")
+"texture": ExtResource("80_jrhfq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("80_mi36n")
+"texture": ExtResource("81_n7my6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("81_dvrm1")
+"texture": ExtResource("82_a0wmi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("82_xgpqn")
+"texture": ExtResource("83_vssac")
 }, {
 "duration": 1.0,
-"texture": ExtResource("83_neai4")
+"texture": ExtResource("84_ya1c3")
 }],
 "loop": true,
 "name": &"policjant_skos_gora_lewo",
@@ -666,79 +666,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("84_yitmi")
+"texture": ExtResource("85_ryqgj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("85_1utp8")
+"texture": ExtResource("86_l2np2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("86_328ws")
+"texture": ExtResource("87_u7h4o")
 }, {
 "duration": 1.0,
-"texture": ExtResource("87_0v3bo")
+"texture": ExtResource("88_ap8l4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("88_o5gfa")
+"texture": ExtResource("89_us3u4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("89_j36tx")
+"texture": ExtResource("90_wm72h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("90_ryjlx")
+"texture": ExtResource("91_sdclh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("91_x8764")
+"texture": ExtResource("92_t6ynv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("92_wrvl2")
+"texture": ExtResource("93_cn013")
 }, {
 "duration": 1.0,
-"texture": ExtResource("93_iktw7")
+"texture": ExtResource("94_7keb6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("94_0epfm")
+"texture": ExtResource("95_kw023")
 }, {
 "duration": 1.0,
-"texture": ExtResource("95_6kbhr")
+"texture": ExtResource("96_eqkrj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("96_kx0gs")
+"texture": ExtResource("97_45lru")
 }, {
 "duration": 1.0,
-"texture": ExtResource("97_lkrst")
+"texture": ExtResource("98_a47tw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("98_4dx3s")
+"texture": ExtResource("99_tdcfg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("99_j5t2v")
+"texture": ExtResource("100_2cmlb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("100_3x1fc")
+"texture": ExtResource("101_a8hfr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("101_vu180")
+"texture": ExtResource("102_bcnfd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("102_hgbxd")
+"texture": ExtResource("103_ans2d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("103_4jagd")
+"texture": ExtResource("104_txmew")
 }, {
 "duration": 1.0,
-"texture": ExtResource("104_x01tf")
+"texture": ExtResource("105_rnbcg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("105_em6xy")
+"texture": ExtResource("106_q3brl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("106_edcav")
+"texture": ExtResource("107_spbvt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("107_lnq4a")
+"texture": ExtResource("108_w23qi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("108_qjpte")
+"texture": ExtResource("109_s3fw7")
 }],
 "loop": true,
 "name": &"policjant_skos_gora_prawo",
@@ -746,79 +746,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("109_bb4i5")
+"texture": ExtResource("110_5apbg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("110_jbl03")
+"texture": ExtResource("111_ytacs")
 }, {
 "duration": 1.0,
-"texture": ExtResource("111_mryu3")
+"texture": ExtResource("112_1wkhj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("112_812h3")
+"texture": ExtResource("113_cnjh5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("113_6j4hm")
+"texture": ExtResource("114_vswio")
 }, {
 "duration": 1.0,
-"texture": ExtResource("114_n7lbu")
+"texture": ExtResource("115_13ypl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("115_m8hns")
+"texture": ExtResource("116_gwnik")
 }, {
 "duration": 1.0,
-"texture": ExtResource("116_rj70v")
+"texture": ExtResource("117_qn1le")
 }, {
 "duration": 1.0,
-"texture": ExtResource("117_d66up")
+"texture": ExtResource("118_p7qqm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("118_dlftg")
+"texture": ExtResource("119_d2wa7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("119_4cvqi")
+"texture": ExtResource("120_bcijh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("120_y4o27")
+"texture": ExtResource("121_rkcvn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("121_uoy0w")
+"texture": ExtResource("122_4as13")
 }, {
 "duration": 1.0,
-"texture": ExtResource("122_77bl6")
+"texture": ExtResource("123_x7jsu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("123_tnw0w")
+"texture": ExtResource("124_iy3gv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("124_fmgda")
+"texture": ExtResource("125_h4slt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("125_ithij")
+"texture": ExtResource("126_skpdm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("126_l2box")
+"texture": ExtResource("127_s0bl7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("127_uoemu")
+"texture": ExtResource("128_mbu4w")
 }, {
 "duration": 1.0,
-"texture": ExtResource("128_kvvv3")
+"texture": ExtResource("129_r6lue")
 }, {
 "duration": 1.0,
-"texture": ExtResource("129_tjnog")
+"texture": ExtResource("130_00afc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("130_o0xq8")
+"texture": ExtResource("131_lejy8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("131_m4ppj")
+"texture": ExtResource("132_ag232")
 }, {
 "duration": 1.0,
-"texture": ExtResource("132_2f3k1")
+"texture": ExtResource("133_6hxio")
 }, {
 "duration": 1.0,
-"texture": ExtResource("133_3woyk")
+"texture": ExtResource("134_wdptj")
 }],
 "loop": true,
 "name": &"policjant_walk_dol",
@@ -826,79 +826,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("134_8xoy6")
+"texture": ExtResource("135_juhf4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("135_uxy0r")
+"texture": ExtResource("136_ifk7n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("136_53qjp")
+"texture": ExtResource("137_x5pyr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("137_63jhh")
+"texture": ExtResource("138_w2eit")
 }, {
 "duration": 1.0,
-"texture": ExtResource("138_no7xy")
+"texture": ExtResource("139_ae86k")
 }, {
 "duration": 1.0,
-"texture": ExtResource("139_isytq")
+"texture": ExtResource("140_qvnog")
 }, {
 "duration": 1.0,
-"texture": ExtResource("140_lo16v")
+"texture": ExtResource("141_xkmvp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("141_ffbwh")
+"texture": ExtResource("142_26hac")
 }, {
 "duration": 1.0,
-"texture": ExtResource("142_e3ogo")
+"texture": ExtResource("143_3f1rp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("143_ss3uf")
+"texture": ExtResource("144_av8lt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("144_h68n0")
+"texture": ExtResource("145_qt0rj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("145_y04d4")
+"texture": ExtResource("146_oenpd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("146_3fb76")
+"texture": ExtResource("147_6ta73")
 }, {
 "duration": 1.0,
-"texture": ExtResource("147_54ci7")
+"texture": ExtResource("148_fdbxp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("148_0nvcw")
+"texture": ExtResource("149_velve")
 }, {
 "duration": 1.0,
-"texture": ExtResource("149_qvol7")
+"texture": ExtResource("150_2bhvq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("150_kpmn4")
+"texture": ExtResource("151_45gte")
 }, {
 "duration": 1.0,
-"texture": ExtResource("151_grjtu")
+"texture": ExtResource("152_xxekr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("152_mpud8")
+"texture": ExtResource("153_hscxj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("153_mbndg")
+"texture": ExtResource("154_m36ld")
 }, {
 "duration": 1.0,
-"texture": ExtResource("154_nosrt")
+"texture": ExtResource("155_tfrdh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("155_xo2kv")
+"texture": ExtResource("156_y4tla")
 }, {
 "duration": 1.0,
-"texture": ExtResource("156_jfd3l")
+"texture": ExtResource("157_s4a28")
 }, {
 "duration": 1.0,
-"texture": ExtResource("157_f5400")
+"texture": ExtResource("158_5ol8n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("158_vnquy")
+"texture": ExtResource("159_raliu")
 }],
 "loop": true,
 "name": &"policjant_walk_gora",
@@ -906,79 +906,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_h64ow")
+"texture": ExtResource("160_46r14")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_2utqm")
+"texture": ExtResource("161_k8gp4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_vbclp")
+"texture": ExtResource("162_8slu3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_c1rrp")
+"texture": ExtResource("163_u1iok")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_ydi13")
+"texture": ExtResource("164_n4k8f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_k66al")
+"texture": ExtResource("165_fopn3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_kj1w4")
+"texture": ExtResource("166_fsy61")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_mjtya")
+"texture": ExtResource("167_jw65x")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_oqgg0")
+"texture": ExtResource("168_xrmi2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_3jmvo")
+"texture": ExtResource("169_1cy1t")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_sj8cq")
+"texture": ExtResource("170_jl5oj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_juodv")
+"texture": ExtResource("171_5gyo1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_246s8")
+"texture": ExtResource("172_poa3d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_0i4fy")
+"texture": ExtResource("173_uqoty")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_po0qy")
+"texture": ExtResource("174_6co85")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_33uh4")
+"texture": ExtResource("175_lyl11")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_bssoc")
+"texture": ExtResource("176_6ddhw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_l1ot1")
+"texture": ExtResource("177_civwc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_ogpx8")
+"texture": ExtResource("178_q8wdr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_xa50p")
+"texture": ExtResource("179_bv2vm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_t1tsb")
+"texture": ExtResource("180_bwt8h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_x3oe5")
+"texture": ExtResource("181_17tan")
 }, {
 "duration": 1.0,
-"texture": ExtResource("31_jjjtk")
+"texture": ExtResource("182_tiimf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("32_qyol7")
+"texture": ExtResource("183_htjjq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("33_6xkyn")
+"texture": ExtResource("184_78fht")
 }],
 "loop": true,
 "name": &"policjant_walk_lewo",
@@ -986,79 +986,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("184_mntii")
+"texture": ExtResource("185_7x6cq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("185_di6lc")
+"texture": ExtResource("186_q274g")
 }, {
 "duration": 1.0,
-"texture": ExtResource("186_4mfd4")
+"texture": ExtResource("187_jksrq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("187_cko2t")
+"texture": ExtResource("188_dwp43")
 }, {
 "duration": 1.0,
-"texture": ExtResource("188_flifg")
+"texture": ExtResource("189_wxocg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("189_2l05p")
+"texture": ExtResource("190_2vfaa")
 }, {
 "duration": 1.0,
-"texture": ExtResource("190_kbwb4")
+"texture": ExtResource("191_pbdbd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("191_7xi2w")
+"texture": ExtResource("192_pmv1m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("192_ukwl8")
+"texture": ExtResource("193_lpm1x")
 }, {
 "duration": 1.0,
-"texture": ExtResource("193_dckcl")
+"texture": ExtResource("194_rewiy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("194_2ccvj")
+"texture": ExtResource("195_tadax")
 }, {
 "duration": 1.0,
-"texture": ExtResource("195_3nf0j")
+"texture": ExtResource("196_kiok7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("196_v7i2g")
+"texture": ExtResource("197_1vvc6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("197_a4yop")
+"texture": ExtResource("198_wwgey")
 }, {
 "duration": 1.0,
-"texture": ExtResource("198_om27k")
+"texture": ExtResource("199_01y24")
 }, {
 "duration": 1.0,
-"texture": ExtResource("199_k2nsb")
+"texture": ExtResource("200_6mqg6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("200_8uf51")
+"texture": ExtResource("201_7402c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("201_2y2t6")
+"texture": ExtResource("202_fbqsd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("202_xf27y")
+"texture": ExtResource("203_cxfsp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("203_6kgad")
+"texture": ExtResource("204_7h5ax")
 }, {
 "duration": 1.0,
-"texture": ExtResource("204_fg4mj")
+"texture": ExtResource("205_ivjkv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("205_ipd7u")
+"texture": ExtResource("206_ixnbv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("206_k4qdu")
+"texture": ExtResource("207_av2mm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("207_itl6y")
+"texture": ExtResource("208_58alo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("208_8mgb0")
+"texture": ExtResource("209_68dcc")
 }],
 "loop": true,
 "name": &"policjant_walk_prawo",
@@ -1631,7 +1631,7 @@ script = ExtResource("5_xxrgm")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=276849374]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_yh7rx")
-animation = &"policjant_idle_dol"
+animation = &"policjant_walk_prawo"
 speed_scale = 3.0
 
 [node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1398790401]
