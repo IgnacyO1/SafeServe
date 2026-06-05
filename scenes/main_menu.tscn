@@ -2,10 +2,18 @@
 
 [ext_resource type="Script" uid="uid://bl2ekncae61bg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://k3kx4rdtujbh" path="res://assets/graphics/loading_background.png" id="2_ekxnf"]
+[ext_resource type="FontFile" uid="uid://d2tcdtina1aqn" path="res://assets/Fonts/Neuropol.otf" id="3_8ln24"]
 [ext_resource type="AudioStream" uid="uid://c58agys6x8rgl" path="res://assets/Sounds/8_Bit_Nostalgia.mp3" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://dih2st35lqn3i" path="res://assets/graphics/safeserve.png" id="3_wu84c"]
 
 [node name="MainMenu" type="Node2D" unique_id=622469435]
 script = ExtResource("1_l6cm7")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=669804140]
+z_index = -1
+position = Vector2(1.5974041e-05, -3.6478043e-05)
+scale = Vector2(0.99218756, 0.83789057)
+texture = ExtResource("2_ekxnf")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2071411176]
 anchors_preset = 15
@@ -19,47 +27,46 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.039215688, 0.08627451, 0.15686275, 1)
 
-[node name="Label" type="Label" parent="." unique_id=289317844]
-offset_left = -187.0
-offset_top = -284.0
-offset_right = 213.0
-offset_bottom = -185.0
-theme_override_font_sizes/font_size = 72
-text = "SAFE SERVE"
-
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1073807691]
-offset_left = -99.0
-offset_top = -108.0
-offset_right = 101.0
-offset_bottom = 192.0
+offset_left = -149.0
+offset_top = -145.0
+offset_right = 151.0
+offset_bottom = 155.0
 theme_override_constants/separation = 15
 alignment = 1
 
 [node name="Button" type="Button" parent="VBoxContainer" unique_id=917689753]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ln24")
 theme_override_font_sizes/font_size = 24
 text = "NOWA GRA"
 
 [node name="Button2" type="Button" parent="VBoxContainer" unique_id=594814752]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ln24")
 theme_override_font_sizes/font_size = 24
-text = "KONTYNUUJ"
+text = "WZNÓW"
 
 [node name="Button3" type="Button" parent="VBoxContainer" unique_id=235537254]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ln24")
 theme_override_font_sizes/font_size = 24
 text = "USTAWIENIA"
 
 [node name="Button4" type="Button" parent="VBoxContainer" unique_id=5190308]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ln24")
 theme_override_font_sizes/font_size = 24
 text = "WYJŚCIE"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=669804140]
-z_index = -1
-position = Vector2(1.5974041e-05, -3.6478043e-05)
-scale = Vector2(0.99218756, 0.83789057)
-texture = ExtResource("2_ekxnf")
+[node name="Logo" type="Sprite2D" parent="." unique_id=234317450]
+position = Vector2(0, -245.00002)
+scale = Vector2(0.24652243, 0.24652241)
+texture = ExtResource("3_wu84c")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=743561711]
 zoom = Vector2(1.26, 1.26)

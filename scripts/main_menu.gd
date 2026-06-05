@@ -80,14 +80,10 @@ func _proces_ladowania(scene_path: String):
 		# Losowy PRZYROST
 		# ----------
 		
-		var increment = randf_range(0.3, 3.5)
-
-		# Im bliżej końca, tym wolniej
-		if progress > 70:
-			increment *= 0.5
+		var increment = randf_range(2.7, 10.5)
 
 		if progress > 90:
-			increment *= 0.2
+			increment *= 0.5
 
 		progress += increment
 		progress = min(progress, 100)
@@ -105,20 +101,20 @@ func _proces_ladowania(scene_path: String):
 		# Shuttery / PRZYCIĘCIA
 		# ----------
 
-		var wait_time = randf_range(0.03, 0.30)
+		var wait_time = randf_range(0.03, 0.05)
 
 		# Mały lag
 		if randi() % 10 == 0:
-			wait_time += randf_range(0.15, 0.4)
+			wait_time += randf_range(0.15, 0.2)
 
 		# Duży "doczyt"
 		if randi() % 25 == 0:
-			wait_time += randf_range(0.5, 1.2)
+			wait_time += randf_range(0.2, 0.5)
 
 		await get_tree().create_timer(wait_time).timeout
 
 	# Małe zatrzymanie na 100%
-	await get_tree().create_timer(0.4).timeout
+	await get_tree().create_timer(0.1).timeout
 
 	get_tree().change_scene_to_file(scene_path)
 	is_loading = false
