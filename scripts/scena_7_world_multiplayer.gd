@@ -61,6 +61,19 @@ func _on_player_disconnected(id: int):
 	var car = get_node_or_null(str(id))
 	if car:
 		car.queue_free()
+	
+	# ZABEZPIECZENIE: Jeśli to był ostatni gracz, resetujemy sesję gry
+	if multiplayer.get_peers().size() == 0:
+		reset_game_session()
+
+# Nowa funkcja czyszcząca stan świata na serwerze
+func reset_game_session():
+	print("[SERWER] Brak aktywnych graczy. Resetowanie stanu gry...")
+	is_changing_scene = false # Resetujemy flagę, aby nowa rozgrywka mogła się zakończyć
+	
+	var boss = get_tree().get_first_node_in_group("uciekinier")
+	if is_instance_valid(boss) and boss.has_method("reset_to_start"):
+		boss.reset_to_start()
 
 # =============================================================================
 # LOGIKA GRACZA (KLIENT)

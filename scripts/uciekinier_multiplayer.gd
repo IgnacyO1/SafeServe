@@ -61,6 +61,15 @@ func setup(_unused_points, manager, oneway_status):
 func _ready():
 	add_to_group("uciekinier")
 
+func reset_to_start():
+	target_index = 1
+	reached_end = false
+	speed = 0.0
+	velocity = Vector2.ZERO
+	global_position = fixed_path[0] # Wraca do pierwszego punktu ze ścieżki
+	rotation = 0.0 # Opcjonalnie: reset rotacji
+	print("[CYBERKRAB] Wszyscy uciekli. Wracam na spawn i czekam...")
+
 func _physics_process(delta):
 	# KLUCZOWE: Klienci nie przetwarzają fizyki uciekiniera! 
 	# Oni tylko pobierają pozycję od serwera przez MultiplayerSynchronizer.
@@ -110,8 +119,13 @@ func _physics_process(delta):
 		# Zabezpieczenie przed skrajnymi wartościami
 		speed = clamp(speed, 50.0, max_allowed_speed)
 	else:
-		# Brak policji w grze -> jedzie stałą, bazową prędkością
-		speed = 10.0
+		# Brak policji w grze -> Cyberkrab stoi w miejscu i czeka
+		speed = 0.0
+		velocity = Vector2.ZERO
+		move_and_slide()
+		real_speed = 0.0
+		return # Przerywamy proces, żeby nie próbował jechać do target_pos
+		
 
 	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
