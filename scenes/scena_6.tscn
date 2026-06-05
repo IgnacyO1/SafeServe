@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://scena6clean001"]
+[gd_scene format=4 uid="uid://dp6ryfdk1pqa7"]
 
 [ext_resource type="Script" path="res://scripts/scena_6.gd" id="script_scena6"]
 [ext_resource type="Script" path="res://scripts/scena6_gracz.gd" id="script_gracz6"]
