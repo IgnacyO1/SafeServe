@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://ki1v78kgv3ih"]
 
 [ext_resource type="Texture2D" uid="uid://bm1y5itbh87vk" path="res://assets/graphics/racetlo.png" id="1_5e7iq"]
+[ext_resource type="Script" uid="uid://d2edkpg5d3k50" path="res://scripts/multiplayer_wybór.gd" id="1_ot4s0"]
 [ext_resource type="FontFile" uid="uid://76estoy8tt2c" path="res://assets/Fonts/Neuropol.otf" id="2_bt6pu"]
 
 [node name="MultiplayerWybór" type="Node2D" unique_id=1005623283]
+script = ExtResource("1_ot4s0")
 
 [node name="Tło" type="TextureRect" parent="." unique_id=986560302]
 offset_top = -73.0
@@ -23,13 +25,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_bt6pu")
 theme_override_font_sizes/font_size = 50
 text = "gram sam"
-
-[node name="BtnHost" type="Button" parent="VBoxContainer" unique_id=527855132]
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_bt6pu")
-theme_override_font_sizes/font_size = 50
-text = "hostuj"
 
 [node name="BtnJoin" type="Button" parent="VBoxContainer" unique_id=1894176287]
 custom_minimum_size = Vector2(0, 150)
