@@ -63,6 +63,7 @@ func _on_player_disconnected(id: int):
 		car.queue_free()
 	
 	# ZABEZPIECZENIE: Jeśli to był ostatni gracz, resetujemy sesję gry
+	print(multiplayer.get_peers().size())
 	if multiplayer.get_peers().size() == 0:
 		print("jest")
 		reset_game_session()
