@@ -64,6 +64,7 @@ func _on_player_disconnected(id: int):
 	
 	# ZABEZPIECZENIE: Jeśli to był ostatni gracz, resetujemy sesję gry
 	if multiplayer.get_peers().size() == 0:
+		print("jest")
 		reset_game_session()
 
 # Nowa funkcja czyszcząca stan świata na serwerze
