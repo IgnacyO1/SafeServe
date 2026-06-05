@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://nahlfbqoxfln"]
+[gd_scene format=3 uid="uid://nahlfbqoxfln"]
 
 [ext_resource type="PackedScene" uid="uid://b8xeg4m1d1p0y" path="res://scenes/Tram/Tram.tscn" id="1_tqek8"]
 

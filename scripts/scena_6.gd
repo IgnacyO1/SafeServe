@@ -1,9 +1,9 @@
 extends Node2D
 
 var gra_aktywna = true
-var TramScene = preload("res://scenes/Tram/Tram.tscn")
+var TramScene = preload("res://scenes/Metrotrain/Train.tscn")
 var timer_spawnu = 0.0
-var interwal_spawnu = 20.0
+var interwal_spawnu = 15.0
 
 @onready var gracz = $Gracz
 @onready var spawn_point = $SpawnPoint
@@ -33,7 +33,7 @@ func _spawn_trains():
 		var end1 = tor1.curve.get_point_position(tor1.curve.point_count - 1)
 		var tram1 = TramScene.instantiate()
 		add_child(tram1)
-		tram1.init_straight_line(start1, end1, 400.0)
+		tram1.init_straight_line(start1, end1, 100.0)
 
 	# Tor 2: pociąg jedzie z dołu do góry
 	if tor2 and tor2.curve and tor2.curve.point_count >= 2:
@@ -41,7 +41,7 @@ func _spawn_trains():
 		var end2 = tor2.curve.get_point_position(tor2.curve.point_count - 1)
 		var tram2 = TramScene.instantiate()
 		add_child(tram2)
-		tram2.init_straight_line(start2, end2, 400.0)
+		tram2.init_straight_line(start2, end2, 100.0)
 
 func gracz_trafiony():
 	if not gra_aktywna:
