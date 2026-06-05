@@ -41,7 +41,8 @@ func _ready():
 		velocity = Vector2.ZERO 
 	)
 	
-	map_manager = get_tree().current_scene.find_child("MapManager", true, false)
+	# Przeszukujemy całe drzewo od korzenia (root), co chroni przed błędem null
+	map_manager = get_tree().root.find_child("MapManager", true, false)
 
 func _process(delta: float) -> void:
 	# KLUCZOWE ZABEZPIECZENIE: Czytamy klawiaturę tylko u gracza, który kontroluje ten wóz!

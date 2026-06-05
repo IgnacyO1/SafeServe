@@ -128,9 +128,11 @@ func _process_client():
 	if is_instance_valid(boss):
 		var dist_to_boss = local_player.global_position.distance_to(boss.global_position)
 		var dist_m = dist_to_boss / 20.0
-		if get_tree().current_scene.get("map") != null:
-			get_tree().current_scene.map.set_player(local_player.global_position, local_player.rotation)
-			get_tree().current_scene.map.set_target(boss.global_position)
+		# Sprawdzamy najpierw, czy current_scene w ogóle istnieje
+		var curr_scene = get_tree().current_scene
+		if curr_scene and curr_scene.get("map") != null:
+			curr_scene.map.set_player(local_player.global_position, local_player.rotation)
+			curr_scene.map.set_target(boss.global_position)
 		var dist_vec = boss.global_position - local_player.global_position
 		arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
 		coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
