@@ -65,6 +65,9 @@ func _physics_process(delta):
 	# KLUCZOWE: Klienci nie przetwarzają fizyki uciekiniera! 
 	# Oni tylko pobierają pozycję od serwera przez MultiplayerSynchronizer.
 	if not multiplayer.is_server(): return
+	# Jeśli serwer nie załadował mapy/managera, zatrzymaj wykonywanie kodu, zamiast spamować błędami
+	if map_manager == null or not is_instance_valid(map_manager):
+		return
 	if current_road_points.is_empty(): return
 	
 	if reached_end or target_index >= current_road_points.size():

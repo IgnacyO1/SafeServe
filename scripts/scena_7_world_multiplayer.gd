@@ -45,8 +45,13 @@ func run_as_dedicated_server():
 func _on_player_connected(id: int):
 	print("Gracz dołączył do pokoju. ID: ", id)
 	var police_scene = load("res://scenes/PoliceMultiplayer/police_multiplayer.tscn")
-	var car = police_scene.instantiate()
 	
+	# ZABEZPIECZENIE: Jeśli scena się nie załaduje, nie wysypuj serwera
+	if police_scene == null:
+		print("[BŁĄD SERWERA] Nie można załadować sceny police_multiplayer.tscn! Sprawdź assety.")
+		return
+		
+	var car = police_scene.instantiate()
 	car.name = str(id)
 	add_child(car)
 	car.global_position = start_pos_px
