@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dp6ryfdk1pqa7"]
 
+[ext_resource type="Texture2D" uid="uid://b2afy1a2xiynu" path="res://assets/graphics/metro.png" id="2_mddhg"]
 [ext_resource type="Texture2D" uid="uid://mupfqlxng5mh" path="res://assets/graphics/POLICJANTSPRITESHEET/police_dol.png" id="5_451g6"]
 [ext_resource type="Texture2D" uid="uid://deohfygqm6w6q" path="res://assets/graphics/POLICJANTSPRITESHEET/police_gora.png" id="6_a8y66"]
 [ext_resource type="Texture2D" uid="uid://b66ihgn3tkrps" path="res://assets/graphics/POLICJANTSPRITESHEET/police_lewa.png" id="7_q24i8"]
@@ -206,7 +207,6 @@
 [ext_resource type="Texture2D" uid="uid://b4vd1o44c0ieo" path="res://assets/graphics/POLICJANTSPRITESHEET/POLICJANT180/0024.png" id="208_8mgb0"]
 [ext_resource type="Script" uid="uid://d3slpxbdpx534" path="res://scripts/scena6_gracz.gd" id="script_gracz6"]
 [ext_resource type="Script" uid="uid://dv0g8lmejbqbt" path="res://scripts/scena_6.gd" id="script_scena6"]
-[ext_resource type="Texture2D" uid="uid://dlclravlqfmjn" path="res://assets/graphics/Scena8/tło_walki.png" id="tex_tlo6"]
 
 [sub_resource type="RectangleShape2D" id="wall_top"]
 size = Vector2(3840, 20)
@@ -215,7 +215,7 @@ size = Vector2(3840, 20)
 size = Vector2(3840, 20)
 
 [sub_resource type="RectangleShape2D" id="wall_left"]
-size = Vector2(20, 2160)
+size = Vector2(27, 2662)
 
 [sub_resource type="RectangleShape2D" id="wall_right"]
 size = Vector2(20, 2160)
@@ -896,30 +896,31 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="gracz_col"]
-radius = 15.0
-height = 40.0
+radius = 6.0
+height = 20.0
 
 [sub_resource type="Curve2D" id="curve_tor1"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 770, -100, 0, 0, 0, 0, 856, 328, 0, 0, 0, 0, 941, 569, 0, 0, 0, 0, 970, 825, 0, 0, 0, 0, 770, 2300)
+"points": PackedVector2Array(0, 0, 0, 0, 1797, -48, 0, 0, 0, 0, 1189, 557, 0, 0, 0, 0, 1165, 586, 0, 0, 0, 0, 1159, 631, 0, 0, 0, 0, 1159, 1371)
 }
 point_count = 5
 
 [sub_resource type="Curve2D" id="curve_tor2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1150, 2300, 0, 0, 0, 0, 1526.4092, 1665, 0, 0, 0, 0, 1581.1198, 1468, 0, 0, 0, 0, 1618.323, 1086, 0, 0, 0, 0, 1590.4207, 695, 0, 0, 0, 0, 1511.0901, 444, 0, 0, 0, 0, 1385.8029, -138)
+"points": PackedVector2Array(0, 0, 0, 0, 1623.247, 1487, 0, 0, 0, 0, 1621.6057, 648, 0, 0, 0, 0, 1634.1891, 592, 0, 0, 0, 0, 1741.4219, 397, 0, 0, 0, 0, 1986.5255, -54)
 }
-point_count = 7
+point_count = 5
 
-[sub_resource type="RectangleShape2D" id="meta_shape"]
-size = Vector2(150, 300)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mddhg"]
+size = Vector2(64, 78)
 
 [node name="Scena6" type="Node2D" unique_id=1625607841]
 script = ExtResource("script_scena6")
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=14756120]
 z_index = -10
-texture = ExtResource("tex_tlo6")
+scale = Vector2(1.1876359, 1.1876357)
+texture = ExtResource("2_mddhg")
 centered = false
 
 [node name="GraniceAreny" type="StaticBody2D" parent="." unique_id=2033551727]
@@ -929,41 +930,49 @@ position = Vector2(960, 0)
 shape = SubResource("wall_top")
 
 [node name="ScianaDol" type="CollisionShape2D" parent="GraniceAreny" unique_id=166126191]
-position = Vector2(960, 1080)
+position = Vector2(1638, 1098)
 shape = SubResource("wall_bottom")
 
 [node name="ScianaLewa" type="CollisionShape2D" parent="GraniceAreny" unique_id=1927065096]
-position = Vector2(0, 540)
+position = Vector2(3.5, 791)
 shape = SubResource("wall_left")
 
 [node name="ScianaPrawa" type="CollisionShape2D" parent="GraniceAreny" unique_id=715854612]
-position = Vector2(1920, 540)
+position = Vector2(1983.9998, 645)
+rotation = -0.7982629
 shape = SubResource("wall_right")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=1949719847]
+position = Vector2(1204, 648)
+rotation = 1.7274113
+polygon = PackedVector2Array(-50.32364, 21.107666, 278.44476, -31.819946, 259.2079, -147.23193, 37.9494, -112.29346, -72.67981, -94.82422, -416.94452, -345.19177, -465.34406, -279.84277)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=1201160775]
+polygon = PackedVector2Array(1200, 483, 1316, 370, 1519, 166, 1679, 331, 1532, 477, 1557, 499, 1576, 510, 1612, 542, 1604, 585, 1548, 604, 1477, 533, 1382, 628, 1382, 1074, 1309, 1073, 1313, 1012, 1312, 978, 1270, 979, 1270, 1008, 1242, 1007, 1238, 979, 1187, 979, 1188, 1070, 1126, 1072, 1129, 852, 1131, 534, 1129, 398, 1034, 306, 598, 306, 598, 399, 878, 399, 878, 468, 910, 1021, 1083, 1191, 1455, 1203, 1488, 953, 1740, 639, 1884, 264, 1547, 64, 1184, 170, 1059, 236, 1198, 374)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=1871441955]
+polygon = PackedVector2Array(30, 463, 204, 468, 878, 467, 886, 655, -45, 619, -53, 138, 1140, 163, 1059, 236, 33, 235)
+
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=1240653555]
-position = Vector2(200, 540)
+position = Vector2(56, 268)
 script = ExtResource("script_gracz6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=1651285393]
-scale = Vector2(0.15, 0.15)
+position = Vector2(210, 121.99997)
+scale = Vector2(0.08046871, 0.075781345)
 sprite_frames = SubResource("SpriteFrames_yh7rx")
-animation = &"policjant_idle_dol"
+animation = &"policjant_skos_dol_lewo"
 autoplay = "policjant_idle_dol"
+frame_progress = 0.43554878
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=558389410]
+position = Vector2(212, 126.99997)
 shape = SubResource("gracz_col")
 
-[node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1832440341]
-zoom = Vector2(1.2, 1.2)
-limit_left = 0
-limit_top = 0
-limit_right = 1920
-limit_bottom = 1080
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
-
-[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1974152783]
-position = Vector2(200, 540)
+[node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1313981278]
+position = Vector2(210, 122)
+zoom = Vector2(5, 5)
+limit_enabled = false
 
 [node name="PociagiTrasy" type="Node2D" parent="." unique_id=1128347400]
 
@@ -976,7 +985,9 @@ scale = Vector2(1.8277982, 1)
 curve = SubResource("curve_tor2")
 
 [node name="Meta" type="Area2D" parent="." unique_id=1928645696]
-position = Vector2(1800, 540)
+position = Vector2(1549, 544)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Meta" unique_id=731315567]
-shape = SubResource("meta_shape")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Meta" unique_id=1331846623]
+position = Vector2(7, 7)
+rotation = 0.76091206
+shape = SubResource("RectangleShape2D_mddhg")

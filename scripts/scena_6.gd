@@ -3,7 +3,7 @@ extends Node2D
 var gra_aktywna = true
 var TramScene = preload("res://scenes/Metrotrain/Train.tscn")
 var timer_spawnu = 0.0
-var interwal_spawnu = 15.0
+var interwal_spawnu = 10.0
 
 @onready var gracz = $Gracz
 @onready var spawn_point = $SpawnPoint
@@ -73,10 +73,8 @@ func _on_meta_entered(body):
 		return
 	if body.is_in_group("gracz"):
 		gra_aktywna = false
-		if ResourceLoader.exists("res://scenes/scena_7.tscn"):
-			get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
-		else:
-			get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/multiplayer_wybór.tscn")
+		
 
 func _screen_shake(intensity: float):
 	if not gracz:

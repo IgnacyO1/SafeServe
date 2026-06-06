@@ -10,7 +10,7 @@ Możliwe odpowiedzi: **1, 2, 3**
 
 **P-Zdanie 1**
 *Potrzebuję klucza odszyfrowującego monitoring PolyServers*
-**Po tym NPC się rozłącza**
+**Po tym NPC się rozłącza i jest info 'zostałeś zablokokwany'**
 
 **P-Zdanie 2**
 *Dzień dobry, Krakowska Policja. Jestem śledczym sprawy nr 6721, dotyczącym pożaru biurowca, którego pan podobno jest administratorem. Mam nagrania z monitoringu, porzebuję hasła aby je odszyfrować.*
