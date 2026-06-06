@@ -6,13 +6,13 @@ extends Control
 @onready var btn_monitoring = $CanvasLayer/"Menu Aplikacji"/BtnMonitoring
 
 @onready var okno_mail = $CanvasLayer/OknoMail
-@onready var okno_sms = $CanvasLayer/OknoSMS
+@onready var okno_tel = $CanvasLayer/Telefon
 @onready var okno_monitoring = $CanvasLayer/OknoMonitoring
 
 @onready var zegar_label = $CanvasLayer/"Pasek Górny"/Zegar
 
 # Stan aktywnego okna
-var current_window = "mail"
+var current_window = "none"
 
 func _ready() -> void:
 	# Podłącz przyciski menu
@@ -45,7 +45,7 @@ func _show_mail_window() -> void:
 		return
 	
 	okno_mail.visible = true
-	okno_sms.visible = false
+	okno_tel.visible = false
 	okno_monitoring.visible = false
 	current_window = "mail"
 	
@@ -57,7 +57,7 @@ func _show_sms_window() -> void:
 		return
 	
 	okno_mail.visible = false
-	okno_sms.visible = true
+	okno_tel.visible = true
 	okno_monitoring.visible = false
 	current_window = "sms"
 	
@@ -69,7 +69,7 @@ func _show_monitoring_window() -> void:
 		return
 	
 	okno_mail.visible = false
-	okno_sms.visible = false
+	okno_tel.visible = false
 	okno_monitoring.visible = true
 	current_window = "monitoring"
 	

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b7wy2ldooa1og" path="res://assets/graphics/scena4/cctv.png" id="4_wb72h"]
 [ext_resource type="Script" uid="uid://dlhjldvq8p4o2" path="res://scripts/mail_manager.gd" id="5_2a01s"]
 [ext_resource type="Script" uid="uid://c1sa3ysw2bpm7" path="res://scripts/sms_manager.gd" id="6_o3ndk"]
+[ext_resource type="Texture2D" uid="uid://cmp75a07f1yik" path="res://assets/graphics/scena4/zadzwon.png" id="7_o3ndk"]
 [ext_resource type="Script" uid="uid://c3u486xkfbp4i" path="res://scripts/monitoring_unlocker.gd" id="7_pfn1c"]
 
 [sub_resource type="Gradient" id="Gradient_7r3tw"]
@@ -57,7 +58,7 @@ icon = ExtResource("2_nn3ug")
 
 [node name="BtnSMS" type="Button" parent="CanvasLayer/Menu Aplikacji" unique_id=169204104]
 layout_mode = 2
-text = "Wiadomości"
+text = "Telefon"
 icon = ExtResource("3_4hk0s")
 
 [node name="BtnMonitoring" type="Button" parent="CanvasLayer/Menu Aplikacji" unique_id=1879534263]
@@ -66,6 +67,7 @@ text = "Pliki video"
 icon = ExtResource("4_wb72h")
 
 [node name="OknoMail" type="Control" parent="CanvasLayer" unique_id=1034318404]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 508.0
@@ -161,43 +163,108 @@ offset_right = 264.0
 offset_bottom = 609.0
 text = "Nowa Wiadomość"
 
-[node name="OknoSMS" type="Control" parent="CanvasLayer" unique_id=373041982]
-visible = false
+[node name="Telefon" type="Control" parent="CanvasLayer" unique_id=373041982]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("6_o3ndk")
 
-[node name="ListaNumerówPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1578462936]
+[node name="Dialer" type="VBoxContainer" parent="CanvasLayer/Telefon" unique_id=1914226]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 785.0
+offset_top = 303.0
+offset_right = 1153.0
+offset_bottom = 855.0
 
-[node name="NumeryVBox" type="VBoxContainer" parent="CanvasLayer/OknoSMS/ListaNumerówPanel" unique_id=113142705]
+[node name="WyświetlaczNumeru" type="Label" parent="CanvasLayer/Telefon/Dialer" unique_id=829018993]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="KonwersjacjaPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1865818557]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HistoriaSMS" type="RichTextLabel" parent="CanvasLayer/OknoSMS/KonwersjacjaPanel" unique_id=639026883]
+[node name="Klawiatura" type="GridContainer" parent="CanvasLayer/Telefon/Dialer" unique_id=1852336047]
 layout_mode = 2
+size_flags_horizontal = 4
+columns = 3
 
-[node name="DolnyPanel" type="PanelContainer" parent="CanvasLayer/OknoSMS" unique_id=1920669227]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="NumerInput" type="LineEdit" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=751208166]
+[node name="Btn1" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=1867012675]
+custom_minimum_size = Vector2(120, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "1"
 
-[node name="WiadomośćInput" type="LineEdit" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=2064261496]
+[node name="Btn2" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=1589028901]
+custom_minimum_size = Vector2(120, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "2"
 
-[node name="BtnWyślijSMS" type="Button" parent="CanvasLayer/OknoSMS/DolnyPanel" unique_id=250535002]
+[node name="Btn3" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=397970853]
+custom_minimum_size = Vector2(120, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "3"
+
+[node name="Btn4" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=873176064]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "4"
+
+[node name="Btn5" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=59440304]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "5"
+
+[node name="Btn6" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=614056619]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "6"
+
+[node name="Btn7" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=782516272]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "7"
+
+[node name="Btn8" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=25468232]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "8"
+
+[node name="Btn9" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=817865665]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "9"
+
+[node name="Btn+" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=1855174821]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="Btn0" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=263250909]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+
+[node name="Btn*" type="Button" parent="CanvasLayer/Telefon/Dialer/Klawiatura" unique_id=1961837463]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "*"
+
+[node name="BtnZadzwon" type="Button" parent="CanvasLayer/Telefon/Dialer" unique_id=755896455]
+layout_mode = 2
+text = "Zadzwoń"
+icon = ExtResource("7_o3ndk")
 
 [node name="OknoMonitoring" type="Control" parent="CanvasLayer" unique_id=2011637223]
 visible = false
