@@ -5,7 +5,7 @@ Uwaga: wprowadzam takie nazewnictwo:
 
 # Bartłomiej Głuś +48 601 247 447
 **NPC-Zdanie A**
-*Halo halo, kto tam?*
+*Halo halo, kto tam? Bartłomiej Głuś przy telefonie.*
 Możliwe odpowiedzi: **1, 2, 3**
 
 **P-Zdanie 1**
@@ -61,3 +61,4 @@ Po tym **H**
 **Po tym NPC się rozłącza, ale tym razem gracz osiągnął cel**
 
 # Lekarz Mietka 12 602 23 46
+to zrobie potem

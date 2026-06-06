@@ -5,9 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://dt80rkd1bve34" path="res://assets/graphics/scena4/smsicon.png" id="3_4hk0s"]
 [ext_resource type="Texture2D" uid="uid://b7wy2ldooa1og" path="res://assets/graphics/scena4/cctv.png" id="4_wb72h"]
 [ext_resource type="Script" uid="uid://dlhjldvq8p4o2" path="res://scripts/mail_manager.gd" id="5_2a01s"]
-[ext_resource type="Script" uid="uid://c1sa3ysw2bpm7" path="res://scripts/sms_manager.gd" id="6_o3ndk"]
+[ext_resource type="Script" uid="uid://c1sa3ysw2bpm7" path="res://scripts/tel_manager.gd" id="6_o3ndk"]
 [ext_resource type="Texture2D" uid="uid://cmp75a07f1yik" path="res://assets/graphics/scena4/zadzwon.png" id="7_o3ndk"]
 [ext_resource type="Script" uid="uid://c3u486xkfbp4i" path="res://scripts/monitoring_unlocker.gd" id="7_pfn1c"]
+[ext_resource type="Texture2D" uid="uid://6qne2gdcvf7q" path="res://assets/graphics/scena4/Black_circle.png" id="8_pfn1c"]
+[ext_resource type="Texture2D" uid="uid://hitv1e543e2l" path="res://assets/graphics/scena4/hangup.png" id="9_om44c"]
 
 [sub_resource type="Gradient" id="Gradient_7r3tw"]
 colors = PackedColorArray(0.41960785, 0.44313726, 0.11764706, 1, 0, 0.37254903, 0.74509805, 1)
@@ -171,6 +173,7 @@ offset_bottom = 40.0
 script = ExtResource("6_o3ndk")
 
 [node name="Dialer" type="VBoxContainer" parent="CanvasLayer/Telefon" unique_id=1914226]
+visible = false
 layout_mode = 0
 offset_left = 785.0
 offset_top = 303.0
@@ -266,8 +269,65 @@ layout_mode = 2
 text = "Zadzwoń"
 icon = ExtResource("7_o3ndk")
 
-[node name="OknoMonitoring" type="Control" parent="CanvasLayer" unique_id=2011637223]
+[node name="OptRandomNb" type="CheckButton" parent="CanvasLayer/Telefon/Dialer" unique_id=745468615]
+layout_mode = 2
+text = "Randomizacja numeru"
+
+[node name="Rozmowa" type="Control" parent="CanvasLayer/Telefon" unique_id=2097567068]
+anchors_preset = 0
+offset_left = 709.0
+offset_top = 468.0
+offset_right = 1917.0
+offset_bottom = 1152.0
+
+[node name="WybieranieOdpowiedzi" type="HBoxContainer" parent="CanvasLayer/Telefon/Rozmowa" unique_id=981487497]
+layout_mode = 0
+offset_left = -239.0
+offset_top = 181.0
+offset_right = 969.0
+offset_bottom = 361.0
+alignment = 1
+
+[node name="OpcjaBtn1" type="Button" parent="CanvasLayer/Telefon/Rozmowa/WybieranieOdpowiedzi" unique_id=2021487287]
+custom_minimum_size = Vector2(400, 180)
+layout_mode = 2
+text = "Opcja 1"
+
+[node name="OpcjaBtn2" type="Button" parent="CanvasLayer/Telefon/Rozmowa/WybieranieOdpowiedzi" unique_id=480068501]
+custom_minimum_size = Vector2(400, 180)
+layout_mode = 2
+text = "Opcja 2"
+
+[node name="OpcjaBtn3" type="Button" parent="CanvasLayer/Telefon/Rozmowa/WybieranieOdpowiedzi" unique_id=625034019]
+custom_minimum_size = Vector2(400, 180)
+layout_mode = 2
+text = "Opcja 3"
+
+[node name="Kółko" type="Sprite2D" parent="CanvasLayer/Telefon/Rozmowa" unique_id=1820656441]
+position = Vector2(373, -181.5)
+scale = Vector2(0.274, 0.274)
+texture = ExtResource("8_pfn1c")
+
+[node name="Text" type="RichTextLabel" parent="CanvasLayer/Telefon/Rozmowa" unique_id=420514113]
+layout_mode = 0
+offset_left = 24.0
+offset_top = -52.0
+offset_right = 721.0
+offset_bottom = 161.0
+text = "Sześć siedem!"
+horizontal_alignment = 1
+
+[node name="BtnRozlacz" type="Button" parent="CanvasLayer/Telefon/Rozmowa" unique_id=709538882]
 visible = false
+layout_mode = 0
+offset_left = 186.0
+offset_top = 376.0
+offset_right = 536.0
+offset_bottom = 449.0
+text = "Rozłącz"
+icon = ExtResource("9_om44c")
+
+[node name="OknoMonitoring" type="Control" parent="CanvasLayer" unique_id=2011637223]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
