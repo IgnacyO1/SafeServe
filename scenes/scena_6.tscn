@@ -907,9 +907,9 @@ point_count = 5
 
 [sub_resource type="Curve2D" id="curve_tor2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1623.247, 1487, 0, 0, 0, 0, 1621.6057, 648, 0, 0, 0, 0, 1634.1891, 592, 0, 0, 0, 0, 1741.4219, 397, 0, 0, 0, 0, 1986.5255, -54)
+"points": PackedVector2Array(0, 0, 0, 0, 1621.0586, 1603, 0, 0, 0, 0, 1622.6998, 1108, 0, 0, 0, 0, 1621.6057, 648, 0, 0, 0, 0, 1634.1891, 592, 0, 0, 0, 0, 1741.4219, 397, 0, 0, 0, 0, 1986.5255, -54)
 }
-point_count = 5
+point_count = 6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mddhg"]
 size = Vector2(64, 78)
@@ -953,12 +953,18 @@ polygon = PackedVector2Array(1200, 483, 1316, 370, 1519, 166, 1679, 331, 1532, 4
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=1871441955]
 polygon = PackedVector2Array(30, 463, 204, 468, 878, 467, 886, 655, -45, 619, -53, 138, 1140, 163, 1059, 236, 33, 235)
 
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=968887041]
+polygon = PackedVector2Array(258, 318, 274, 330, 277, 349, 344, 349, 343, 308, 334, 295, 313, 294, 304, 277, 285, 278, 248, 264, 242, 309)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="GraniceAreny" unique_id=2079519482]
+polygon = PackedVector2Array(71, 377, 87, 373, 120, 378, 125, 358, 117, 329, 141, 345, 156, 343, 154, 287, 112, 308, 90, 308, 86, 322, 60, 323, 59, 376)
+
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=1240653555]
-position = Vector2(56, 268)
+position = Vector2(252, 350)
 script = ExtResource("script_gracz6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=1651285393]
-position = Vector2(210, 121.99997)
+position = Vector2(-0.4000244, -5.5999756)
 scale = Vector2(0.08046871, 0.075781345)
 sprite_frames = SubResource("SpriteFrames_yh7rx")
 animation = &"policjant_skos_dol_lewo"
@@ -966,11 +972,12 @@ autoplay = "policjant_idle_dol"
 frame_progress = 0.43554878
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=558389410]
-position = Vector2(212, 126.99997)
+z_index = 1
+position = Vector2(1.5999756, -0.5999756)
 shape = SubResource("gracz_col")
 
 [node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1313981278]
-position = Vector2(210, 122)
+position = Vector2(1, -1)
 zoom = Vector2(5, 5)
 limit_enabled = false
 
@@ -991,3 +998,6 @@ position = Vector2(1549, 544)
 position = Vector2(7, 7)
 rotation = 0.76091206
 shape = SubResource("RectangleShape2D_mddhg")
+
+[node name="SpawnPoint" type="PinJoint2D" parent="." unique_id=1033048812]
+position = Vector2(253, 349)
