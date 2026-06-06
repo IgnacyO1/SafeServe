@@ -163,7 +163,7 @@ texture = ExtResource("15_tbjg3")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=676667078]
 stream = ExtResource("18_yhfs0")
-volume_db = -14.954
+volume_db = -13.574
 parameters/looping = true
 
 [connection signal="toggled" from="HUD/Control/TextureButton2" to="SubViewportContainer/SubViewport/World/Car" method="turn_siren"]

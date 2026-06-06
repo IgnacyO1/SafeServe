@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dykt813ctgqxo" path="res://assets/Sounds/horn.mp3" id="3_y0jbw"]
 [ext_resource type="Texture2D" uid="uid://gjvwdwuilj0a" path="res://assets/graphics/lights_grid2.png" id="4_j5ret"]
 [ext_resource type="AudioStream" uid="uid://duw5bgcn21xft" path="res://assets/Sounds/police-siren-drill-type-sound-fx_F.wav" id="5_eh8x1"]
+[ext_resource type="AudioStream" uid="uid://20007mkulj8s" path="res://assets/Sounds/engine-loop-1-normalized.mp3" id="6_a88ic"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbtw7"]
 radius = 24.0
@@ -621,3 +622,10 @@ frame_progress = 0.53600425
 
 [node name="SirenPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1397137812]
 stream = ExtResource("5_eh8x1")
+volume_db = 5.403
+
+[node name="EnginePlayer" type="AudioStreamPlayer2D" parent="." unique_id=1077415586]
+stream = ExtResource("6_a88ic")
+pitch_scale = 0.01
+autoplay = true
+parameters/looping = true
