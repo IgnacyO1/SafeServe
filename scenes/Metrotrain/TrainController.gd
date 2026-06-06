@@ -1,5 +1,5 @@
 extends Node2D
-
+# POCIĄG (skrypt skopiowany od tramwaju)
 @export var speed: float = 400.0 # Prędkość tramwaju
 
 var master_distance: float = 0.0
@@ -7,17 +7,15 @@ var curve: Curve2D = Curve2D.new()
 var current_path_points: PackedVector2Array = PackedVector2Array()
 
 # Zarządzanie strukturą członów
-@onready var segments = [$Segment1, $Segment2, $Segment3]
+@onready var segments = [$Segment1, $Segment2, $Segment3, $Segment4, $Segment5]
 
-# Ustawienia wózków (w pikselach). Załóżmy, że człon ma 160px długości (8 metrów w skali 20)
-# Przesunięcia liczone są od samego przodu (zderzaka pierwszego wagonu)
-# Segment 1: wózki na 20px i 140px
-# Segment 2: wózki na 180px i 300px (uwzględniając przerwę między wagonami)
-# Segment 3: wózki na 340px i 460px
+# Ustawienia wózków (w pikselach)
 var bogie_presets = [
-	{"front": 20.0, "rear": 170.0},
-	{"front": 210.0, "rear": 340.0},
-	{"front": 380.0, "rear": 530.0}
+	{"front": 10.0, "rear": 180.0},
+	{"front": 200.0, "rear": 350.0},
+	{"front": 370.0, "rear": 520.0},
+	{"front": 540.0, "rear": 690.0},
+	{"front": 710.0, "rear": 880.0}
 ]
 
 var map_manager = null
@@ -45,6 +43,22 @@ func init_tram(start_node: Vector2, manager):
 	rebuild_curve()
 	# Zacznij z przesunięciem, aby cały tramwaj od razu zespawnował się na torach
 	master_distance = 480.0 
+
+# NOWA FUNKCJA: Inicjalizacja pociągu na podstawie gotowej ścieżki Path2D z edytora
+func init_from_path2d(path_node: Path2D, p_speed: float = 100.0):
+	is_scene8_mode = false
+	speed = p_speed
+	
+	current_path_points.clear()
+	
+	# Przepisujemy wszystkie punkty z Path2D, konwertując je na pozycje globalne
+	for i in range(path_node.curve.point_count):
+		var local_pos = path_node.curve.get_point_position(i)
+		var global_pos = path_node.to_global(local_pos)
+		current_path_points.append(global_pos)
+		
+	rebuild_curve()
+	master_distance = 480.0 # Zapas dystansu startowego dla członów pociągu
 
 func init_straight_line(p_start: Vector2, p_end: Vector2, p_speed: float = 600.0):
 	is_scene8_mode = true
@@ -93,16 +107,15 @@ func _physics_process(delta):
 		if master_distance > curve.get_baked_length() + 500.0:
 			queue_free()
 	else:
-		# Jeśli przód tramwaju zbliża się do końca obecnej krzywej, doklej kolejne tory
-		if master_distance > curve.get_baked_length() - 600.0:
-			if extend_path():
-				rebuild_curve()
-				
+		# Zwykły tryb jazdy po zdefiniowanej ścieżce (np. Scena 6)
+		
 		# Aktualizacja pozycji każdego członu
 		for segment in segments:
 			segment.update_position(curve, master_distance)
-
-
+			
+		# Usunięcie pociągu, kiedy ostatni wagon opuści koniec ścieżki
+		if master_distance > curve.get_baked_length() + 600.0:
+			queue_free()
 
 func _on_segment_body_entered(body: Node2D, segment: Node2D):
 	if not is_scene8_mode:
@@ -138,17 +151,15 @@ func _on_segment_body_entered(body: Node2D, segment: Node2D):
 			body.apply_knockback(push_dir * 1600.0)
 
 func extend_path() -> bool:
-	if not map_manager.tram_network.has(last_node):
+	if not map_manager or not map_manager.tram_network.has(last_node):
 		return false
 		
 	var options = map_manager.tram_network[last_node]
 	if options.is_empty(): return false
 	
-	# Losowy wybór następnego segmentu torów na skrzyżowaniu
 	var chosen_track = options.pick_random()
 	var points = chosen_track["points"]
 	
-	# Pomijamy pierwszy punkt nowej drogi, bo jest identyczny z last_node
 	for i in range(1, points.size()):
 		current_path_points.append(points[i])
 		
@@ -156,18 +167,15 @@ func extend_path() -> bool:
 	return true
 
 func rebuild_curve():
-	# Zapamiętujemy stary upieczony dystans, aby uniknąć teleportacji tramwaju
 	curve.clear_points()
 	for p in current_path_points:
 		curve.add_point(p)
 		
-	# Optymalizacja pamięci: Usuwamy z tablicy punkty, które tramwaj już dawno minął
-	# (Zostawiamy zapas 1000px z tyłu dla ostatniego wagonu)
-	if master_distance > 2000.0:
+	# Czyścimy historię tylko wtedy, kiedy NIE jedziemy po sztywnej ścieżce Path2D
+	if map_manager and master_distance > 2000.0:
 		var cut_dist = master_distance - 1000.0
 		var offset_baked = curve.get_closest_offset(curve.sample_baked(cut_dist))
 		
-		# Znajdź indeks punktu w wektorze do usunięcia
 		var points_to_remove = 0
 		for i in range(current_path_points.size()):
 			if current_path_points[i].distance_to(curve.sample_baked(0)) < offset_baked:
@@ -178,7 +186,6 @@ func rebuild_curve():
 		if points_to_remove > 0:
 			current_path_points = current_path_points.slice(points_to_remove)
 			master_distance -= offset_baked
-			# Ponowne przebudowanie po oczyszczeniu historii
 			curve.clear_points()
 			for p in current_path_points:
 				curve.add_point(p)

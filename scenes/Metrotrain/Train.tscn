@@ -38,14 +38,40 @@ position = Vector2(0.5, 2.1855683e-08)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")
 
-[node name="Segment3" type="CharacterBody2D" parent="." unique_id=650745104]
+[node name="Segment3" type="CharacterBody2D" parent="." unique_id=2044280248]
 script = ExtResource("2_y7kjj")
 
-[node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=2022612332]
+[node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=1544330047]
+z_index = 2
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=2143603553]
+position = Vector2(0.5, 2.1855683e-08)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment4" type="CharacterBody2D" parent="." unique_id=723347436]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment4" unique_id=1250374601]
+z_index = 2
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment4" unique_id=1745481904]
+position = Vector2(0.5, 2.1855683e-08)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment5" type="CharacterBody2D" parent="." unique_id=650745104]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment5" unique_id=2022612332]
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("3_bxfey")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=84850316]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment5" unique_id=84850316]
 z_index = 1
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")

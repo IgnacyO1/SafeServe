@@ -27,21 +27,17 @@ func _physics_process(delta):
 		_spawn_trains()
 
 func _spawn_trains():
-	# Tor 1: pociąg jedzie z góry na dół
+	# Tor 1: przekazujemy cały węzeł Tor1 do pociągu
 	if tor1 and tor1.curve and tor1.curve.point_count >= 2:
-		var start1 = tor1.curve.get_point_position(0)
-		var end1 = tor1.curve.get_point_position(tor1.curve.point_count - 1)
 		var tram1 = TramScene.instantiate()
 		add_child(tram1)
-		tram1.init_straight_line(start1, end1, 100.0)
+		tram1.init_from_path2d(tor1, 300.0) # 300.0 to prędkość pociągu
 
-	# Tor 2: pociąg jedzie z dołu do góry
+	# Tor 2: przekazujemy cały węzeł Tor2 do pociągu
 	if tor2 and tor2.curve and tor2.curve.point_count >= 2:
-		var start2 = tor2.curve.get_point_position(0)
-		var end2 = tor2.curve.get_point_position(tor2.curve.point_count - 1)
 		var tram2 = TramScene.instantiate()
 		add_child(tram2)
-		tram2.init_straight_line(start2, end2, 100.0)
+		tram2.init_from_path2d(tor2, 300.0) # 300.0 to prędkość pociągu
 
 func gracz_trafiony():
 	if not gra_aktywna:
