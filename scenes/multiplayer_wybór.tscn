@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ki1v78kgv3ih"]
 
-[ext_resource type="Texture2D" uid="uid://bm1y5itbh87vk" path="res://assets/graphics/racetlo.png" id="1_5e7iq"]
+[ext_resource type="Texture2D" uid="uid://grl82uiebh71" path="res://assets/graphics/racetlo.png" id="1_5e7iq"]
 [ext_resource type="Script" uid="uid://d2edkpg5d3k50" path="res://scripts/multiplayer_wybór.gd" id="1_ot4s0"]
-[ext_resource type="FontFile" uid="uid://76estoy8tt2c" path="res://assets/Fonts/Neuropol.otf" id="2_bt6pu"]
+[ext_resource type="FontFile" uid="uid://d2tcdtina1aqn" path="res://assets/Fonts/Neuropol.otf" id="2_bt6pu"]
 
 [node name="MultiplayerWybór" type="Node2D" unique_id=1005623283]
 script = ExtResource("1_ot4s0")

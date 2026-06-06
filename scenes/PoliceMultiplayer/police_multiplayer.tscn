@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dykt813ctgqxo" path="res://assets/Sounds/horn.mp3" id="3_v58ls"]
 [ext_resource type="Texture2D" uid="uid://gjvwdwuilj0a" path="res://assets/graphics/lights_grid2.png" id="4_jbm8h"]
 [ext_resource type="AudioStream" uid="uid://duw5bgcn21xft" path="res://assets/Sounds/police-siren-drill-type-sound-fx_F.wav" id="5_os3mu"]
+[ext_resource type="AudioStream" uid="uid://20007mkulj8s" path="res://assets/Sounds/engine-loop-1-normalized.mp3" id="6_tjdqn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbtw7"]
 radius = 21.0
@@ -634,3 +635,8 @@ stream = ExtResource("5_os3mu")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1964122987]
 replication_config = SubResource("SceneReplicationConfig_qhs2g")
+
+[node name="EnginePlayer" type="AudioStreamPlayer2D" parent="." unique_id=243266564]
+stream = ExtResource("6_tjdqn")
+autoplay = true
+parameters/looping = true
