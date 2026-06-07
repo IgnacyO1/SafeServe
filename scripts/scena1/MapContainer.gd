@@ -65,8 +65,8 @@ func update_scale(amount : float):
 var max_position : Vector2
 var min_position : Vector2
 func clamp_position():
-	position.x = clamp(position.x, min_position.x , max_position.x)
-	position.y = clamp(position.y, min_position.y , max_position.y)
+	position.x = clamp(position.x, min_position.x, max_position.x)
+	position.y = clamp(position.y, min_position.y, max_position.y)
 
 func _ready():
 	map_view_size = Vector2(self.get_parent().get_parent().size)
@@ -78,7 +78,7 @@ func _process(_delta : float):
 	for i in range(Events.size()):
 		Events[i].update_arrow()
 
-var map_locked : bool = true
+var map_locked : bool = false
 var dragging : bool = false
 var last_mouse_position : Vector2 = Vector2.ZERO
 func _input(event) -> void:
@@ -95,3 +95,7 @@ func _input(event) -> void:
 		position += delta
 		clamp_position()
 		last_mouse_position = event.position
+
+func clear():
+	for me in Events:
+		me.delete()

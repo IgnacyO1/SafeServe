@@ -1,4 +1,4 @@
-extends TextureButton
+extends BaseButton
 func _ready() -> void:
 	pass # Replace with function body.
 func _process(_delta: float) -> void:
@@ -31,3 +31,7 @@ func _play_message():
 	get_tree().current_scene.radio.show_radio_message("Nie mamy jednostek, będziesz musiał jechać sam ", "res://assets/Sounds/nie_mamy_wolnych_jednostek.mp3")
 	await get_tree().create_timer(5.0).timeout
 	get_tree().change_scene_to_file("res://scenes/scena_2.tscn")
+
+
+func _on_pressed() -> void:
+	_on_press()

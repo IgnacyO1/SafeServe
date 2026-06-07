@@ -63,10 +63,5 @@ func scale_marker(amount : float):
 	marker.position *= ((original_scale + amount) / original_scale)
 func delete():
 	container_node.Events.remove_at(container_node.Events.rfind(self))
-	container_node.any_emergencies = false
-	for e in container_node.Events:
-		if e.type in ["Crime", "Emergency", "Fire"]:
-			container_node.any_emergencies = true
-			break
 	marker.queue_free()
 	arrow_sprite.queue_free()

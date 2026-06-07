@@ -3,15 +3,12 @@
 [ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena1/scena_1.gd" id="1_exvab"]
 [ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/scena1/MapContainer.gd" id="2_qjgc2"]
 [ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
-[ext_resource type="Texture2D" uid="uid://pqg61u2i5pfo" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
-[ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/scena1/modal_button.gd" id="5_atxpi"]
+[ext_resource type="Texture2D" uid="uid://kbxgfhbjsjm" path="res://assets/graphics/scena_1/HUD nowy.svg" id="4_el5c8"]
+[ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/modal_button.gd" id="5_atxpi"]
 [ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
 [ext_resource type="Script" uid="uid://dbhixobuaj6b" path="res://scripts/scena1/bottom_panel.gd" id="6_qjgc2"]
 [ext_resource type="Script" uid="uid://i231op5alp5j" path="res://scripts/scena1/side_panel.gd" id="7_7ealu"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
-[ext_resource type="Script" uid="uid://6gjgsr251yft" path="res://scripts/scena1/button_container.gd" id="7_bhyte"]
-[ext_resource type="Texture2D" uid="uid://bfi21jnij7qjw" path="res://assets/graphics/scena_1/Side panel background.svg" id="8_0rpw8"]
-[ext_resource type="Texture2D" uid="uid://drw1ulnb5cdig" path="res://assets/graphics/scena_1/bottom panel.svg" id="8_2q4pn"]
 [ext_resource type="Texture2D" uid="uid://dd8v1brsx6x76" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
 [ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
 [ext_resource type="Texture2D" uid="uid://byv7kjm3ahrty" path="res://assets/graphics/scena_1/wykrzyknik.svg" id="9_8cvow"]
@@ -32,30 +29,18 @@
 [ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
 [ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="25_ar68y"]
 
-[sub_resource type="Theme" id="Theme_maknc"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2q4pn"]
-texture = ExtResource("8_0rpw8")
-expand_margin_left = 30.0
-expand_margin_top = 30.0
-expand_margin_right = 30.0
-expand_margin_bottom = 30.0
-
 [sub_resource type="Theme" id="Theme_el5c8"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kkjyc"]
-texture = ExtResource("8_2q4pn")
-expand_margin_left = 20.0
-expand_margin_top = 20.0
-expand_margin_right = 20.0
-expand_margin_bottom = 20.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da6gn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2fvm5"]
-font_size = 20
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2q4pn"]
+font_size = 48
 
 [sub_resource type="LabelSettings" id="LabelSettings_3epbs"]
+
+[sub_resource type="Theme" id="Theme_maknc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmwsu"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cmwsu"]
 texture = ExtResource("8_maknc")
@@ -66,168 +51,16 @@ font_size = 42
 [sub_resource type="LabelSettings" id="LabelSettings_du2nj"]
 font_size = 30
 
-[sub_resource type="FontFile" id="FontFile_bhyte"]
-cache/0/variation_coordinates = {}
-cache/0/face_index = 0
-cache/0/embolden = 0.0
-cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
-cache/0/spacing_top = 0
-cache/0/spacing_bottom = 0
-cache/0/spacing_space = 0
-cache/0/spacing_glyph = 0
-cache/0/baseline_offset = 0.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/17/0/ascent = 0.0
-cache/0/17/0/descent = 0.0
-cache/0/17/0/underline_position = 0.0
-cache/0/17/0/underline_thickness = 0.0
-cache/0/17/0/scale = 1.0
-cache/0/18/0/ascent = 0.0
-cache/0/18/0/descent = 0.0
-cache/0/18/0/underline_position = 0.0
-cache/0/18/0/underline_thickness = 0.0
-cache/0/18/0/scale = 1.0
-cache/0/19/0/ascent = 0.0
-cache/0/19/0/descent = 0.0
-cache/0/19/0/underline_position = 0.0
-cache/0/19/0/underline_thickness = 0.0
-cache/0/19/0/scale = 1.0
-cache/0/20/0/ascent = 0.0
-cache/0/20/0/descent = 0.0
-cache/0/20/0/underline_position = 0.0
-cache/0/20/0/underline_thickness = 0.0
-cache/0/20/0/scale = 1.0
-cache/0/21/0/ascent = 0.0
-cache/0/21/0/descent = 0.0
-cache/0/21/0/underline_position = 0.0
-cache/0/21/0/underline_thickness = 0.0
-cache/0/21/0/scale = 1.0
-cache/0/22/0/ascent = 0.0
-cache/0/22/0/descent = 0.0
-cache/0/22/0/underline_position = 0.0
-cache/0/22/0/underline_thickness = 0.0
-cache/0/22/0/scale = 1.0
-cache/0/23/0/ascent = 0.0
-cache/0/23/0/descent = 0.0
-cache/0/23/0/underline_position = 0.0
-cache/0/23/0/underline_thickness = 0.0
-cache/0/23/0/scale = 1.0
-cache/0/24/0/ascent = 0.0
-cache/0/24/0/descent = 0.0
-cache/0/24/0/underline_position = 0.0
-cache/0/24/0/underline_thickness = 0.0
-cache/0/24/0/scale = 1.0
-cache/0/25/0/ascent = 0.0
-cache/0/25/0/descent = 0.0
-cache/0/25/0/underline_position = 0.0
-cache/0/25/0/underline_thickness = 0.0
-cache/0/25/0/scale = 1.0
-cache/0/26/0/ascent = 0.0
-cache/0/26/0/descent = 0.0
-cache/0/26/0/underline_position = 0.0
-cache/0/26/0/underline_thickness = 0.0
-cache/0/26/0/scale = 1.0
-cache/0/27/0/ascent = 0.0
-cache/0/27/0/descent = 0.0
-cache/0/27/0/underline_position = 0.0
-cache/0/27/0/underline_thickness = 0.0
-cache/0/27/0/scale = 1.0
-cache/0/28/0/ascent = 0.0
-cache/0/28/0/descent = 0.0
-cache/0/28/0/underline_position = 0.0
-cache/0/28/0/underline_thickness = 0.0
-cache/0/28/0/scale = 1.0
-cache/0/29/0/ascent = 0.0
-cache/0/29/0/descent = 0.0
-cache/0/29/0/underline_position = 0.0
-cache/0/29/0/underline_thickness = 0.0
-cache/0/29/0/scale = 1.0
-cache/0/30/0/ascent = 0.0
-cache/0/30/0/descent = 0.0
-cache/0/30/0/underline_position = 0.0
-cache/0/30/0/underline_thickness = 0.0
-cache/0/30/0/scale = 1.0
-cache/0/31/0/ascent = 0.0
-cache/0/31/0/descent = 0.0
-cache/0/31/0/underline_position = 0.0
-cache/0/31/0/underline_thickness = 0.0
-cache/0/31/0/scale = 1.0
-cache/0/32/0/ascent = 0.0
-cache/0/32/0/descent = 0.0
-cache/0/32/0/underline_position = 0.0
-cache/0/32/0/underline_thickness = 0.0
-cache/0/32/0/scale = 1.0
-cache/0/33/0/ascent = 0.0
-cache/0/33/0/descent = 0.0
-cache/0/33/0/underline_position = 0.0
-cache/0/33/0/underline_thickness = 0.0
-cache/0/33/0/scale = 1.0
-cache/0/34/0/ascent = 0.0
-cache/0/34/0/descent = 0.0
-cache/0/34/0/underline_position = 0.0
-cache/0/34/0/underline_thickness = 0.0
-cache/0/34/0/scale = 1.0
-cache/0/35/0/ascent = 0.0
-cache/0/35/0/descent = 0.0
-cache/0/35/0/underline_position = 0.0
-cache/0/35/0/underline_thickness = 0.0
-cache/0/35/0/scale = 1.0
-cache/0/36/0/ascent = 0.0
-cache/0/36/0/descent = 0.0
-cache/0/36/0/underline_position = 0.0
-cache/0/36/0/underline_thickness = 0.0
-cache/0/36/0/scale = 1.0
-cache/0/37/0/ascent = 0.0
-cache/0/37/0/descent = 0.0
-cache/0/37/0/underline_position = 0.0
-cache/0/37/0/underline_thickness = 0.0
-cache/0/37/0/scale = 1.0
-cache/0/38/0/ascent = 0.0
-cache/0/38/0/descent = 0.0
-cache/0/38/0/underline_position = 0.0
-cache/0/38/0/underline_thickness = 0.0
-cache/0/38/0/scale = 1.0
-cache/0/12/0/ascent = 0.0
-cache/0/12/0/descent = 0.0
-cache/0/12/0/underline_position = 0.0
-cache/0/12/0/underline_thickness = 0.0
-cache/0/12/0/scale = 1.0
-cache/0/9/0/ascent = 0.0
-cache/0/9/0/descent = 0.0
-cache/0/9/0/underline_position = 0.0
-cache/0/9/0/underline_thickness = 0.0
-cache/0/9/0/scale = 1.0
-cache/0/6/0/ascent = 0.0
-cache/0/6/0/descent = 0.0
-cache/0/6/0/underline_position = 0.0
-cache/0/6/0/underline_thickness = 0.0
-cache/0/6/0/scale = 1.0
-cache/0/1/0/ascent = 0.0
-cache/0/1/0/descent = 0.0
-cache/0/1/0/underline_position = 0.0
-cache/0/1/0/underline_thickness = 0.0
-cache/0/1/0/scale = 1.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhyte"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rpw8"]
+[sub_resource type="LabelSettings" id="LabelSettings_maknc"]
+font_size = 75
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ar68y"]
 texture = ExtResource("8_maknc")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qjgc2"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_maknc"]
-font_size = 75
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ealu"]
 texture = ExtResource("8_maknc")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da6gn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ar68y"]
 font_size = 32
@@ -270,7 +103,7 @@ texture = ExtResource("3_bqyrf")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1241085609]
 position = Vector2(960, 577)
-texture = ExtResource("4_bhyte")
+texture = ExtResource("4_el5c8")
 
 [node name="pasekzadań" type="Sprite2D" parent="." unique_id=249254113]
 z_index = 10
@@ -278,74 +111,60 @@ position = Vector2(960, 1057.47)
 scale = Vector2(0.7507109, 0.750711)
 texture = ExtResource("5_cmwsu")
 
+[node name="BottomPanel" type="Panel" parent="." unique_id=1070282638]
+layout_mode = 0
+offset_left = 259.0
+offset_top = 875.0
+offset_right = 1462.0
+offset_bottom = 1019.0
+theme = SubResource("Theme_el5c8")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
+script = ExtResource("6_qjgc2")
+
+[node name="Label" type="Label" parent="BottomPanel" unique_id=2120738279]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 24.0
+offset_right = 450.0
+offset_bottom = 144.0
+label_settings = SubResource("LabelSettings_2fvm5")
+vertical_alignment = 1
+
+[node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
+position = Vector2(74, 74)
+scale = Vector2(2, 2)
+
+[node name="Desc" type="Label" parent="BottomPanel" unique_id=613711265]
+visible = false
+layout_mode = 0
+offset_left = 454.0
+offset_top = -13.0
+offset_right = 904.0
+offset_bottom = 157.0
+label_settings = SubResource("LabelSettings_3epbs")
+vertical_alignment = 1
+
 [node name="SidePanel" type="Panel" parent="." unique_id=691123791]
 layout_mode = 0
-offset_left = 1371.0
-offset_top = 135.0
-offset_right = 1871.0
-offset_bottom = 835.0
+offset_left = 1367.0
+offset_top = 158.0
+offset_right = 1868.0
+offset_bottom = 820.0
 theme = SubResource("Theme_maknc")
-theme_override_styles/panel = SubResource("StyleBoxTexture_2q4pn")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cmwsu")
 script = ExtResource("7_7ealu")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SidePanel" unique_id=1409309134]
 layout_mode = 0
-offset_right = 500.0
-offset_bottom = 700.0
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
+offset_left = 9.0
+offset_top = -23.0
+offset_right = 505.0
+offset_bottom = 676.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/ScrollContainer" unique_id=121786957]
+[node name="Control" type="Control" parent="SidePanel/ScrollContainer" unique_id=419631721]
 layout_mode = 2
-
-[node name="BottomPanel" type="Panel" parent="." unique_id=1070282638]
-layout_mode = 0
-offset_left = 177.0
-offset_top = 883.0
-offset_right = 1872.0
-offset_bottom = 1011.0
-theme = SubResource("Theme_el5c8")
-theme_override_styles/panel = SubResource("StyleBoxTexture_kkjyc")
-script = ExtResource("6_qjgc2")
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="BottomPanel" unique_id=1820753213]
-visible = false
-
-[node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
-position = Vector2(64, 64)
-scale = Vector2(2, 2)
-
-[node name="Information" type="Label" parent="BottomPanel" unique_id=2120738279]
-layout_mode = 0
-offset_left = 148.0
-offset_right = 468.0
-offset_bottom = 128.0
-label_settings = SubResource("LabelSettings_2fvm5")
-autowrap_mode = 3
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BottomPanel" unique_id=604867132]
-layout_mode = 0
-offset_left = 478.0
-offset_right = 1101.0
-offset_bottom = 128.0
-
-[node name="Transcript" type="Label" parent="BottomPanel/ScrollContainer" unique_id=613711265]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2q4pn")
-label_settings = SubResource("LabelSettings_3epbs")
-vertical_alignment = 1
-
-[node name="ButtonContainer" type="HFlowContainer" parent="BottomPanel" unique_id=92126092]
-layout_mode = 0
-offset_left = 1113.0
-offset_right = 1690.0
-offset_bottom = 128.0
-alignment = 1
-last_wrap_alignment = 2
-script = ExtResource("7_bhyte")
 
 [node name="Tutorial modal" type="Panel" parent="." unique_id=1116195531]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -535,24 +354,28 @@ texture = ExtResource("16_cmwsu")
 position = Vector2(96, 32)
 texture = ExtResource("17_ar68y")
 
-[node name="Button" type="Button" parent="Tutorial modal" unique_id=147856455]
+[node name="TextureButton" type="TextureButton" parent="Tutorial modal" unique_id=1786378780]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 387.0
-offset_right = 670.0
-offset_bottom = 496.0
-theme_override_fonts/font = SubResource("FontFile_bhyte")
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bhyte")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_0rpw8")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_0rpw8")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0rpw8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_0rpw8")
-text = "Rozumiem."
-icon = ExtResource("21_0bpa3")
-icon_alignment = 1
-expand_icon = true
+offset_left = 65.0
+offset_top = 396.0
+offset_right = 1405.0
+offset_bottom = 601.0
+scale = Vector2(0.45, 0.45)
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
 script = ExtResource("5_atxpi")
+
+[node name="Label" type="Label" parent="Tutorial modal/TextureButton" unique_id=943155831]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 45.0
+offset_right = 873.0
+offset_bottom = 253.99997
+text = "Rozumiem."
+label_settings = SubResource("LabelSettings_maknc")
 
 [node name="General purpose modal" type="Panel" parent="." unique_id=556690621]
 visible = false
@@ -760,8 +583,8 @@ position = Vector2(960, 18)
 scale = Vector2(0.8376963, 0.74)
 texture = ExtResource("25_ar68y")
 
-[connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_begin_game"]
-[connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_on_press"]
+[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="Tutorial modal/TextureButton" to="Tutorial modal/TextureButton" method="_begin_game"]
 [connection signal="pressed" from="General purpose modal/TextureButton" to="." method="_main_event"]
 [connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
