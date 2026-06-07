@@ -57,6 +57,12 @@ func init_straight_line(p_start: Vector2, p_end: Vector2, p_speed: float = 600.0
 	rebuild_curve()
 	master_distance = 480.0
 	
+	# Wyłączenie dźwięków tramwaju w scenie 8
+	for segment in segments:
+		var audio_player = segment.get_node_or_null("AudioStreamPlayer2D")
+		if audio_player:
+			audio_player.stop()
+	
 	# Podłączamy sygnały dla Area2D, jeśli istnieją w tej wersji sceny (np. TramBoss)
 	for segment in segments:
 		segment.add_to_group("tramwaj")
