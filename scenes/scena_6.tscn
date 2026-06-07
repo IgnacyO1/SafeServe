@@ -899,6 +899,15 @@ animations = [{
 radius = 6.0
 height = 20.0
 
+[sub_resource type="Gradient" id="Gradient_mddhg"]
+offsets = PackedFloat32Array(0, 0.72796935)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g3e0u"]
+gradient = SubResource("Gradient_mddhg")
+fill = 1
+fill_from = Vector2(0.52136755, 0.48290598)
+
 [sub_resource type="Curve2D" id="curve_tor1"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1797, -48, 0, 0, 0, 0, 1189, 557, 0, 0, 0, 0, 1165, 586, 0, 0, 0, 0, 1159, 631, 0, 0, 0, 0, 1159, 1371)
@@ -914,11 +923,25 @@ point_count = 6
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mddhg"]
 size = Vector2(64, 78)
 
+[sub_resource type="Gradient" id="Gradient_g3e0u"]
+offsets = PackedFloat32Array(0, 0.79646015, 0.9712389)
+colors = PackedColorArray(0, 0, 0, 1, 0.42745098, 0.81960785, 0.5058824, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yyxjx"]
+gradient = SubResource("Gradient_g3e0u")
+
 [node name="Scena6" type="Node2D" unique_id=1625607841]
 script = ExtResource("script_scena6")
 
 [node name="Tlo" type="Sprite2D" parent="." unique_id=14756120]
 z_index = -10
+scale = Vector2(1.1876359, 1.1876357)
+texture = ExtResource("2_mddhg")
+centered = false
+
+[node name="Tlo2" type="Sprite2D" parent="." unique_id=614381911]
+z_index = -23
+position = Vector2(-263, -435)
 scale = Vector2(1.1876359, 1.1876357)
 texture = ExtResource("2_mddhg")
 centered = false
@@ -976,6 +999,11 @@ z_index = 1
 position = Vector2(1.5999756, -0.5999756)
 shape = SubResource("gracz_col")
 
+[node name="Latarka" type="PointLight2D" parent="Gracz" unique_id=2135427124]
+position = Vector2(1.0000038, -1.0000067)
+scale = Vector2(1.7187496, 1.5625)
+texture = SubResource("GradientTexture2D_g3e0u")
+
 [node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1313981278]
 position = Vector2(1, -1)
 zoom = Vector2(5, 5)
@@ -1001,3 +1029,17 @@ shape = SubResource("RectangleShape2D_mddhg")
 
 [node name="SpawnPoint" type="PinJoint2D" parent="." unique_id=1033048812]
 position = Vector2(253, 349)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=689936419]
+color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+
+[node name="Odkrywka" type="PointLight2D" parent="." unique_id=613162303]
+position = Vector2(290.49997, 345.50003)
+scale = Vector2(6.578124, 2.984375)
+texture = SubResource("GradientTexture2D_g3e0u")
+
+[node name="Wejście" type="PointLight2D" parent="." unique_id=2006953801]
+position = Vector2(1500.0001, 495.00003)
+rotation = 0.75839126
+scale = Vector2(2.8218765, 1)
+texture = SubResource("GradientTexture2D_yyxjx")

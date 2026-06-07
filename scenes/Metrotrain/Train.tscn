@@ -8,6 +8,24 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
 size = Vector2(41, 163)
 
+[sub_resource type="Gradient" id="Gradient_pvg8n"]
+offsets = PackedFloat32Array(0, 0.7743363)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pvg8n"]
+gradient = SubResource("Gradient_pvg8n")
+fill = 1
+fill_from = Vector2(0.52136755, 0.48290598)
+
+[sub_resource type="Gradient" id="Gradient_mddhg"]
+offsets = PackedFloat32Array(0, 0.72796935)
+colors = PackedColorArray(1, 0.47785383, 0.4100569, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bxfey"]
+gradient = SubResource("Gradient_mddhg")
+fill = 1
+fill_from = Vector2(0.52136755, 0.48290598)
+
 [node name="Train" type="Node2D" unique_id=354519398]
 script = ExtResource("1_5afme")
 
@@ -24,6 +42,11 @@ z_index = 1
 position = Vector2(-2.5, -1.0927852e-07)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Latarka" type="PointLight2D" parent="Segment1" unique_id=653277843]
+position = Vector2(-153, 0)
+scale = Vector2(2, 1.3281251)
+texture = SubResource("GradientTexture2D_pvg8n")
 
 [node name="Segment2" type="CharacterBody2D" parent="." unique_id=1174539438]
 script = ExtResource("2_y7kjj")
@@ -75,3 +98,8 @@ texture = ExtResource("3_bxfey")
 z_index = 1
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Tył" type="PointLight2D" parent="Segment5" unique_id=505158228]
+position = Vector2(160, 0)
+scale = Vector2(2, 1.3281251)
+texture = SubResource("GradientTexture2D_bxfey")
