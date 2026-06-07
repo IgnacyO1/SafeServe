@@ -110,6 +110,7 @@ func setup_ui():
 func play_cutscene_sequence():
 	is_changing_scene = true
 	
+	get_tree().current_scene.radio.visible = false
 	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)

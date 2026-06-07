@@ -906,7 +906,7 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[node name="Scena6" type="Node2D" unique_id=1697731604]
+[node name="Scena7" type="Node2D" unique_id=1697731604]
 script = ExtResource("1_pkmh6")
 
 [node name="Muzyka" type="AudioStreamPlayer" parent="." unique_id=1109459120]
