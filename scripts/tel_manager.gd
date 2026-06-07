@@ -13,11 +13,12 @@ extends Control
 @onready var text_label: RichTextLabel = $Rozmowa/Text
 @onready var btn_rozlacz: Button = $Rozmowa/BtnRozlacz
 
-# --- NOWOŚĆ: Dynamiczny odtwarzacz audio w kodzie ---
+# --- Dynamiczny odtwarzacz audio w kodzie ---
 @onready var audio_player: AudioStreamPlayer = AudioStreamPlayer.new()
-
-# --- NOWOŚĆ: Stałe ścieżki do ogólnych dźwięków telefonu ---
-const AUDIO_CALLING = "res://assets/audio/dialing.mp3"       # Dźwięk sygnału oczekiwania (3 sekundy)
+@onready var ambient_player: AudioStreamPlayer = AudioStreamPlayer.new()
+const AUDIO_BEACH_AMBIENT = "res://assets/audio/plaża.mp3" # Odgłosy morza/plaży
+# --- Stałe ścieżki do ogólnych dźwięków telefonu ---
+const AUDIO_CALLING = "res://assets/audio/dialing.mp3"       # Dźwięk sygnału oczekiwania (5 sekund)
 const AUDIO_DISCONNECT = "res://assets/audio/rozlacz.mp3" # Dźwięk rozłączenia / zajętości
 const AUDIO_ERROR = "res://assets/audio/invalid.mp3"           # Dźwięk "nie ma takiego numeru"
 
@@ -27,10 +28,10 @@ const TARGET_NUMBERS = {
 	"lekarz": "126022346"
 }
 
-# --- Baza Danych Dialogów (Graf + NOWOŚĆ: Ścieżki Audio) ---
+# --- Baza Danych Dialogów (Graf + Ścieżki Audio) ---
 const DIALOGUE_GRAPH = {
 	"A": {
-		"text": "Halo halo, kto tam? Bartłomiej Głuś przy telefonie.",
+		"text": "Halo halo, kto tam? Bartłomiej Głuś przy telefonie.",
 		"audio_duration": 3.0,
 		"audio": "res://assets/audio/A.mp3",
 		"options": ["1", "2", "3"]
@@ -75,10 +76,10 @@ const DIALOGUE_GRAPH = {
 		"action": "win"
 	},
 	
-	# P-Zdania (Wypowiedzi Gracza / Audio opcjonalne, na razie puste lub ścieżka lektora gracza)
+	# P-Zdania (Wypowiedzi Gracza)
 	"1": {
 		"text": "Potrzebuję klucza odszyfrowującego monitoring PolyServers.",
-		"audio_duration": 3.0,
+		"audio_duration": 3.5,
 		"audio": "res://assets/audio/1.mp3",
 		"action": "block"
 	},
@@ -125,11 +126,11 @@ var current_number: String = ""
 var is_glus_blocked: bool = false
 var is_speaking: bool = false
 var pulse_time: float = 0.0
-var is_connecting_call: bool = false # Blokada, żeby nie klikać rozłączenia w trakcie dzwonienia
+var is_connecting_call: bool = false 
 
 func _ready() -> void:
-	add_child(audio_player) # Rejestrujemy odtwarzacz w drzewie
-	
+	add_child(audio_player) 
+	add_child(ambient_player)
 	dialer.visible = true
 	rozmowa.visible = false
 	wyswietlacz_numeru.text = ""
@@ -193,17 +194,20 @@ func _on_btn_zadzwon_pressed():
 		
 	dialer.visible = false
 	rozmowa.visible = true
-	btn_rozlacz.visible = false
+	btn_rozlacz.visible = true # Gracz może rozłączyć się w trakcie sygnału oczekiwania
 	_hide_all_reply_buttons()
 	
 	is_connecting_call = true
 	text_label.text = "[color=gray][i]Łączenie...[/i][/color]"
 	
-	# Odtwórz sygnał dzwonienia
 	_play_sound(AUDIO_CALLING)
 	
-	# Czekamy wymuszone 5 sekundy zanim ktoś odbierze lub odrzuci
 	await get_tree().create_timer(5.0).timeout
+	
+	# Jeśli gracz anulował połączenie w trakcie tych 5 sekund, zatrzymujemy wykonywanie
+	if not rozmowa.visible or not is_connecting_call:
+		return
+		
 	is_connecting_call = false
 	audio_player.stop()
 	
@@ -212,33 +216,42 @@ func _on_btn_zadzwon_pressed():
 	if current_number == TARGET_NUMBERS["glus"]:
 		if is_glus_blocked and not bypass_block:
 			_play_sound(AUDIO_DISCONNECT)
-			_start_fake_call("Sygnał zajętości... Zostałeś zablokowany przez tego użytkownika.")
+			_end_call_by_npc("Sygnał zajętości... Zostałeś zablokowany przez tego użytkownika.")
 		else:
+			_play_ambient(AUDIO_BEACH_AMBIENT)
 			start_dialogue("A")
 	elif current_number == TARGET_NUMBERS["lekarz"]:
 		_play_sound(AUDIO_ERROR)
-		_start_fake_call("Abonent czasowo niedostępny. Spróbuj później. (Funkcja w budowie)")
+		_end_call_by_npc("Abonent czasowo niedostępny. Spróbuj później. (Funkcja w budowie)")
 	else:
 		_play_sound(AUDIO_ERROR)
-		_start_fake_call("Wybrany numer nie istnieje. Głuchy sygnał w słuchawce...")
+		_end_call_by_npc("Wybrany numer nie istnieje. Głuchy sygnał w słuchawce...")
 
-func _start_fake_call(message: String):
+# --- Logika automatycznego powrotu gdy to NPC kończy połączenie ---
+func _end_call_by_npc(message: String):
+	ambient_player.stop() # Bartek się rozłącza, więc ucinamy szum morza
+	is_speaking = false
+	_hide_all_reply_buttons()
+	btn_rozlacz.visible = false # Brak przycisku – zostaliśmy rozłączeni przez system/NPC
+	
 	text_label.visible_characters = -1
 	text_label.text = message
-	btn_rozlacz.visible = true
+	
+	# Odczekaj 3 sekundy na przeczytanie komunikatu i automatycznie wyjdź do menu
+	await get_tree().create_timer(3.0).timeout
+	_clean_ui_to_dialer()
 
 # --- Obsługa Dialogów i Audio Rozmówcy ---
 func start_dialogue(node_id: String):
 	var node = DIALOGUE_GRAPH[node_id]
 	
 	_hide_all_reply_buttons()
-	btn_rozlacz.visible = false
+	btn_rozlacz.visible = true # Podczas rozmowy przycisk działa, dopóki ktoś nie rzuci słuchawką
 	
 	var prefix = "[b]Bartek:[/b] " if not node_id[0].is_valid_int() else "[b]Ty:[/b] "
 	text_label.text = prefix + "[i]\"" + node["text"] + "\"[/i]"
 	text_label.visible_characters = 0
 	
-	# Odtwarzanie dedykowanego pliku głosowego z grafu (jeśli zdefiniowany i istnieje)
 	if node.has("audio") and ResourceLoader.exists(node["audio"]):
 		_play_sound(node["audio"])
 		
@@ -257,19 +270,21 @@ func start_dialogue(node_id: String):
 			"block":
 				is_glus_blocked = true
 				_play_sound(AUDIO_DISCONNECT)
-				_start_fake_call("\n\n[color=red][b]*Klik!* Połączenie przerwane. Zostałeś zablokowany.[/b][/color]")
+				_end_call_by_npc("\n\n[color=red][b]*Klik!* Połączenie przerwane. Zostałeś zablokowany.[/b][/color]")
 				return
 			"disconnect":
 				_play_sound(AUDIO_DISCONNECT)
-				_start_fake_call("\n\n[color=gray][b]*Rozłączono.*[/b][/color]")
+				_end_call_by_npc("\n\n[color=gray][b]*Rozłączono.*[/b][/color]")
 				return
 			"win":
-				_start_fake_call("\n\n[color=green][b]Sukces! Zdobyłeś hasło do monitoringu: zaq1. Śledztwo posunęło się do przodu.[/b][/color]")
+				# Przy wygranej nie puszczamy dźwięku błędu/rozłączenia od razu – dajemy graczowi zapisać hasło
+				_end_call_by_npc("\n\n[color=green][b]Sukces! Zdobyłeś hasło do monitoringu: zaq1. Śledztwo posunęło się do przodu.[/b][/color]")
 				return
 
 	if node.has("next") and node["next"] != "":
 		await get_tree().create_timer(1.0).timeout
-		start_dialogue(node["next"])
+		if rozmowa.visible: # Bezpiecznik na wypadek gdyby gracz odłożył słuchawkę w sekundowej przerwie
+			start_dialogue(node["next"])
 	else:
 		_generate_reply_buttons(node["options"])
 
@@ -307,22 +322,23 @@ func _hide_all_reply_buttons():
 		if child is Button:
 			child.visible = false
 
-# --- Pomocnicza funkcja odtwarzania plików ---
 func _play_sound(path: String):
 	if ResourceLoader.exists(path):
 		audio_player.stream = load(path)
 		audio_player.play()
 
+# --- Rozłączenie WYWOŁANE RĘCZNIE przez gracza ---
 func back_to_dialer():
-	# Jeśli gracz rozłączy się ręcznie, upewniamy się, że ucinamy dźwięki
 	audio_player.stop()
+	ambient_player.stop()
+	is_connecting_call = false
 	
-	# Jeśli kliknął w trakcie 3 sekund łączenia, nie wywalamy błędów
-	is_connecting_call = false 
-	
-	# Zawsze odtwórz krótkie odłożenie słuchawki przy powrocie
+	# Dźwięk odkładania słuchawki generujemy wyłącznie przy ręcznym kliknięciu gracza
 	_play_sound(AUDIO_DISCONNECT)
-	
+	_clean_ui_to_dialer()
+
+# --- Pomocnicze czyszczenie stanów UI ---
+func _clean_ui_to_dialer():
 	is_speaking = false
 	rozmowa.visible = false
 	btn_rozlacz.visible = false
@@ -330,3 +346,8 @@ func back_to_dialer():
 	dialer.visible = true
 	current_number = ""
 	wyswietlacz_numeru.text = ""
+
+func _play_ambient(path: String):
+	if ResourceLoader.exists(path):
+		ambient_player.stream = load(path)
+		ambient_player.play()
