@@ -15,13 +15,22 @@ var loading_layer: CanvasLayer = null
 var progress_bar: ProgressBar = null 
 var tip_label: Label = null
 var is_loading = false
+var is_new_game = false # Flaga sprawdzająca, czy kliknięto "Nowa Gra"
 
-func _on_button_pressed(): 
+func _on_button_pressed(): # NOWA GRA
 	if is_loading:
 		return
 	is_loading = true
-	# Startujemy standardowo od ekranu ładowania
+	is_new_game = true # Tu aktywujemy intro fabularne i wyciszenie
 	_uruchom_loading_screen("res://scenes/scena_1.tscn")
+
+func _on_button_2_pressed(): # KONTYNUACJA
+	if is_loading:
+		return
+	is_loading = true
+	is_new_game = false # Dla kontynuacji pomijamy intro i wyciszenie
+	var last_level = GameConfig.get_last_level()
+	_uruchom_loading_screen(last_level)
 
 func _uruchom_loading_screen(scene_path: String):
 	loading_layer = CanvasLayer.new()
@@ -99,73 +108,68 @@ func _proces_ladowania(scene_path: String):
 	if is_instance_valid(loading_layer):
 		loading_layer.queue_free()
 	
-	# TERAZ odpalamy piękny ekran powitalny z efektami kinowymi
-	_pokaz_ekran_powitalny_z_efektami(scene_path)
+	# Decyzja co robimy po ładowaniu
+	if is_new_game:
+		# Odpalamy ekran z napisami i ściiszeniem audio (tylko dla Nowej Gry)
+		_pokaz_ekran_powitalny_z_efektami(scene_path)
+	else:
+		# Zwykłe przejście bez efektów (dla Kontynuacji)
+		get_tree().change_scene_to_file(scene_path)
+		is_loading = false
 
 func _pokaz_ekran_powitalny_z_efektami(scene_path: String):
 	var story_layer = CanvasLayer.new()
 	story_layer.layer = 105
 	add_child(story_layer)
 	
-	# Czarne tło (ustawiamy początkową przezroczystość na 0 do Fade In)
+	# Czarne tło
 	var black_bg = ColorRect.new()
 	black_bg.color = Color(0, 0, 0, 0)
 	black_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	story_layer.add_child(black_bg)
 	
-	# Stylowy kontener na tekst
+	# Tekst wprowadzający
 	var label = Label.new()
 	label.text = "Cześć, Greg. To twój pierwszy dzień pracy na 112. Powodzenia."
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
-	# Podkręcony wygląd tekstu
 	label.set("theme_override_font_sizes/font_size", 38)
 	label.set("theme_override_colors/font_color", Color.WHITE)
-	label.modulate.a = 0.0 # Też startuje od niewidzialnego
+	label.modulate.a = 0.0
 	story_layer.add_child(label)
 	
-	# --- POBRANIE BUSU AUDIO ---
-	# Jeśli masz osobny bus na muzykę, zmień "Master" na "Music"
+	# POBRANIE BUSU AUDIO
 	var bus_index = AudioServer.get_bus_index("Master") 
 	
-	# --- FADE IN (Płynne pojawianie się obrazu i ściszanie muzyki) ---
+	# --- FADE IN ---
 	var tween_in = create_tween().set_parallel(true)
-	tween_in.tween_property(black_bg, "color:a", 1.0, 0.8) # Czarny ekran w 0.8s
-	tween_in.tween_property(label, "modulate:a", 1.0, 1.2)   # Napis chwilę wolniej (1.2s)
+	tween_in.tween_property(black_bg, "color:a", 1.0, 0.8)
+	tween_in.tween_property(label, "modulate:a", 1.0, 1.2)
 	
-	# Płynne ściszanie do -40 dB w czasie 1.2 sekundy (równo z napisem)
+	# Wyciszenie do -40 dB
 	tween_in.tween_method(
 		func(volume): AudioServer.set_bus_volume_db(bus_index, volume),
-		AudioServer.get_bus_volume_db(bus_index), # wartość początkowa (aktualna)
-		-40.0,                                    # wartość docelowa
-		1.2                                       # czas trwania w sekundach
+		AudioServer.get_bus_volume_db(bus_index),
+		-40.0,
+		1.2
 	)
 	
 	await tween_in.finished
 	
-	# Czas na przeczytanie komunikatu (3 sekundy)
+	# Czas na czytanie
 	await get_tree().create_timer(3.0).timeout
 	
-	# --- FADE OUT (Płynne znikanie do czerni przed nową sceną) ---
+	# --- FADE OUT ---
 	var tween_out = create_tween().set_parallel(true)
-	tween_out.tween_property(label, "modulate:a", 0.0, 0.8) # Napis znika
+	tween_out.tween_property(label, "modulate:a", 0.0, 0.8)
 	await tween_out.finished
 	
-	# Zmiana sceny w tle
+	# Zmiana sceny i czyszczenie
 	get_tree().change_scene_to_file(scene_path)
-	
-	# Ostateczne wyczyszczenie warstwy i odblokowanie stanu
 	story_layer.queue_free()
 	is_loading = false
-
-func _on_button_2_pressed(): # Kontynuacja
-	if is_loading:
-		return
-	is_loading = true
-	var last_level = GameConfig.get_last_level()
-	_uruchom_loading_screen(last_level)
 
 func _on_button_3_pressed(): # Ustawienia
 	get_tree().change_scene_to_file("res://scenes/ustawienia.tscn")
