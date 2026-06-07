@@ -122,7 +122,7 @@ func _on_meta_entered(body):
 		return
 	if body.is_in_group("gracz"):
 		gra_aktywna = false
-		get_tree().change_scene_to_file("res://scenes/multiplayer_wybór.tscn")
+		get_tree().change_scene_to_file("res://scenes/scena_6ipol.tscn")
 
 func _screen_shake(intensity: float):
 	if not gracz:

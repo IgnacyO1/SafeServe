@@ -1008,7 +1008,7 @@ scale = Vector2(0.111328155, 0.10484321)
 sprite_frames = SubResource("SpriteFrames_yh7rx")
 animation = &"policjant_walk_prawo"
 autoplay = "policjant_idle_dol"
-frame_progress = 0.5331507
+frame_progress = 0.6744529
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=558389410]
 z_index = 1

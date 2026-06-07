@@ -92,8 +92,6 @@ func _process(delta: float) -> void:
 	if quests_active and is_instance_valid(wire_panel):
 		wire_panel.queue_redraw()
 
-	# Interakcja obsługiwana w _unhandled_input (E i Space/Enter)
-
 func _interact_with_skrzynka() -> void:
 	if not first_shock_done:
 		_trigger_electric_shock()
@@ -108,7 +106,7 @@ func _trigger_electric_shock() -> void:
 	# Dzwiek porazenia
 	var sound_player = AudioStreamPlayer.new()
 	add_child(sound_player)
-	sound_player.stream = load("res://assets/Sounds/391669__jeckkech__crash.wav")
+	sound_player.stream = load("res://assets/Sounds/bum.mp3")
 	sound_player.volume_db = 10.0
 	sound_player.play()
 
@@ -139,11 +137,14 @@ func _trigger_electric_shock() -> void:
 	_play_shock_voice()
 
 func _play_shock_voice() -> void:
-	if is_instance_valid(radio):
-		radio.show_radio_message(
-			"AŁĆ! Kurwa! Ta skrzynka kopie jak cholera! Muszę być ostrożniejszy...",
-			"res://assets/Sounds/scena_6_krotkofalowka.wav"
-		)
+	# POPRAWKA: Samotny krzyk odtworzony bezpośrednio w grze, bez krótkofalówki i napisów
+	var voice_player = AudioStreamPlayer.new()
+	add_child(voice_player)
+	voice_player.stream = load("res://assets/Sounds/dying.mp3")
+	voice_player.volume_db = 5.0
+	voice_player.play()
+	# Usunięcie playera z pamięci po zakończeniu dźwięku
+	voice_player.finished.connect(func(): voice_player.queue_free())
 
 func _open_electric_quests() -> void:
 	quests_active = true
@@ -171,11 +172,9 @@ func _on_skrzynka_area_exited(body: Node2D) -> void:
 
 # ============================================================
 # WIRE CUTTING PUZZLE
-# Kable sa juz podlaczone - KLIKNIJ zeby przeciac
 # ============================================================
 
 func _unhandled_input(event: InputEvent) -> void:
-	# --- Interakcja ze skrzynka (E lub Space) ---
 	if player_in_range and gra_aktywna and not quests_active:
 		if event is InputEventKey and event.pressed and not event.echo:
 			if event.keycode == KEY_E or event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:
@@ -189,12 +188,10 @@ func _on_wire_panel_gui_input(event: InputEvent) -> void:
 	if not event.pressed: return
 	if event.button_index != MOUSE_BUTTON_LEFT: return
 
-	# Pozycja myszy w lokalnym ukladzie wire_panel
 	var local_pos = wire_panel.get_local_mouse_position()
 
 	for i in range(4):
 		if wire_cut[i]: continue
-		# Sprawdz wzdluz calej linii kabla z tolerancja 22px
 		var closest = _closest_point_on_segment(local_pos, wire_left_pts[i], wire_right_pts[i])
 		if local_pos.distance_to(closest) < 22.0:
 			_cut_wire(i)
@@ -210,14 +207,12 @@ func _cut_wire(idx: int) -> void:
 	wire_cut[idx] = true
 	wire_panel.queue_redraw()
 
-	# Dzwiek przeciecia
 	var snip = AudioStreamPlayer.new()
 	add_child(snip)
-	snip.stream = load("res://assets/Sounds/275903_crash02.wav")
+	snip.stream = load("res://assets/Sounds/cutting.mp3")
 	snip.volume_db = 2.0
 	snip.play()
 
-	# Iskry przy skrzynce
 	if is_instance_valid(sparks):
 		sparks.amount = 40
 		sparks.explosiveness = 0.8
@@ -236,28 +231,22 @@ func _draw_wires() -> void:
 		var rp = wire_right_pts[i]
 
 		if wire_cut[i]:
-			# Przeciety kabel - dwa kawalki z przerwa i ciemnym kolorem
 			var mid = (lp + rp) / 2.0
 			var gap = 20.0
-			# Ciemniejszy kolor - martwy kabel
 			var dead_col = col.darkened(0.5)
 			dead_col.a = 0.5
 			wire_panel.draw_line(lp, mid - Vector2(gap, 0), dead_col, 10.0, true)
 			wire_panel.draw_line(mid + Vector2(gap, 0), rp, dead_col, 10.0, true)
-			# Napis PRZECIETY
 			wire_panel.draw_circle(mid, 8.0, Color(0.8, 0.1, 0.1, 1.0))
 		else:
-			# Zywotny kabel - gruba pulsujaca linia
 			var pulse = 0.7 + 0.3 * sin(Time.get_ticks_msec() * 0.005 + i * 1.5)
 			var bright_col = col.lightened(0.2)
 			bright_col.a = pulse
 			wire_panel.draw_line(lp, rp, bright_col, 12.0, true)
 
-			# Koncowki kabla
 			wire_panel.draw_circle(lp, 10.0, col)
 			wire_panel.draw_circle(rp, 10.0, col)
 
-			# Label przecinek hint
 			wire_panel.draw_string(
 				ThemeDB.fallback_font,
 				(lp + rp) / 2.0 + Vector2(0, -16),
@@ -269,7 +258,7 @@ func _draw_wires() -> void:
 			)
 
 # ============================================================
-# BREAKER PANEL - startuja ON, trzeba wlaczyc na OFF
+# BREAKER PANEL
 # ============================================================
 
 func _setup_breakers_ui() -> void:
@@ -277,18 +266,16 @@ func _setup_breakers_ui() -> void:
 		var btn = Button.new()
 		btn.custom_minimum_size = Vector2(160, 70)
 		btn.toggle_mode = true
-		btn.button_pressed = true   # startuje wcisniety = ON
+		btn.button_pressed = true
 		_style_breaker_button(btn, true)
 		btn.toggled.connect(func(state): _on_breaker_toggled(i, state, btn))
 		breaker_buttons.append(btn)
 		breaker_container.add_child(btn)
 
 func _on_breaker_toggled(index: int, state: bool, btn: Button) -> void:
-	# state=true => ON, state=false => OFF
 	breaker_states[index] = state
 	_style_breaker_button(btn, state)
 
-	# Dzwiek kliknietia
 	var beep = AudioStreamPlayer.new()
 	add_child(beep)
 	beep.stream = load("res://assets/Sounds/391650__jeckkech__beep.wav")
@@ -307,12 +294,10 @@ func _style_breaker_button(btn: Button, is_on: bool) -> void:
 	style_hover.set_corner_radius_all(8)
 
 	if is_on:
-		# ON = aktywne zasilanie - zielony = ZLE, trzeba wylaczyc
 		style_normal.bg_color = Color("#1c8c30")
 		style_hover.bg_color = Color("#22a038")
 		btn.add_theme_color_override("font_color", Color(0.9, 1.0, 0.9))
 	else:
-		# OFF = wylaczone - czerwony/ciemny = DOBRZE
 		style_normal.bg_color = Color("#3a0505")
 		style_hover.bg_color = Color("#4d0707")
 		btn.add_theme_color_override("font_color", Color(0.6, 0.1, 0.1))
@@ -327,10 +312,7 @@ func _style_breaker_button(btn: Button, is_on: bool) -> void:
 # ============================================================
 
 func _check_quest_completion() -> void:
-	# Kable: wszystkie musza byc przeciete
 	quest_wires_completed = wire_cut.all(func(c): return c == true)
-
-	# Breaker: wszystkie musza byc OFF (false)
 	quest_breakers_completed = breaker_states.all(func(s): return s == false)
 
 	_update_quest_status()
@@ -357,21 +339,31 @@ func _complete_all_quests() -> void:
 	quests_active = false
 	quest_layer.hide()
 
-	# Zasilanie wylaczone - ekran gaśnie
-	var tw = create_tween()
-	tw.tween_property(fade_rect, "color:a", 1.0, 2.5)
-	await tw.finished
-
+	# NAGŁE zgaśnięcie świateł
+	fade_rect.color = Color.BLACK
+	fade_rect.color.a = 1.0 
+	
 	prompt_label.hide()
+
+	# NOWOŚĆ: Natychmiastowy dźwięk odcięcia zasilania (power down)
+	var power_down_sound = AudioStreamPlayer.new()
+	add_child(power_down_sound)
+	power_down_sound.stream = load("res://assets/Sounds/hisound-power-outage-451574.mp3") # Możesz zmienić ścieżkę na np. "res://assets/Sounds/power_down.mp3"
+	power_down_sound.volume_db = 3.0
+	power_down_sound.play()
+	power_down_sound.finished.connect(func(): power_down_sound.queue_free())
+
+	# Chwila ciszy/ciemności w napięciu przed komunikatem radiowym (1.5 sekundy)
+	await get_tree().create_timer(3.5).timeout
 
 	# Komunikat radiowy
 	if is_instance_valid(radio):
 		await radio.show_radio_message(
-			"ZASILANIE TRAKCYJNE WYLACZONE! Cyberkrab stracil panowanie nad pociagiem! Ten cwel ucieka autem na autostrde! Ruszamy za nim!",
-			"res://assets/Sounds/scena_6_krotkofalowka.wav"
+			"Gratulacje! Metro uratowane.",
+			"res://assets/Sounds/metro3.mp3"
 		)
 
-	get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
+	get_tree().change_scene_to_file("res://scenes/multiplayer_wybór.tscn")
 
 func _on_close_button_pressed() -> void:
 	_close_electric_quests()
