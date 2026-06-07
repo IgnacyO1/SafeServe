@@ -270,7 +270,7 @@ func start_dialogue(node_id: String):
 			"block":
 				is_glus_blocked = true
 				_play_sound(AUDIO_DISCONNECT)
-				_end_call_by_npc("\n\n[color=red][b]*Klik!* Połączenie przerwane. Zostałeś zablokowany.[/b][/color]")
+				_end_call_by_npc("\n\n[color=red][b]Połączenie przerwane. Zostałeś zablokowany.[/b][/color]")
 				return
 			"disconnect":
 				_play_sound(AUDIO_DISCONNECT)
