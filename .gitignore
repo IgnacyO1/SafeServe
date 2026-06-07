@@ -1,6 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
-assets/Videos/output.ogv
 scripts/nonsense-backup/
 *.import

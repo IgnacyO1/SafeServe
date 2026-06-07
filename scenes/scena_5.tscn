@@ -25,7 +25,7 @@ texture = SubResource("GradientTexture2D_jhgwc")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
 stream = ExtResource("2_6hmby")
-volume_db = -11.982
+volume_db = -18.052
 autoplay = true
 parameters/looping = true
 
