@@ -8,27 +8,33 @@ const map_margin : Vector2 = Vector2(250, 150)
 
 
 
-func find_marker_filename(type : String ):
-	const event_type_to_marker_filename : Dictionary = {
-		"Fire" : "ogien.png",
-		"Police" : "police.svg",
-		"Fire rescue" : "fire_truck.svg",
-		"Ambulance" : "ambulance.svg",
-		"Emergency" : "wykrzyknik.svg",
-		"Crime" : "zlodziej.svg"
-	}
-	return "res://assets/graphics/scena_1/" + event_type_to_marker_filename[type] 
+#func find_marker_filename(type : String ):
+	#const event_type_to_marker_filename : Dictionary = {
+		#"Fire" : "ogien.png",
+		#"Police" : "police.svg",
+		#"Fire rescue" : "fire_truck.svg",
+		#"Ambulance" : "ambulance.svg",
+		#"Emergency" : "wykrzyknik.svg",
+		#"Crime" : "zlodziej.svg"
+	#}
+	#return "res://assets/graphics/scena_1/" + event_type_to_marker_filename[type] 
+func find_marker_filename( type : String ):
+	return "res://assets/graphics/scena_1/" + "wykrzyknik.svg"
 
 func find_arrow_filename(type : String ):
-	const event_type_to_arrow_color : Dictionary = {
-		"Fire" : "orange",
-		"Police" : "blue",
-		"Fire rescue" : "dark_red",
-		"Ambulance" : "white",
-		"Emergency" : "red",
-		"Crime" : "black"
-	}
-	return "res://assets/graphics/scena_1/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
+	return "res://assets/graphics/scena_1/" + "Arrow_icon_red.svg"
+
+
+#func find_arrow_filename(type : String ):
+	#const event_type_to_arrow_color : Dictionary = {
+		#"Fire" : "orange",
+		#"Police" : "blue",
+		#"Fire rescue" : "dark_red",
+		#"Ambulance" : "white",
+		#"Emergency" : "red",
+		#"Crime" : "black"
+	#}
+	#return "res://assets/graphics/scena_1/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
 
 var map_view_size
 var MapSprite : Sprite2D
@@ -65,8 +71,8 @@ func update_scale(amount : float):
 var max_position : Vector2
 var min_position : Vector2
 func clamp_position():
-	position.x = clamp(position.x, min_position.x , max_position.x)
-	position.y = clamp(position.y, min_position.y , max_position.y)
+	position.x = clamp(position.x, min_position.x, max_position.x)
+	position.y = clamp(position.y, min_position.y, max_position.y)
 
 func _ready():
 	map_view_size = Vector2(self.get_parent().get_parent().size)
@@ -78,7 +84,7 @@ func _process(_delta : float):
 	for i in range(Events.size()):
 		Events[i].update_arrow()
 
-var map_locked : bool = true
+var map_locked : bool = false
 var dragging : bool = false
 var last_mouse_position : Vector2 = Vector2.ZERO
 func _input(event) -> void:
@@ -95,3 +101,7 @@ func _input(event) -> void:
 		position += delta
 		clamp_position()
 		last_mouse_position = event.position
+
+func clear():
+	for me in Events:
+		me.delete()

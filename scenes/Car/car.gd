@@ -49,6 +49,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_lights"):
 		lights_active = !lights_active
 		turn_emergency_lights(lights_active)
+		print(self.position)
 
 func _physics_process(delta: float) -> void:
 	if map_manager and map_manager.has_method("is_point_on_road"):
@@ -150,7 +151,6 @@ func make_way_for_emergency():
 					npc.yield_to_emergency()
 
 func turn_emergency_lights( mode : bool ):
-	print("Przycisk świateł naciśnięty!")
 	lights.visible = mode
 	if mode:
 		lights.play()

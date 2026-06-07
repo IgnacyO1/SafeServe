@@ -1,0 +1,784 @@
+[gd_scene format=3 uid="uid://cpv6vbvmdefnx"]
+
+[ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena1/scena_1.gd" id="1_exvab"]
+[ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/scena1/MapContainer.gd" id="2_qjgc2"]
+[ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
+[ext_resource type="Texture2D" uid="uid://pqg61u2i5pfo" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
+[ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/scena1/modal_button.gd" id="5_atxpi"]
+[ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
+[ext_resource type="Script" uid="uid://dbhixobuaj6b" path="res://scripts/scena1/bottom_panel.gd" id="6_qjgc2"]
+[ext_resource type="Script" uid="uid://i231op5alp5j" path="res://scripts/scena1/side_panel.gd" id="7_7ealu"]
+[ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
+[ext_resource type="Script" uid="uid://6gjgsr251yft" path="res://scripts/scena1/button_container.gd" id="7_bhyte"]
+[ext_resource type="Texture2D" uid="uid://bfi21jnij7qjw" path="res://assets/graphics/scena_1/Side panel background.svg" id="8_0rpw8"]
+[ext_resource type="Texture2D" uid="uid://drw1ulnb5cdig" path="res://assets/graphics/scena_1/bottom panel.svg" id="8_2q4pn"]
+[ext_resource type="Texture2D" uid="uid://dd8v1brsx6x76" path="res://assets/graphics/scena_1/Arrow_icon_red.svg" id="8_d4w84"]
+[ext_resource type="Texture2D" uid="uid://dne83jrc2h7q7" path="res://assets/graphics/scena_1/Modal.png" id="8_maknc"]
+[ext_resource type="Texture2D" uid="uid://byv7kjm3ahrty" path="res://assets/graphics/scena_1/wykrzyknik.svg" id="9_8cvow"]
+[ext_resource type="Texture2D" uid="uid://dg4el2vwcvv81" path="res://assets/graphics/scena_1/Arrow_icon_orange.svg" id="9_el5c8"]
+[ext_resource type="Texture2D" uid="uid://2hjcj7826c1s" path="res://assets/graphics/scena_1/Arrow_icon_black.svg" id="10_el5c8"]
+[ext_resource type="Texture2D" uid="uid://drpxmcv2rj756" path="res://assets/graphics/scena_1/zlodziej.svg" id="11_da6gn"]
+[ext_resource type="Texture2D" uid="uid://dh4lqglgia2xt" path="res://assets/graphics/scena_1/Arrow_icon_blue.svg" id="12_maknc"]
+[ext_resource type="Texture2D" uid="uid://bk3y6psw153h" path="res://assets/graphics/scena_1/police.svg" id="13_0bpa3"]
+[ext_resource type="Texture2D" uid="uid://dkgfsqfw4s8qj" path="res://assets/graphics/scena_1/Arrow_icon_dark_red.svg" id="14_bqyrf"]
+[ext_resource type="Texture2D" uid="uid://bio2pd3aqp4op" path="res://assets/graphics/scena_1/fire_truck.svg" id="15_n24rr"]
+[ext_resource type="Texture2D" uid="uid://caspmwry8eag6" path="res://assets/graphics/scena_1/Arrow_icon_white.svg" id="16_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://corjwbf8i64pu" path="res://assets/graphics/scena_1/ambulance.svg" id="17_ar68y"]
+[ext_resource type="AudioStream" uid="uid://brw24n8b477jg" path="res://assets/Sounds/pozar_w_polyservers.wav" id="20_da6gn"]
+[ext_resource type="Texture2D" uid="uid://lyal5gxrpo0l" path="res://assets/graphics/scena_1/Button.png" id="21_0bpa3"]
+[ext_resource type="Script" uid="uid://bl5w6mqlgpxf4" path="res://scripts/scena1/modal.gd" id="21_ar68y"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="21_bqyrf"]
+[ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="22_n24rr"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="23_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="25_ar68y"]
+[ext_resource type="Texture2D" uid="uid://d24g8uashq26" path="res://assets/graphics/Motorola krotkofalowka glow.png" id="28_kkjyc"]
+[ext_resource type="Script" uid="uid://ccrn7dnbdgnrn" path="res://scripts/scena1/radio_glow.gd" id="29_wv1cp"]
+[ext_resource type="Script" uid="uid://utw66u5ek3qf" path="res://scripts/scena1/radio_handler.gd" id="31_pcab4"]
+
+[sub_resource type="Theme" id="Theme_maknc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2q4pn"]
+texture = ExtResource("8_0rpw8")
+expand_margin_left = 30.0
+expand_margin_top = 30.0
+expand_margin_right = 30.0
+expand_margin_bottom = 30.0
+
+[sub_resource type="Theme" id="Theme_el5c8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kkjyc"]
+texture = ExtResource("8_2q4pn")
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_2fvm5"]
+font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2q4pn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3epbs"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cmwsu"]
+texture = ExtResource("8_maknc")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ktn7"]
+font_size = 42
+
+[sub_resource type="LabelSettings" id="LabelSettings_du2nj"]
+font_size = 30
+
+[sub_resource type="FontFile" id="FontFile_bhyte"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/17/0/ascent = 0.0
+cache/0/17/0/descent = 0.0
+cache/0/17/0/underline_position = 0.0
+cache/0/17/0/underline_thickness = 0.0
+cache/0/17/0/scale = 1.0
+cache/0/18/0/ascent = 0.0
+cache/0/18/0/descent = 0.0
+cache/0/18/0/underline_position = 0.0
+cache/0/18/0/underline_thickness = 0.0
+cache/0/18/0/scale = 1.0
+cache/0/19/0/ascent = 0.0
+cache/0/19/0/descent = 0.0
+cache/0/19/0/underline_position = 0.0
+cache/0/19/0/underline_thickness = 0.0
+cache/0/19/0/scale = 1.0
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/21/0/ascent = 0.0
+cache/0/21/0/descent = 0.0
+cache/0/21/0/underline_position = 0.0
+cache/0/21/0/underline_thickness = 0.0
+cache/0/21/0/scale = 1.0
+cache/0/22/0/ascent = 0.0
+cache/0/22/0/descent = 0.0
+cache/0/22/0/underline_position = 0.0
+cache/0/22/0/underline_thickness = 0.0
+cache/0/22/0/scale = 1.0
+cache/0/23/0/ascent = 0.0
+cache/0/23/0/descent = 0.0
+cache/0/23/0/underline_position = 0.0
+cache/0/23/0/underline_thickness = 0.0
+cache/0/23/0/scale = 1.0
+cache/0/24/0/ascent = 0.0
+cache/0/24/0/descent = 0.0
+cache/0/24/0/underline_position = 0.0
+cache/0/24/0/underline_thickness = 0.0
+cache/0/24/0/scale = 1.0
+cache/0/25/0/ascent = 0.0
+cache/0/25/0/descent = 0.0
+cache/0/25/0/underline_position = 0.0
+cache/0/25/0/underline_thickness = 0.0
+cache/0/25/0/scale = 1.0
+cache/0/26/0/ascent = 0.0
+cache/0/26/0/descent = 0.0
+cache/0/26/0/underline_position = 0.0
+cache/0/26/0/underline_thickness = 0.0
+cache/0/26/0/scale = 1.0
+cache/0/27/0/ascent = 0.0
+cache/0/27/0/descent = 0.0
+cache/0/27/0/underline_position = 0.0
+cache/0/27/0/underline_thickness = 0.0
+cache/0/27/0/scale = 1.0
+cache/0/28/0/ascent = 0.0
+cache/0/28/0/descent = 0.0
+cache/0/28/0/underline_position = 0.0
+cache/0/28/0/underline_thickness = 0.0
+cache/0/28/0/scale = 1.0
+cache/0/29/0/ascent = 0.0
+cache/0/29/0/descent = 0.0
+cache/0/29/0/underline_position = 0.0
+cache/0/29/0/underline_thickness = 0.0
+cache/0/29/0/scale = 1.0
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0
+cache/0/31/0/ascent = 0.0
+cache/0/31/0/descent = 0.0
+cache/0/31/0/underline_position = 0.0
+cache/0/31/0/underline_thickness = 0.0
+cache/0/31/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/33/0/ascent = 0.0
+cache/0/33/0/descent = 0.0
+cache/0/33/0/underline_position = 0.0
+cache/0/33/0/underline_thickness = 0.0
+cache/0/33/0/scale = 1.0
+cache/0/34/0/ascent = 0.0
+cache/0/34/0/descent = 0.0
+cache/0/34/0/underline_position = 0.0
+cache/0/34/0/underline_thickness = 0.0
+cache/0/34/0/scale = 1.0
+cache/0/35/0/ascent = 0.0
+cache/0/35/0/descent = 0.0
+cache/0/35/0/underline_position = 0.0
+cache/0/35/0/underline_thickness = 0.0
+cache/0/35/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+cache/0/37/0/ascent = 0.0
+cache/0/37/0/descent = 0.0
+cache/0/37/0/underline_position = 0.0
+cache/0/37/0/underline_thickness = 0.0
+cache/0/37/0/scale = 1.0
+cache/0/38/0/ascent = 0.0
+cache/0/38/0/descent = 0.0
+cache/0/38/0/underline_position = 0.0
+cache/0/38/0/underline_thickness = 0.0
+cache/0/38/0/scale = 1.0
+cache/0/12/0/ascent = 0.0
+cache/0/12/0/descent = 0.0
+cache/0/12/0/underline_position = 0.0
+cache/0/12/0/underline_thickness = 0.0
+cache/0/12/0/scale = 1.0
+cache/0/9/0/ascent = 0.0
+cache/0/9/0/descent = 0.0
+cache/0/9/0/underline_position = 0.0
+cache/0/9/0/underline_thickness = 0.0
+cache/0/9/0/scale = 1.0
+cache/0/6/0/ascent = 0.0
+cache/0/6/0/descent = 0.0
+cache/0/6/0/underline_position = 0.0
+cache/0/6/0/underline_thickness = 0.0
+cache/0/6/0/scale = 1.0
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhyte"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0rpw8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ar68y"]
+texture = ExtResource("8_maknc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qjgc2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_maknc"]
+font_size = 75
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ealu"]
+texture = ExtResource("8_maknc")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da6gn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ar68y"]
+font_size = 32
+font_color = Color(0, 0.6627451, 0, 1)
+
+[node name="Control" type="Control" unique_id=265069389]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_exvab")
+
+[node name="MapView" type="Panel" parent="." unique_id=1404406384]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 117.0
+offset_right = 1310.0
+offset_bottom = 857.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MapView" unique_id=182997264]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+
+[node name="SubViewport" type="SubViewport" parent="MapView/SubViewportContainer" unique_id=1478992441]
+handle_input_locally = false
+size = Vector2i(1230, 740)
+render_target_update_mode = 4
+
+[node name="MapRoot" type="Node2D" parent="MapView/SubViewportContainer/SubViewport" unique_id=1191415807]
+
+[node name="MapContainer" type="Node2D" parent="MapView/SubViewportContainer/SubViewport/MapRoot" unique_id=648824321]
+script = ExtResource("2_qjgc2")
+
+[node name="MapSprite" type="Sprite2D" parent="MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer" unique_id=1463073134]
+position = Vector2(1164, 904.5)
+texture = ExtResource("3_bqyrf")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1241085609]
+position = Vector2(960, 577)
+texture = ExtResource("4_bhyte")
+
+[node name="SidePanel" type="Panel" parent="." unique_id=691123791]
+layout_mode = 0
+offset_left = 1371.0
+offset_top = 135.0
+offset_right = 1871.0
+offset_bottom = 835.0
+theme = SubResource("Theme_maknc")
+theme_override_styles/panel = SubResource("StyleBoxTexture_2q4pn")
+script = ExtResource("7_7ealu")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SidePanel" unique_id=1409309134]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 700.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/ScrollContainer" unique_id=121786957]
+layout_mode = 2
+
+[node name="BottomPanel" type="Panel" parent="." unique_id=1070282638]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 883.0
+offset_right = 1872.0
+offset_bottom = 1011.0
+theme = SubResource("Theme_el5c8")
+theme_override_styles/panel = SubResource("StyleBoxTexture_kkjyc")
+script = ExtResource("6_qjgc2")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="BottomPanel" unique_id=1820753213]
+visible = false
+
+[node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
+position = Vector2(64, 64)
+scale = Vector2(2, 2)
+
+[node name="Information" type="Label" parent="BottomPanel" unique_id=2120738279]
+layout_mode = 0
+offset_left = 148.0
+offset_right = 468.0
+offset_bottom = 128.0
+label_settings = SubResource("LabelSettings_2fvm5")
+autowrap_mode = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BottomPanel" unique_id=604867132]
+layout_mode = 0
+offset_left = 478.0
+offset_right = 1101.0
+offset_bottom = 128.0
+
+[node name="Transcript" type="Label" parent="BottomPanel/ScrollContainer" unique_id=613711265]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2q4pn")
+label_settings = SubResource("LabelSettings_3epbs")
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="HFlowContainer" parent="BottomPanel" unique_id=92126092]
+layout_mode = 0
+offset_left = 1113.0
+offset_right = 1690.0
+offset_bottom = 128.0
+alignment = 1
+last_wrap_alignment = 2
+script = ExtResource("7_bhyte")
+
+[node name="Tutorial modal" type="Panel" parent="." unique_id=1116195531]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -646.0
+offset_top = -304.0
+offset_right = 520.0
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cmwsu")
+
+[node name="Label" type="Label" parent="Tutorial modal" unique_id=223030600]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 43.0
+offset_right = 1122.0
+offset_bottom = 113.0
+text = "Podsumowanie szkolenia"
+label_settings = SubResource("LabelSettings_6ktn7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Text" type="Label" parent="Tutorial modal" unique_id=807487684]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 109.0
+offset_right = 634.0
+offset_bottom = 408.0
+text = "- Przeciągaj mapę
+- Wybierz jednocześnie zdarzenie i odpowiadającą jednostkę, potem kliknij \"Wyślij\", aby ją wysłać "
+label_settings = SubResource("LabelSettings_du2nj")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Control2" type="Control" parent="Tutorial modal" unique_id=178386122]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 100.0
+offset_right = 688.0
+offset_bottom = 140.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control2" unique_id=1517164884]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Wypadek"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control2" unique_id=1666211267]
+position = Vector2(32, 32)
+texture = ExtResource("8_d4w84")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control2" unique_id=2073255301]
+position = Vector2(96, 38.5)
+scale = Vector2(1, 1.2708334)
+texture = ExtResource("9_8cvow")
+
+[node name="Control67" type="Control" parent="Tutorial modal" unique_id=668618956]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 167.0
+offset_right = 688.0
+offset_bottom = 207.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control67" unique_id=1524602099]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Ogień"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control67" unique_id=1550146987]
+position = Vector2(32, 32)
+texture = ExtResource("9_el5c8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control67" unique_id=1958918065]
+position = Vector2(96, 32)
+texture = ExtResource("7_8g8i5")
+
+[node name="Control3" type="Control" parent="Tutorial modal" unique_id=1401894522]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 234.0
+offset_right = 688.0
+offset_bottom = 274.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control3" unique_id=749034303]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Przestępstwo"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control3" unique_id=1342764261]
+position = Vector2(32, 32)
+texture = ExtResource("10_el5c8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control3" unique_id=1136699831]
+position = Vector2(96, 32)
+texture = ExtResource("11_da6gn")
+
+[node name="Control4" type="Control" parent="Tutorial modal" unique_id=1337243999]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 301.0
+offset_right = 688.0
+offset_bottom = 341.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control4" unique_id=436237509]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Policja"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control4" unique_id=843105976]
+position = Vector2(32, 32)
+texture = ExtResource("12_maknc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control4" unique_id=1101820019]
+position = Vector2(96, 32)
+texture = ExtResource("13_0bpa3")
+
+[node name="Control5" type="Control" parent="Tutorial modal" unique_id=1076693318]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 368.0
+offset_right = 688.0
+offset_bottom = 408.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control5" unique_id=628176168]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Straż pożarna"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control5" unique_id=678373418]
+position = Vector2(32, 32)
+texture = ExtResource("14_bqyrf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control5" unique_id=1593558105]
+position = Vector2(96, 32)
+texture = ExtResource("15_n24rr")
+
+[node name="Control6" type="Control" parent="Tutorial modal" unique_id=723006002]
+anchors_preset = 0
+offset_left = 648.0
+offset_top = 435.0
+offset_right = 688.0
+offset_bottom = 475.0
+
+[node name="Text2" type="Label" parent="Tutorial modal/Control6" unique_id=145815693]
+layout_mode = 0
+offset_left = 138.0
+offset_right = 402.0
+offset_bottom = 64.0
+text = "Karetka"
+label_settings = SubResource("LabelSettings_du2nj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Tutorial modal/Control6" unique_id=1556603161]
+position = Vector2(32, 32)
+texture = ExtResource("16_cmwsu")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Tutorial modal/Control6" unique_id=1166209308]
+position = Vector2(96, 32)
+texture = ExtResource("17_ar68y")
+
+[node name="Button" type="Button" parent="Tutorial modal" unique_id=147856455]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 387.0
+offset_right = 670.0
+offset_bottom = 496.0
+theme_override_fonts/font = SubResource("FontFile_bhyte")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bhyte")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0rpw8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0rpw8")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0rpw8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0rpw8")
+text = "Rozumiem."
+icon = ExtResource("21_0bpa3")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_atxpi")
+
+[node name="General purpose modal" type="Panel" parent="." unique_id=556690621]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -140.0
+offset_right = 374.0
+offset_bottom = 209.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ar68y")
+script = ExtResource("21_ar68y")
+
+[node name="Label" type="Label" parent="General purpose modal" unique_id=1943317274]
+layout_mode = 0
+offset_left = -77.0
+offset_top = 72.0
+offset_right = 762.0
+offset_bottom = 141.0
+text = "Jednostka wysłana!"
+label_settings = SubResource("LabelSettings_du2nj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="General purpose modal" unique_id=151140849]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 183.0
+offset_right = 1389.0
+offset_bottom = 388.0
+scale = Vector2(0.45, 0.45)
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
+script = ExtResource("5_atxpi")
+
+[node name="Label" type="Label" parent="General purpose modal/TextureButton" unique_id=1045552010]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 45.0
+offset_right = 873.0
+offset_bottom = 253.99997
+theme_override_styles/normal = SubResource("StyleBoxTexture_qjgc2")
+text = "Przyjąłem"
+label_settings = SubResource("LabelSettings_maknc")
+
+[node name="Message modal" type="Panel" parent="." unique_id=1045472808]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -171.0
+offset_right = 286.0
+offset_bottom = 143.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7ealu")
+
+[node name="Label" type="Label" parent="Message modal" unique_id=1289796101]
+layout_mode = 0
+offset_left = -82.0
+offset_top = 72.0
+offset_right = 757.0
+offset_bottom = 141.0
+text = "[Nowa wiadomość]"
+label_settings = SubResource("LabelSettings_du2nj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="Message modal" unique_id=879481681]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 166.0
+offset_right = 1369.0
+offset_bottom = 371.0
+scale = Vector2(0.45, 0.45)
+texture_normal = ExtResource("21_0bpa3")
+texture_pressed = ExtResource("21_0bpa3")
+texture_hover = ExtResource("21_0bpa3")
+texture_disabled = ExtResource("21_0bpa3")
+texture_focused = ExtResource("21_0bpa3")
+script = ExtResource("5_atxpi")
+
+[node name="Label" type="Label" parent="Message modal/TextureButton" unique_id=545655583]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 45.0
+offset_right = 873.0
+offset_bottom = 253.99997
+text = "Odsłuchaj"
+label_settings = SubResource("LabelSettings_maknc")
+
+[node name="SoundIcon" type="Label" parent="Message modal" unique_id=1973445567]
+visible = false
+layout_mode = 0
+offset_left = 108.0
+offset_top = 240.0
+offset_right = 228.0
+offset_bottom = 320.0
+text = "🔊"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Message modal" unique_id=2047641932]
+position = Vector2(40, 31)
+stream = ExtResource("20_da6gn")
+
+[node name="Notification popup" type="Panel" parent="." unique_id=1987654321]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.2
+offset_left = -320.0
+offset_top = -80.0
+offset_right = 320.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_el5c8")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_da6gn")
+
+[node name="Background" type="ColorRect" parent="Notification popup" unique_id=1987654323]
+layout_mode = 0
+offset_left = -241.0
+offset_top = 721.0
+offset_right = 940.0
+offset_bottom = 888.0
+color = Color(0, 0, 0, 0.27450982)
+
+[node name="NotificationText" type="Label" parent="Notification popup" unique_id=1987654322]
+layout_mode = 0
+offset_left = -204.0
+offset_top = 695.0
+offset_right = 918.0
+offset_bottom = 917.0
+text = "Halo halo, mamy pożar w biurze w PolyServers, ulica Zielone Tulipany 82, palą nam się serwery, mamy w budynku uwięzioną 1 starszą osobę, potrzebujemy pilnie pomocy!"
+label_settings = SubResource("LabelSettings_du2nj")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SoundWave" type="Label" parent="Notification popup" unique_id=1987654324]
+visible = false
+layout_mode = 0
+offset_left = 466.0
+offset_top = 761.0
+offset_right = 1058.0
+offset_bottom = 864.0
+text = "∿  ∿  ∿  ∿  ∿"
+label_settings = SubResource("LabelSettings_maknc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="pasekzadań" type="Sprite2D" parent="." unique_id=249254113]
+z_index = 10
+position = Vector2(960, 1057.47)
+scale = Vector2(0.7507109, 0.750711)
+texture = ExtResource("5_cmwsu")
+
+[node name="HUD" type="Control" parent="." unique_id=1462378878]
+visibility_layer = 512
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RadioSpriteGlow" type="Sprite2D" parent="HUD" unique_id=607752123]
+position = Vector2(83, 894)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("28_kkjyc")
+script = ExtResource("29_wv1cp")
+
+[node name="RadioSprite" type="TextureButton" parent="HUD" unique_id=471249022]
+layout_mode = 0
+offset_left = -105.0
+offset_top = 704.0
+offset_right = 540.0
+offset_bottom = 1349.0
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("21_bqyrf")
+script = ExtResource("31_pcab4")
+
+[node name="Radio popup" type="Control" parent="HUD" unique_id=1043280712]
+z_index = 100
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("22_n24rr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Radio popup" unique_id=1481724730]
+position = Vector2(858.25, 967)
+scale = Vector2(0.9040134, 1)
+texture = ExtResource("23_cmwsu")
+
+[node name="Label" type="Label" parent="HUD/Radio popup" unique_id=1705143820]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 869.0
+offset_right = 1294.0
+offset_bottom = 1106.0
+text = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
+label_settings = SubResource("LabelSettings_ar68y")
+autowrap_mode = 2
+clip_text = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=834002578]
+
+[node name="okno" type="Sprite2D" parent="." unique_id=857695944]
+z_index = 10
+position = Vector2(960, 18)
+scale = Vector2(0.8376963, 0.74)
+texture = ExtResource("25_ar68y")
+
+[connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_on_press"]
+[connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_begin_game"]
+[connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
+[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="HUD/RadioSprite" to="HUD/RadioSprite" method="_click"]

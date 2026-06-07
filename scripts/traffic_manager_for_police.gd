@@ -20,8 +20,16 @@ func spawn_boss_car():
 	if uciekinier_scene == null:
 		print("ERROR: uciekinier_scene not loaded")
 		return
-	
+
+	var world = get_parent()
 	uciekinier = uciekinier_scene.instantiate()
+
+	var spawn_point = Vector2.ZERO
+	if "fixed_path" in uciekinier and not uciekinier.fixed_path.is_empty():
+		spawn_point = uciekinier.fixed_path[0]
+
+	uciekinier.position = spawn_point - world.global_position
 	add_child(uciekinier)
 	uciekinier.setup([], map_manager, false)
+	uciekinier.global_position = spawn_point
 	print("SPAWNED: Cyberkrab gotowy do ucieczki!")

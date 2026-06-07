@@ -1,6 +1,6 @@
 extends Node2D
 
-var start_pos_px = Vector2(-40671, 98832)
+var start_pos_px = Vector2(-18100+randf(), 50860+randf())
 var cutscene_path = "res://assets/Videos/spin.ogv"
 
 var local_player: CharacterBody2D = null 
@@ -54,7 +54,10 @@ func _on_player_connected(id: int):
 	var car = police_scene.instantiate()
 	car.name = str(id)
 	add_child(car)
-	car.global_position = start_pos_px
+	var player_spawn = start_pos_px
+	if traffic_manager and traffic_manager.has_method("get_player_spawn_position"):
+		player_spawn = traffic_manager.get_player_spawn_position()
+	car.global_position = player_spawn
 
 func _on_player_disconnected(id: int):
 	print("Gracz opuścił pokój. ID: ", id)
@@ -137,7 +140,10 @@ func _process_client():
 		local_player = get_node_or_null(str(my_id))
 		if is_instance_valid(local_player) and map_manager:
 			map_manager.player = local_player
-			map_manager.initialize_map(start_pos_px)
+			var start_for_map = start_pos_px
+			if traffic_manager and traffic_manager.has_method("get_player_spawn_position"):
+				start_for_map = traffic_manager.get_player_spawn_position()
+			map_manager.initialize_map(start_for_map)
 		return
 	var boss = get_tree().get_first_node_in_group("uciekinier")
 	if is_instance_valid(boss):

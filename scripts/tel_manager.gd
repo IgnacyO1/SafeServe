@@ -163,6 +163,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		if key_string.is_valid_int() and key_string.length() == 1:
 			_on_key_pressed(key_string)
+		elif key_string == "Plus" or event.as_text() == "+": # Obsługa fizycznego plusa
+			_on_key_pressed("+")
 		elif event.keycode == KEY_BACKSPACE:
 			if current_number.length() > 0:
 				current_number = current_number.left(current_number.length() - 1)
@@ -170,31 +172,67 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
 			_on_btn_zadzwon_pressed()
 
+# --- Logika Dialera (Wprowadzanie Numeru) ---
 func _on_key_pressed(digit: String) -> void:
-	if current_number.length() < 12:
+	# Pozwalamy na znak '+' tylko na samym początku wiadomości
+	if digit == "+" and current_number.length() > 0:
+		return
+		
+	# Zwiększamy limit znaków do 16, aby zmieścić ewentualny '+' i spacje formatowania
+	if current_number.length() < 16:
 		current_number += digit
 		_format_display()
 
+# --- Dynamiczne i inteligentne formatowanie wyświetlacza ---
 func _format_display() -> void:
-	if current_number.begins_with("48") and current_number.length() > 2:
-		var formatted = "+" + current_number.left(2) + " "
-		var rest = current_number.substr(2)
-		for i in range(rest.length()):
+	var raw = current_number
+	var has_plus = raw.begins_with("+")
+	
+	if has_plus:
+		raw = raw.substr(1) # Tymczasowo odcinamy plus do obliczeń
+		
+	var formatted = "+" if has_plus else ""
+	
+	# Scenariusz A: Numer zaczyna się od kierunkowego Polski (48)
+	if raw.begins_with("48"):
+		if raw.length() <= 2:
+			formatted += raw
+		else:
+			formatted += raw.left(2) + " "
+			var rest = raw.substr(2)
+			for i in range(rest.length()):
+				if i > 0 and i % 3 == 0:
+					formatted += " "
+				formatted += rest[i]
+				
+	# Scenariusz B: Gracz wpisuje od razu numer komórkowy (np. 601...) lub stacjonarny
+	else:
+		for i in range(raw.length()):
 			if i > 0 and i % 3 == 0:
 				formatted += " "
-			formatted += rest[i]
-		wyswietlacz_numeru.text = formatted
-	else:
-		wyswietlacz_numeru.text = current_number
+			formatted += raw[i]
+			
+	wyswietlacz_numeru.text = formatted
 
-# --- Wybieranie numeru i sekwencja dzwonienia ---
+# --- Wybieranie numeru z normalizacją wejścia ---
 func _on_btn_zadzwon_pressed():
 	if current_number == "": 
 		return
 		
+	# --- NORMALIZACJA NUMERU ---
+	# Czyścimy numer z plusa, aby uzyskać sam ciąg cyfr do porównania
+	var checked_number = current_number
+	if checked_number.begins_with("+"):
+		checked_number = checked_number.substr(1)
+		
+	# Jeśli gracz podał sam 9-cyfrowy numer komórkowy Bartka, doklejamy automatycznie kierunkowy '48'
+	if checked_number.length() == 9 and checked_number.begins_with("601"):
+		checked_number = "48" + checked_number
+	# ----------------------------
+
 	dialer.visible = false
 	rozmowa.visible = true
-	btn_rozlacz.visible = true # Gracz może rozłączyć się w trakcie sygnału oczekiwania
+	btn_rozlacz.visible = true 
 	_hide_all_reply_buttons()
 	
 	is_connecting_call = true
@@ -204,7 +242,6 @@ func _on_btn_zadzwon_pressed():
 	
 	await get_tree().create_timer(5.0).timeout
 	
-	# Jeśli gracz anulował połączenie w trakcie tych 5 sekund, zatrzymujemy wykonywanie
 	if not rozmowa.visible or not is_connecting_call:
 		return
 		
@@ -213,14 +250,15 @@ func _on_btn_zadzwon_pressed():
 	
 	var bypass_block = opt_random_nb.button_pressed
 	
-	if current_number == TARGET_NUMBERS["glus"]:
+	# Porównujemy już znormalizowany, czysty ciąg cyfr
+	if checked_number == TARGET_NUMBERS["glus"]:
 		if is_glus_blocked and not bypass_block:
 			_play_sound(AUDIO_DISCONNECT)
 			_end_call_by_npc("Sygnał zajętości... Zostałeś zablokowany przez tego użytkownika.")
 		else:
 			_play_ambient(AUDIO_BEACH_AMBIENT)
 			start_dialogue("A")
-	elif current_number == TARGET_NUMBERS["lekarz"]:
+	elif checked_number == TARGET_NUMBERS["lekarz"]:
 		_play_sound(AUDIO_ERROR)
 		_end_call_by_npc("Abonent czasowo niedostępny. Spróbuj później. (Funkcja w budowie)")
 	else:
