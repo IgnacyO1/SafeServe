@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var traction_fast: float = 0.2
 @export var traction_slow: float = 0.5
 @onready var horn_player: AudioStreamPlayer2D = $HornPlayer
+@onready var engine_player: AudioStreamPlayer2D = $EnginePlayer
 @onready var lights: AnimatedSprite2D = $EmergencyLights
 @onready var siren_player: AudioStreamPlayer2D = $SirenPlayer
 var lights_active: bool = false
@@ -61,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	# CharacterBody2D sam przelicza pozycję na podstawie zmiennej velocity podczas move_and_slide()
 	move_and_slide()
 	# Wewnątrz _physics_process lub _input w car.gd
+	update_engine_sound(delta)
 	if Input.is_action_just_pressed("horn"): # Musisz dodać "horn" w Input Map
 		play_horn_sound() # Opcjonalnie
 	
@@ -144,3 +146,24 @@ func turn_siren( mode : bool ):
 		siren_player.play() # Uruchamia dźwięk
 	else:
 		siren_player.stop() # Zatrzymuje dźwięk
+
+func update_engine_sound(delta: float) -> void:
+	if not engine_player:
+		return
+		
+	# 1. Obliczamy aktualną prędkość auta
+	var speed = velocity.length()
+	
+	# 2. Wyznaczamy procent prędkości względem maksymalnej (wartość od 0.0 do 1.0)
+	var speed_ratio = speed / max_speed
+	
+	# 3. Ustalamy zakres pitch (wysokości tonu)
+	# Na postoju pitch = 0.8 (niski bas), przy max prędkości pitch = 2.2 (wysokie obroty)
+	var target_pitch = lerp(0.7, 2.0, speed_ratio)
+	
+	# 4. Płynnie zmieniamy pitch, żeby dźwięk nie skakał gwałtownie
+	engine_player.pitch_scale = lerp(engine_player.pitch_scale, target_pitch, 10.0 * delta)
+	
+	# OPTYMALNIE: Możesz też lekko zgłośnić silnik, gdy jedzie szybko
+	var target_volume = lerp(-19.0, -12.0, speed_ratio) # wartości w dB
+	engine_player.volume_db = lerp(engine_player.volume_db, target_volume, 5.0 * delta)

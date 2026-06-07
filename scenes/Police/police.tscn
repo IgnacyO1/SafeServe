@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://dpu65mdptiq8b"]
 
 [ext_resource type="Script" uid="uid://cmgt85vk4tm0p" path="res://scenes/Police/police.gd" id="1_8jn78"]
-[ext_resource type="Texture2D" uid="uid://dnilq7synmm84" path="res://assets/graphics/policja-Photoroom.png" id="2_etjl1"]
+[ext_resource type="Texture2D" uid="uid://by8dsxwvky37r" path="res://assets/graphics/policja-Photoroom.png" id="2_etjl1"]
 [ext_resource type="AudioStream" uid="uid://dykt813ctgqxo" path="res://assets/Sounds/horn.mp3" id="3_nojuw"]
-[ext_resource type="Texture2D" uid="uid://d16q4gpdmfihn" path="res://assets/graphics/lights_grid2.png" id="4_7dmwl"]
+[ext_resource type="Texture2D" uid="uid://gjvwdwuilj0a" path="res://assets/graphics/lights_grid2.png" id="4_7dmwl"]
 [ext_resource type="AudioStream" uid="uid://duw5bgcn21xft" path="res://assets/Sounds/police-siren-drill-type-sound-fx_F.wav" id="5_436w1"]
+[ext_resource type="AudioStream" uid="uid://20007mkulj8s" path="res://assets/Sounds/engine-loop-1-normalized.mp3" id="6_434cb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xbtw7"]
 radius = 21.0
@@ -608,6 +609,7 @@ rotation_smoothing_enabled = true
 
 [node name="HornPlayer" type="AudioStreamPlayer2D" parent="." unique_id=470119659]
 stream = ExtResource("3_nojuw")
+volume_db = 5.168
 
 [node name="EmergencyLights" type="AnimatedSprite2D" parent="." unique_id=38540455]
 z_index = 15
@@ -620,3 +622,10 @@ frame_progress = 0.6028169
 
 [node name="SirenPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1397137812]
 stream = ExtResource("5_436w1")
+volume_db = 6.46
+
+[node name="EnginePlayer" type="AudioStreamPlayer2D" parent="." unique_id=158345735]
+stream = ExtResource("6_434cb")
+volume_db = -9.689
+autoplay = true
+parameters/looping = true

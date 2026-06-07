@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://b3kue0mrr5tt8"]
+
+[ext_resource type="Script" uid="uid://6cdo3vdpc347" path="res://scenes/Metrotrain/TrainController.gd" id="1_5afme"]
+[ext_resource type="Script" uid="uid://df37sy74klg3t" path="res://scenes/Metrotrain/TrainSegment.gd" id="2_y7kjj"]
+[ext_resource type="Texture2D" uid="uid://bgx6bq0op3ldy" path="res://assets/graphics/przód.png" id="3_bxfey"]
+[ext_resource type="Texture2D" uid="uid://btbxgyo8u6ai5" path="res://assets/graphics/środek.png" id="4_bxfey"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
+size = Vector2(41, 163)
+
+[node name="Train" type="Node2D" unique_id=354519398]
+script = ExtResource("1_5afme")
+
+[node name="Segment1" type="CharacterBody2D" parent="." unique_id=1348999955]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment1" unique_id=129379051]
+rotation = 3.1415927
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("3_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment1" unique_id=2031933230]
+z_index = 1
+position = Vector2(-2.5, -1.0927852e-07)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment2" type="CharacterBody2D" parent="." unique_id=1174539438]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment2" unique_id=591341582]
+z_index = 2
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment2" unique_id=20536380]
+position = Vector2(0.5, 2.1855683e-08)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment3" type="CharacterBody2D" parent="." unique_id=2044280248]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment3" unique_id=1544330047]
+z_index = 2
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=2143603553]
+position = Vector2(0.5, 2.1855683e-08)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment4" type="CharacterBody2D" parent="." unique_id=723347436]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment4" unique_id=1250374601]
+z_index = 2
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment4" unique_id=1745481904]
+position = Vector2(0.5, 2.1855683e-08)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="Segment5" type="CharacterBody2D" parent="." unique_id=650745104]
+script = ExtResource("2_y7kjj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Segment5" unique_id=2022612332]
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("3_bxfey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Segment5" unique_id=84850316]
+z_index = 1
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_cfis5")

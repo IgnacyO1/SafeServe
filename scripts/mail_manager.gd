@@ -2,7 +2,7 @@ extends Control
 
 # --- Ścieżki do węzłów interfejsu ---
 @onready var kontakty_vbox = $KontaktyPanel/KontaktyScroll/KontaktyVBox
-@onready var maile_vbox = $MailePanel/MaileScroll/MaileVBox
+@onready var maile_vbox = $MaileContainer/MailePanel/MaileScroll/MaileVBox
 @onready var tresc_maila = $TreśćPanel/TreśćMaila
 @onready var btn_odpowiedz = $BtnOdpowiedz
 @onready var btn_new_message = $BtnNewMessage # Nowy przycisk do tworzenia nowej wiadomości
@@ -11,6 +11,13 @@ extends Control
 @onready var wybieranie_odbiorcy = $NowaWiadomość/WybieranieOdbiorcy
 @onready var nowa_wiadomosc_panel = $NowaWiadomość/NowaWiadomośćPanel
 @onready var wyslij_btn = $"NowaWiadomość/Wyślij Btn"
+
+@onready var btn_odebrane: Button = $"MaileContainer/Odebrane-Wysłane/BtnOdebrane"
+@onready var btn_wyslane: Button = $"MaileContainer/Odebrane-Wysłane/BtnWysłane"
+
+# --- Stan Filtrowania Maili ---
+# "received" dla Odebranych, "sent" dla Wysłanych
+var current_filter: String = "received"
 
 # --- Baza Danych Grafu Mailowego ---
 const CONTACTS = {
@@ -105,8 +112,10 @@ func _ready():
 	btn_odpowiedz.pressed.connect(_on_btn_odpowiedz_pressed)
 	btn_new_message.pressed.connect(_on_btn_new_message_pressed)
 	wybieranie_odbiorcy.item_selected.connect(_on_recipient_dropdown_changed)
-	
-	select_contact("pulaski")
+	# Filtrowanie wiadomości - obsługa Toggle Mode
+	btn_odebrane.toggled.connect(_on_btn_odebrane_toggled)
+	btn_wyslane.toggled.connect(_on_btn_wyslane_toggled)
+	select_contact("pulaski") # Twoja ostatnia linijka w _ready()
 
 # --- Zarządzanie UI ---
 
@@ -144,6 +153,10 @@ func setup_recipient_dropdown():
 	wybieranie_odbiorcy.add_item("--- Wybierz odbiorcę ---", 0)
 	var idx = 1
 	for contact_id in active_contacts:
+		# NOWOŚĆ: Jeśli gracz nie ma żadnych dostępnych wiadomości do wysłania do tego NPC, pomiń go
+		if get_available_replies_for_contact(contact_id).is_empty():
+			continue
+			
 		wybieranie_odbiorcy.add_item(CONTACTS[contact_id]["name"], idx)
 		wybieranie_odbiorcy.set_item_metadata(idx, contact_id)
 		idx += 1
@@ -170,10 +183,20 @@ func rebuild_global_mailbox_ui():
 	for i in range(global_mailbox_history.size() - 1, -1, -1):
 		var mail_id = global_mailbox_history[i]
 		var mail_data = EMAILS[mail_id]
+		
+		var is_player_sender = mail_data.has("target") # Jeśli ma klucz "target", wysłał go gracz
+		
+		if current_filter == "received" and is_player_sender:
+			continue # Pomiń wysłane, jeśli szukamy odebranych
+		elif current_filter == "sent" and not is_player_sender:
+			continue # Pomiń odebrane, jeśli szukamy wysłanych
+			
 		var btn = Button.new()
+		# NOWOŚĆ: Przycisk rozciąga się i wypełnia całą szerokość kontenera VBox
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL 
 		
 		var sender_name = ""
-		if mail_data.has("target"):
+		if is_player_sender:
 			sender_name = "Ja -> " + CONTACTS[mail_data["target"]]["name"]
 		else:
 			sender_name = CONTACTS[mail_data["sender"]]["name"]
@@ -188,9 +211,11 @@ func display_email_content(mail_id: String):
 	
 	var mail_data = EMAILS[mail_id]
 	
-	# Zapisujemy, kto jest nadawcą tego maila, żeby przycisk "Odpowiedz" wiedział komu odpisać
-	if mail_data.has("sender"):
-		current_contact = mail_data["sender"]
+	# POPRAWKA: Ustalamy poprawny kontakt w zależności od typu maila
+	if mail_data.has("target"):
+		current_contact = mail_data["target"] # Dla wysłanych kontaktem jest ich cel
+	elif mail_data.has("sender"):
+		current_contact = mail_data["sender"] # Dla odebranych kontaktem jest nadawca
 		
 	var sender_name = "Ty" if mail_data.has("target") else CONTACTS[mail_data["sender"]]["name"]
 	
@@ -200,7 +225,10 @@ func display_email_content(mail_id: String):
 		seen_j_mail = true
 		update_reply_buttons_ui()
 		
-	if not mail_data.has("target") and mail_id != "SUGESTIA_BARTEK":
+	# Sprawdzamy czy w ogóle mamy jakąś opcję odpowiedzi do tego kontaktu
+	var has_replies = not get_available_replies_for_contact(current_contact).is_empty()
+	
+	if not mail_data.has("target") and mail_id != "SUGESTIA_BARTEK" and has_replies:
 		btn_odpowiedz.visible = true
 	else:
 		btn_odpowiedz.visible = false
@@ -290,23 +318,23 @@ func _on_wyslij_btn_pressed():
 	send_player_mail(current_selected_reply_id)
 
 func _on_btn_odpowiedz_pressed():
-	# Pokazujemy cały kontener nowej wiadomości
 	nowa_wiadomosc_root.visible = true
+	# NOWOŚĆ: Ukrywamy wybór odbiorcy, bo odpowiadamy bezpośrednio autorowi maila
+	wybieranie_odbiorcy.visible = false 
 	
-	# AUTOMATYCZNE WYBIERANIE ODBIORCY:
-	# Szukamy w dropdownie indeksu, który pasuje do current_contact
 	for i in range(wybieranie_odbiorcy.item_count):
 		if wybieranie_odbiorcy.get_item_metadata(i) == current_contact:
 			wybieranie_odbiorcy.selected = i
 			break
 			
-	# Odświeżamy przyciski wyboru opcji dla tego kontaktu
 	update_reply_buttons_ui()
 	nowa_wiadomosc_panel.grab_focus()
 
 func _on_btn_new_message_pressed():
-	# Wymuszenie otwarcia czystego panelu nowej wiadomości
 	nowa_wiadomosc_root.visible = true
+	# NOWOŚĆ: Pokazujemy dropdown, bo tworzymy czystą wiadomość i musimy wybrać do kogo
+	wybieranie_odbiorcy.visible = true 
+	setup_recipient_dropdown() # Aktualizujemy listę (żeby ukryć tych bez opcji)
 	update_reply_buttons_ui()
 
 func _on_recipient_dropdown_changed(index: int):
@@ -330,9 +358,9 @@ func send_player_mail(p_mail_id: String):
 		
 	rebuild_global_mailbox_ui()
 	
-	# Po udanym wysłaniu ukrywamy okno, zanim przejdziemy do odświeżenia kontaktu
 	nowa_wiadomosc_root.visible = false
 	select_contact(contact_id)
+	setup_recipient_dropdown() # NOWOŚĆ: Odśwież listę odbiorców po wysłaniu
 	
 	wyslij_btn.disabled = true
 	await get_tree().create_timer(1.2).timeout
@@ -370,3 +398,31 @@ func receive_npc_mail(mail_id: String):
 	global_mailbox_history.append(mail_id)
 	
 	rebuild_global_mailbox_ui()
+
+func _on_btn_odebrane_toggled(button_pressed: bool):
+	if button_pressed:
+		current_filter = "received"
+		# Blokujemy sygnał na chwilę, by uniknąć nieskończonej pętli togglowania
+		btn_wyslane.set_block_signals(true)
+		btn_wyslane.button_pressed = false
+		btn_wyslane.set_block_signals(false)
+		rebuild_global_mailbox_ui()
+	else:
+		# Zabezpieczenie: Gracz nie może odznaczyć przycisku, jeśli już jest aktywny
+		if current_filter == "received":
+			btn_odebrane.set_block_signals(true)
+			btn_odebrane.button_pressed = true
+			btn_odebrane.set_block_signals(false)
+
+func _on_btn_wyslane_toggled(button_pressed: bool):
+	if button_pressed:
+		current_filter = "sent"
+		btn_odebrane.set_block_signals(true)
+		btn_odebrane.button_pressed = false
+		btn_odebrane.set_block_signals(false)
+		rebuild_global_mailbox_ui()
+	else:
+		if current_filter == "sent":
+			btn_wyslane.set_block_signals(true)
+			btn_wyslane.button_pressed = true
+			btn_wyslane.set_block_signals(false)

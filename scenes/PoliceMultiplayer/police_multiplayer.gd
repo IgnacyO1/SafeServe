@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var horn_player: AudioStreamPlayer2D = $HornPlayer
 @onready var lights: AnimatedSprite2D = $EmergencyLights
 @onready var siren_player: AudioStreamPlayer2D = $SirenPlayer
+@onready var engine_player:AudioStreamPlayer2D = $EnginePlayer
 
 var lights_active: bool = false
 var steer_angle: float = 0.0
@@ -41,7 +42,8 @@ func _ready():
 		velocity = Vector2.ZERO 
 	)
 	
-	map_manager = get_tree().current_scene.find_child("MapManager", true, false)
+	# Przeszukujemy całe drzewo od korzenia (root), co chroni przed błędem null
+	map_manager = get_tree().root.find_child("MapManager", true, false)
 
 func _process(delta: float) -> void:
 	# KLUCZOWE ZABEZPIECZENIE: Czytamy klawiaturę tylko u gracza, który kontroluje ten wóz!
@@ -53,7 +55,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_lights"):
 		# Wysyłamy sygnał RPC do serwera, żeby zsynchronizował koguty u wszystkich
 		rpc("sync_emergency_lights", !lights_active)
-
+	update_engine_sound(delta)
 	if Input.is_action_just_pressed("horn"):
 		play_horn_sound()
 
@@ -70,7 +72,6 @@ func _physics_process(delta: float) -> void:
 	apply_friction(delta)
 	apply_steering(delta)
 	apply_lateral_friction()
-
 	move_and_slide()
 
 # RPC: Każdy gracz wysyła informację o zmianie świateł, serwer przekazuje ją wszystkim klientom
@@ -168,3 +169,24 @@ func _enter_tree() -> void:
 		var player_id = name.to_int()
 		set_multiplayer_authority(player_id)
 		print("[SIEĆ] Przypisano autorytet dla auta ", name, " do gracza: ", player_id)
+
+func update_engine_sound(delta: float) -> void:
+	if not engine_player:
+		return
+		
+	# 1. Obliczamy aktualną prędkość auta
+	var speed = velocity.length()
+	
+	# 2. Wyznaczamy procent prędkości względem maksymalnej (wartość od 0.0 do 1.0)
+	var speed_ratio = speed / max_speed
+	
+	# 3. Ustalamy zakres pitch (wysokości tonu)
+	# Na postoju pitch = 0.8 (niski bas), przy max prędkości pitch = 2.2 (wysokie obroty)
+	var target_pitch = lerp(0.7, 2.0, speed_ratio)
+	
+	# 4. Płynnie zmieniamy pitch, żeby dźwięk nie skakał gwałtownie
+	engine_player.pitch_scale = lerp(engine_player.pitch_scale, target_pitch, 10.0 * delta)
+	
+	# OPTYMALNIE: Możesz też lekko zgłośnić silnik, gdy jedzie szybko
+	var target_volume = lerp(-19.0, -12.0, speed_ratio) # wartości w dB
+	engine_player.volume_db = lerp(engine_player.volume_db, target_volume, 5.0 * delta)
