@@ -1,6 +1,6 @@
 extends Node2D
 
-var start_pos_px = Vector2(-18000+randf(), 50860+randf())
+var start_pos_px = Vector2(-18100+randf(), 50860+randf())
 var cutscene_path = "res://assets/Videos/spin.ogv"
 
 var local_player: CharacterBody2D = null 
