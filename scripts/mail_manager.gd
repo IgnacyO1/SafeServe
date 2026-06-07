@@ -153,6 +153,10 @@ func setup_recipient_dropdown():
 	wybieranie_odbiorcy.add_item("--- Wybierz odbiorcę ---", 0)
 	var idx = 1
 	for contact_id in active_contacts:
+		# NOWOŚĆ: Jeśli gracz nie ma żadnych dostępnych wiadomości do wysłania do tego NPC, pomiń go
+		if get_available_replies_for_contact(contact_id).is_empty():
+			continue
+			
 		wybieranie_odbiorcy.add_item(CONTACTS[contact_id]["name"], idx)
 		wybieranie_odbiorcy.set_item_metadata(idx, contact_id)
 		idx += 1
@@ -188,6 +192,8 @@ func rebuild_global_mailbox_ui():
 			continue # Pomiń odebrane, jeśli szukamy wysłanych
 			
 		var btn = Button.new()
+		# NOWOŚĆ: Przycisk rozciąga się i wypełnia całą szerokość kontenera VBox
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL 
 		
 		var sender_name = ""
 		if is_player_sender:
@@ -205,9 +211,11 @@ func display_email_content(mail_id: String):
 	
 	var mail_data = EMAILS[mail_id]
 	
-	# Zapisujemy, kto jest nadawcą tego maila, żeby przycisk "Odpowiedz" wiedział komu odpisać
-	if mail_data.has("sender"):
-		current_contact = mail_data["sender"]
+	# POPRAWKA: Ustalamy poprawny kontakt w zależności od typu maila
+	if mail_data.has("target"):
+		current_contact = mail_data["target"] # Dla wysłanych kontaktem jest ich cel
+	elif mail_data.has("sender"):
+		current_contact = mail_data["sender"] # Dla odebranych kontaktem jest nadawca
 		
 	var sender_name = "Ty" if mail_data.has("target") else CONTACTS[mail_data["sender"]]["name"]
 	
@@ -217,7 +225,10 @@ func display_email_content(mail_id: String):
 		seen_j_mail = true
 		update_reply_buttons_ui()
 		
-	if not mail_data.has("target") and mail_id != "SUGESTIA_BARTEK":
+	# Sprawdzamy czy w ogóle mamy jakąś opcję odpowiedzi do tego kontaktu
+	var has_replies = not get_available_replies_for_contact(current_contact).is_empty()
+	
+	if not mail_data.has("target") and mail_id != "SUGESTIA_BARTEK" and has_replies:
 		btn_odpowiedz.visible = true
 	else:
 		btn_odpowiedz.visible = false
@@ -307,23 +318,23 @@ func _on_wyslij_btn_pressed():
 	send_player_mail(current_selected_reply_id)
 
 func _on_btn_odpowiedz_pressed():
-	# Pokazujemy cały kontener nowej wiadomości
 	nowa_wiadomosc_root.visible = true
+	# NOWOŚĆ: Ukrywamy wybór odbiorcy, bo odpowiadamy bezpośrednio autorowi maila
+	wybieranie_odbiorcy.visible = false 
 	
-	# AUTOMATYCZNE WYBIERANIE ODBIORCY:
-	# Szukamy w dropdownie indeksu, który pasuje do current_contact
 	for i in range(wybieranie_odbiorcy.item_count):
 		if wybieranie_odbiorcy.get_item_metadata(i) == current_contact:
 			wybieranie_odbiorcy.selected = i
 			break
 			
-	# Odświeżamy przyciski wyboru opcji dla tego kontaktu
 	update_reply_buttons_ui()
 	nowa_wiadomosc_panel.grab_focus()
 
 func _on_btn_new_message_pressed():
-	# Wymuszenie otwarcia czystego panelu nowej wiadomości
 	nowa_wiadomosc_root.visible = true
+	# NOWOŚĆ: Pokazujemy dropdown, bo tworzymy czystą wiadomość i musimy wybrać do kogo
+	wybieranie_odbiorcy.visible = true 
+	setup_recipient_dropdown() # Aktualizujemy listę (żeby ukryć tych bez opcji)
 	update_reply_buttons_ui()
 
 func _on_recipient_dropdown_changed(index: int):
@@ -347,9 +358,9 @@ func send_player_mail(p_mail_id: String):
 		
 	rebuild_global_mailbox_ui()
 	
-	# Po udanym wysłaniu ukrywamy okno, zanim przejdziemy do odświeżenia kontaktu
 	nowa_wiadomosc_root.visible = false
 	select_contact(contact_id)
+	setup_recipient_dropdown() # NOWOŚĆ: Odśwież listę odbiorców po wysłaniu
 	
 	wyslij_btn.disabled = true
 	await get_tree().create_timer(1.2).timeout
