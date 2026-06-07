@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://df37sy74klg3t" path="res://scenes/Metrotrain/TrainSegment.gd" id="2_y7kjj"]
 [ext_resource type="Texture2D" uid="uid://bgx6bq0op3ldy" path="res://assets/graphics/przód.png" id="3_bxfey"]
 [ext_resource type="Texture2D" uid="uid://btbxgyo8u6ai5" path="res://assets/graphics/środek.png" id="4_bxfey"]
+[ext_resource type="AudioStream" uid="uid://otm22oqlwmtk" path="res://assets/Sounds/subwaysound.mp3" id="5_bxfey"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
 size = Vector2(41, 163)
@@ -68,6 +69,14 @@ script = ExtResource("2_y7kjj")
 z_index = 2
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("4_bxfey")
+
+[node name="DzwiekMetra" type="AudioStreamPlayer2D" parent="Segment3" unique_id=319011583]
+stream = ExtResource("5_bxfey")
+autoplay = true
+max_distance = 1280.0
+attenuation = 2.5491252
+max_polyphony = 2
+parameters/looping = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Segment3" unique_id=2143603553]
 position = Vector2(0.5, 2.1855683e-08)

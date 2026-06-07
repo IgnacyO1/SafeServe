@@ -3,12 +3,17 @@ extends CharacterBody2D
 const SPEED = 100.0
 
 @onready var anim_sprite = $AnimatedSprite2D
+# Pobieramy węzeł światła (upewnij się, że nazywa się "Latarka" w scenie gracza)
+@onready var latarka = $Latarka 
 
 var ostatni_kierunek_idle = "dol"
 
 func _ready():
 	z_index = 10
 	add_to_group("gracz")
+	# Opcjonalnie: latarka domyślnie włączona na starcie
+	if latarka:
+		latarka.enabled = false
 
 func _physics_process(delta):
 	var scena = get_tree().current_scene
@@ -27,6 +32,12 @@ func _physics_process(delta):
 
 	global_position.x = clamp(global_position.x, 20, 1900)
 	global_position.y = clamp(global_position.y, 20, 1060)
+
+# Obsługa przełączania latarki klawiszem L
+func _unhandled_input(event):
+	if event.is_action_pressed("toggle_lights"):
+		if latarka:
+			latarka.enabled = not latarka.enabled
 
 func _update_animations(dir: Vector2):
 	if dir == Vector2.ZERO:

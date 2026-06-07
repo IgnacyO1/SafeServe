@@ -2,6 +2,9 @@ extends Node2D
 
 var gra_aktywna = true
 var TramScene = preload("res://scenes/Metrotrain/Train.tscn")
+# Załadowanie pliku dźwiękowego (podmień ścieżkę, jeśli plik jest w innym folderze)
+var dzwiek_smierci = preload("res://assets/Sounds/dying.mp3") 
+
 var timer_spawnu = 0.0
 var interwal_spawnu = 10.0
 
@@ -40,6 +43,7 @@ func gracz_trafiony():
 	if not gra_aktywna:
 		return
 		
+	_odtworz_dzwiek_smierci() # Uruchomienie dźwięku na samym początku
 	_screen_shake(25.0)
 	_spawn_krew_na_ekranie()
 	
@@ -55,6 +59,18 @@ func gracz_trafiony():
 		gracz.set_physics_process(true)
 		if "velocity" in gracz:
 			gracz.velocity = Vector2.ZERO
+
+func _odtworz_dzwiek_smierci():
+	if not dzwiek_smierci:
+		return
+		
+	var audio_player = AudioStreamPlayer.new()
+	audio_player.stream = dzwiek_smierci
+	add_child(audio_player)
+	audio_player.play()
+	
+	# Automatyczne usunięcie odtwarzacza z pamięci po zakończeniu odtwarzania MP3
+	audio_player.finished.connect(audio_player.queue_free)
 
 func _spawn_krew_na_ekranie():
 	var canvas_layer = CanvasLayer.new()
@@ -115,6 +131,6 @@ func _screen_shake(intensity: float):
 	if not cam:
 		return
 	var tw = create_tween()
-	for i in range(5):
+	for i in range(10):
 		tw.tween_property(cam, "offset", Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity)), 0.05)
 	tw.tween_property(cam, "offset", Vector2.ZERO, 0.05)

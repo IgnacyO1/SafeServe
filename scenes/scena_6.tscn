@@ -910,15 +910,15 @@ fill_from = Vector2(0.52136755, 0.48290598)
 
 [sub_resource type="Curve2D" id="curve_tor1"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1797, -48, 0, 0, 0, 0, 1189, 557, 0, 0, 0, 0, 1165, 586, 0, 0, 0, 0, 1159, 631, 0, 0, 0, 0, 1159, 1371)
+"points": PackedVector2Array(0, 0, 0, 0, 2358, -584, 0, 0, 0, 0, 1652, 95, 0, 0, 0, 0, 1189, 557, 0, 0, 0, 0, 1165, 586, 0, 0, 0, 0, 1159, 631, 0, 0, 0, 0, 1161, 1145, 0, 0, 0, 0, 1191, 3064)
 }
-point_count = 5
+point_count = 7
 
 [sub_resource type="Curve2D" id="curve_tor2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1621.0586, 1603, 0, 0, 0, 0, 1622.6998, 1108, 0, 0, 0, 0, 1621.6057, 648, 0, 0, 0, 0, 1634.1891, 592, 0, 0, 0, 0, 1741.4219, 397, 0, 0, 0, 0, 1986.5255, -54)
+"points": PackedVector2Array(0, 0, 0, 0, 1621.0586, 1603, 0, 0, 0, 0, 1622.6998, 1108, 0, 0, 0, 0, 1621.6057, 648, 0, 0, 0, 0, 1634.1891, 592, 0, 0, 0, 0, 1741.4219, 397, 0, 0, 0, 0, 1844.2778, 205, 0, 0, 0, 0, 2391.9314, -720)
 }
-point_count = 6
+point_count = 7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mddhg"]
 size = Vector2(64, 78)
@@ -1039,7 +1039,7 @@ scale = Vector2(6.578124, 2.984375)
 texture = SubResource("GradientTexture2D_g3e0u")
 
 [node name="Wejście" type="PointLight2D" parent="." unique_id=2006953801]
-position = Vector2(1500.0001, 495.00003)
+position = Vector2(1516.169, 510.31824)
 rotation = 0.75839126
-scale = Vector2(2.8218765, 1)
+scale = Vector2(2.125852, 1)
 texture = SubResource("GradientTexture2D_yyxjx")
