@@ -2,14 +2,26 @@
 
 [ext_resource type="Script" uid="uid://dukdf1db753yw" path="res://scripts/scena_5.gd" id="1_sc5gd"]
 [ext_resource type="AudioStream" uid="uid://dbk6iuduehycf" path="res://assets/Sounds/Conspiracy Theory - Rod Kim.mp3" id="2_6hmby"]
-[ext_resource type="Texture2D" uid="uid://dn52leh6bgbqd" path="res://assets/graphics/pasekwindows.png" id="3_mc8du"]
-[ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="4_7ve8e"]
-[ext_resource type="Texture2D" uid="uid://1cxrkb33s1ag" path="res://assets/graphics/moto-1.png" id="5_jhgwc"]
+
+[sub_resource type="Gradient" id="Gradient_7r3tw"]
+colors = PackedColorArray(0.41960785, 0.44313726, 0.11764706, 1, 0, 0.37254903, 0.74509805, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jhgwc"]
+gradient = SubResource("Gradient_7r3tw")
+width = 60
+fill_from = Vector2(0.018233618, 0.02991453)
+fill_to = Vector2(1, 1)
 
 [node name="Scena5" type="Control" unique_id=1391430140]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_sc5gd")
+
+[node name="Tło" type="TextureRect" parent="." unique_id=352276092]
+layout_mode = 0
+offset_right = 1927.0
+offset_bottom = 1079.0
+texture = SubResource("GradientTexture2D_jhgwc")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
 stream = ExtResource("2_6hmby")
@@ -17,30 +29,65 @@ volume_db = -11.982
 autoplay = true
 parameters/looping = true
 
-[node name="pasekzadań" type="Sprite2D" parent="." unique_id=950731206]
-z_index = 10
-position = Vector2(960, 1058)
-scale = Vector2(0.7507109, 0.750711)
-texture = ExtResource("3_mc8du")
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=56173469]
 
-[node name="okno" type="Sprite2D" parent="." unique_id=357794957]
-z_index = 10
-position = Vector2(960, 18)
-scale = Vector2(0.8376963, 0.74)
-texture = ExtResource("4_7ve8e")
+[node name="Pasek Górny" type="HBoxContainer" parent="CanvasLayer" unique_id=1429957459]
+offset_right = 1926.0
+offset_bottom = 68.0
+alignment = 1
 
-[node name="moto" type="Sprite2D" parent="." unique_id=559961015]
-z_index = 1
-position = Vector2(1789.0001, 967.99994)
-scale = Vector2(0.2006095, 0.20060956)
-texture = ExtResource("5_jhgwc")
+[node name="Tytuł" type="Label" parent="CanvasLayer/Pasek Górny" unique_id=1797923613]
+layout_mode = 2
+text = "Motorola Solutions Surveillance Center"
 
-[node name="Label" type="Label" parent="." unique_id=177958328]
-z_index = 11
-layout_mode = 0
-offset_left = 785.0
-offset_top = 7.0
-offset_right = 1031.475
-offset_bottom = 79.0
-text = "SMART REGISTER SYSTEM | CCTV
-"
+[node name="Zegar" type="Label" parent="CanvasLayer/Pasek Górny" unique_id=857774038]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "13:56"
+
+[node name="VideoPanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=1270183358]
+offset_left = 109.0
+offset_top = 228.0
+offset_right = 1059.0
+offset_bottom = 809.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=764767153]
+offset_left = 116.0
+offset_top = 959.0
+offset_right = 1815.0
+offset_bottom = 1009.0
+
+[node name="BtnPlay" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=675893638]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Odtwórz/Pauza"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/HBoxContainer" unique_id=651727037]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=646346056]
+clip_contents = true
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+text = "9:37:50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CarInfoPanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=214554458]
+offset_left = 1072.0
+offset_top = 234.0
+offset_right = 1823.0
+offset_bottom = 807.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CarInfoPanelContainer" unique_id=518538322]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 0
+bbcode_enabled = true
+
+[node name="ButtonSend" type="Button" parent="CanvasLayer/CarInfoPanelContainer" unique_id=247093640]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Wyślij patrol policyjny"
