@@ -12,7 +12,7 @@ var ostatni_kierunek_idle = "dol"
 
 func _ready():
 	z_index = 10
-	anim_sprite.scale = Vector2(0.5, 0.5)
+	anim_sprite.scale = Vector2(0.3, 0.3)
 	anim_sprite.speed_scale = 3.0
 	anim_sprite.play("strazak_idle_dol")
 

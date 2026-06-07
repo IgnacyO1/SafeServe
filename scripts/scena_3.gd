@@ -11,8 +11,8 @@ var faza = "DRZWI"  # DRZWI -> POZARY -> BABCIA -> SKRZYNKA -> KONIEC
 
 const OGIEN_SCENA = preload("res://scenes/ogien.tscn")
 var WYKRZYKNIK_TEX = preload("res://assets/graphics/scena4_wykrzyknik.png") if ResourceLoader.exists("res://assets/graphics/scena4_wykrzyknik.png") else preload("res://assets/graphics/Dot.png")
-var MAP_TEX_ZAMKNIETE = preload("res://assets/graphics/safeservemap (1).png")
-var MAP_TEX_OTWARTE = preload("res://assets/graphics/scena4_mapa_otwarte.png")
+var MAP_TEX_ZAMKNIETE = preload("res://assets/graphics/mapasafeserve.png")
+var MAP_TEX_OTWARTE = preload("res://assets/graphics/mapasafeserve.png")
 var SIEKIRA_TEX = preload("res://assets/graphics/siekira_scena4.png")
 
 var VIDEO_PATH = "res://assets/Videos/cutscean2.ogv" # Ścieżka do filmu
@@ -28,9 +28,8 @@ var pozycje_ogni = [
 	Vector2(6560, 3232),
 	# Nowe pozycje (klitki biurowe i korytarze)
 	Vector2(1500, 1200), Vector2(2800, 1500), Vector2(3500, 1200),
-	Vector2(4200, 800), Vector2(1800, 2200), Vector2(2500, 2800),
-	Vector2(4000, 3200), Vector2(5200, 2500), Vector2(5800, 1000),
-	Vector2(3000, 800), Vector2(1200, 1500), Vector2(4500, 2900)
+	Vector2(4200, 800), Vector2(1800, 2200), Vector2(2500, 2800), Vector2(5200, 2500), Vector2(5800, 1000),
+	Vector2(3000, 800), Vector2(1200, 1500)
 ]
 var ognie = []
 var gracz
@@ -129,7 +128,7 @@ func _ready():
 			cam.limit_top = 0
 			cam.limit_right = 8192
 			cam.limit_bottom = 4096
-			cam.zoom = Vector2(1.5, 1.5)
+			cam.zoom = Vector2(1.3, 1.3)
 
 	# Siekira sprite - dziecko gracza
 	_stworz_siekire()
