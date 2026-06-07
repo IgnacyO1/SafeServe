@@ -15,7 +15,7 @@ func get_player_spawn_position() -> Vector2:
 			var direction = (uciekinier.fixed_path[1] - spawn_point).normalized()
 			var perpendicular = Vector2(-direction.y, direction.x)
 			return spawn_point + direction * 260.0 + perpendicular * 420.0
-	return spawn_point + Vector2(260.0, -420.0)
+	return spawn_point + Vector2(-260.0, -420.0)
 
 func setup_mode(pursuit_active: bool):
 	# Zabezpieczenie: Tylko serwer dedykowany ma prawo odpalić uciekiniera
