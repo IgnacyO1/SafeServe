@@ -1,0 +1,347 @@
+[gd_scene format=3 uid="uid://dsq37o7b2mh2p"]
+
+[ext_resource type="Script" uid="uid://copwcjb61qe64" path="res://scripts/scena_6ipol.gd" id="1_pkmh6"]
+[ext_resource type="AudioStream" uid="uid://dbk6iuduehycf" path="res://assets/Sounds/Conspiracy Theory - Rod Kim.mp3" id="2_tkhu3"]
+[ext_resource type="Texture2D" uid="uid://bwib5dln0kd5o" path="res://assets/graphics/scena6_control_room.png" id="3_5mfve"]
+[ext_resource type="Texture2D" uid="uid://dnclo1ox8kygf" path="res://assets/graphics/scena6_electric_box.png" id="4_adycr"]
+[ext_resource type="Script" uid="uid://dbjf3f67gt25q" path="res://scripts/scena6ipol_gracz.gd" id="5_8kxc3"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="6_j76f8"]
+[ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="7_q6w70"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="8_ehdxy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_skrzynka"]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gracz"]
+radius = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_quest"]
+bg_color = Color(0.0823529, 0.0941176, 0.156863, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.172549, 0.709804, 0.886275, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="Scena6" type="Node2D" unique_id=1697731604]
+script = ExtResource("1_pkmh6")
+
+[node name="Muzyka" type="AudioStreamPlayer" parent="." unique_id=1109459120]
+stream = ExtResource("2_tkhu3")
+volume_db = -12.0
+autoplay = true
+
+[node name="Background" type="TextureRect" parent="." unique_id=1491048968]
+z_index = -50
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_5mfve")
+expand_mode = 1
+
+[node name="HackedScreen" type="ColorRect" parent="." unique_id=1644633411]
+offset_left = 730.0
+offset_top = 180.0
+offset_right = 1190.0
+offset_bottom = 400.0
+color = Color(0.08, 0.02, 0.02, 0.85)
+
+[node name="Border" type="ReferenceRect" parent="HackedScreen" unique_id=1750561701]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(1, 0.1, 0.1, 1)
+border_width = 3.0
+editor_only = false
+
+[node name="Label" type="Label" parent="HackedScreen" unique_id=844387993]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.1, 0.1, 1)
+theme_override_font_sizes/font_size = 20
+text = "CRITICAL METRO SYSTEM ALERT
+
+WARNING: UNAUTHORIZED OVERRIDE
+HACKED BY CYBERCRAB"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Skrzynka" type="Area2D" parent="." unique_id=751122063]
+position = Vector2(100, 307)
+
+[node name="Sprite2D" type="Sprite2D" parent="Skrzynka" unique_id=2071015168]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_adycr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skrzynka" unique_id=561814342]
+shape = SubResource("CircleShape2D_skrzynka")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Skrzynka" unique_id=1530586873]
+amount = 25
+lifetime = 0.5
+explosiveness = 0.1
+randomness = 0.5
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 20.0
+direction = Vector2(0, -1)
+spread = 60.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 80.0
+initial_velocity_max = 150.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color = Color(0.2, 0.8, 1, 1)
+
+[node name="Gracz" type="CharacterBody2D" parent="." unique_id=249299119]
+position = Vector2(1645, 750)
+script = ExtResource("5_8kxc3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=2112612005]
+scale = Vector2(0.5, 0.5)
+speed_scale = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=932186246]
+shape = SubResource("CircleShape2D_gracz")
+
+[node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1146709587]
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1171858511]
+layer = 90
+
+[node name="PromptLabel" type="Label" parent="HUD" unique_id=828443420]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "Naciśnij E aby otworzyć skrzynkę"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FlashRect" type="ColorRect" parent="HUD" unique_id=156720037]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.2, 0.2, 0)
+
+[node name="FadeRect" type="ColorRect" parent="HUD" unique_id=2138191008]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="RadioSprite" type="Sprite2D" parent="HUD" unique_id=310563284]
+position = Vector2(89, 900)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_j76f8")
+
+[node name="Radio popup" type="Control" parent="HUD" unique_id=1998489987]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_q6w70")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Radio popup" unique_id=1101198527]
+position = Vector2(858.25, 967)
+scale = Vector2(0.904, 1)
+texture = ExtResource("8_ehdxy")
+
+[node name="Label" type="Label" parent="HUD/Radio popup" unique_id=63287438]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 869.0
+offset_right = 1509.0
+offset_bottom = 1050.0
+theme_override_colors/font_color = Color(0, 0.7, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "..."
+autowrap_mode = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=927466880]
+volume_db = 19.712
+
+[node name="QuestLayer" type="CanvasLayer" parent="." unique_id=1297051558]
+layer = 100
+visible = false
+
+[node name="QuestPanel" type="Panel" parent="QuestLayer" unique_id=2048969710]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -350.0
+offset_right = 500.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_quest")
+
+[node name="TitleLabel" type="Label" parent="QuestLayer/QuestPanel" unique_id=1011997456]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.2, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "AWARIA ZASILANIA METRA - TRYB SYSTEMOWY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WirePanel" type="Control" parent="QuestLayer/QuestPanel" unique_id=1297796768]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -230.0
+offset_right = 510.0
+offset_bottom = 190.0
+grow_vertical = 2
+
+[node name="WireTitle" type="Label" parent="QuestLayer/QuestPanel/WirePanel" unique_id=1214961377]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -30.0
+offset_bottom = -8.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "⚡ KLIKAJ KABLE ABY JE PRZECIAC ⚡"
+horizontal_alignment = 1
+
+[node name="PanelBG" type="ColorRect" parent="QuestLayer/QuestPanel/WirePanel" unique_id=1237935484]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.1, 0.7)
+
+[node name="BreakerPanel" type="Control" parent="QuestLayer/QuestPanel" unique_id=1659095430]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -220.0
+offset_right = -40.0
+offset_bottom = 180.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="BreakerTitle" type="Label" parent="QuestLayer/QuestPanel/BreakerPanel" unique_id=986375119]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -30.0
+offset_bottom = -8.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "⚡ WYLACZ WSZYSTKIE BEZPIECZNIKI ⚡"
+horizontal_alignment = 1
+
+[node name="PanelBG2" type="ColorRect" parent="QuestLayer/QuestPanel/BreakerPanel" unique_id=1346192981]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.1, 0.7)
+
+[node name="BreakerContainer" type="GridContainer" parent="QuestLayer/QuestPanel/BreakerPanel" unique_id=966804872]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="StatusLabel" type="Label" parent="QuestLayer/QuestPanel" unique_id=1610644081]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -110.0
+offset_right = 700.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.2, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 20
+text = "STATUS ZASILANIA POCIAGU:
+KABLE: 0/4 PRZECIETE
+BEZPIECZNIKI: 0/4 WYLACZONE"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="QuestLayer/QuestPanel" unique_id=1726598365]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "X"
+
+[connection signal="body_entered" from="Skrzynka" to="." method="_on_skrzynka_area_entered"]
+[connection signal="body_exited" from="Skrzynka" to="." method="_on_skrzynka_area_exited"]
+[connection signal="pressed" from="QuestLayer/QuestPanel/CloseButton" to="." method="_on_close_button_pressed"]
