@@ -1031,7 +1031,7 @@ shape = SubResource("RectangleShape2D_mddhg")
 position = Vector2(253, 349)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=689936419]
-color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+color = Color(0.08468992, 0.08468994, 0.08468989, 1)
 
 [node name="Odkrywka" type="PointLight2D" parent="." unique_id=613162303]
 position = Vector2(290.49997, 345.50003)
