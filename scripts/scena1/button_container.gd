@@ -57,9 +57,8 @@ func say(text : String, dubbing_path : String):
 			
 func option_chosen(option : DialogueOption, coordinates = Vector2.ZERO):
 	disable_buttons()
-	say(option.question, option.question_voicefile_path)
-	await get_tree().create_timer(1.0).timeout
-	say(option.answer, option.answer_voicefile_path)
+	await say(option.question, option.question_voicefile_path)
+	await say(option.answer, option.answer_voicefile_path)
 	get_parent().information.text += option.information + '\n'
 	if coordinates != Vector2.ZERO:
 		get_tree().current_scene.map_container.spawn_event(get_tree().current_scene.emergency.type, coordinates)
