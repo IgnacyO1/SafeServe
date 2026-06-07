@@ -1,8 +1,9 @@
 extends Control
 
 @export var video_path: String = "res://assets/Videos/output.ogv"
-@export var json_path: String = "res://data/detections.json" # Ścieżka do Twojego JSON-a
-# Referencje do istniejącego UI (zgodnie z Twoim nowym drzewem)
+@export var json_path: String = "res://data/detections.json" 
+
+# Referencje do istniejącego UI (zgodnie z nowym drzewem)
 @onready var video_panel_container: PanelContainer = $CanvasLayer/VideoPanelContainer
 @onready var btn_play: Button = $CanvasLayer/HBoxContainer/BtnPlay
 @onready var h_slider: HSlider = $CanvasLayer/HBoxContainer/HSlider
@@ -12,7 +13,7 @@ extends Control
 @onready var car_info_text: RichTextLabel = $CanvasLayer/CarInfoPanelContainer/RichTextLabel
 @onready var button_send: Button = $CanvasLayer/CarInfoPanelContainer/ButtonSend
 
-# Elementy starego skryptu (mapa) generowane dynamicznie / zachowane
+# Elementy starego skryptu (mapa) generowane dynamicznie
 var map_panel: ColorRect
 var map_dot: Polygon2D
 var dispatch_btn: Button
@@ -33,6 +34,9 @@ var current_selected_plate: String = ""
 var json_data: Dictionary = {}
 var start_timestamp: int = 34239 # 09:30:39 w sekundach od północy
 
+# Słownik przechowujący przypisane na stałe wylosowane dane pojazdów (zapobiega migotaniu przy hoverze)
+var assigned_car_data: Dictionary = {}
+
 # Kolory
 const COLOR_BG = Color("#15053d")
 const COLOR_SIDEBAR = Color("#2a1863")
@@ -40,26 +44,37 @@ const COLOR_PRIMARY = Color("#004e9e")
 const COLOR_PRIMARY_HOVER = Color("#2c7bc4")
 const COLOR_ACCENT = Color("#008bc2")
 const COLOR_TEXT = Color("#8eb5de")
-const COLOR_SUCCESS = Color("#545917")
-const COLOR_WARNING = Color("#d66d00")
-const COLOR_ERROR = Color("#a82a30")
+const COLOR_SUCCESS = Color("30e428ff")
+const COLOR_WARNING = Color("e8cb00ff")
+const COLOR_ERROR = Color("e20000ff")
 
-# Baza zmyślonych właścicieli i adresów
+# Baza danych do losowania (25 imion i ulic)
+var mock_names: Array = [
+	"Andrzej Wiśniewski", "Barbara Wójcik", "Cezary Kamiński", "Dariusz Lewandowski", "Elżbieta Zielińska",
+	"Filip Szymański", "Grażyna Woźniak", "Henryk Kozłowski", "Igor Jankowski", "Joanna Mazur",
+	"Krzysztof Kwiatkowski", "Lucyna Krawczyk", "Marek Kaczmarek", "Natalia Piotrowska", "Oskar Grabowski",
+	"Paweł Pawlak", "Renata Michalska", "Stanisław Nowicki", "Tomasz Adamczyk", "Urszula Dudek",
+	"Waldemar Zając", "Wiktoria Król", "Zbigniew Wieczorek", "Anna Wróbel", "Maciej Stępień"
+]
+
+var mock_streets: Array = [
+	"Q3", "M19", "Z5", "A24", "F10", "I16", "D7", "N21", "C12", "H2", "G18", "B15", "K9", "E23", "L6", "T4", "S20", "P1", "U14", "W8", "X22", "Y11", "J25", "O13", "R26", "V17"
+]
+
+# Baza zmyślonych właścicieli i adresów dla konkretnych przypadków
 var mock_owners: Dictionary = {
-	"KR4B2137": {"name": "BRAK", "address": "Lipińskiego 1", "risk": "WYSOKIE", "color": "#a82a30"},
-	"KR64607": {"name": "Jan Kowalski", "address": "Pawia 5, Kraków", "risk": "Niskie", "color": "#545917"}
+	"KR4B2137": {"name": "--!Error!--", "address": "Sektor G7 26", "risk": "WYSOKIE", "color": COLOR_ERROR}
 }
 
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_5.tscn")
 	
-	# Ukrywamy panel info na starcie
 	car_info_panel.hide()
 	
 	_load_json_data()
 	_setup_video_player()
 	_setup_ui_signals()
-	_build_map_ui() # Zachowane stare okno mapy
+	_build_map_ui() 
 
 func _load_json_data() -> void:
 	if FileAccess.file_exists(json_path):
@@ -74,19 +89,15 @@ func _load_json_data() -> void:
 		print("Błąd: Nie znaleziono pliku JSON z danymi YOLO: ", json_path)
 
 func _setup_video_player() -> void:
-	# 1. Tworzymy VideoStreamPlayer wewnątrz VideoPanelContainer
 	video_player = VideoStreamPlayer.new()
 	video_player.expand = true
 	video_player.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	video_player.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	video_panel_container.add_child(video_player)
 	
-	# 2. Tworzymy kontener na ramki jako DZIECKO odtwarzacza wideo lub PO NIM,
-	# aby rysował się na samym wierzchu.
 	bbox_container = Control.new()
-	# Wymuszamy, aby kontener idealnie podążał za rozmiarem wideo
 	bbox_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bbox_container.mouse_filter = Control.MOUSE_FILTER_PASS # Pozwala klikać przez niego
+	bbox_container.mouse_filter = Control.MOUSE_FILTER_PASS 
 	video_panel_container.add_child(bbox_container)
 	
 	if FileAccess.file_exists(video_path):
@@ -123,14 +134,12 @@ func _update_time_label(current_stream_time: float) -> void:
 	time_label.text = "%02d:%02d:%02d" % [hrs, mins, secs]
 
 func _update_bounding_boxes(current_time: float) -> void:
-	# Czyszczenie starych ramek
 	for child in bbox_container.get_children():
 		child.queue_free()
 		
 	if not json_data.has("vehicles"): return
 	
 	var container_size = bbox_container.size
-	# Skala mapowania pozycji z 720x576 do obecnego rozmiaru PanelContainer
 	var scale_x = container_size.x / video_orig_width
 	var scale_y = container_size.y / video_orig_height
 	
@@ -138,9 +147,8 @@ func _update_bounding_boxes(current_time: float) -> void:
 		var car_data = json_data["vehicles"][plate]
 		if not car_data.has("positions"): continue
 		
-		# Szukamy pozycji najbliższej aktualnemu czasowi wideo
 		var best_pos = null
-		var min_diff = 0.5 # Tolerancja czasu klatki (ok. 2 klatki przy 25 FPS)
+		var min_diff = 0.5 
 		
 		for pos in car_data["positions"]:
 			var diff = abs(pos["time"] - current_time)
@@ -149,88 +157,104 @@ func _update_bounding_boxes(current_time: float) -> void:
 				best_pos = pos
 				
 		if best_pos != null:
-			_create_bbox_ui(plate, best_pos, scale_x, scale_y)
+			var car_info = _get_or_create_car_data(plate)
+			_create_bbox_ui(plate, best_pos, scale_x, scale_y, car_info["color"])
 
-func _create_bbox_ui(plate: String, pos: Dictionary, scale_x: float, scale_y: float) -> void:
+func _create_bbox_ui(plate: String, pos: Dictionary, scale_x: float, scale_y: float, box_color: Color) -> void:
 	var box = ReferenceRect.new()
 	
-	# Kolorowanie ramek
-	box.border_color = Color.GREEN
-	if plate == "KR4B2137": 
-		box.border_color = Color.RED
+	# Sprawdzamy, czy ten konkretny samochód jest aktualnie zaznaczony (hovered)
+	if plate == current_selected_plate:
+		# Zwiększamy grubość linii i rozjaśniamy bazowy kolor stałej o 30%
+		box.border_color = box_color.lightened(0.3)
+		box.border_width = 6.0
+	else:
+		# Standardowy wygląd dla pozostałych aut na ekranie
+		box.border_color = box_color
+		box.border_width = 3.0
 	
-	box.border_width = 3.0 # Zwiększamy grubość, żeby była wyraźna
-	box.editor_only = false # KLUCZOWE: Inaczej nie rysuje się w buildzie gry
-	
-	# Blokujemy domyślne zachowanie pochłaniania myszki przez ReferenceRect, 
-	# aby sygnał hover działał bezbłędnie
+	box.editor_only = false 
 	box.mouse_filter = Control.MOUSE_FILTER_STOP 
 	
-	# Pozycja i rozmiar przeskalowane do obecnego, fizycznego rozmiaru okna wideo
 	box.position = Vector2(pos["x"] * scale_x, pos["y"] * scale_y)
 	box.size = Vector2(pos["width"] * scale_x, pos["height"] * scale_y)
 	
-	# Label z numerem rejestracyjnym nad ramką
 	var label = Label.new()
 	label.text = plate
 	label.position = Vector2(0, -22)
 	label.add_theme_color_override("font_color", box.border_color)
 	label.add_theme_font_size_override("font_size", 14)
 	
-	# Dodajemy czarne tło pod napis, żeby był czytelny na ruchomym wideo
 	var sb = StyleBoxFlat.new()
 	sb.bg_color = Color(0, 0, 0, 0.7)
 	sb.set_content_margin_all(2)
 	label.add_theme_stylebox_override("normal", sb)
 	
 	box.add_child(label)
-	
-	# Wykrywanie najechania myszką (Hover)
 	box.mouse_entered.connect(_on_car_hovered.bind(plate))
 	
 	bbox_container.add_child(box)
 
+func _get_or_create_car_data(plate: String) -> Dictionary:
+	if mock_owners.has(plate):
+		return mock_owners[plate]
+		
+	if assigned_car_data.has(plate):
+		return assigned_car_data[plate]
+		
+	var random_name = mock_names[randi() % mock_names.size()]
+	var random_street = mock_streets[randi() % mock_streets.size()]
+	var random_number = str(randi() % 120 + 1)
+	var full_address = "Sektor " + random_street + " " + random_number
+	
+	var roll = randf()
+	var risk = "Niskie"
+	var risk_color = COLOR_SUCCESS 
+	
+	if roll >= 0.8 && roll < 0.95:
+		risk = "Średnie"
+		risk_color = COLOR_WARNING 
+	elif roll >= 0.95:
+		risk = "Wysokie"
+		risk_color = COLOR_ERROR 
+		
+	var generated = {
+		"name": random_name,
+		"address": full_address,
+		"risk": risk,
+		"color": risk_color
+	}
+	
+	assigned_car_data[plate] = generated
+	return generated
+
 func _on_car_hovered(plate: String) -> void:
 	current_selected_plate = plate
+	var car = _get_or_create_car_data(plate)
 	
-	# Pobieramy dane (jeśli nie ma w bazie, generujemy zmyślone)
-	var owner = "Nieznany"
-	var address = "Brak danych w bazie miejskiej"
-	var risk = "Niskie"
-	var risk_color = "#545917"
-	 
-	if mock_owners.has(plate):
-		owner = mock_owners[plate]["name"]
-		address = mock_owners[plate]["address"]
-		risk = mock_owners[plate]["risk"]
-		risk_color = mock_owners[plate]["color"]
-	else:
-		# Generowanie losowych danych dla reszty aut z JSON
-		owner = "Mieszkaniec nr " + str(randi() % 1000)
-		address = "ul. Reymonta " + str(randi() % 50 + 1) + ", Kraków"
+	var hex_color = car["color"].to_html(false)
 	
-	# Budowanie tekstu dla RichTextLabel
 	car_info_text.clear()
 	car_info_text.append_text("[b]POJAZD ZIDENTYFIKOWANY[/b]\n")
 	car_info_text.append_text("Tablica: [color=yellow]" + plate + "[/color]\n")
-	car_info_text.append_text("Właściciel: " + owner + "\n")
-	car_info_text.append_text("Podejrzenie: [color=" + risk_color + "]" + risk.to_upper() + "[/color]\n")
-	car_info_text.append_text("Ostatnio widziany: " + address)
+	car_info_text.append_text("Właściciel: " + car["name"] + "\n")
+	car_info_text.append_text("Podejrzenie: [color=#" + hex_color + "]" + car["risk"].to_upper() + "[/color]\n")
+	car_info_text.append_text("Ostatnio widziano pod adresem:\n" + car["address"])
 	
 	car_info_panel.show()
 
 func _on_button_send_pressed() -> void:
-	# Pokazujemy stare okno mapy po kliknięciu wyślij
 	map_panel.show()
 	_style_button(dispatch_btn, COLOR_WARNING, COLOR_PRIMARY_HOVER)
 	dispatch_btn.disabled = false
 	dispatch_btn.text = "POTWIERDŹ WYSŁANIE PATROLU"
 	
 	if current_selected_plate == "KR4B2137":
-		map_title_label.text = "LOKALIZACJA: Lipińskiego 1 (ZAGROŻENIE WYSOKIE)"
-		map_dot.position = Vector2(260, 490) # Konkretny punkt
+		map_title_label.text = "LOKALIZACJA: Lipińskiego 1 (Budowa Metra)"
+		map_dot.position = Vector2(370, 260)
 	else:
-		map_title_label.text = "LOKALIZACJA: Parking Główny Sector B"
+		var car = _get_or_create_car_data(current_selected_plate)
+		map_title_label.text = "LOKALIZACJA: " + car["address"].to_upper()
 		map_dot.position = Vector2(randf_range(200, 600), randf_range(200, 400))
 
 # --- OBSŁUGA WIDEO I INTERFEJSU ---
@@ -254,14 +278,17 @@ func _on_video_finished() -> void:
 	video_player.paused = true
 	btn_play.text = " Odtwórz "
 
-# --- STARE OKNO MAPY (ZACHOWANA LOGIKA I ZMIANA SCENY) ---
+# --- OKNO MAPY (ZAPEWNIONY WYSOKI PRIORYTET I WYŚRODKOWANIE) ---
 
 func _build_map_ui() -> void:
 	map_panel = ColorRect.new()
-	map_panel.color = Color(COLOR_BG.r, COLOR_BG.g, COLOR_BG.b, 0.96)
+	map_panel.color = Color(COLOR_BG.r, COLOR_BG.g, COLOR_BG.b, 0.98)
 	map_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	map_panel.top_level = true 
 	map_panel.hide()
-	add_child(map_panel)
+	
+	$CanvasLayer.add_child(map_panel)
 	
 	var center = CenterContainer.new()
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -274,7 +301,7 @@ func _build_map_ui() -> void:
 	map_title_label = Label.new()
 	map_title_label.text = "Lokalizacja pojazdu"
 	map_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	map_title_label.add_theme_font_size_override("font_size", 28)
+	map_title_label.add_theme_font_size_override("font_size", 24)
 	map_title_label.add_theme_color_override("font_color", COLOR_TEXT)
 	vbox.add_child(map_title_label)
 	
@@ -323,7 +350,7 @@ func _build_map_ui() -> void:
 
 func _on_dispatch_pressed() -> void:
 	if current_selected_plate == "KR4B2137":
-		get_tree().change_scene_to_file("res://scenes/scena_7.tscn")
+		get_tree().change_scene_to_file("res://scenes/scena_6.tscn")
 	else:
 		dispatch_btn.disabled = true
 		dispatch_btn.text = "ŁADOWANIE..."
