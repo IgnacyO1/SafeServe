@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://86wsvvbj721"]
 
+[ext_resource type="Script" uid="uid://4pul3axf4wb1" path="res://scripts/scena_6_root.gd" id="1_6f412"]
 [ext_resource type="Script" uid="uid://dv0g8lmejbqbt" path="res://scripts/scena_6.gd" id="1_hu4f1"]
 [ext_resource type="Texture2D" uid="uid://b2afy1a2xiynu" path="res://assets/graphics/metro.png" id="1_jv7rg"]
 [ext_resource type="Script" path="res://scripts/scena6_gracz.gd" id="2_hu4f1"]
@@ -207,6 +208,12 @@
 [ext_resource type="Texture2D" uid="uid://k1ffrh43j62a" path="res://assets/graphics/police_bez/90/bez_broni900022.png" id="204_s2skr"]
 [ext_resource type="Texture2D" uid="uid://bsxf1e1xyjhct" path="res://assets/graphics/police_bez/90/bez_broni900023.png" id="205_accys"]
 [ext_resource type="Texture2D" uid="uid://gbin5lf27v3" path="res://assets/graphics/police_bez/90/bez_broni900024.png" id="206_ndo6v"]
+[ext_resource type="Texture2D" uid="uid://d24g8uashq26" path="res://assets/graphics/Motorola krotkofalowka glow.png" id="208_nmaqs"]
+[ext_resource type="Script" uid="uid://ccrn7dnbdgnrn" path="res://scripts/scena1/radio_glow.gd" id="209_6f412"]
+[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="210_uejic"]
+[ext_resource type="Script" uid="uid://dj1yppat6lukl" path="res://scripts/scena_6_radio_handler.gd" id="211_7kxxk"]
+[ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="212_0r3er"]
+[ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="213_wre1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_613l5"]
 size = Vector2(3840, 20)
@@ -930,7 +937,12 @@ colors = PackedColorArray(0, 0, 0, 1, 0.42745098, 0.81960785, 0.5058824, 1, 0, 0
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5p0gc"]
 gradient = SubResource("Gradient_g3e0u")
 
+[sub_resource type="LabelSettings" id="LabelSettings_hrwxg"]
+font_size = 32
+font_color = Color(0, 0.6627451, 0, 1)
+
 [node name="Scena6" type="Node2D" unique_id=1624331308]
+script = ExtResource("1_6f412")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=307638799]
 offset_right = 40.0
@@ -1055,3 +1067,55 @@ position = Vector2(1516.169, 510.31824)
 rotation = 0.75839126
 scale = Vector2(2.125852, 1)
 texture = SubResource("GradientTexture2D_5p0gc")
+
+[node name="HUD" type="Control" parent="." unique_id=1707994242]
+visibility_layer = 512
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RadioSpriteGlow" type="Sprite2D" parent="HUD" unique_id=112606132]
+visible = false
+position = Vector2(83, 894)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("208_nmaqs")
+script = ExtResource("209_6f412")
+
+[node name="RadioSprite" type="TextureButton" parent="HUD" unique_id=396744762]
+layout_mode = 0
+offset_left = -105.0
+offset_top = 704.0
+offset_right = 540.0
+offset_bottom = 1349.0
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("210_uejic")
+script = ExtResource("211_7kxxk")
+
+[node name="Radio popup" type="Control" parent="HUD" unique_id=2132991748]
+visible = false
+z_index = 100
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("212_0r3er")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/Radio popup" unique_id=507319019]
+position = Vector2(858.25, 967)
+scale = Vector2(0.9040134, 1)
+texture = ExtResource("213_wre1p")
+
+[node name="Label" type="Label" parent="HUD/Radio popup" unique_id=28123690]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 869.0
+offset_right = 1294.0
+offset_bottom = 1106.0
+text = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
+label_settings = SubResource("LabelSettings_hrwxg")
+autowrap_mode = 2
+clip_text = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=273307608]
+
+[connection signal="pressed" from="HUD/RadioSprite" to="HUD/RadioSprite" method="_click"]
