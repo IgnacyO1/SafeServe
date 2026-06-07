@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bxplipoovs58" path="res://assets/graphics/segment1.png" id="3_cfis5"]
 [ext_resource type="Texture2D" uid="uid://b16hgexr3uh5p" path="res://assets/graphics/segment2.png" id="4_uucmp"]
 [ext_resource type="Texture2D" uid="uid://10ttliali3lj" path="res://assets/graphics/segment3.png" id="5_e3bno"]
+[ext_resource type="AudioStream" uid="uid://cwllt0ftxqlvx" path="res://assets/Sounds/tram.mp3" id="5_uucmp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfis5"]
 size = Vector2(41, 86)
@@ -35,6 +36,14 @@ texture = ExtResource("4_uucmp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Segment2" unique_id=20536380]
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_cfis5")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Segment2" unique_id=94203682]
+stream = ExtResource("5_uucmp")
+volume_db = 13.613
+autoplay = true
+max_distance = 2291.0
+attenuation = 1.681793
+parameters/looping = true
 
 [node name="Segment3" type="CharacterBody2D" parent="." unique_id=650745104]
 script = ExtResource("2_mcfro")
