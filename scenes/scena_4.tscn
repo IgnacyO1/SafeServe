@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d1falslb55lk8"]
 
-[ext_resource type="Script" path="res://scripts/scena_4.gd" id="1_7r3tw"]
+[ext_resource type="Script" uid="uid://bhi7me2pijjjy" path="res://scripts/scena_4.gd" id="1_7r3tw"]
 [ext_resource type="Texture2D" uid="uid://b4knmfuhae2mr" path="res://assets/graphics/Scena4/mailicon.png" id="2_nn3ug"]
-[ext_resource type="Texture2D" uid="uid://cd1w7u2coga17" path="res://assets/graphics/Scena4/smsicon.png" id="3_4hk0s"]
-[ext_resource type="Texture2D" uid="uid://b7wy2ldooa1og" path="res://assets/graphics/Scena4/cctv.png" id="4_wb72h"]
+[ext_resource type="Texture2D" uid="uid://csylq1fhihdsf" path="res://assets/graphics/Scena4/smsicon.png" id="3_4hk0s"]
+[ext_resource type="Texture2D" uid="uid://di8lwt37kc5k2" path="res://assets/graphics/Scena4/cctv.png" id="4_wb72h"]
 [ext_resource type="Script" uid="uid://dlhjldvq8p4o2" path="res://scripts/mail_manager.gd" id="5_2a01s"]
 [ext_resource type="Script" uid="uid://c1sa3ysw2bpm7" path="res://scripts/tel_manager.gd" id="6_o3ndk"]
 [ext_resource type="Texture2D" uid="uid://igd1e88mxbav" path="res://assets/graphics/Scena4/zadzwon.png" id="7_o3ndk"]

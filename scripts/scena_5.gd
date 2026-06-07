@@ -239,7 +239,7 @@ func _on_car_hovered(plate: String) -> void:
 	car_info_text.append_text("Tablica: [color=yellow]" + plate + "[/color]\n")
 	car_info_text.append_text("Właściciel: " + car["name"] + "\n")
 	car_info_text.append_text("Podejrzenie: [color=#" + hex_color + "]" + car["risk"].to_upper() + "[/color]\n")
-	car_info_text.append_text("Ostatnio widziano pod adresem:\n" + car["address"])
+	car_info_text.append_text("Ostatnie miejce zarejestrowania przez kamery miejskie:\n" + car["address"])
 	
 	car_info_panel.show()
 
