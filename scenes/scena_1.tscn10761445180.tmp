@@ -730,7 +730,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="RadioSpriteGlow" type="Sprite2D" parent="HUD" unique_id=607752123]
-visible = false
 position = Vector2(83, 894)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("28_kkjyc")
@@ -747,7 +746,6 @@ texture_normal = ExtResource("21_bqyrf")
 script = ExtResource("31_pcab4")
 
 [node name="Radio popup" type="Control" parent="HUD" unique_id=1043280712]
-visible = false
 z_index = 100
 anchors_preset = 0
 offset_right = 40.0

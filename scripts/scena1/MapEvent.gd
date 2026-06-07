@@ -5,8 +5,10 @@ var marker : TextureButton
 var arrow_sprite : TextureButton
 var type : String
 var map_margin 
+
 func on_press():
 	container_node.get_tree().current_scene.message(self)
+
 func _init(container_node_i : MapContainer, marker_texture : Texture2D, arrow_texture : Texture2D, type_i : String, position_i : Vector2):
 	id = randi()
 	type = type_i
@@ -61,6 +63,7 @@ func update_arrow():
 func scale_marker(amount : float):
 	var original_scale = container_node.MapSprite.scale.x
 	marker.position *= ((original_scale + amount) / original_scale)
+
 func delete():
 	container_node.Events.remove_at(container_node.Events.rfind(self))
 	marker.queue_free()

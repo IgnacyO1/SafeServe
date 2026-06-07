@@ -8,27 +8,33 @@ const map_margin : Vector2 = Vector2(250, 150)
 
 
 
-func find_marker_filename(type : String ):
-	const event_type_to_marker_filename : Dictionary = {
-		"Fire" : "ogien.png",
-		"Police" : "police.svg",
-		"Fire rescue" : "fire_truck.svg",
-		"Ambulance" : "ambulance.svg",
-		"Emergency" : "wykrzyknik.svg",
-		"Crime" : "zlodziej.svg"
-	}
-	return "res://assets/graphics/scena_1/" + event_type_to_marker_filename[type] 
+#func find_marker_filename(type : String ):
+	#const event_type_to_marker_filename : Dictionary = {
+		#"Fire" : "ogien.png",
+		#"Police" : "police.svg",
+		#"Fire rescue" : "fire_truck.svg",
+		#"Ambulance" : "ambulance.svg",
+		#"Emergency" : "wykrzyknik.svg",
+		#"Crime" : "zlodziej.svg"
+	#}
+	#return "res://assets/graphics/scena_1/" + event_type_to_marker_filename[type] 
+func find_marker_filename( type : String ):
+	return "res://assets/graphics/scena_1/" + "wykrzyknik.svg"
 
 func find_arrow_filename(type : String ):
-	const event_type_to_arrow_color : Dictionary = {
-		"Fire" : "orange",
-		"Police" : "blue",
-		"Fire rescue" : "dark_red",
-		"Ambulance" : "white",
-		"Emergency" : "red",
-		"Crime" : "black"
-	}
-	return "res://assets/graphics/scena_1/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
+	return "res://assets/graphics/scena_1/" + "Arrow_icon_red.svg"
+
+
+#func find_arrow_filename(type : String ):
+	#const event_type_to_arrow_color : Dictionary = {
+		#"Fire" : "orange",
+		#"Police" : "blue",
+		#"Fire rescue" : "dark_red",
+		#"Ambulance" : "white",
+		#"Emergency" : "red",
+		#"Crime" : "black"
+	#}
+	#return "res://assets/graphics/scena_1/" + "Arrow_icon_" + event_type_to_arrow_color[type] + ".svg"
 
 var map_view_size
 var MapSprite : Sprite2D

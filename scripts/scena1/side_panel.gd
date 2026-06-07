@@ -4,6 +4,7 @@ var children_count : int = 0
 var button_queue : Array[Button]
 var buttons : Array[Button]
 @onready var bottom_panel = get_tree().current_scene.bottom_panel
+var root
 
 func spawn_button(text : String, icon : Texture2D) -> Button:
 	var button = Button.new()
@@ -23,14 +24,19 @@ func spawn_button(text : String, icon : Texture2D) -> Button:
 	button.add_theme_font_size_override("font_size", 14)
 	return button
 	
-func spawn_unit(people_count : int, busy : bool):
-	var icon_texture : Texture2D = preload("res://assets/graphics/scena_1/fire_truck.svg")
+func spawn_unit(type: String, people_count : int, busy : bool):
+	const textures_map : Dictionary[String,Texture2D] = {
+		"Fire" : preload("res://assets/graphics/scena_1/fire_truck.svg"),
+		"Crime" : preload("res://assets/graphics/scena_1/police.svg"),
+	}
+	var icon_texture : Texture2D = textures_map[type]
 	var item_size = Vector2(size.x, 128)
 	var reg_id : String = "KR "
 	for i in range(5):
 		reg_id += String.chr(65 + randi_range(0, 25))
 	
 	var icon = Sprite2D.new()
+	icon.name = type
 	icon.texture = icon_texture
 	icon.scale = Vector2(2, 2)
 	icon.position = icon_texture.get_size()
@@ -70,30 +76,39 @@ func spawn_unit(people_count : int, busy : bool):
 	children_count += 1
 		
 func _ready() -> void:
-	spawn_unit(2, true)
-	spawn_unit(2, true)
-	spawn_unit(2, false)
-	#spawn_unit(2, true)
-	spawn_unit(2, false)
-	#spawn_unit(3, true)
-	#spawn_unit(3, true)
-	#spawn_unit(3, true)
-	spawn_unit(5, false)
-	spawn_unit(5, true)
-	spawn_unit(7, false)
-	spawn_unit(2, true)
+	spawn_unit("Fire", 2, true)
+	spawn_unit("Fire", 2, false)
+	spawn_unit("Fire", 3, true)
+	spawn_unit("Fire", 5, true)
+	spawn_unit("Crime", 2, true)
+	spawn_unit("Crime", 3, true)
+	spawn_unit("Crime", 3, false)
 	disable_buttons()
+	root = get_tree().current_scene
+	
 	
 func send_unit(unit : Control):
-	print(unit.get_children())
+	var type
+	for c in unit.get_children():
+		if c is Sprite2D:
+			type = c.name
+	print(type)
+	print(root.emergency.type)
+	if type != root.emergency.type:
+		root.modal.show_message("Ups! Zły rodzaj jednostki!")
+		return
 	unit.get_node_or_null("btn").disabled = true
 	unit.get_node("rtl").text = unit.get_node("rtl").text.replace("[color=green]Wolny[/color]", "[color=red]Zajęty[/color]" )
-	var root = get_tree().current_scene
+
 	root.bottom_panel.clear()
 	root.bottom_panel.call_in_progress = false
 	root.modal.show_message("Jednostka wysłana!")
 	root.map_container.clear()
-	
+	disable_buttons()
+
+func end_call():
+	enable_buttons()
+
 func disable_buttons():
 	for button in buttons:
 		if button.disabled == false:

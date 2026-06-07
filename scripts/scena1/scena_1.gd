@@ -8,12 +8,14 @@ var main_event = false
 @onready var side_panel = $"SidePanel"
 @onready var map_container : MapContainer = $"MapView/SubViewportContainer/SubViewport/MapRoot/MapContainer"
 @onready var radio = $"HUD/Radio popup"
+@onready var radio_glow = $"HUD/RadioSpriteGlow"
 @onready var modal = $"General purpose modal"
 
 
 
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_1.tscn")
+	
 
 func message( event : MapEvent ) -> void:
 	
@@ -58,3 +60,6 @@ func _main_event():
 	modal.show_message("Uwaga! Nowe zgłoszenie!")
 	map_container.spawn_event("Fire", Vector2(230, 2300))
 	
+func begin_radio_call():
+	radio_glow.start_glow()
+	find_child("RadioSprite").clickable = true

@@ -33,7 +33,6 @@
 [ext_resource type="Texture2D" uid="uid://d1eilf1hfi6sm" path="res://assets/graphics/oknowindows.png" id="25_ar68y"]
 [ext_resource type="Texture2D" uid="uid://d24g8uashq26" path="res://assets/graphics/Motorola krotkofalowka glow.png" id="28_kkjyc"]
 [ext_resource type="Script" uid="uid://ccrn7dnbdgnrn" path="res://scripts/scena1/radio_glow.gd" id="29_wv1cp"]
-[ext_resource type="Script" uid="uid://utw66u5ek3qf" path="res://scripts/scena1/radio_handler.gd" id="31_pcab4"]
 
 [sub_resource type="Theme" id="Theme_maknc"]
 
@@ -274,6 +273,12 @@ texture = ExtResource("3_bqyrf")
 [node name="Background" type="Sprite2D" parent="." unique_id=1241085609]
 position = Vector2(960, 577)
 texture = ExtResource("4_bhyte")
+
+[node name="pasekzadań" type="Sprite2D" parent="." unique_id=249254113]
+z_index = 10
+position = Vector2(960, 1057.47)
+scale = Vector2(0.7507109, 0.750711)
+texture = ExtResource("5_cmwsu")
 
 [node name="SidePanel" type="Panel" parent="." unique_id=691123791]
 layout_mode = 0
@@ -717,14 +722,7 @@ label_settings = SubResource("LabelSettings_maknc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="pasekzadań" type="Sprite2D" parent="." unique_id=249254113]
-z_index = 10
-position = Vector2(960, 1057.47)
-scale = Vector2(0.7507109, 0.750711)
-texture = ExtResource("5_cmwsu")
-
 [node name="HUD" type="Control" parent="." unique_id=1462378878]
-visibility_layer = 512
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -736,19 +734,13 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("28_kkjyc")
 script = ExtResource("29_wv1cp")
 
-[node name="RadioSprite" type="TextureButton" parent="HUD" unique_id=471249022]
-layout_mode = 0
-offset_left = -105.0
-offset_top = 704.0
-offset_right = 540.0
-offset_bottom = 1349.0
+[node name="RadioSprite" type="Sprite2D" parent="HUD" unique_id=470503202]
+position = Vector2(89.00001, 900)
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("21_bqyrf")
-script = ExtResource("31_pcab4")
+texture = ExtResource("21_bqyrf")
 
 [node name="Radio popup" type="Control" parent="HUD" unique_id=1043280712]
 visible = false
-z_index = 100
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -763,12 +755,11 @@ texture = ExtResource("23_cmwsu")
 layout_mode = 0
 offset_left = 356.0
 offset_top = 869.0
-offset_right = 1294.0
+offset_right = 1509.0
 offset_bottom = 1106.0
 text = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
 label_settings = SubResource("LabelSettings_ar68y")
 autowrap_mode = 2
-clip_text = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=834002578]
 
@@ -783,4 +774,3 @@ texture = ExtResource("25_ar68y")
 [connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
-[connection signal="pressed" from="HUD/RadioSprite" to="HUD/RadioSprite" method="_click"]

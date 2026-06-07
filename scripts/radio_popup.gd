@@ -1,6 +1,7 @@
 extends Control
 
 @onready var label = $Label
+@onready var sprite = $"Sprite2D2"
 func show_radio_message(text : String, audio_file_path : String = ""):
 	label.text = text
 	visible = true
