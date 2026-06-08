@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="AudioStream" uid="uid://dumdvyt2mojxu" path="res://assets/Sounds/Test Your Fight - Rod Kim.mp3" id="2_dorrt"]
-[ext_resource type="Texture2D" uid="uid://uchlm7me4a10" path="res://assets/graphics/mapasafeserve.png" id="2_e2cp6"]
+[ext_resource type="Texture2D" uid="uid://dit5vmb2pimqi" path="res://assets/graphics/mapasafeserve.png" id="2_e2cp6"]
 [ext_resource type="Texture2D" uid="uid://mfj4kymlgasv" path="res://assets/graphics/spritesheet_strażak/strażak idle/0.png" id="4_m477w"]
 [ext_resource type="Texture2D" uid="uid://dukfk8uesa17d" path="res://assets/graphics/spritesheet_strażak/strażak idle/180.png" id="5_5pasc"]
 [ext_resource type="Script" uid="uid://cddlbpp2p2kf4" path="res://scripts/strazak_npc.gd" id="5_dorrt"]
@@ -1101,6 +1101,7 @@ autoplay = true
 
 [node name="StrazakNPC" type="CharacterBody2D" parent="." unique_id=1452296926]
 position = Vector2(7500, 1100)
+scale = Vector2(0.5, 0.5)
 collision_layer = 2
 script = ExtResource("5_dorrt")
 
