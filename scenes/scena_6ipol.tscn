@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cl3g1i545axvi" path="res://assets/Sounds/sparking.mp3" id="2_pkmh6"]
 [ext_resource type="Texture2D" uid="uid://bwib5dln0kd5o" path="res://assets/graphics/scena6_control_room.png" id="3_5mfve"]
 [ext_resource type="Texture2D" uid="uid://coanlwvrqtjji" path="res://assets/graphics/scena6_electric_box2.png" id="4_0uggq"]
+[ext_resource type="Texture2D" uid="uid://cfdlcijarrdw4" path="res://assets/graphics/561751_4.jpg" id="4_xow4f"]
 [ext_resource type="Script" uid="uid://dbjf3f67gt25q" path="res://scripts/scena6ipol_gracz.gd" id="5_8kxc3"]
 [ext_resource type="Texture2D" uid="uid://ohtpykkusxnj" path="res://assets/graphics/police_bez/idle/0.png" id="6_0uggq"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="6_j76f8"]
@@ -217,7 +218,7 @@
 radius = 80.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gracz"]
-radius = 93.64828
+radius = 46.389652
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q5xn8"]
 animations = [{
@@ -921,6 +922,11 @@ offset_bottom = 1080.0
 texture = ExtResource("3_5mfve")
 expand_mode = 1
 
+[node name="Mapa metra" type="Sprite2D" parent="." unique_id=396426317]
+position = Vector2(201.00002, 412.00003)
+scale = Vector2(0.20987648, 0.16853452)
+texture = ExtResource("4_xow4f")
+
 [node name="HackedScreen" type="ColorRect" parent="." unique_id=1644633411]
 offset_left = 730.0
 offset_top = 180.0
@@ -984,10 +990,11 @@ scale_amount_max = 5.0
 color = Color(0.2, 0.8, 1, 1)
 
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=249299119]
-position = Vector2(1645, 750)
+position = Vector2(1527, 742)
 script = ExtResource("5_8kxc3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=932186246]
+position = Vector2(0, 23)
 shape = SubResource("CircleShape2D_gracz")
 
 [node name="Camera2D" type="Camera2D" parent="Gracz" unique_id=1146709587]
@@ -1000,7 +1007,7 @@ limit_bottom = 1080
 position = Vector2(-5.9127808e-05, -1.335144e-05)
 scale = Vector2(0.50781274, 0.4782323)
 sprite_frames = SubResource("SpriteFrames_q5xn8")
-animation = &"policjant_walk_prawo"
+animation = &"policjant_skos_dol_lewo"
 autoplay = "policjant_idle_dol"
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1171858511]
@@ -1039,6 +1046,10 @@ color = Color(1, 0.2, 0.2, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -31.0
+offset_top = -17.0
+offset_right = -31.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1226,6 +1237,43 @@ grow_horizontal = 0
 theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 20
 text = "X"
+
+[node name="Boundery" type="StaticBody2D" parent="." unique_id=1924141294]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundery" unique_id=147505067]
+polygon = PackedVector2Array(558, 746, 490, 759, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 871, 756, 809, 761, 753, 739, 700, 759, 644, 753)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Boundery" unique_id=486919624]
+position = Vector2(2, -226)
+polygon = PackedVector2Array(558, 746, 490, 759, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 871, 756, 809, 761, 753, 739, 700, 759, 644, 753)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Boundery" unique_id=697969127]
+position = Vector2(567, -227)
+polygon = PackedVector2Array(560, 761, 487, 761, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 865, 766, 805, 762, 749, 752, 700, 759, 635, 757)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Boundery" unique_id=816972503]
+position = Vector2(563, 0)
+polygon = PackedVector2Array(552, 755, 490, 757, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 865, 754, 809, 756, 736, 755, 709, 755, 637, 748)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Boundery" unique_id=1728206841]
+polygon = PackedVector2Array(95, 471, 303, 469, 298, 359, 100, 358)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Boundery" unique_id=1610315659]
+polygon = PackedVector2Array(90, 493, 232, 493, 259, 499, 296, 502, 297, 569, 268, 569, 221, 562, 87, 564)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Boundery" unique_id=158132695]
+polygon = PackedVector2Array(72, 615, 119, 620, 117, 681, 240, 669, 316, 700, 317, 907, 275, 911, 267, 998, 71, 991)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Boundery" unique_id=1041802442]
+polygon = PackedVector2Array(788, 1024, 846, 999, 841, 940, 885, 906, 1041, 907, 1080, 944, 1079, 985, 1147, 1006, 1141, 1062)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Boundery" unique_id=1970829175]
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Boundery" unique_id=245354063]
+polygon = PackedVector2Array(1595, 727, 1854, 734, 1853, 817, 1535, 824, 1531, 1024, 1875, 1018, 1871, 637, 1870, 94, 1813, 83, 1770, 212, 1809, 218, 1810, 374, 1770, 349, 1625, 348, 1624, 449, 1624, 537, 1666, 547, 1816, 540, 1811, 638, 1591, 638)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Boundery" unique_id=107922754]
+polygon = PackedVector2Array(1262, 238, 1391, 238, 1407, 289, 1511, 277, 1537, 219, 1765, 210, 1818, 58, 1179, 36, 544, 17, 418, 19, 398, 317, 522, 304, 525, 226, 652, 231, 622, 304, 695, 298, 1283, 297)
 
 [connection signal="body_entered" from="Skrzynka" to="." method="_on_skrzynka_area_entered"]
 [connection signal="body_exited" from="Skrzynka" to="." method="_on_skrzynka_area_exited"]
