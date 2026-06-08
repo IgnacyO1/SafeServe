@@ -192,10 +192,21 @@ func _zmien_scene_z_efektem():
 	if komunikat_label:
 		komunikat_label.visible = false
 	
+	# 1. Odtworzenie dźwięku otwierania drzwi (podmień ścieżkę jeśli plik nazywa się inaczej)
+	var dzwiek_drzwi = load("res://assets/Sounds/door_open.mp3")
+	if dzwiek_drzwi:
+		var audio_player = AudioStreamPlayer.new()
+		audio_player.stream = dzwiek_drzwi
+		add_child(audio_player)
+		audio_player.play()
+		# Automatyczne usunięcie odtwarzacza po zakończeniu dźwięku
+		audio_player.finished.connect(audio_player.queue_free)
+	
 	# Sprzątamy lokalną warstwę UI przed wyjściem
 	if lokalny_canvas_ui:
 		lokalny_canvas_ui.queue_free()
 		
+	# 2. Tworzymy czarny prostokąt wewnątrz Subviewportu
 	var fade_rect = ColorRect.new()
 	fade_rect.color = Color(0.0, 0.0, 0.0, 0.0)
 	
@@ -204,9 +215,11 @@ func _zmien_scene_z_efektem():
 	fade_rect.z_index = 999 
 	add_child(fade_rect)
 	
+	# 3. Animacja ściemnienia (Fade Out) - trwa 0.5 sekundy
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
+	# 4. Czekamy na koniec animacji i zmieniamy scenę
 	await tween.finished
 	get_tree().change_scene_to_file("res://scenes/scena_6ipol.tscn")
 
