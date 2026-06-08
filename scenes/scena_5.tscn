@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cxab3k7p0f2q5"]
 
 [ext_resource type="Script" uid="uid://dukdf1db753yw" path="res://scripts/scena_5.gd" id="1_sc5gd"]
-[ext_resource type="AudioStream" uid="uid://dbk6iuduehycf" path="res://assets/Sounds/Conspiracy Theory - Rod Kim.mp3" id="2_6hmby"]
+[ext_resource type="StyleBox" uid="uid://clhya03251en7" path="res://assets/styleboxes/scena 4 panel.tres" id="2_mc8du"]
+[ext_resource type="StyleBox" uid="uid://d4kn221p0ugvp" path="res://assets/styleboxes/scena4 button.tres" id="3_7ve8e"]
 
 [sub_resource type="Gradient" id="Gradient_7r3tw"]
 colors = PackedColorArray(0.41960785, 0.44313726, 0.11764706, 1, 0, 0.37254903, 0.74509805, 1)
@@ -22,12 +23,6 @@ layout_mode = 0
 offset_right = 1927.0
 offset_bottom = 1079.0
 texture = SubResource("GradientTexture2D_jhgwc")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
-stream = ExtResource("2_6hmby")
-volume_db = -18.052
-autoplay = true
-parameters/looping = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=56173469]
 
@@ -50,6 +45,7 @@ offset_left = 109.0
 offset_top = 228.0
 offset_right = 1059.0
 offset_bottom = 809.0
+theme_override_styles/panel = ExtResource("2_mc8du")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=764767153]
 offset_left = 116.0
@@ -75,19 +71,32 @@ text = "9:37:50"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CarInfoPanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=214554458]
-offset_left = 1072.0
-offset_top = 234.0
-offset_right = 1823.0
-offset_bottom = 807.0
+[node name="CarInfoPanelContainer" type="Panel" parent="CanvasLayer" unique_id=946890596]
+offset_left = 1060.0
+offset_top = 229.0
+offset_right = 1837.0
+offset_bottom = 804.0
+theme_override_styles/panel = ExtResource("2_mc8du")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CarInfoPanelContainer" unique_id=518538322]
-custom_minimum_size = Vector2(0, 500)
-layout_mode = 2
+custom_minimum_size = Vector2(0, 470)
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 747.0
+offset_bottom = 500.0
 size_flags_vertical = 0
 bbcode_enabled = true
 
 [node name="ButtonSend" type="Button" parent="CanvasLayer/CarInfoPanelContainer" unique_id=247093640]
-layout_mode = 2
+layout_mode = 0
+offset_left = 27.0
+offset_top = 506.0
+offset_right = 744.0
+offset_bottom = 529.0
 size_flags_vertical = 8
+theme_override_styles/normal = ExtResource("3_7ve8e")
+theme_override_styles/hover = ExtResource("3_7ve8e")
+theme_override_styles/disabled = ExtResource("3_7ve8e")
+theme_override_styles/focus = ExtResource("3_7ve8e")
 text = "Wyślij patrol policyjny"

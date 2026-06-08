@@ -1,7 +1,7 @@
 extends Node2D
 
 # Unikalne USTAWIENIA TEJ TRASY
-var start_pos_px = Vector2(-18030+randf(), 50850+randf())
+var start_pos_px = Vector2(-18030, 50850)
 var cutscene_path = "res://assets/Videos/spin.ogv" # to trzeba zmienić tzn dodać cutscenę jak cyberkrab wychodzi z samochodu
 
 @onready var player = $Police
@@ -110,6 +110,7 @@ func setup_ui():
 func play_cutscene_sequence():
 	is_changing_scene = true
 	
+	get_tree().current_scene.radio.visible = false
 	# Ściemnienie gry (Fade Out)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)

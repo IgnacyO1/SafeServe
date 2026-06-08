@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://chhjxhfk7xjvj"]
+
+[ext_resource type="Texture2D" uid="uid://cyly0vpihb2nd" path="res://assets/styleboxes/Side panel background shrunk.svg" id="1_ws3tu"]
+
+[resource]
+content_margin_left = 30.0
+content_margin_top = 30.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+texture = ExtResource("1_ws3tu")

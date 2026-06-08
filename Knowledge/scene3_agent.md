@@ -20,7 +20,8 @@ Mechanika opiera się na prostym `State Machine` przypisanym do zmiennej `faza`.
 - `_process(delta)` - Główne serce mechaniki. Odlicza czas do zera. Zależnie od zmiennej `faza` pozwala na rąbanie drzwi lub tworzy z czasem nowe obszary pożaru (w phase POŻARY).
 - `_rabniecie_drzwi_tick()` - Zmniejsza "HP" drzwi, włącza trzęsienie kamery. Po wyzerowaniu otwiera drogę (fade in/out, usunięcie przeszkód).
 - `zgaszono_ogien(ogien)` - Reaguje na informację od poszczególnych prefabów ognia. Gdy gasną wszystkie ognie w liście, przechodzi do fazy BABCIA.
-- `_odswiez_minimape()` - Dynamicznie pozycjonuje kropki pożarów, gracza i celów na teksturze HUD-a na podstawie fizycznej wielkości mapy `(8192, 4096)`.
+- `_odswiez_minimape()` - Dynamicznie pozycjonuje kropki pożarów, gracza i celów na teksturze HUD-a, korzystając z `world_to_local()` do kompensacji przesunięcia i skali tła.
+- `local_to_world(local_pos)` / `world_to_local(world_pos)` - Funkcje pomocnicze do dynamicznego przeliczania współrzędnych między układem lokalnym tekstury tła (gdzie lewe górne róg to `(0, 0)`), a układem świata gry (węzeł `Tlo` przesunięty i przeskalowany w edytorze).
 - `_odtworz_cutscenke()` - Na końcu uruchamia plik wideo OGV i MP3 z efektami dźwiękowymi, po czym przechodzi na Scenę 5.
 
 ## Wykorzystane Obrazy i Style
@@ -30,4 +31,8 @@ Mechanika opiera się na prostym `State Machine` przypisanym do zmiennej `faza`.
 - Wszystko toczy się w widoku izometrycznym / pseudo top-down z systemem "fade-in, fade-out" dla przejść pomiędzy fazami.
 
 ## Wskazówki dla Agenta
-Zwróć uwagę na zmienną `faza`. Modyfikując logikę misji musisz pamiętać o poprawnym zaktualizowaniu stringów (np. `faza = "POZARY"`). Pozycje do spawnów ognisk pożaru są sztywno przypisane do tablicy wektorów w skrypcie. Skrypt również w locie generuje obiekty Area2D z CollisionShape dla Babci i Czarnej Skrzynki w ściśle określonych koordynatach. Pamiętaj o używaniu `is_instance_valid()`, bo pożary i NPC mogą być nagle niszczone przez gracza!
+Zwróć uwagę na zmienną `faza`. Modyfikując logikę misji musisz pamiętać o poprawnym zaktualizowaniu stringów (np. `faza = "POZARY"`). 
+
+**Ważne (Współrzędne poziomu):** Pozycje do spawnów ognisk pożaru, punkty startowe gracza, drzwi, czarnej skrzynki i wyjścia są zdefiniowane jako współrzędne lokalne na teksturze budynku. Zawsze muszą być one przepuszczane przez funkcję `local_to_world()`, aby gra działała poprawnie w przypadku przesunięcia lub przeskalowania węzła `Tlo` w edytorze Godota. 
+
+Pamiętaj o używaniu `is_instance_valid()`, bo pożary i NPC mogą być nagle niszczone przez gracza!

@@ -1220,5 +1220,5 @@ func _spawn_tram_scene8():
 
 
 func _on_tram_timer_timeout() -> void:
-	if gra_aktywna:
+	if gra_aktywna and not faza_6_odpalona:
 		_spawn_tram_scene8()
