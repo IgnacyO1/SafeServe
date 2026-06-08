@@ -3,6 +3,7 @@ extends Node
 const CONFIG_PATH = "user://config.json"
 
 var crab_mode: String = "turbo" # "turbo" or "cutie"
+var multiplayer_loser: bool = false # Czy gracz przegrał wyścig w multiplayerze
 
 func _ready():
 	_load_config()

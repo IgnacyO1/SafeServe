@@ -79,6 +79,11 @@ func _ready():
 	# Zapisz poziom w konfiguracji gry
 	GameConfig.save_level("res://scenes/scena_8.tscn")
 	
+	# Komunikat dla przegranego z multiplayer'a (kolega był szybszy)
+	var show_loser_msg = GameConfig.multiplayer_loser
+	if show_loser_msg:
+		GameConfig.multiplayer_loser = false  # Reset flagi od razu
+	
 	# Upewnij się, że muzyka jest na starcie wyłączona (zagra po napisach)
 	if muzyka and muzyka.playing:
 		muzyka.stop()
@@ -136,6 +141,12 @@ func _ready():
 	# Szybka sekwencja intro (krótsze napisy)
 	_fade_in(0.5)
 	await get_tree().create_timer(0.2).timeout
+	
+	# Komunikat dla przegranego z multiplayer'a
+	if show_loser_msg:
+		_pokaz_info("PRZEGRYWASZ!\nTwój kolega był szybszy!", 3.0)
+		await get_tree().create_timer(3.5).timeout
+	
 	_pokaz_info("WALKA Z CYBERKRABEM!", 1.0)
 	await get_tree().create_timer(1.2).timeout
 	_pokaz_info("GOTOWY?", 0.6)

@@ -121,17 +121,22 @@ func _process_server():
 	if is_instance_valid(boss):
 		var reached_end_of_path = boss.reached_end
 		var is_close_and_blocked = false
+		var closest_police_id: int = -1
+		var closest_dist: float = INF
 		var police_cars = get_tree().get_nodes_in_group("police")
 		for police in police_cars:
 			if is_instance_valid(police):
 				var dist_m = boss.global_position.distance_to(police.global_position) / 20.0
+				# Śledź kto jest najbliżej (zwycięzca)
+				if dist_m < closest_dist:
+					closest_dist = dist_m
+					closest_police_id = str(police.name).to_int()
 				if dist_m < 7.0 and boss.real_speed < 30.0:
 					is_close_and_blocked = true
-					break
 		if is_close_and_blocked or reached_end_of_path:
 			is_changing_scene = true
-			print("[SERWER] Koniec gry. Wysyłam RPC.")
-			rpc("trigger_end_game")
+			print("[SERWER] Koniec gry. Zwycięzca: ", closest_police_id, ". Wysyłam RPC.")
+			rpc("trigger_end_game", closest_police_id)
 
 func _process_client():
 	if is_changing_scene: return
@@ -161,7 +166,21 @@ func _process_client():
 		coords_label.text = "OCZEKIWANIE NA START..."
 
 @rpc("authority", "call_local", "reliable")
-func trigger_end_game():
+func trigger_end_game(winner_id: int = -1):
+	# Zabezpieczenie przed podwójnym wywołaniem RPC
+	if is_changing_scene:
+		return
+	# Serwer headless nie odgrywa cutsceny
+	if DisplayServer.get_name() == "headless":
+		return
+	# Sprawdź czy to my wygraliśmy wyścig
+	var my_id = multiplayer.get_unique_id()
+	if winner_id != -1 and my_id != winner_id:
+		GameConfig.multiplayer_loser = true
+		print("[KLIENT] Przegrałeś wyścig! Zwycięzca: ", winner_id)
+	else:
+		GameConfig.multiplayer_loser = false
+		print("[KLIENT] Wygrałeś wyścig!")
 	play_cutscene_sequence()
 
 func setup_ui():
@@ -201,15 +220,74 @@ func setup_ui():
 
 func play_cutscene_sequence():
 	is_changing_scene = true
+	
+	# --- CUTSCENA Z ZABEZPIECZENIAMI ---
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	await tween.finished
+	if not is_inside_tree(): return  # GUARD: węzeł mógł zostać usunięty
+	
 	video_player.modulate.a = 1.0
 	video_player.play()
 	var tween_in = create_tween()
 	tween_in.tween_property(fade_rect, "color", Color(0, 0, 0, 0), 0.5)
-	await get_tree().create_timer(2.0).timeout
+	
+	var tree = get_tree()
+	if tree == null: return  # GUARD
+	await tree.create_timer(2.0).timeout
+	if not is_inside_tree(): return  # GUARD
+	
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	await tween_out.finished
-	get_tree().change_scene_to_file("res://scenes/scena_8.tscn")
+	if not is_inside_tree(): return  # GUARD
+	
+	# === ROZŁĄCZENIE MULTIPLAYER ===
+	print("[KLIENT] Rozłączanie z serwera przed przejściem do sceny 8...")
+	if multiplayer.multiplayer_peer != null:
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	print("[KLIENT] Rozłączono. Ładowanie sceny 8...")
+	
+	# === RĘCZNA ZMIANA SCENY ===
+	# Scena multiplayer była dodana ręcznie do root (via add_child w multiplayer_wybór.gd),
+	# a NIE przez change_scene_to_file(). Przez to change_scene_to_file() nie usuwa
+	# starej sceny — jej CanvasLayer (layer 100) z czarnym fade_rect zasłania scenę 8.
+	# Musimy ręcznie załadować scenę 8 i wyczyścić starą.
+	
+	tree = get_tree()
+	if tree == null: return  # GUARD
+	var root = tree.root
+	
+	# Bezpieczne załadowanie sceny 8
+	var scene_8_res = load("res://scenes/scena_8.tscn")
+	if scene_8_res == null:
+		push_error("[CRITICAL] Nie można załadować scena_8.tscn!")
+		return
+	var scene_8 = scene_8_res.instantiate()
+	
+	# Bezpieczne znalezienie nadrzędnego węzła (RootMulti)
+	var root_multi = self
+	var safety = 0
+	while root_multi.get_parent() != null and root_multi.get_parent() != root and safety < 50:
+		root_multi = root_multi.get_parent()
+		safety += 1
+	
+	if root_multi.get_parent() != root:
+		push_error("[CRITICAL] Nie można znaleźć root_multi! Fallback: dodaję scenę 8 bezpośrednio.")
+		root.add_child(scene_8)
+		tree.current_scene = scene_8
+		return
+	
+	# Wyczyść stary current_scene jeśli istnieje i jest prawidłowy
+	if is_instance_valid(tree.current_scene) and tree.current_scene != root_multi:
+		tree.current_scene.queue_free()
+	
+	# Dodaj scenę 8 jako nową current_scene
+	root.add_child(scene_8)
+	tree.current_scene = scene_8
+	
+	# Usuń starą scenę multiplayer (RootMulti wraz ze wszystkimi dziećmi, w tym self)
+	# queue_free jest deferred — funkcja wykona się do końca przed faktycznym zwolnieniem
+	root_multi.queue_free()
+
