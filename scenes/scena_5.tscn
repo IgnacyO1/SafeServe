@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cxab3k7p0f2q5"]
 
 [ext_resource type="Script" uid="uid://dukdf1db753yw" path="res://scripts/scena_5.gd" id="1_sc5gd"]
-[ext_resource type="AudioStream" uid="uid://dbk6iuduehycf" path="res://assets/Sounds/Conspiracy Theory - Rod Kim.mp3" id="2_6hmby"]
 
 [sub_resource type="Gradient" id="Gradient_7r3tw"]
 colors = PackedColorArray(0.41960785, 0.44313726, 0.11764706, 1, 0, 0.37254903, 0.74509805, 1)
@@ -22,12 +21,6 @@ layout_mode = 0
 offset_right = 1927.0
 offset_bottom = 1079.0
 texture = SubResource("GradientTexture2D_jhgwc")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1752593880]
-stream = ExtResource("2_6hmby")
-volume_db = -18.052
-autoplay = true
-parameters/looping = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=56173469]
 

@@ -183,31 +183,31 @@
 [ext_resource type="Texture2D" uid="uid://lfs1mrbqg2hh" path="res://assets/graphics/police_bez/270/bez_broni2700022.png" id="179_byg1k"]
 [ext_resource type="Texture2D" uid="uid://kxd20t8d7v6s" path="res://assets/graphics/police_bez/270/bez_broni2700023.png" id="180_2lg63"]
 [ext_resource type="Texture2D" uid="uid://bx7is577pmiam" path="res://assets/graphics/police_bez/270/bez_broni2700024.png" id="181_as3yc"]
-[ext_resource type="Texture2D" uid="uid://brk0ek15j4h0n" path="res://assets/graphics/police_bez/90/bez_broni900000.png" id="182_6yrbf"]
-[ext_resource type="Texture2D" uid="uid://ctcp68mcoee7h" path="res://assets/graphics/police_bez/90/bez_broni900001.png" id="183_lt82j"]
-[ext_resource type="Texture2D" uid="uid://l3l1sg1bp7rt" path="res://assets/graphics/police_bez/90/bez_broni900002.png" id="184_e5wyr"]
-[ext_resource type="Texture2D" uid="uid://c27ej68vsla8g" path="res://assets/graphics/police_bez/90/bez_broni900003.png" id="185_uar5j"]
-[ext_resource type="Texture2D" uid="uid://cc7h2gq3vwkg8" path="res://assets/graphics/police_bez/90/bez_broni900004.png" id="186_2assg"]
-[ext_resource type="Texture2D" uid="uid://bu46v5o8twfcx" path="res://assets/graphics/police_bez/90/bez_broni900005.png" id="187_erbi8"]
-[ext_resource type="Texture2D" uid="uid://drkddahxd8rtx" path="res://assets/graphics/police_bez/90/bez_broni900006.png" id="188_rg1sl"]
-[ext_resource type="Texture2D" uid="uid://dlmes8j7mkal6" path="res://assets/graphics/police_bez/90/bez_broni900007.png" id="189_t1vg6"]
-[ext_resource type="Texture2D" uid="uid://djsqeahfytfql" path="res://assets/graphics/police_bez/90/bez_broni900008.png" id="190_nc86h"]
-[ext_resource type="Texture2D" uid="uid://c0jcgupexliy8" path="res://assets/graphics/police_bez/90/bez_broni900009.png" id="191_nicn0"]
-[ext_resource type="Texture2D" uid="uid://b5uekkvsusof6" path="res://assets/graphics/police_bez/90/bez_broni900010.png" id="192_o6duy"]
-[ext_resource type="Texture2D" uid="uid://dkg2lmuygy4o0" path="res://assets/graphics/police_bez/90/bez_broni900011.png" id="193_di76f"]
-[ext_resource type="Texture2D" uid="uid://tgy1sffq454i" path="res://assets/graphics/police_bez/90/bez_broni900012.png" id="194_nt8gx"]
-[ext_resource type="Texture2D" uid="uid://co8tsuj2e3djl" path="res://assets/graphics/police_bez/90/bez_broni900013.png" id="195_anx6w"]
-[ext_resource type="Texture2D" uid="uid://df6rg2m21neuc" path="res://assets/graphics/police_bez/90/bez_broni900014.png" id="196_jatfc"]
-[ext_resource type="Texture2D" uid="uid://cpl84k7wpgomj" path="res://assets/graphics/police_bez/90/bez_broni900015.png" id="197_j1vqb"]
-[ext_resource type="Texture2D" uid="uid://m642603rhbvm" path="res://assets/graphics/police_bez/90/bez_broni900016.png" id="198_eqaye"]
-[ext_resource type="Texture2D" uid="uid://63w0sfsueyvh" path="res://assets/graphics/police_bez/90/bez_broni900017.png" id="199_e7eo5"]
-[ext_resource type="Texture2D" uid="uid://bhvp6mfnusvq4" path="res://assets/graphics/police_bez/90/bez_broni900018.png" id="200_u7sux"]
-[ext_resource type="Texture2D" uid="uid://3osoadea2c48" path="res://assets/graphics/police_bez/90/bez_broni900019.png" id="201_87ow8"]
-[ext_resource type="Texture2D" uid="uid://dyobfbnd2fqbr" path="res://assets/graphics/police_bez/90/bez_broni900020.png" id="202_bt73d"]
-[ext_resource type="Texture2D" uid="uid://bajdxd34oblcf" path="res://assets/graphics/police_bez/90/bez_broni900021.png" id="203_8tk57"]
-[ext_resource type="Texture2D" uid="uid://k1ffrh43j62a" path="res://assets/graphics/police_bez/90/bez_broni900022.png" id="204_s2skr"]
-[ext_resource type="Texture2D" uid="uid://bsxf1e1xyjhct" path="res://assets/graphics/police_bez/90/bez_broni900023.png" id="205_accys"]
-[ext_resource type="Texture2D" uid="uid://gbin5lf27v3" path="res://assets/graphics/police_bez/90/bez_broni900024.png" id="206_ndo6v"]
+[ext_resource type="Texture2D" uid="uid://cnjjnoiwcoc5g" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0000.png" id="184_6f412"]
+[ext_resource type="Texture2D" uid="uid://cqj30mj6hs3ku" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0001.png" id="185_uejic"]
+[ext_resource type="Texture2D" uid="uid://ifngfrhshyyx" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0002.png" id="186_7kxxk"]
+[ext_resource type="Texture2D" uid="uid://c1ujvketrt0gp" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0003.png" id="187_0r3er"]
+[ext_resource type="Texture2D" uid="uid://tpugylq3k75h" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0004.png" id="188_wre1p"]
+[ext_resource type="Texture2D" uid="uid://bsjbohun63mvx" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0005.png" id="189_hrwxg"]
+[ext_resource type="Texture2D" uid="uid://dtbqkmm7h6vc7" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0006.png" id="190_7yb1c"]
+[ext_resource type="Texture2D" uid="uid://88c817eucu1d" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0007.png" id="191_ua2m6"]
+[ext_resource type="Texture2D" uid="uid://77tmxg7ynkc2" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0008.png" id="192_7rtx2"]
+[ext_resource type="Texture2D" uid="uid://bvppl67jcmecn" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0009.png" id="193_k1upt"]
+[ext_resource type="Texture2D" uid="uid://diqemcbxk4j5i" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0010.png" id="194_4xq4f"]
+[ext_resource type="Texture2D" uid="uid://c34qta5txsbut" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0011.png" id="195_msj4e"]
+[ext_resource type="Texture2D" uid="uid://bhgpsm8obrjah" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0012.png" id="196_kww6n"]
+[ext_resource type="Texture2D" uid="uid://c66u0rw1gqetl" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0013.png" id="197_jplal"]
+[ext_resource type="Texture2D" uid="uid://bupbni6lxr78c" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0014.png" id="198_63r3p"]
+[ext_resource type="Texture2D" uid="uid://cqpc633rl8py5" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0015.png" id="199_afgj6"]
+[ext_resource type="Texture2D" uid="uid://dk7se6euksn32" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0016.png" id="200_fbidf"]
+[ext_resource type="Texture2D" uid="uid://ceuf3qtvhpe2f" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0017.png" id="201_w317m"]
+[ext_resource type="Texture2D" uid="uid://djnheraeiuy7g" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0018.png" id="202_p5v2c"]
+[ext_resource type="Texture2D" uid="uid://gllowabp0llj" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0019.png" id="203_hd75o"]
+[ext_resource type="Texture2D" uid="uid://bw7guxy4wyrn2" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0020.png" id="204_n8xkb"]
+[ext_resource type="Texture2D" uid="uid://bxkx4usr1ncbs" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0021.png" id="205_tvlpk"]
+[ext_resource type="Texture2D" uid="uid://cqmf2w8fmthak" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0022.png" id="206_mu2kv"]
+[ext_resource type="Texture2D" uid="uid://b5mmb6ipv1xod" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0023.png" id="207_1s0q4"]
+[ext_resource type="Texture2D" uid="uid://cd6h3mk2ctsj4" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0024.png" id="208_28l7j"]
 [ext_resource type="Texture2D" uid="uid://d24g8uashq26" path="res://assets/graphics/Motorola krotkofalowka glow.png" id="208_nmaqs"]
 [ext_resource type="Script" uid="uid://ccrn7dnbdgnrn" path="res://scripts/scena1/radio_glow.gd" id="209_6f412"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="210_uejic"]
@@ -823,79 +823,79 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("182_6yrbf")
+"texture": ExtResource("184_6f412")
 }, {
 "duration": 1.0,
-"texture": ExtResource("183_lt82j")
+"texture": ExtResource("185_uejic")
 }, {
 "duration": 1.0,
-"texture": ExtResource("184_e5wyr")
+"texture": ExtResource("186_7kxxk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("185_uar5j")
+"texture": ExtResource("187_0r3er")
 }, {
 "duration": 1.0,
-"texture": ExtResource("186_2assg")
+"texture": ExtResource("188_wre1p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("187_erbi8")
+"texture": ExtResource("189_hrwxg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("188_rg1sl")
+"texture": ExtResource("190_7yb1c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("189_t1vg6")
+"texture": ExtResource("191_ua2m6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("190_nc86h")
+"texture": ExtResource("192_7rtx2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("191_nicn0")
+"texture": ExtResource("193_k1upt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("192_o6duy")
+"texture": ExtResource("194_4xq4f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("193_di76f")
+"texture": ExtResource("195_msj4e")
 }, {
 "duration": 1.0,
-"texture": ExtResource("194_nt8gx")
+"texture": ExtResource("196_kww6n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("195_anx6w")
+"texture": ExtResource("197_jplal")
 }, {
 "duration": 1.0,
-"texture": ExtResource("196_jatfc")
+"texture": ExtResource("198_63r3p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("197_j1vqb")
+"texture": ExtResource("199_afgj6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("198_eqaye")
+"texture": ExtResource("200_fbidf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("199_e7eo5")
+"texture": ExtResource("201_w317m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("200_u7sux")
+"texture": ExtResource("202_p5v2c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("201_87ow8")
+"texture": ExtResource("203_hd75o")
 }, {
 "duration": 1.0,
-"texture": ExtResource("202_bt73d")
+"texture": ExtResource("204_n8xkb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("203_8tk57")
+"texture": ExtResource("205_tvlpk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("204_s2skr")
+"texture": ExtResource("206_mu2kv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("205_accys")
+"texture": ExtResource("207_1s0q4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("206_ndo6v")
+"texture": ExtResource("208_28l7j")
 }],
 "loop": true,
 "name": &"policjant_walk_prawo",
