@@ -629,3 +629,9 @@ stream = ExtResource("6_434cb")
 volume_db = -9.689
 autoplay = true
 parameters/looping = true
+
+[node name="RearLeftWheel" type="Marker2D" parent="."]
+position = Vector2(-40, -15)
+
+[node name="RearRightWheel" type="Marker2D" parent="."]
+position = Vector2(-40, 15)

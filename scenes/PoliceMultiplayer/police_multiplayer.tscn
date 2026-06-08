@@ -640,3 +640,9 @@ replication_config = SubResource("SceneReplicationConfig_qhs2g")
 stream = ExtResource("6_tjdqn")
 autoplay = true
 parameters/looping = true
+
+[node name="RearLeftWheel" type="Marker2D" parent="."]
+position = Vector2(-40, -15)
+
+[node name="RearRightWheel" type="Marker2D" parent="."]
+position = Vector2(-40, 15)
