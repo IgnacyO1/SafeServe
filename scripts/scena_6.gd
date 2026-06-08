@@ -2,11 +2,15 @@ extends Node2D
 
 var gra_aktywna = true
 var TramScene = preload("res://scenes/Metrotrain/Train.tscn")
-# Załadowanie pliku dźwiękowego (podmień ścieżkę, jeśli plik jest w innym folderze)
 var dzwiek_smierci = preload("res://assets/Sounds/dying.mp3") 
 
 var timer_spawnu = 0.0
 var interwal_spawnu = 10.0
+
+# Zmienne pomocnicze dla interakcji i UI
+var gracz_przy_metacie = false
+var komunikat_label: Label = null
+var lokalny_canvas_ui: CanvasLayer = null
 
 @onready var gracz = $Gracz
 @onready var spawn_point = $SpawnPoint
@@ -17,8 +21,13 @@ var interwal_spawnu = 10.0
 
 func _ready():
 	_spawn_trains()
+	
 	if meta:
 		meta.body_entered.connect(_on_meta_entered)
+		meta.body_exited.connect(_on_meta_exited)
+	
+	# Stworzenie bezpiecznego komunikatu tekstowego odpornego na CanvasModulate
+	_stworz_komunikat_ui()
 	
 	# Uruchomienie efektu czarnego ekranu i budzenia na starcie sceny
 	_efekt_budzenia()
@@ -30,6 +39,14 @@ func _physics_process(delta):
 	if timer_spawnu >= interwal_spawnu:
 		timer_spawnu = 0.0
 		_spawn_trains()
+
+func _unhandled_input(event):
+	if not gra_aktywna:
+		return
+		
+	# POPRAWKA LOGICZNA: Nawiasy gwarantują, że interakcja zadziała TYLKO gdy gracz stoi przy drzwiach
+	if gracz_przy_metacie and (event.is_action_pressed("interakcja") or (event is InputEventKey and event.pressed and event.keycode == KEY_E)):
+		_zmien_scene_z_efektem()
 
 func _spawn_trains():
 	if tor1 and tor1.curve and tor1.curve.point_count >= 2:
@@ -46,7 +63,11 @@ func gracz_trafiony():
 	if not gra_aktywna:
 		return
 		
-	_odtworz_dzwiek_smierci() # Uruchomienie dźwięku na samym początku
+	if komunikat_label:
+		komunikat_label.visible = false
+	gracz_przy_metacie = false
+		
+	_odtworz_dzwiek_smierci()
 	_screen_shake(25.0)
 	_spawn_krew_na_ekranie()
 	
@@ -71,8 +92,6 @@ func _odtworz_dzwiek_smierci():
 	audio_player.stream = dzwiek_smierci
 	add_child(audio_player)
 	audio_player.play()
-	
-	# Automatyczne usunięcie odtwarzacza z pamięci po zakończeniu odtwarzania MP3
 	audio_player.finished.connect(audio_player.queue_free)
 
 func _spawn_krew_na_ekranie():
@@ -105,8 +124,6 @@ func _spawn_krew_na_ekranie():
 	krew.color_ramp = gradient
 	
 	krew.lifetime = 1.8
-	
-	# WYMUSZENIE EMISJI: Aktywuje cząsteczki stworzone dynamicznie
 	krew.emitting = true 
 	
 	var flash = ColorRect.new()
@@ -123,7 +140,6 @@ func _spawn_krew_na_ekranie():
 func _efekt_budzenia():
 	var canvas_layer = CanvasLayer.new()
 	canvas_layer.layer = 99 
-	# POPRAWKA: Dodajemy do głównego okna gry (root)
 	get_tree().root.add_child.call_deferred(canvas_layer)
 	
 	var czarne_tlo = ColorRect.new()
@@ -136,32 +152,63 @@ func _efekt_budzenia():
 	tween.tween_property(czarne_tlo, "color:a", 0.0, 5.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
 	tween.tween_callback(canvas_layer.queue_free)
+
+func _stworz_komunikat_ui():
+	# POPRAWKA WIDOCZNOŚCI: Tworzymy dedykowaną warstwę UI przypisaną do naszego SubViewportu.
+	# Ignoruje ona działanie efektu nocy z CanvasModulate!
+	lokalny_canvas_ui = CanvasLayer.new()
+	lokalny_canvas_ui.layer = 50
+	lokalny_canvas_ui.custom_viewport = get_viewport()
+	add_child(lokalny_canvas_ui)
+
+	komunikat_label = Label.new()
+	komunikat_label.text = "Naciśnij E aby otworzyć drzwi"
 	
+	komunikat_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	komunikat_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
+	# Pozycjonowanie od dołu okna renderowania SubViewportu
+	komunikat_label.position.y -= 50 
+	
+	komunikat_label.visible = false
+	lokalny_canvas_ui.add_child(komunikat_label)
+
 func _on_meta_entered(body):
 	if not gra_aktywna:
 		return
 	if body.is_in_group("gracz"):
-		gra_aktywna = false
+		gracz_przy_metacie = true
+		if komunikat_label:
+			komunikat_label.visible = true
+
+func _on_meta_exited(body):
+	if body.is_in_group("gracz"):
+		gracz_przy_metacie = false
+		if komunikat_label:
+			komunikat_label.visible = false
+
+func _zmien_scene_z_efektem():
+	gra_aktywna = false
+	if komunikat_label:
+		komunikat_label.visible = false
+	
+	# Sprzątamy lokalną warstwę UI przed wyjściem
+	if lokalny_canvas_ui:
+		lokalny_canvas_ui.queue_free()
 		
-		# 1. Tworzymy czarny prostokąt wewnątrz Subviewportu
-		var fade_rect = ColorRect.new()
-		fade_rect.color = Color(0.0, 0.0, 0.0, 0.0) # Zaczynamy od przezroczystego
-		
-		# Ustawiamy rozmiar na sztywno, żeby na pewno pokrył całą arenę (wartości z clamp gracza)
-		fade_rect.position = Vector2(-100, -100)
-		fade_rect.size = Vector2(2100, 1200)
-		
-		# Wysoki z_index, żeby przykryć gracza, światła i pociągi wewnątrz viewportu
-		fade_rect.z_index = 999 
-		add_child(fade_rect)
-		
-		# 2. Animacja ściemnienia (Fade Out) - trwa 0.5 sekundy
-		var tween = create_tween()
-		tween.tween_property(fade_rect, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-		# 3. Czekamy na koniec animacji i zmieniamy scenę
-		await tween.finished
-		get_tree().change_scene_to_file("res://scenes/scena_6ipol.tscn")
+	var fade_rect = ColorRect.new()
+	fade_rect.color = Color(0.0, 0.0, 0.0, 0.0)
+	
+	fade_rect.position = Vector2(-100, -100)
+	fade_rect.size = Vector2(2100, 1200)
+	fade_rect.z_index = 999 
+	add_child(fade_rect)
+	
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	await tween.finished
+	get_tree().change_scene_to_file("res://scenes/scena_6ipol.tscn")
 
 func _screen_shake(intensity: float):
 	if not gracz:

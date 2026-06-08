@@ -227,6 +227,9 @@ size = Vector2(27, 2662)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6o26s"]
 size = Vector2(20, 2160)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6f412"]
+size = Vector2(88, 116.72888)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_la362"]
 animations = [{
 "frames": [{
@@ -1007,6 +1010,12 @@ polygon = PackedVector2Array(258, 318, 274, 330, 277, 349, 344, 349, 343, 308, 3
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="SubViewportContainer/SubViewport/Scena 6 root/GraniceAreny" unique_id=440921465]
 polygon = PackedVector2Array(71, 377, 87, 373, 120, 378, 125, 358, 117, 329, 141, 345, 156, 343, 154, 287, 112, 308, 90, 308, 86, 322, 60, 323, 59, 376)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Scena 6 root/GraniceAreny" unique_id=910043863]
+position = Vector2(1569.1862, 568.2826)
+rotation = -0.7836315
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_6f412")
+
 [node name="Gracz" type="CharacterBody2D" parent="SubViewportContainer/SubViewport/Scena 6 root" unique_id=1448393912]
 position = Vector2(252, 350)
 script = ExtResource("2_hu4f1")
@@ -1047,7 +1056,7 @@ curve = SubResource("Curve2D_uotao")
 position = Vector2(1549, 544)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Scena 6 root/Meta" unique_id=602068250]
-position = Vector2(7, 7)
+position = Vector2(-15, -12)
 rotation = 0.76091206
 shape = SubResource("RectangleShape2D_os21g")
 
