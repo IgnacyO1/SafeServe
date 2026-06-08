@@ -30,6 +30,9 @@ func begin_call():
 
 func create_buttons(emergency : Emergency):
 	get_parent().update_transcript("Dzień dobry, 112.")
+	audio_player.stream = preload("res://assets/Sounds/112.wav")
+	audio_player.play()
+	await audio_player.finished
 	for opt in emergency.dialogue_options:
 		var btn = Button.new()
 		btn.text = opt.question
