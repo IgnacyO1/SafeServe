@@ -53,8 +53,9 @@ func _process(_delta):
 		# Przerywnik odpali się, jeśli:
 		# a) Jesteś blisko (< 7m) I uciekinier fizycznie utknął / stoi (real_speed < 30.0)
 		# b) LUB uciekinier dojechał do samego końca trasy (boss.speed == 0)
-		
-		var is_close_and_blocked = (dist_m < 7.0 and boss.real_speed < 30.0)
+		print("dystans: ", dist_m)
+		#var is_close_and_blocked = (dist_m < 1.5 and boss.real_speed < 30.0)
+		var is_close_and_blocked = false
 		var reached_end_of_path = (boss.speed == 0.0)
 
 		if is_close_and_blocked or reached_end_of_path:
