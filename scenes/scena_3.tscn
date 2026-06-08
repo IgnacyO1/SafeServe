@@ -111,105 +111,333 @@
 [ext_resource type="Texture2D" uid="uid://bsaordfp4547m" path="res://assets/graphics/spritesheet_strażak/strażak 90/strażak90.png0023.png" id="106_yohwm"]
 [ext_resource type="Texture2D" uid="uid://d2spyw4v7432b" path="res://assets/graphics/spritesheet_strażak/strażak 90/strażak90.png0024.png" id="107_mf4vo"]
 [ext_resource type="Texture2D" uid="uid://c46udxyyijluc" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0000.png" id="108_4f61u"]
+[ext_resource type="Texture2D" uid="uid://bsj8tn3jhoqfd" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0000.png" id="108_7x0tf"]
 [ext_resource type="Texture2D" uid="uid://lv1jgbtkdv1s" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0001.png" id="109_0eta2"]
+[ext_resource type="Texture2D" uid="uid://d3ten0gpp4hvt" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0001.png" id="109_yxipw"]
+[ext_resource type="Texture2D" uid="uid://d12dxpj6dwuat" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0002.png" id="110_a154l"]
 [ext_resource type="Texture2D" uid="uid://b6q36ge7l0sy0" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0002.png" id="110_nm8yr"]
 [ext_resource type="Texture2D" uid="uid://cy31y2kyvlou0" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0003.png" id="111_cuya2"]
+[ext_resource type="Texture2D" uid="uid://c7xgixsna4kqo" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0003.png" id="111_u303q"]
 [ext_resource type="Texture2D" uid="uid://vkv1quxfnma8" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0004.png" id="112_nv2ko"]
+[ext_resource type="Texture2D" uid="uid://8s4kmpig0x5m" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0004.png" id="112_t4xbe"]
+[ext_resource type="Texture2D" uid="uid://c3bne2a8h67ju" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0005.png" id="113_sutqc"]
 [ext_resource type="Texture2D" uid="uid://cedsijd4vvnpt" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0005.png" id="113_w8jbf"]
+[ext_resource type="Texture2D" uid="uid://cy3336iijvrx0" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0006.png" id="114_18gtv"]
 [ext_resource type="Texture2D" uid="uid://cby0wq3oe2527" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0006.png" id="114_racyo"]
 [ext_resource type="Texture2D" uid="uid://cjh46qw53q5f5" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0007.png" id="115_200q2"]
+[ext_resource type="Texture2D" uid="uid://cyfitn6n8cqv1" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0007.png" id="115_su8ln"]
 [ext_resource type="Texture2D" uid="uid://bxyl3emghujbh" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0008.png" id="116_ak3qy"]
+[ext_resource type="Texture2D" uid="uid://vgiv807f7a1m" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0008.png" id="116_hneob"]
+[ext_resource type="Texture2D" uid="uid://d18m7wcis1jwd" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0009.png" id="117_p1f42"]
 [ext_resource type="Texture2D" uid="uid://lef6ydkbaqbh" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0009.png" id="117_rj3oi"]
+[ext_resource type="Texture2D" uid="uid://c2lietsag4dts" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0010.png" id="118_1e3rn"]
 [ext_resource type="Texture2D" uid="uid://kvqqsmxitlul" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0010.png" id="118_n14ny"]
+[ext_resource type="Texture2D" uid="uid://butqrltjv2glk" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0011.png" id="119_dtuq0"]
 [ext_resource type="Texture2D" uid="uid://bogpp2h0hjc1n" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0011.png" id="119_lvksd"]
 [ext_resource type="Texture2D" uid="uid://dit0meopbqtdi" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0012.png" id="120_2cv6b"]
+[ext_resource type="Texture2D" uid="uid://qyuv6k0pfydx" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0012.png" id="120_8j3rj"]
 [ext_resource type="Texture2D" uid="uid://ji468rmaugqj" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0013.png" id="121_0m1ss"]
+[ext_resource type="Texture2D" uid="uid://dnvitvb3g8o8v" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0013.png" id="121_br6mx"]
 [ext_resource type="Texture2D" uid="uid://co036u1wody2v" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0014.png" id="122_q50pc"]
+[ext_resource type="Texture2D" uid="uid://dl25c5h6hhogk" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0014.png" id="122_swiff"]
 [ext_resource type="Texture2D" uid="uid://bvdyqkr6jn3ei" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0015.png" id="123_8os8v"]
+[ext_resource type="Texture2D" uid="uid://c020jagc6e05l" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0015.png" id="123_eovkp"]
 [ext_resource type="Texture2D" uid="uid://cvf0vo8w4b4ii" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0016.png" id="124_5h5ux"]
+[ext_resource type="Texture2D" uid="uid://cwg6q6sgc7edw" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0016.png" id="124_gtpxf"]
 [ext_resource type="Texture2D" uid="uid://bwidal7cip7it" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0017.png" id="125_nyhbp"]
+[ext_resource type="Texture2D" uid="uid://b8qnv376yluy5" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0017.png" id="125_vdmgh"]
 [ext_resource type="Texture2D" uid="uid://c7p1jacc1b5vx" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0018.png" id="126_1qoqa"]
+[ext_resource type="Texture2D" uid="uid://da870mdr6sa5k" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0018.png" id="126_1y8om"]
 [ext_resource type="Texture2D" uid="uid://ced7d8t5aud4v" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0019.png" id="127_b8a41"]
+[ext_resource type="Texture2D" uid="uid://05garuklaf2y" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0019.png" id="127_x11ye"]
 [ext_resource type="Texture2D" uid="uid://rvjf8488cgbs" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0020.png" id="128_ajl7x"]
+[ext_resource type="Texture2D" uid="uid://crc6jtud5j85r" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0020.png" id="128_lpyr0"]
+[ext_resource type="Texture2D" uid="uid://b2x3hm8gklds5" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0021.png" id="129_4c2jv"]
 [ext_resource type="Texture2D" uid="uid://chj60co0a8qgw" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0021.png" id="129_76ab2"]
+[ext_resource type="Texture2D" uid="uid://c0rvlfdpqtmvs" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0022.png" id="130_5hpjy"]
 [ext_resource type="Texture2D" uid="uid://ovgmgtkxofnx" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0022.png" id="130_h8lxc"]
 [ext_resource type="Texture2D" uid="uid://b6qfomj2pci2f" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0023.png" id="131_7x0tf"]
+[ext_resource type="Texture2D" uid="uid://divixgvcwh138" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0023.png" id="131_a626a"]
+[ext_resource type="Texture2D" uid="uid://dn5x6ru8iw2oa" path="res://assets/graphics/niesienie/niesienie 0/niesienie_0_0024.png" id="132_amspt"]
 [ext_resource type="Texture2D" uid="uid://dny5ijpfpnk35" path="res://assets/graphics/spritesheet_strażak/strażak 315/strażak315.png0024.png" id="132_yxipw"]
 [ext_resource type="Texture2D" uid="uid://iw0h2684kbyw" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0000.png" id="133_a154l"]
+[ext_resource type="Texture2D" uid="uid://cfwveihy3b5cu" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0000.png" id="133_sipin"]
+[ext_resource type="Texture2D" uid="uid://d56trfj0turq" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0001.png" id="134_mhtyp"]
 [ext_resource type="Texture2D" uid="uid://cy7c7hbxyvwjv" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0001.png" id="134_u303q"]
 [ext_resource type="Texture2D" uid="uid://ds8htgrrxep0g" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0002.png" id="135_t4xbe"]
+[ext_resource type="Texture2D" uid="uid://c2emwqdrteuvu" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0002.png" id="135_v7el6"]
+[ext_resource type="Texture2D" uid="uid://dg2q3mdcicoqu" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0003.png" id="136_b4xx6"]
 [ext_resource type="Texture2D" uid="uid://cor511dt2aivi" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0003.png" id="136_sutqc"]
+[ext_resource type="Texture2D" uid="uid://bptxi2lr2oqbc" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0004.png" id="137_7hk5b"]
 [ext_resource type="Texture2D" uid="uid://dnvvgcoo5qaoa" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0004.png" id="137_18gtv"]
+[ext_resource type="Texture2D" uid="uid://depahnxlnabvr" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0005.png" id="138_lm47q"]
 [ext_resource type="Texture2D" uid="uid://l5k1e5mof2pk" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0005.png" id="138_su8ln"]
 [ext_resource type="Texture2D" uid="uid://dl6lvvuvh5h8x" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0006.png" id="139_hneob"]
+[ext_resource type="Texture2D" uid="uid://c5jnco8nnnnu0" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0006.png" id="139_og3yl"]
 [ext_resource type="Texture2D" uid="uid://dbr6u4pivx33s" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0007.png" id="140_p1f42"]
+[ext_resource type="Texture2D" uid="uid://e7jfl3xjbqun" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0007.png" id="140_pg1g0"]
 [ext_resource type="Texture2D" uid="uid://c3s3rcirmqlob" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0008.png" id="141_1e3rn"]
+[ext_resource type="Texture2D" uid="uid://bc4y8m4aiy81m" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0008.png" id="141_3bumf"]
+[ext_resource type="Texture2D" uid="uid://ecjf0e1n7v5v" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0009.png" id="142_8pkgd"]
 [ext_resource type="Texture2D" uid="uid://b3xjjleiqj6xt" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0009.png" id="142_dtuq0"]
 [ext_resource type="Texture2D" uid="uid://b4r2w1adxt4w" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0010.png" id="143_8j3rj"]
+[ext_resource type="Texture2D" uid="uid://b67arrqrwl7aw" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0010.png" id="143_y8cg8"]
+[ext_resource type="Texture2D" uid="uid://cigq26y3jpjsv" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0011.png" id="144_73bvj"]
 [ext_resource type="Texture2D" uid="uid://fv38i5ddjpuo" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0011.png" id="144_br6mx"]
+[ext_resource type="Texture2D" uid="uid://bxaop6ol4lyb4" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0012.png" id="145_83psb"]
 [ext_resource type="Texture2D" uid="uid://duxn6sgrv5umm" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0012.png" id="145_swiff"]
 [ext_resource type="Texture2D" uid="uid://cqy6e1uxc3q1h" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0013.png" id="146_eovkp"]
+[ext_resource type="Texture2D" uid="uid://h3jxtw2uufu" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0013.png" id="146_vr4fd"]
 [ext_resource type="Texture2D" uid="uid://cvloqk5r5ni4y" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0014.png" id="147_gtpxf"]
+[ext_resource type="Texture2D" uid="uid://cem1eos7ql0hb" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0014.png" id="147_j3q5s"]
+[ext_resource type="Texture2D" uid="uid://1ga5rl12ragk" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0015.png" id="148_tcobu"]
 [ext_resource type="Texture2D" uid="uid://dto25htw8am8k" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0015.png" id="148_vdmgh"]
 [ext_resource type="Texture2D" uid="uid://xtw1r5v03ojl" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0016.png" id="149_1y8om"]
+[ext_resource type="Texture2D" uid="uid://qe5t3auav3v1" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0016.png" id="149_uiyyr"]
+[ext_resource type="Texture2D" uid="uid://dcrg2s7vpvxu7" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0017.png" id="150_t52je"]
 [ext_resource type="Texture2D" uid="uid://mlu0iq8cd2dw" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0017.png" id="150_x11ye"]
+[ext_resource type="Texture2D" uid="uid://dtod0jbwcmf0w" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0018.png" id="151_gg3dp"]
 [ext_resource type="Texture2D" uid="uid://d08dwl7qkmufb" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0018.png" id="151_lpyr0"]
 [ext_resource type="Texture2D" uid="uid://c7rba15gin23k" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0019.png" id="152_4c2jv"]
+[ext_resource type="Texture2D" uid="uid://c7ompgi5dn60n" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0019.png" id="152_p8evo"]
 [ext_resource type="Texture2D" uid="uid://cgrq75gk3btqp" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0020.png" id="153_5hpjy"]
+[ext_resource type="Texture2D" uid="uid://gx6o70bqyive" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0020.png" id="153_7nmv1"]
 [ext_resource type="Texture2D" uid="uid://dmasgsifa4vo5" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0021.png" id="154_a626a"]
+[ext_resource type="Texture2D" uid="uid://dr1n5eekg4llw" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0021.png" id="154_xfclg"]
 [ext_resource type="Texture2D" uid="uid://ckvuceaj45du6" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0022.png" id="155_amspt"]
+[ext_resource type="Texture2D" uid="uid://5olplvyay16t" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0022.png" id="155_pu0t6"]
 [ext_resource type="Texture2D" uid="uid://bdwgkdc60hatx" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0023.png" id="156_sipin"]
+[ext_resource type="Texture2D" uid="uid://d3cinl5kig1er" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0023.png" id="156_siswg"]
 [ext_resource type="Texture2D" uid="uid://c6rscnmwjonk6" path="res://assets/graphics/spritesheet_strażak/strażak 225/strażak225.png0024.png" id="157_mhtyp"]
+[ext_resource type="Texture2D" uid="uid://mhdfbmk4njtb" path="res://assets/graphics/niesienie/niesienie 180/niesienie_180_0024.png" id="157_xorfp"]
 [ext_resource type="Texture2D" uid="uid://8lprv4ttqqv0" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0000.png" id="158_v7el6"]
+[ext_resource type="Texture2D" uid="uid://b45rvgcyg88cl" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0000.png" id="158_vucnq"]
 [ext_resource type="Texture2D" uid="uid://becsqof5r3ny8" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0001.png" id="159_b4xx6"]
+[ext_resource type="Texture2D" uid="uid://c6om6lgnry7ng" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0001.png" id="159_qq4i0"]
 [ext_resource type="Texture2D" uid="uid://dn52fo5hsabai" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0002.png" id="160_7hk5b"]
+[ext_resource type="Texture2D" uid="uid://c57j4763lrvfv" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0002.png" id="160_g7mc1"]
+[ext_resource type="Texture2D" uid="uid://b4pceuojjwk8l" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0003.png" id="161_5cvw1"]
 [ext_resource type="Texture2D" uid="uid://4e50q05jv8hc" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0003.png" id="161_lm47q"]
 [ext_resource type="Texture2D" uid="uid://dmvbp8gxg51be" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0004.png" id="162_og3yl"]
+[ext_resource type="Texture2D" uid="uid://c51513dxjkh0c" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0004.png" id="162_qf24v"]
+[ext_resource type="Texture2D" uid="uid://crbaoxm4jojl3" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0005.png" id="163_e7wkn"]
 [ext_resource type="Texture2D" uid="uid://cl6w23xro6gdt" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0005.png" id="163_pg1g0"]
 [ext_resource type="Texture2D" uid="uid://cfhmqcmp4c0o2" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0006.png" id="164_3bumf"]
+[ext_resource type="Texture2D" uid="uid://dh168c4qaog52" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0006.png" id="164_mi4fg"]
 [ext_resource type="Texture2D" uid="uid://du1kcvjlfb2f0" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0007.png" id="165_8pkgd"]
+[ext_resource type="Texture2D" uid="uid://cpcov0hhyq5kh" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0007.png" id="165_rw0le"]
+[ext_resource type="Texture2D" uid="uid://c7l6rvoay4fms" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0008.png" id="166_8mm06"]
 [ext_resource type="Texture2D" uid="uid://yqwct7r404q5" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0008.png" id="166_y8cg8"]
 [ext_resource type="Texture2D" uid="uid://c256em2posjbb" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0009.png" id="167_73bvj"]
+[ext_resource type="Texture2D" uid="uid://cq3ncq4dr1e13" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0009.png" id="167_mijsi"]
 [ext_resource type="Texture2D" uid="uid://bdp2lu5fha6tt" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0010.png" id="168_83psb"]
+[ext_resource type="Texture2D" uid="uid://7k531xkybuor" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0010.png" id="168_fi8br"]
+[ext_resource type="Texture2D" uid="uid://dbin4b4a50ow1" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0011.png" id="169_l8iul"]
 [ext_resource type="Texture2D" uid="uid://ctgcqr0lneb4f" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0011.png" id="169_vr4fd"]
+[ext_resource type="Texture2D" uid="uid://dc3ev3lx0qkbw" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0012.png" id="170_fbgc2"]
 [ext_resource type="Texture2D" uid="uid://bo18pc5b38cp3" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0012.png" id="170_j3q5s"]
+[ext_resource type="Texture2D" uid="uid://3v8c7kqrelyf" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0013.png" id="171_n0731"]
 [ext_resource type="Texture2D" uid="uid://dp6o6oddm50l6" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0013.png" id="171_tcobu"]
 [ext_resource type="Texture2D" uid="uid://btokq8x0lwta2" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0014.png" id="172_uiyyr"]
+[ext_resource type="Texture2D" uid="uid://dv740r1w525gx" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0014.png" id="172_v1t56"]
+[ext_resource type="Texture2D" uid="uid://cmr48w1ny56ab" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0015.png" id="173_7mx67"]
 [ext_resource type="Texture2D" uid="uid://bejvcq1pq1x63" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0015.png" id="173_t52je"]
+[ext_resource type="Texture2D" uid="uid://6qyombgf8tch" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0016.png" id="174_1r8q8"]
 [ext_resource type="Texture2D" uid="uid://kr7wnuk0s0d2" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0016.png" id="174_gg3dp"]
 [ext_resource type="Texture2D" uid="uid://7obk56spee2k" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0017.png" id="175_p8evo"]
+[ext_resource type="Texture2D" uid="uid://gksx6gisp6h4" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0017.png" id="175_sc6hv"]
 [ext_resource type="Texture2D" uid="uid://cln4kqa4clxxl" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0018.png" id="176_7nmv1"]
+[ext_resource type="Texture2D" uid="uid://bucxh1qmq5771" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0018.png" id="176_nymmr"]
+[ext_resource type="Texture2D" uid="uid://bwoubxey04vwd" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0019.png" id="177_rc7rw"]
 [ext_resource type="Texture2D" uid="uid://bs4nmr5np2ab8" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0019.png" id="177_xfclg"]
+[ext_resource type="Texture2D" uid="uid://c3bd4567lsu2s" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0020.png" id="178_m8fvr"]
 [ext_resource type="Texture2D" uid="uid://v4a8g2v4u0e4" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0020.png" id="178_pu0t6"]
+[ext_resource type="Texture2D" uid="uid://bja1bpntghy5x" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0021.png" id="179_m2asm"]
 [ext_resource type="Texture2D" uid="uid://ck78i18xi26ok" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0021.png" id="179_siswg"]
+[ext_resource type="Texture2D" uid="uid://ck6k4nevc4pkt" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0022.png" id="180_s0tg8"]
 [ext_resource type="Texture2D" uid="uid://dbw1m1vha0wj6" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0022.png" id="180_xorfp"]
+[ext_resource type="Texture2D" uid="uid://bep6pyt2w4uok" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0023.png" id="181_ice3n"]
 [ext_resource type="Texture2D" uid="uid://dklhpw6hlgihq" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0023.png" id="181_vucnq"]
 [ext_resource type="Texture2D" uid="uid://bq44wvuyoka65" path="res://assets/graphics/spritesheet_strażak/strażak 45/strażak45.png0024.png" id="182_qq4i0"]
+[ext_resource type="Texture2D" uid="uid://c26meh77h02ci" path="res://assets/graphics/niesienie/niesienie 270/niesienie_270_0024.png" id="182_xdooc"]
 [ext_resource type="Texture2D" uid="uid://tefv6qcw060q" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0000.png" id="183_g7mc1"]
+[ext_resource type="Texture2D" uid="uid://bjbpdf2c2gcr2" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0000.png" id="183_gpcqf"]
 [ext_resource type="Texture2D" uid="uid://1muf1fws8cxl" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0001.png" id="184_5cvw1"]
+[ext_resource type="Texture2D" uid="uid://cba130vkkj1oy" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0001.png" id="184_kamhd"]
 [ext_resource type="Texture2D" uid="uid://c7c6cesqr1rrs" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0002.png" id="185_qf24v"]
+[ext_resource type="Texture2D" uid="uid://bxgxegakc3nn" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0002.png" id="185_vp10b"]
 [ext_resource type="Texture2D" uid="uid://brnp4d2tsxxee" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0003.png" id="186_e7wkn"]
+[ext_resource type="Texture2D" uid="uid://m3fd1bbnxwod" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0003.png" id="186_v501l"]
+[ext_resource type="Texture2D" uid="uid://cjy0olkbiryq3" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0004.png" id="187_hspj4"]
 [ext_resource type="Texture2D" uid="uid://cddkj03vtdkwl" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0004.png" id="187_mi4fg"]
+[ext_resource type="Texture2D" uid="uid://32k2dlin0bkl" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0005.png" id="188_8w6i1"]
 [ext_resource type="Texture2D" uid="uid://dkxh7wykorsag" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0005.png" id="188_rw0le"]
 [ext_resource type="Texture2D" uid="uid://cwff36y4pa6sd" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0006.png" id="189_8mm06"]
+[ext_resource type="Texture2D" uid="uid://b0jjei647rt20" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0006.png" id="189_jvjbi"]
 [ext_resource type="Texture2D" uid="uid://bf3rgrtsixmd5" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0007.png" id="190_mijsi"]
+[ext_resource type="Texture2D" uid="uid://dmibifb2vdcuc" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0007.png" id="190_oswd5"]
+[ext_resource type="Texture2D" uid="uid://cj4k4yfh8w3b" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0008.png" id="191_2v8ki"]
 [ext_resource type="Texture2D" uid="uid://dpbrvdb3mioce" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0008.png" id="191_fi8br"]
 [ext_resource type="Texture2D" uid="uid://wmko1c0dih3f" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0009.png" id="192_l8iul"]
+[ext_resource type="Texture2D" uid="uid://t6s5wxli18p1" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0009.png" id="192_vqw5t"]
 [ext_resource type="Texture2D" uid="uid://ds3wn0ybepmwy" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0010.png" id="193_fbgc2"]
+[ext_resource type="Texture2D" uid="uid://5k6p882vrrwt" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0010.png" id="193_ik73j"]
 [ext_resource type="Texture2D" uid="uid://cvb8idx1sdgop" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0011.png" id="194_n0731"]
+[ext_resource type="Texture2D" uid="uid://dmw4oiehtb83m" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0011.png" id="194_q6kip"]
+[ext_resource type="Texture2D" uid="uid://cgxhrmng8ic87" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0012.png" id="195_gt3vw"]
 [ext_resource type="Texture2D" uid="uid://cvn24o4eruw0b" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0012.png" id="195_v1t56"]
 [ext_resource type="Texture2D" uid="uid://bt5ejcyw5hrtp" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0013.png" id="196_7mx67"]
+[ext_resource type="Texture2D" uid="uid://qxpxi66rg37v" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0013.png" id="196_swbcl"]
 [ext_resource type="Texture2D" uid="uid://cxgouidnffku" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0014.png" id="197_1r8q8"]
+[ext_resource type="Texture2D" uid="uid://dmpdcrjqnxvmb" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0014.png" id="197_ywdx7"]
+[ext_resource type="Texture2D" uid="uid://glmab572mecq" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0015.png" id="198_0ufso"]
 [ext_resource type="Texture2D" uid="uid://c3qbywms6yooy" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0015.png" id="198_sc6hv"]
 [ext_resource type="Texture2D" uid="uid://csgpxr54ko7i6" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0016.png" id="199_nymmr"]
+[ext_resource type="Texture2D" uid="uid://bx4yys5vmwx3u" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0016.png" id="199_wimps"]
+[ext_resource type="Texture2D" uid="uid://bvyjxb3din0uy" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0017.png" id="200_onfak"]
 [ext_resource type="Texture2D" uid="uid://5fnw5ct67d3h" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0017.png" id="200_rc7rw"]
 [ext_resource type="Texture2D" uid="uid://ce1xk4lsssb1w" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0018.png" id="201_m8fvr"]
+[ext_resource type="Texture2D" uid="uid://61vrh6wx0s1u" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0018.png" id="201_x5g0r"]
 [ext_resource type="Texture2D" uid="uid://grcbq8bjpeai" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0019.png" id="202_m2asm"]
+[ext_resource type="Texture2D" uid="uid://clymtcvgfyrgq" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0019.png" id="202_xboak"]
+[ext_resource type="Texture2D" uid="uid://b7cy82sbdrl2p" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0020.png" id="203_7w2sr"]
 [ext_resource type="Texture2D" uid="uid://c25pbm8dbrfwa" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0020.png" id="203_s0tg8"]
+[ext_resource type="Texture2D" uid="uid://djry1qpqd14dg" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0021.png" id="204_gtbbx"]
 [ext_resource type="Texture2D" uid="uid://bd4cgwahu3dby" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0021.png" id="204_ice3n"]
+[ext_resource type="Texture2D" uid="uid://c6y4nndv2c4ly" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0022.png" id="205_32dgu"]
 [ext_resource type="Texture2D" uid="uid://c8mx2duh3l15x" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0022.png" id="205_xdooc"]
 [ext_resource type="Texture2D" uid="uid://vhk80jgm8p6x" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0023.png" id="206_gpcqf"]
+[ext_resource type="Texture2D" uid="uid://bws6g2166bjb6" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0023.png" id="206_hoyjh"]
 [ext_resource type="Texture2D" uid="uid://cormpxvhyq076" path="res://assets/graphics/spritesheet_strażak/strażak 135/strażak135.png0024.png" id="207_kamhd"]
+[ext_resource type="Texture2D" uid="uid://bf0isw0pak3tq" path="res://assets/graphics/niesienie/niesienie 90/niesienie_90_0024.png" id="207_kgken"]
+[ext_resource type="Texture2D" uid="uid://c5lgm0y5pa5tb" path="res://assets/graphics/sprzontacz/0001.png" id="208_g5ra6"]
+[ext_resource type="Texture2D" uid="uid://dkip4r8pc2x1s" path="res://assets/graphics/niesienie/niesienie idle/niesienie0.png" id="208_l5kgt"]
+[ext_resource type="Texture2D" uid="uid://6xejqyx1qv7r" path="res://assets/graphics/niesienie/niesienie idle/niesienie180.png" id="209_7fg3n"]
+[ext_resource type="Texture2D" uid="uid://svp7nqjy26p5" path="res://assets/graphics/sprzontacz/0002.png" id="209_o6gml"]
+[ext_resource type="Texture2D" uid="uid://bgjghgv2yusse" path="res://assets/graphics/sprzontacz/0003.png" id="210_juj25"]
+[ext_resource type="Texture2D" uid="uid://dyk7cn3tsiadn" path="res://assets/graphics/niesienie/niesienie idle/niesienie270.png" id="210_mgma1"]
+[ext_resource type="Texture2D" uid="uid://txonjuapgxsh" path="res://assets/graphics/niesienie/niesienie idle/niesienie90.png" id="211_ckkc5"]
+[ext_resource type="Texture2D" uid="uid://c2pwwmjimg5c1" path="res://assets/graphics/sprzontacz/0004.png" id="211_kiog6"]
+[ext_resource type="Texture2D" uid="uid://bwf4lmfj7vbvo" path="res://assets/graphics/sprzontacz/0005.png" id="212_fs7yp"]
+[ext_resource type="Texture2D" uid="uid://ctv1q2wqlvoqe" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0000.png" id="212_l5kgt"]
+[ext_resource type="Texture2D" uid="uid://dl3fsqm4s52vd" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0001.png" id="213_7fg3n"]
+[ext_resource type="Texture2D" uid="uid://d0ltilrk4s2l0" path="res://assets/graphics/sprzontacz/0006.png" id="213_jcdmv"]
+[ext_resource type="Texture2D" uid="uid://7tijvaoes0ej" path="res://assets/graphics/sprzontacz/0007.png" id="214_jgglx"]
+[ext_resource type="Texture2D" uid="uid://djoo54kewvnlg" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0002.png" id="214_mgma1"]
+[ext_resource type="Texture2D" uid="uid://djt4d5yhx5nuh" path="res://assets/graphics/sprzontacz/0008.png" id="215_35cit"]
+[ext_resource type="Texture2D" uid="uid://yok3wxrj8sld" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0003.png" id="215_ckkc5"]
+[ext_resource type="Texture2D" uid="uid://b3ripfs6sgbnr" path="res://assets/graphics/sprzontacz/0009.png" id="216_c058x"]
+[ext_resource type="Texture2D" uid="uid://b3ebia0eydpik" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0004.png" id="216_cspjd"]
+[ext_resource type="Texture2D" uid="uid://cjji08y5jm07h" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0005.png" id="217_01syw"]
+[ext_resource type="Texture2D" uid="uid://bpwwb7dwifgtq" path="res://assets/graphics/sprzontacz/0010.png" id="217_14lbv"]
+[ext_resource type="Texture2D" uid="uid://dqck1y4kw605k" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0006.png" id="218_e730k"]
+[ext_resource type="Texture2D" uid="uid://cbkbuw60i5wid" path="res://assets/graphics/sprzontacz/0011.png" id="218_j647h"]
+[ext_resource type="Texture2D" uid="uid://odotxi8eth3c" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0007.png" id="219_fo6g0"]
+[ext_resource type="Texture2D" uid="uid://dwdecoubgggar" path="res://assets/graphics/sprzontacz/0012.png" id="219_ufbhm"]
+[ext_resource type="Texture2D" uid="uid://du41rj3u6nv6w" path="res://assets/graphics/sprzontacz/0013.png" id="220_f67dj"]
+[ext_resource type="Texture2D" uid="uid://o5a14p2bgtxm" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0008.png" id="220_rwqsd"]
+[ext_resource type="Texture2D" uid="uid://cnjx80ivt8u4j" path="res://assets/graphics/sprzontacz/0014.png" id="221_8g04m"]
+[ext_resource type="Texture2D" uid="uid://dau7nf65lsvel" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0009.png" id="221_83ebd"]
+[ext_resource type="Texture2D" uid="uid://csmdma7oyhhsl" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0010.png" id="222_s1ab4"]
+[ext_resource type="Texture2D" uid="uid://ll7yjr3gcqig" path="res://assets/graphics/sprzontacz/0015.png" id="222_xtf28"]
+[ext_resource type="Texture2D" uid="uid://de2q70kt17qvn" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0011.png" id="223_4cxuv"]
+[ext_resource type="Texture2D" uid="uid://bu8qnkjfgixhx" path="res://assets/graphics/sprzontacz/0016.png" id="223_4la8h"]
+[ext_resource type="Texture2D" uid="uid://7yy808mjt8bn" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0012.png" id="224_qldc4"]
+[ext_resource type="Texture2D" uid="uid://u5rx0ufujwoo" path="res://assets/graphics/sprzontacz/0017.png" id="224_wbjgp"]
+[ext_resource type="Texture2D" uid="uid://j283160tmudv" path="res://assets/graphics/sprzontacz/0018.png" id="225_3c5oh"]
+[ext_resource type="Texture2D" uid="uid://bhhbs7wib5v34" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0013.png" id="225_nmgj0"]
+[ext_resource type="Texture2D" uid="uid://1nr5sdsyl7yw" path="res://assets/graphics/sprzontacz/0019.png" id="226_1p07d"]
+[ext_resource type="Texture2D" uid="uid://bmlvro6jcwk6q" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0014.png" id="226_n270s"]
+[ext_resource type="Texture2D" uid="uid://bjltkbxtk8vpf" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0015.png" id="227_cimai"]
+[ext_resource type="Texture2D" uid="uid://b13iu8lkmnyww" path="res://assets/graphics/sprzontacz/0020.png" id="227_ekxub"]
+[ext_resource type="Texture2D" uid="uid://guvfk1od6erf" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0016.png" id="228_m5n7a"]
+[ext_resource type="Texture2D" uid="uid://c6uxnaypgrhqa" path="res://assets/graphics/sprzontacz/0021.png" id="228_m43h8"]
+[ext_resource type="Texture2D" uid="uid://cku42hs3jxhye" path="res://assets/graphics/sprzontacz/0022.png" id="229_s6n80"]
+[ext_resource type="Texture2D" uid="uid://bfh6tvgel5shc" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0017.png" id="229_t6j3r"]
+[ext_resource type="Texture2D" uid="uid://btwrhbwod2kg6" path="res://assets/graphics/sprzontacz/0023.png" id="230_e42nr"]
+[ext_resource type="Texture2D" uid="uid://bje6wh22spi6e" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0018.png" id="230_yi7uu"]
+[ext_resource type="Texture2D" uid="uid://sf2knabv0cna" path="res://assets/graphics/sprzontacz/0024.png" id="231_888y1"]
+[ext_resource type="Texture2D" uid="uid://bb7fr2f3o3hpt" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0019.png" id="231_eod3e"]
+[ext_resource type="Texture2D" uid="uid://byedgglmwyirs" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0020.png" id="232_tja1w"]
+[ext_resource type="Texture2D" uid="uid://cd3dh5xhntig5" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0021.png" id="233_xhead"]
+[ext_resource type="Texture2D" uid="uid://btjxgvwgvgkuk" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0022.png" id="234_wqrlj"]
+[ext_resource type="Texture2D" uid="uid://codyf27irx4mc" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0023.png" id="235_w228p"]
+[ext_resource type="Texture2D" uid="uid://gqcy8xm52v6j" path="res://assets/graphics/niesienie/niesienie 315/niesienie_315_0024.png" id="236_vd1yq"]
+[ext_resource type="Texture2D" uid="uid://dttmftifr76m7" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0000.png" id="237_xtev6"]
+[ext_resource type="Texture2D" uid="uid://b26bxr86b8r2w" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0001.png" id="238_50atc"]
+[ext_resource type="Texture2D" uid="uid://jbqahr0n6s31" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0002.png" id="239_3tx46"]
+[ext_resource type="Texture2D" uid="uid://qbkkaosoo0ai" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0003.png" id="240_w75br"]
+[ext_resource type="Texture2D" uid="uid://dat4fg5eorxu3" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0004.png" id="241_rvjjn"]
+[ext_resource type="Texture2D" uid="uid://cmsqyfpk6nm7m" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0005.png" id="242_qyfjt"]
+[ext_resource type="Texture2D" uid="uid://b1ialjc3yubkl" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0006.png" id="243_geg7l"]
+[ext_resource type="Texture2D" uid="uid://ct1dtefd484kx" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0007.png" id="244_cgxu7"]
+[ext_resource type="Texture2D" uid="uid://cspjgirw0o1br" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0008.png" id="245_cxd6d"]
+[ext_resource type="Texture2D" uid="uid://d3uvkqqel7b15" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0009.png" id="246_5ktf5"]
+[ext_resource type="Texture2D" uid="uid://b5e3unpmlalx0" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0010.png" id="247_2vhg6"]
+[ext_resource type="Texture2D" uid="uid://bjltybb4piir4" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0011.png" id="248_klmlc"]
+[ext_resource type="Texture2D" uid="uid://cddvd8mu5b3vb" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0012.png" id="249_55v2b"]
+[ext_resource type="Texture2D" uid="uid://4wk8thxl5wwh" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0013.png" id="250_63urt"]
+[ext_resource type="Texture2D" uid="uid://bi2rsx4k1fq6u" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0014.png" id="251_q13gk"]
+[ext_resource type="Texture2D" uid="uid://3l1lyaoh778a" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0015.png" id="252_wvkd4"]
+[ext_resource type="Texture2D" uid="uid://b3deuv8q2qxce" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0016.png" id="253_2kbmm"]
+[ext_resource type="Texture2D" uid="uid://b7i11bko6t8av" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0017.png" id="254_vopac"]
+[ext_resource type="Texture2D" uid="uid://blik4h57qftsi" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0018.png" id="255_uga0d"]
+[ext_resource type="Texture2D" uid="uid://cy143bp8wjh0p" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0019.png" id="256_ydqpg"]
+[ext_resource type="Texture2D" uid="uid://dq1yfqvu605v0" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0020.png" id="257_v5l7o"]
+[ext_resource type="Texture2D" uid="uid://caebmb0e8jedq" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0021.png" id="258_uqjwa"]
+[ext_resource type="Texture2D" uid="uid://c5pnm2fexhnib" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0022.png" id="259_5781h"]
+[ext_resource type="Texture2D" uid="uid://683pmfigl5ye" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0023.png" id="260_g8dbt"]
+[ext_resource type="Texture2D" uid="uid://bwnxoub7av7g4" path="res://assets/graphics/niesienie/niesienie 45/niesienie_45_0024.png" id="261_44xn6"]
+[ext_resource type="Texture2D" uid="uid://djfxvuthdotet" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0000.png" id="262_dhbee"]
+[ext_resource type="Texture2D" uid="uid://cs5uy3bnm3lv4" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0001.png" id="263_4t74h"]
+[ext_resource type="Texture2D" uid="uid://d0334bqrfh3g4" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0002.png" id="264_ob3dc"]
+[ext_resource type="Texture2D" uid="uid://pylmrcqq4m67" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0003.png" id="265_l33a1"]
+[ext_resource type="Texture2D" uid="uid://cqowgl2xsglnf" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0004.png" id="266_2cqdi"]
+[ext_resource type="Texture2D" uid="uid://cko6qsejllwg1" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0005.png" id="267_yks2d"]
+[ext_resource type="Texture2D" uid="uid://k3flqt02wsb4" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0006.png" id="268_t6yh2"]
+[ext_resource type="Texture2D" uid="uid://s00nr4twiv3d" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0007.png" id="269_pt4o0"]
+[ext_resource type="Texture2D" uid="uid://dj7l6wyudrj1q" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0008.png" id="270_3vbh4"]
+[ext_resource type="Texture2D" uid="uid://ds4hawv0s85d6" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0009.png" id="271_5yy2l"]
+[ext_resource type="Texture2D" uid="uid://8hmm8wcuhod2" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0010.png" id="272_1n31u"]
+[ext_resource type="Texture2D" uid="uid://8a73kfru6xm5" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0011.png" id="273_0ruc1"]
+[ext_resource type="Texture2D" uid="uid://cd76b5r277hmi" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0012.png" id="274_crmrd"]
+[ext_resource type="Texture2D" uid="uid://trtvv6o7m72a" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0013.png" id="275_sd8gp"]
+[ext_resource type="Texture2D" uid="uid://dki8pxoj3yamt" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0014.png" id="276_x67pm"]
+[ext_resource type="Texture2D" uid="uid://b0smnvhjxs3xo" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0015.png" id="277_oxgui"]
+[ext_resource type="Texture2D" uid="uid://cccbtvtswm35w" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0016.png" id="278_7tbnx"]
+[ext_resource type="Texture2D" uid="uid://dychvhw2j0kr" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0017.png" id="279_0drfc"]
+[ext_resource type="Texture2D" uid="uid://bjfewrun3o4ng" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0018.png" id="280_ekwlt"]
+[ext_resource type="Texture2D" uid="uid://b0naewe6ecoyx" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0019.png" id="281_lq21q"]
+[ext_resource type="Texture2D" uid="uid://crtjuwoo44x5y" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0020.png" id="282_vx0l4"]
+[ext_resource type="Texture2D" uid="uid://c8sm7i232fb2c" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0021.png" id="283_jqjmp"]
+[ext_resource type="Texture2D" uid="uid://d214o1e2pj0w0" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0022.png" id="284_i2tkb"]
+[ext_resource type="Texture2D" uid="uid://3b4021t8wxj7" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0023.png" id="285_b2evo"]
+[ext_resource type="Texture2D" uid="uid://cit7voj8wfpt0" path="res://assets/graphics/niesienie/niesienie 215/niesienie_215_0024.png" id="286_hjntk"]
+[ext_resource type="Texture2D" uid="uid://f32lud6qojdw" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0000.png" id="287_tvxy0"]
+[ext_resource type="Texture2D" uid="uid://kkbmdibomqet" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0001.png" id="288_tl8iw"]
+[ext_resource type="Texture2D" uid="uid://c2akpuotm1hnf" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0002.png" id="289_ir460"]
+[ext_resource type="Texture2D" uid="uid://bbcu13wvpno3d" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0003.png" id="290_2f0vn"]
+[ext_resource type="Texture2D" uid="uid://3u3oiti4b84l" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0004.png" id="291_xn2p7"]
+[ext_resource type="Texture2D" uid="uid://dgva7en0nxci0" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0005.png" id="292_yc34x"]
+[ext_resource type="Texture2D" uid="uid://dkgtapxrts1b4" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0006.png" id="293_nulvt"]
+[ext_resource type="Texture2D" uid="uid://bicxb51prokr" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0007.png" id="294_wt87m"]
+[ext_resource type="Texture2D" uid="uid://dk1a26lm6m67d" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0008.png" id="295_qqtiv"]
+[ext_resource type="Texture2D" uid="uid://d3ev754jgncen" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0009.png" id="296_q1mwb"]
+[ext_resource type="Texture2D" uid="uid://x8r1as3ortjw" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0010.png" id="297_2atnh"]
+[ext_resource type="Texture2D" uid="uid://cb82t256sfqbb" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0011.png" id="298_kdchh"]
+[ext_resource type="Texture2D" uid="uid://cfmdn3f4y3xpq" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0012.png" id="299_5x61p"]
+[ext_resource type="Texture2D" uid="uid://p4kcua2e0yjf" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0013.png" id="300_2j6eu"]
+[ext_resource type="Texture2D" uid="uid://c6h40uwxpirs" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0014.png" id="301_8vxl3"]
+[ext_resource type="Texture2D" uid="uid://dwl0gpraq3ocb" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0015.png" id="302_28aev"]
+[ext_resource type="Texture2D" uid="uid://dqrgf6wafa1l7" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0016.png" id="303_ol6xs"]
+[ext_resource type="Texture2D" uid="uid://bekcnwpyblsi4" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0017.png" id="304_8yrp1"]
+[ext_resource type="Texture2D" uid="uid://d2quuv6v4yehl" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0018.png" id="305_kgx8g"]
+[ext_resource type="Texture2D" uid="uid://db7atrc3c20an" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0019.png" id="306_h88in"]
+[ext_resource type="Texture2D" uid="uid://bn7jole1dofm6" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0020.png" id="307_yntev"]
+[ext_resource type="Texture2D" uid="uid://ddm0a4k8820ux" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0021.png" id="308_2352j"]
+[ext_resource type="Texture2D" uid="uid://bqdr4q50xyme6" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0022.png" id="309_uc1av"]
+[ext_resource type="Texture2D" uid="uid://bdoghwjbdvm2r" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0023.png" id="310_6j4cn"]
+[ext_resource type="Texture2D" uid="uid://5678eq5usgdk" path="res://assets/graphics/niesienie/niesienie 135/niesienie_135_0024.png" id="311_elo5h"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vp10b"]
 animations = [{
@@ -567,6 +795,678 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("108_7x0tf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_yxipw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_a154l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_u303q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_t4xbe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_sutqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_18gtv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_su8ln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_hneob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_p1f42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_1e3rn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_dtuq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_8j3rj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_br6mx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_swiff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_eovkp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_gtpxf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_vdmgh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_1y8om")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_x11ye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_lpyr0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_4c2jv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130_5hpjy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_a626a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_amspt")
+}],
+"loop": true,
+"name": &"strazak_noszenie_chodzenie_dol",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("133_sipin")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_mhtyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_v7el6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_b4xx6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_7hk5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_lm47q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_og3yl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_pg1g0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_3bumf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142_8pkgd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_y8cg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_73bvj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_83psb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_vr4fd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_j3q5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148_tcobu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_uiyyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150_t52je")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_gg3dp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_p8evo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_7nmv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_xfclg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155_pu0t6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156_siswg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157_xorfp")
+}],
+"loop": true,
+"name": &"strazak_noszenie_chodzenie_gora",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("158_vucnq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159_qq4i0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160_g7mc1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161_5cvw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162_qf24v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163_e7wkn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164_mi4fg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165_rw0le")
+}, {
+"duration": 1.0,
+"texture": ExtResource("166_8mm06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("167_mijsi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168_fi8br")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_l8iul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_fbgc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_n0731")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_v1t56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_7mx67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("174_1r8q8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("175_sc6hv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("176_nymmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("177_rc7rw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("178_m8fvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("179_m2asm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("180_s0tg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("181_ice3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("182_xdooc")
+}],
+"loop": true,
+"name": &"strazak_noszenie_chodzenie_lewo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("183_gpcqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("184_kamhd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("185_vp10b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("186_v501l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("187_hspj4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("188_8w6i1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("189_jvjbi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("190_oswd5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("191_2v8ki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("192_vqw5t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("193_ik73j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("194_q6kip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("195_gt3vw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("196_swbcl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("197_ywdx7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("198_0ufso")
+}, {
+"duration": 1.0,
+"texture": ExtResource("199_wimps")
+}, {
+"duration": 1.0,
+"texture": ExtResource("200_onfak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("201_x5g0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("202_xboak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("203_7w2sr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("204_gtbbx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("205_32dgu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("206_hoyjh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("207_kgken")
+}],
+"loop": true,
+"name": &"strazak_noszenie_chodzenie_prawo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("208_l5kgt")
+}],
+"loop": true,
+"name": &"strazak_noszenie_idle_dol",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("209_7fg3n")
+}],
+"loop": true,
+"name": &"strazak_noszenie_idle_gora",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("210_mgma1")
+}],
+"loop": true,
+"name": &"strazak_noszenie_idle_lewo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("211_ckkc5")
+}],
+"loop": true,
+"name": &"strazak_noszenie_idle_prawo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("212_l5kgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("213_7fg3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("214_mgma1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("215_ckkc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("216_cspjd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("217_01syw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("218_e730k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("219_fo6g0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("220_rwqsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("221_83ebd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("222_s1ab4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("223_4cxuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("224_qldc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("225_nmgj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("226_n270s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("227_cimai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("228_m5n7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("229_t6j3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("230_yi7uu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("231_eod3e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("232_tja1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("233_xhead")
+}, {
+"duration": 1.0,
+"texture": ExtResource("234_wqrlj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("235_w228p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("236_vd1yq")
+}],
+"loop": true,
+"name": &"strazak_noszenie_skos_dol_lewo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("237_xtev6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("238_50atc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("239_3tx46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("240_w75br")
+}, {
+"duration": 1.0,
+"texture": ExtResource("241_rvjjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("242_qyfjt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("243_geg7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("244_cgxu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("245_cxd6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("246_5ktf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("247_2vhg6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("248_klmlc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("249_55v2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("250_63urt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("251_q13gk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("252_wvkd4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("253_2kbmm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("254_vopac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("255_uga0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("256_ydqpg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("257_v5l7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("258_uqjwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("259_5781h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("260_g8dbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("261_44xn6")
+}],
+"loop": true,
+"name": &"strazak_noszenie_skos_dol_prawo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("262_dhbee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("263_4t74h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("264_ob3dc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("265_l33a1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("266_2cqdi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("267_yks2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("268_t6yh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("269_pt4o0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("270_3vbh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("271_5yy2l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("272_1n31u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("273_0ruc1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("274_crmrd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("275_sd8gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("276_x67pm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("277_oxgui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("278_7tbnx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("279_0drfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("280_ekwlt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("281_lq21q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("282_vx0l4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("283_jqjmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("284_i2tkb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("285_b2evo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("286_hjntk")
+}],
+"loop": true,
+"name": &"strazak_noszenie_skos_gora_lewo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("287_tvxy0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("288_tl8iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("289_ir460")
+}, {
+"duration": 1.0,
+"texture": ExtResource("290_2f0vn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("291_xn2p7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("292_yc34x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("293_nulvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("294_wt87m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("295_qqtiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("296_q1mwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("297_2atnh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("298_kdchh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("299_5x61p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("300_2j6eu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("301_8vxl3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("302_28aev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("303_ol6xs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("304_8yrp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("305_kgx8g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("306_h88in")
+}, {
+"duration": 1.0,
+"texture": ExtResource("307_yntev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("308_2352j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("309_uc1av")
+}, {
+"duration": 1.0,
+"texture": ExtResource("310_6j4cn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("311_elo5h")
+}],
+"loop": true,
+"name": &"strazak_noszenie_skos_gora_prawo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("108_4f61u")
 }, {
 "duration": 1.0,
@@ -892,6 +1792,89 @@ size = Vector2(30, 50)
 [sub_resource type="CircleShape2D" id="CircleShape2D_wb72h"]
 radius = 80.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_t31kk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("208_g5ra6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("209_o6gml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("210_juj25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("211_kiog6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("212_fs7yp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("213_jcdmv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("214_jgglx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("215_35cit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("216_c058x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("217_14lbv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("218_j647h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("219_ufbhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("220_f67dj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("221_8g04m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("222_xtf28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("223_4la8h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("224_wbjgp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("225_3c5oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("226_1p07d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("227_ekxub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("228_m43h8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("229_s6n80")
+}, {
+"duration": 1.0,
+"texture": ExtResource("230_e42nr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("231_888y1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5ra6"]
+size = Vector2(49.5, 80.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t1kk4"]
 size = Vector2(30, 60)
 
@@ -910,7 +1893,7 @@ script = ExtResource("2_axo31")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gracz" unique_id=236196416]
 sprite_frames = SubResource("SpriteFrames_vp10b")
-animation = &"strazak_idle_prawo"
+animation = &"strazak_noszenie_skos_gora_prawo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=1691777242]
 shape = SubResource("RectangleShape2D_nn3ug")
@@ -946,6 +1929,19 @@ offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprzątacz" type="CharacterBody2D" parent="." unique_id=115592497]
+position = Vector2(2067, 2461)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprzątacz" unique_id=975991358]
+scale = Vector2(0.26953143, 0.26953143)
+sprite_frames = SubResource("SpriteFrames_t31kk")
+autoplay = "default"
+frame_progress = 0.3266275
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprzątacz" unique_id=1479448190]
+position = Vector2(4, -15)
+shape = SubResource("RectangleShape2D_g5ra6")
 
 [node name="ScianyRysowane" type="StaticBody2D" parent="." unique_id=576166230]
 position = Vector2(0, -11)
