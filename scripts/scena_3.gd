@@ -37,8 +37,8 @@ var czas_do_rozrostu = 5.0
 # DRZWI (rąbanie)
 var drzwi_hp = 30.0
 var drzwi_max_hp = 30.0
-var siekira_pivot: Node2D = null
-var siekira_sprite: Sprite2D = null
+@onready var siekira_pivot: Node2D = $Gracz/SiekiraPivot
+@onready var siekira_sprite: Sprite2D = $Gracz/SiekiraPivot/SiekiraSprite
 var drzwi_pasek: ColorRect = null
 var drzwi_pasek_bg: ColorRect = null
 var drzwi_label: Label = null
@@ -130,21 +130,7 @@ func _ready():
 			cam.limit_bottom = 4096
 			cam.zoom = Vector2(1.3, 1.3)
 
-	_stworz_siekire()
 	_stworz_pasek_drzwi(hud)
-
-func _stworz_siekire():
-	if not gracz: return
-	siekira_pivot = Node2D.new()
-	siekira_pivot.z_index = 15
-	gracz.add_child(siekira_pivot)
-	siekira_sprite = Sprite2D.new()
-	siekira_sprite.texture = SIEKIRA_TEX
-	siekira_sprite.scale = Vector2(0.3, 0.3)
-	siekira_sprite.offset = Vector2(-SIEKIRA_TEX.get_size().x * 0.35, -SIEKIRA_TEX.get_size().y * 0.35)
-	siekira_sprite.position = Vector2.ZERO
-	siekira_sprite.visible = true
-	siekira_pivot.add_child(siekira_sprite)
 
 func _stworz_pasek_drzwi(hud):
 	drzwi_pasek_bg = ColorRect.new()

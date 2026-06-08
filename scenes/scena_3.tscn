@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://yl4bvvhjql4p"]
 
 [ext_resource type="Script" uid="uid://d1smwua5mv2rm" path="res://scripts/scena_3.gd" id="1_2a01s"]
+[ext_resource type="Texture2D" uid="uid://cji2rrijicnyi" path="res://assets/graphics/siekira_scena4.png" id="siekiera_tex"]
 [ext_resource type="Script" uid="uid://c6mbmeagj8ej3" path="res://scripts/gracz.gd" id="2_axo31"]
 [ext_resource type="AudioStream" uid="uid://dumdvyt2mojxu" path="res://assets/Sounds/Test Your Fight - Rod Kim.mp3" id="2_dorrt"]
 [ext_resource type="Texture2D" uid="uid://dit5vmb2pimqi" path="res://assets/graphics/mapasafeserve.png" id="2_e2cp6"]
@@ -1911,6 +1912,14 @@ zoom = Vector2(0.1, 0.1)
 limit_right = 8192
 limit_bottom = 4096
 position_smoothing_enabled = true
+
+[node name="SiekiraPivot" type="Node2D" parent="Gracz" unique_id=293810293]
+z_index = 15
+
+[node name="SiekiraSprite" type="Sprite2D" parent="Gracz/SiekiraPivot" unique_id=293810294]
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("siekiera_tex")
+offset = Vector2(-175, -175)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=475091537]
 
