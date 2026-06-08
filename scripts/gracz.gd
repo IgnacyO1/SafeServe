@@ -51,6 +51,8 @@ func _physics_process(delta: float) -> void:
 	# PUNKT 3: Obsługa opuszczania sprzątacza przy wyjściu z użyciem efektu Fade
 	if ma_sprzatacza and not scena.sprzatacz_uratowany:
 		var wyjscie_pos = Vector2(7500, 1100) 
+		if scena.has_method("local_to_world"):
+			wyjscie_pos = scena.local_to_world(wyjscie_pos)
 		if global_position.distance_to(wyjscie_pos) < 250.0:
 			if scena.has_method("wykonaj_interakcje_fade"):
 				scena.wykonaj_interakcje_fade(func():

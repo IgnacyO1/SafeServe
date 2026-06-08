@@ -121,7 +121,7 @@ func _ready():
 	_dodaj_sciany_graniczne()
 
 	if gracz:
-		gracz.set_deferred("global_position", Vector2(7500, 1600))
+		gracz.set_deferred("global_position", local_to_world(Vector2(7500, 1600)))
 		var cam = gracz.get_node_or_null("Camera2D")
 		if cam:
 			cam.limit_left = 0
@@ -249,7 +249,7 @@ func _input(event: InputEvent) -> void:
 
 func _rabniecie_drzwi_tick():
 	if faza != "DRZWI" or not gracz: return
-	var drzwi_pos = Vector2(7500, 1000)
+	var drzwi_pos = local_to_world(Vector2(7500, 1000))
 	if gracz.global_position.distance_to(drzwi_pos) > 800: return
 
 	drzwi_hp -= 1.0
@@ -285,7 +285,7 @@ func _drzwi_wyburzone():
 	if tlo: tlo.texture = MAP_TEX_OTWARTE
 	minimapa_bg.texture = MAP_TEX_OTWARTE
 
-	if gracz: gracz.global_position = Vector2(7500, 1100)
+	if gracz: gracz.global_position = local_to_world(Vector2(7500, 1100))
 	_fade_in(0.8)
 
 	await get_tree().create_timer(0.3).timeout
@@ -313,7 +313,7 @@ func _rozpocznij_faze_pozary():
 			var offset = Vector2.ZERO
 			if spakowane_w_tej_strefie > 0:
 				offset = Vector2(randf_range(-80, 80), randf_range(-80, 80))
-			var testowana_pozycja = poz + offset
+			var testowana_pozycja = local_to_world(poz) + offset
 			if not _czy_pozycja_zablokowana(testowana_pozycja):
 				var ogien = OGIEN_SCENA.instantiate()
 				ogien.position = testowana_pozycja
@@ -373,7 +373,7 @@ func rozpocznij_faze_skrzynka():
 	var skrzynka_area = Area2D.new()
 	skrzynka_area.name = "CzarnaSkrzynka"
 	skrzynka_area.add_to_group("skrzynka")
-	skrzynka_area.position = Vector2(1638, 3072)
+	skrzynka_area.position = local_to_world(Vector2(1638, 3072))
 	var col = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(80, 80)
@@ -402,7 +402,7 @@ func podniesiono_skrzynke():
 	var wyjscie_area = Area2D.new()
 	wyjscie_area.name = "Wyjscie"
 	wyjscie_area.add_to_group("wyjscie")
-	wyjscie_area.position = Vector2(7500, 900)
+	wyjscie_area.position = local_to_world(Vector2(7500, 900))
 	var col = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(150, 150)
@@ -456,20 +456,26 @@ func _fade_out(duration: float):
 	var tw = create_tween()
 	tw.tween_property(fade_rect, "color:a", 1.0, duration)
 
+func local_to_world(local_pos: Vector2) -> Vector2:
+	var tlo = get_node_or_null("Tlo")
+	var tlo_pos = tlo.position if tlo else Vector2(285, 317)
+	var tlo_scale = tlo.scale if tlo else Vector2(0.939, 0.812)
+	return local_pos * tlo_scale + tlo_pos
+
+func world_to_local(world_pos: Vector2) -> Vector2:
+	var tlo = get_node_or_null("Tlo")
+	var tlo_pos = tlo.position if tlo else Vector2(285, 317)
+	var tlo_scale = tlo.scale if tlo else Vector2(0.939, 0.812)
+	return (world_pos - tlo_pos) / tlo_scale
+
 func _odswiez_minimape():
 	for child in markers_node.get_children(): child.queue_free()
 	var map_world_size = Vector2(8192, 4096)
 	var tex_size = minimapa_bg.texture.get_size()
-	
-	# Pobieramy pozycję i skalę tła, aby skompensować przesunięcie w edytorze
-	var tlo = get_node_or_null("Tlo")
-	var tlo_pos = tlo.position if tlo else Vector2(285, 317)
-	var tlo_scale = tlo.scale if tlo else Vector2(0.939, 0.812)
 
 	var get_marker_pos = func(real_pos: Vector2) -> Vector2:
 		# Przeliczamy pozycję ze świata na pozycję lokalną tła
-		var local_pos = (real_pos - tlo_pos) / tlo_scale
-		var pos_norm = local_pos / map_world_size
+		var pos_norm = world_to_local(real_pos) / map_world_size
 		return (pos_norm * tex_size) - (tex_size / 2.0)
 
 	for ogien in ognie:
@@ -591,7 +597,7 @@ func _czy_pozycja_zablokowana(pozycja: Vector2) -> bool:
 	var space_state = get_world_2d().direct_space_state
 	if not space_state: return false
 	var query = PhysicsPointQueryParameters2D.new()
-	query.position = query.position
+	query.position = pozycja
 	query.collision_mask = 1 
 	var wyniki = space_state.intersect_point(query)
 	return wyniki.size() > 0
