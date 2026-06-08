@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dkbcs7e6xtfl6" path="res://assets/graphics/scena_2_HUD/Switch on.svg" id="12_h2fln"]
 [ext_resource type="Texture2D" uid="uid://b2uq4l20msb7t" path="res://assets/graphics/scena_2_HUD/Siren icon.svg" id="13_1bncr"]
 [ext_resource type="Texture2D" uid="uid://tkre7ikuba8g" path="res://assets/graphics/scena_2_HUD/Light icon.svg" id="14_30wi0"]
-[ext_resource type="Script" uid="uid://b7883u4v4m6ro" path="res://scripts/scena_2_mapa.gd" id="15_xxl8d"]
+[ext_resource type="Script" path="res://scripts/scena_7_mapa_multiplayer.gd" id="15_xxl8d"]
 [ext_resource type="Texture2D" uid="uid://cw6ukbfow4r3h" path="res://assets/graphics/Mapa krakow OSM.png" id="16_730he"]
 [ext_resource type="AudioStream" uid="uid://b52jb6y30uvf1" path="res://assets/Sounds/Overboard - The Grey Room _ Golden Palms.mp3" id="17_2rql8"]
 
@@ -81,8 +81,8 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_3k3b3")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CanvasLayer/HUD/Radio popup" unique_id=1297795664]
-volume_db = 20.724
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="CanvasLayer/HUD/Radio popup" unique_id=1297795664]
+volume_db = 0.0
 
 [node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/HUD/Radio popup" unique_id=1421575649]
 position = Vector2(858.25, 967)
@@ -152,7 +152,7 @@ position = Vector2(495.3, 383.175)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("16_730he")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1440221500]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1440221500]
 stream = ExtResource("17_2rql8")
 volume_db = -9.107
 autoplay = true

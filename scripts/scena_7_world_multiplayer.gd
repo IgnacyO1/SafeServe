@@ -149,21 +149,77 @@ func _process_client():
 			if traffic_manager and traffic_manager.has_method("get_player_spawn_position"):
 				start_for_map = traffic_manager.get_player_spawn_position()
 			map_manager.initialize_map(start_for_map)
+			
+			# Dynamiczne podłączenie przycisków syreny i świateł
+			var root_node = get_parent()
+			if root_node:
+				var siren_btn = root_node.get_node_or_null("CanvasLayer/HUD/Control/TextureButton2")
+				var lights_btn = root_node.get_node_or_null("CanvasLayer/HUD/Control/TextureButton")
+				if siren_btn and local_player.has_method("turn_siren"):
+					if siren_btn.toggled.is_connected(local_player.turn_siren):
+						siren_btn.toggled.disconnect(local_player.turn_siren)
+					siren_btn.toggled.connect(local_player.turn_siren)
+					# Synchronizacja stanu początkowego
+					local_player.turn_siren(siren_btn.button_pressed)
+				if lights_btn and local_player.has_method("turn_emergency_lights"):
+					if lights_btn.toggled.is_connected(local_player.turn_emergency_lights):
+						lights_btn.toggled.disconnect(local_player.turn_emergency_lights)
+					lights_btn.toggled.connect(local_player.turn_emergency_lights)
+					# Synchronizacja stanu początkowego
+					local_player.turn_emergency_lights(lights_btn.button_pressed)
 		return
+
+	# Synchronizacja przycisków HUD ze stanem pojazdu (np. gdy przełączono klawiszem)
+	if is_instance_valid(local_player):
+		var root_node = get_parent()
+		if root_node:
+			var siren_btn = root_node.get_node_or_null("CanvasLayer/HUD/Control/TextureButton2")
+			var lights_btn = root_node.get_node_or_null("CanvasLayer/HUD/Control/TextureButton")
+			if siren_btn and "siren_active" in local_player:
+				var local_siren_active = local_player.get("siren_active")
+				if siren_btn.button_pressed != local_siren_active:
+					siren_btn.set_pressed_no_signal(local_siren_active)
+			if lights_btn and "lights_active" in local_player:
+				var local_lights_active = local_player.get("lights_active")
+				if lights_btn.button_pressed != local_lights_active:
+					lights_btn.set_pressed_no_signal(local_lights_active)
+
+	# Aktualizacja multimapy dla wszystkich graczy
+	var map_node = get_node_or_null("../CanvasLayer/Map")
+	if map_node:
+		var police_cars = get_tree().get_nodes_in_group("police")
+		var my_id = multiplayer.get_unique_id()
+		
+		# Czyszczenie nieaktywnych / rozłączonych graczy z mapy
+		var active_ids = []
+		for police in police_cars:
+			if is_instance_valid(police) and str(police.name).is_valid_int():
+				active_ids.append(str(police.name).to_int())
+				
+		for pid in map_node.player_markers.keys():
+			if not pid in active_ids:
+				map_node.remove_player(pid)
+				
+		# Rysowanie wszystkich aut
+		for police in police_cars:
+			if is_instance_valid(police) and str(police.name).is_valid_int():
+				var pid = str(police.name).to_int()
+				map_node.set_player(pid, police.global_position, police.rotation, pid == my_id)
+
 	var boss = get_tree().get_first_node_in_group("uciekinier")
 	if is_instance_valid(boss):
 		var dist_to_boss = local_player.global_position.distance_to(boss.global_position)
 		var dist_m = dist_to_boss / 20.0
-		# Sprawdzamy najpierw, czy current_scene w ogóle istnieje
-		var curr_scene = get_tree().current_scene
-		if curr_scene and curr_scene.get("map") != null:
-			curr_scene.map.set_player(local_player.global_position, local_player.rotation)
-			curr_scene.map.set_target(boss.global_position)
+		if map_node:
+			map_node.set_target(boss.global_position)
 		var dist_vec = boss.global_position - local_player.global_position
-		arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
-		coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
+		if is_instance_valid(arrow_sprite):
+			arrow_sprite.rotation = dist_vec.angle() - local_player.rotation
+		if is_instance_valid(coords_label):
+			coords_label.text = "POŚCIG SIECIOWY\nDYSTANS DO CELU: %d m" % int(dist_m)
 	else:
-		coords_label.text = "OCZEKIWANIE NA START..."
+		if is_instance_valid(coords_label):
+			coords_label.text = "OCZEKIWANIE NA START..."
 
 @rpc("authority", "call_local", "reliable")
 func trigger_end_game(winner_id: int = -1):
@@ -211,6 +267,7 @@ func setup_ui():
 	video_player.expand = true
 	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	video_player.modulate.a = 0
+	video_player.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	canvas.add_child(video_player)
 	fade_rect = ColorRect.new()
 	fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -221,11 +278,19 @@ func setup_ui():
 func play_cutscene_sequence():
 	is_changing_scene = true
 	
+	# Jeśli brak UI (np. test bez Canvas lub na serwerze headless), przejdź od razu do zmiany sceny
+	if not is_instance_valid(fade_rect) or not is_instance_valid(video_player):
+		_change_to_scene_8_direct()
+		return
+		
+	# Zablokuj klikanie pod spodem podczas cutsceny
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	
 	# --- CUTSCENA Z ZABEZPIECZENIAMI ---
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
 	await tween.finished
-	if not is_inside_tree(): return  # GUARD: węzeł mógł zostać usunięty
+	if not is_inside_tree() or not is_instance_valid(video_player) or not is_instance_valid(fade_rect): return  # GUARD: węzeł mógł zostać usunięty
 	
 	video_player.modulate.a = 1.0
 	video_player.play()
@@ -235,7 +300,7 @@ func play_cutscene_sequence():
 	var tree = get_tree()
 	if tree == null: return  # GUARD
 	await tree.create_timer(2.0).timeout
-	if not is_inside_tree(): return  # GUARD
+	if not is_inside_tree() or not is_instance_valid(fade_rect): return  # GUARD
 	
 	var tween_out = create_tween()
 	tween_out.tween_property(fade_rect, "color", Color(0, 0, 0, 1), 1.0)
@@ -249,14 +314,11 @@ func play_cutscene_sequence():
 		multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	print("[KLIENT] Rozłączono. Ładowanie sceny 8...")
 	
-	# === RĘCZNA ZMIANA SCENY ===
-	# Scena multiplayer była dodana ręcznie do root (via add_child w multiplayer_wybór.gd),
-	# a NIE przez change_scene_to_file(). Przez to change_scene_to_file() nie usuwa
-	# starej sceny — jej CanvasLayer (layer 100) z czarnym fade_rect zasłania scenę 8.
-	# Musimy ręcznie załadować scenę 8 i wyczyścić starą.
-	
-	tree = get_tree()
-	if tree == null: return  # GUARD
+	_change_to_scene_8_direct()
+
+func _change_to_scene_8_direct():
+	var tree = get_tree()
+	if tree == null: return
 	var root = tree.root
 	
 	# Bezpieczne załadowanie sceny 8
@@ -288,6 +350,6 @@ func play_cutscene_sequence():
 	tree.current_scene = scene_8
 	
 	# Usuń starą scenę multiplayer (RootMulti wraz ze wszystkimi dziećmi, w tym self)
-	# queue_free jest deferred — funkcja wykona się do końca przed faktycznym zwolnieniem
+	# queue_free jest deferred – funkcja wykona się do końca przed faktycznym zwolnieniem
 	root_multi.queue_free()
 

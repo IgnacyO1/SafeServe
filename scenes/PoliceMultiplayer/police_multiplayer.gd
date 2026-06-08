@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var engine_player:AudioStreamPlayer2D = $EnginePlayer
 
 var lights_active: bool = false
+var siren_active: bool = false
 var steer_angle: float = 0.0
 var _throttle: float = 0.0
 var _steer_input: float = 0.0
@@ -84,7 +85,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 # RPC: Każdy gracz wysyła informację o zmianie świateł, serwer przekazuje ją wszystkim klientom
-@rpc("any_peer", "call_local", "reliable")
+@rpc("authority", "call_local", "reliable")
 func sync_emergency_lights(mode: bool):
 	lights_active = mode
 	if lights:
@@ -184,23 +185,28 @@ func apply_lateral_friction() -> void:
 	velocity = forward_vel + lateral_vel * lateral_retention
 
 func play_horn_sound():
-	if horn_player:
-		if not horn_player.playing:
-			horn_player.play()
+	rpc("sync_horn")
 
+@rpc("authority", "call_local", "reliable")
+func sync_horn():
+	if horn_player and not horn_player.playing:
+		horn_player.play()
+
+@rpc("authority", "call_local", "reliable")
+func sync_siren(mode: bool):
+	siren_active = mode
+	if siren_player:
+		if mode:
+			siren_player.play() # Uruchamia dźwięk
+		else:
+			siren_player.stop() # Zatrzymuje dźwięk
 
 func turn_emergency_lights( mode : bool ):
 	print("Przycisk świateł naciśnięty!")
-	lights.visible = mode
-	if mode:
-		lights.play()
-	else:
-		lights.stop()
+	rpc("sync_emergency_lights", mode)
+
 func turn_siren( mode : bool ):
-	if mode:
-		siren_player.play() # Uruchamia dźwięk
-	else:
-		siren_player.stop() # Zatrzymuje dźwięk
+	rpc("sync_siren", mode)
 func _enter_tree() -> void:
 	# Jeśli nazwa węzła to tekstowa liczba (np. "1899499609"), 
 	# oznacza to, że to auto należy do gracza o takim ID sieciowym.
