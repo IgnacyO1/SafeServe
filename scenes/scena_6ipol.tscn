@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://copwcjb61qe64" path="res://scripts/scena_6ipol.gd" id="1_pkmh6"]
 [ext_resource type="AudioStream" uid="uid://cl3g1i545axvi" path="res://assets/Sounds/sparking.mp3" id="2_pkmh6"]
 [ext_resource type="Texture2D" uid="uid://bwib5dln0kd5o" path="res://assets/graphics/scena6_control_room.png" id="3_5mfve"]
-[ext_resource type="Texture2D" uid="uid://dnclo1ox8kygf" path="res://assets/graphics/scena6_electric_box.png" id="4_adycr"]
+[ext_resource type="Texture2D" uid="uid://coanlwvrqtjji" path="res://assets/graphics/scena6_electric_box2.png" id="4_0uggq"]
 [ext_resource type="Script" uid="uid://dbjf3f67gt25q" path="res://scripts/scena6ipol_gracz.gd" id="5_8kxc3"]
 [ext_resource type="Texture2D" uid="uid://ohtpykkusxnj" path="res://assets/graphics/police_bez/idle/0.png" id="6_0uggq"]
 [ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="6_j76f8"]
@@ -957,11 +957,11 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Skrzynka" type="Area2D" parent="." unique_id=751122063]
-position = Vector2(100, 307)
+position = Vector2(237, 157)
 
 [node name="Sprite2D" type="Sprite2D" parent="Skrzynka" unique_id=2071015168]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_adycr")
+scale = Vector2(0.203125, 0.203125)
+texture = ExtResource("4_0uggq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Skrzynka" unique_id=561814342]
 shape = SubResource("CircleShape2D_skrzynka")
