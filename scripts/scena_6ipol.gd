@@ -9,6 +9,10 @@ var player_in_range = false
 var quest_wires_completed = false
 var quest_breakers_completed = false
 var quests_active = false
+var gra_zakonczona = false # Zapobiega przegranej po upływie czasu, jeśli gracz wygrał
+
+# Timer State
+var czas_pozostaly = 30.0
 
 # Wire Cutting Puzzle State
 # Kable sa podlaczone od lewej do prawej - gracz musi je PRZECIAC
@@ -46,15 +50,24 @@ const BREAKER_NAMES = ["TRAKCJA A", "TRAKCJA B", "STEROWANIE", "AWARYJNE"]
 @onready var sparks = $Skrzynka/CPUParticles2D
 @onready var hud_rect = $HUD/HUDFadeLayer
 
+# Podwęzeł do wyświetlania czasu
+@onready var timer_label = $HackedScreen/Time
+
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_6ipol.tscn")
 	gra_aktywna = true
+	gra_zakonczona = false
 	prompt_label.hide()
 	quest_layer.hide()
 	flash_rect.color.a = 0.0
 	fade_rect.color = Color.BLACK
 	fade_rect.color.a = 1.0
 	hud_rect.hide()
+	
+	# Inicjalizacja tekstu timera
+	if is_instance_valid(timer_label):
+		timer_label.text = "00:%02d" % int(czas_pozostaly)
+	
 	# Fade in na start
 	var tw = create_tween()
 	tw.tween_property(fade_rect, "color:a", 0.0, 1.5)
@@ -74,8 +87,17 @@ func _ready() -> void:
 	wire_panel.gui_input.connect(_on_wire_panel_gui_input)
 
 func _process(delta: float) -> void:
+	# Odliczanie czasu (tylko gdy gra jest aktywna i nie została wygrana/przegrana)
+	if gra_aktywna and not gra_zakonczona:
+		czas_pozostaly = move_toward(czas_pozostaly, 0.0, delta)
+		if is_instance_valid(timer_label):
+			timer_label.text = "00:%02d" % int(ceil(czas_pozostaly))
+		
+		if czas_pozostaly <= 0.0:
+			_trigger_game_over()
+
 	# CRT Screen Flickering
-	if is_instance_valid(hacked_screen):
+	if is_instance_valid(hacked_screen) and not gra_zakonczona:
 		hacked_screen.modulate.a = randf_range(0.72, 1.0)
 		if randf() < 0.04:
 			hacked_screen.visible = !hacked_screen.visible
@@ -104,12 +126,21 @@ func _trigger_electric_shock() -> void:
 	gra_aktywna = false
 	prompt_label.hide()
 
-	# Dzwiek porazenia
+	# Oryginalny dźwięk porażenia
 	var sound_player = AudioStreamPlayer.new()
 	add_child(sound_player)
 	sound_player.stream = load("res://assets/Sounds/bum.mp3")
 	sound_player.volume_db = 10.0
 	sound_player.play()
+	sound_player.finished.connect(func(): sound_player.queue_free())
+
+	# DODATKOWO: Nowy dźwięk Evil Cyberkraba przy odrzuceniu
+	var krab_player = AudioStreamPlayer.new()
+	add_child(krab_player)
+	krab_player.stream = load("res://assets/Sounds/jaksmieszgrzebac.wav")
+	krab_player.volume_db = 8.0
+	krab_player.play()
+	krab_player.finished.connect(func(): krab_player.queue_free())
 
 	# Wybuch sparkow
 	if is_instance_valid(sparks):
@@ -134,17 +165,18 @@ func _trigger_electric_shock() -> void:
 		sparks.amount = 20
 		sparks.explosiveness = 0.08
 
-	gra_aktywna = true
+	# Jeżeli czas minął w trakcie animacji szoku, nie przywracaj kontroli
+	if not gra_zakonczona:
+		gra_aktywna = true
 	_play_shock_voice()
 
 func _play_shock_voice() -> void:
-	# POPRAWKA: Samotny krzyk odtworzony bezpośrednio w grze, bez krótkofalówki i napisów
+	# Samotny krzyk odtworzony bezpośrednio w grze
 	var voice_player = AudioStreamPlayer.new()
 	add_child(voice_player)
 	voice_player.stream = load("res://assets/Sounds/dying.mp3")
 	voice_player.volume_db = 5.0
 	voice_player.play()
-	# Usunięcie playera z pamięci po zakończeniu dźwięku
 	voice_player.finished.connect(func(): voice_player.queue_free())
 
 func _open_electric_quests() -> void:
@@ -160,7 +192,7 @@ func _close_electric_quests() -> void:
 	quest_layer.hide()
 
 func _on_skrzynka_area_entered(body: Node2D) -> void:
-	if body == player:
+	if body == player and not gra_zakonczona:
 		player_in_range = true
 		if not quests_active:
 			prompt_label.text = "[E] Otwórz skrzynkę elektryczną"
@@ -176,7 +208,7 @@ func _on_skrzynka_area_exited(body: Node2D) -> void:
 # ============================================================
 
 func _unhandled_input(event: InputEvent) -> void:
-	if player_in_range and gra_aktywna and not quests_active:
+	if player_in_range and gra_aktywna and not quests_active and not gra_zakonczona:
 		if event is InputEventKey and event.pressed and not event.echo:
 			if event.keycode == KEY_E or event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:
 				_interact_with_skrzynka()
@@ -184,7 +216,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 
 func _on_wire_panel_gui_input(event: InputEvent) -> void:
-	if quest_wires_completed: return
+	if quest_wires_completed or gra_zakonczona: return
 	if not (event is InputEventMouseButton): return
 	if not event.pressed: return
 	if event.button_index != MOUSE_BUTTON_LEFT: return
@@ -274,6 +306,7 @@ func _setup_breakers_ui() -> void:
 		breaker_container.add_child(btn)
 
 func _on_breaker_toggled(index: int, state: bool, btn: Button) -> void:
+	if gra_zakonczona: return
 	breaker_states[index] = state
 	_style_breaker_button(btn, state)
 
@@ -313,6 +346,7 @@ func _style_breaker_button(btn: Button, is_on: bool) -> void:
 # ============================================================
 
 func _check_quest_completion() -> void:
+	if gra_zakonczona: return
 	quest_wires_completed = wire_cut.all(func(c): return c == true)
 	quest_breakers_completed = breaker_states.all(func(s): return s == false)
 
@@ -337,6 +371,7 @@ func _update_quest_status() -> void:
 		status_label.text = status
 
 func _complete_all_quests() -> void:
+	gra_zakonczona = true
 	quests_active = false
 	quest_layer.hide()
 
@@ -346,25 +381,98 @@ func _complete_all_quests() -> void:
 	hud_rect.show()
 	prompt_label.hide()
 
-	# NOWOŚĆ: Natychmiastowy dźwięk odcięcia zasilania (power down)
+	# Natychmiastowy dźwięk odcięcia zasilania (power down)
 	var power_down_sound = AudioStreamPlayer.new()
 	add_child(power_down_sound)
-	power_down_sound.stream = load("res://assets/Sounds/hisound-power-outage-451574.mp3") # Możesz zmienić ścieżkę na np. "res://assets/Sounds/power_down.mp3"
+	power_down_sound.stream = load("res://assets/Sounds/hisound-power-outage-451574.mp3")
 	power_down_sound.volume_db = 3.0
 	power_down_sound.play()
 	power_down_sound.finished.connect(func(): power_down_sound.queue_free())
 
-	# Chwila ciszy/ciemności w napięciu przed komunikatem radiowym (1.5 sekundy)
+	# Chwila ciszy/ciemności w napięciu przed komunikatem radiowym (3.5 sekundy)
 	await get_tree().create_timer(3.5).timeout
 
-	# Komunikat radiowy
+	# Komunikat radiowy (odtwarzanie metro3.mp3 za pomocą skryptu nadrzędnego)
 	if is_instance_valid(radio):
 		await radio.show_radio_message(
 			"Gratulacje! Metro uratowane.",
 			"res://assets/Sounds/metro3.mp3"
 		)
 
+	# DODATKOWO: Dźwięk po zakończeniu metro3.mp3 na ciemnym ekranie
+	var cyberkrab_end_sound = AudioStreamPlayer.new()
+	add_child(cyberkrab_end_sound)
+	cyberkrab_end_sound.stream = load("res://assets/Sounds/ejcotyzrobiles.wav")
+	cyberkrab_end_sound.volume_db = 8.0
+	cyberkrab_end_sound.play()
+	
+	# Czekamy aż Evil Cyberkrab skończy mówić, zanim zmienimy scenę
+	await cyberkrab_end_sound.finished
+	await get_tree().create_timer(2.5).timeout
+	cyberkrab_end_sound.queue_free()
+
 	get_tree().change_scene_to_file("res://scenes/multiplayer_wybór.tscn")
+
+# ============================================================
+# SYSTEM PRZEGRANEJ (TIMEOUT)
+# ============================================================
+
+func _trigger_game_over() -> void:
+	gra_zakonczona = true
+	gra_aktywna = false
+	quests_active = false
+	quest_layer.hide()
+	prompt_label.hide()
+	
+	# Schowanie mrugającego ekranu zhakowanego
+	if is_instance_valid(hacked_screen):
+		hacked_screen.hide()
+
+	# Przygotowanie pełnego czarnego ekranu śmierci (wartość alfa na 0 przed Tweenem)
+	fade_rect.color = Color.BLACK
+	fade_rect.color.a = 0.0
+	fade_rect.show()
+	
+	# Uruchomienie smutnej muzyki w tle (sad.mp3 - trwa dokładnie 11 sekund)
+	var sad_music_player = AudioStreamPlayer.new()
+	add_child(sad_music_player)
+	sad_music_player.stream = load("res://assets/Sounds/sad.mp3")
+	sad_music_player.volume_db = 2.0
+	sad_music_player.play()
+	sad_music_player.finished.connect(func(): sad_music_player.queue_free())
+	
+	# Dynamiczne stworzenie napisu przegranej na środku ekranu HUD
+	var death_label = Label.new()
+	death_label.text = "Misja nieudana. Pociąg się rozbił. Zginęło 167 osób"
+	death_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	
+	# Stylizowanie tekstu (biały, przezroczysty na start pod animację)
+	death_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.0))
+	death_label.add_theme_font_size_override("font_size", 24)
+	
+	# Centrowanie na pełnym ekranie
+	death_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	$HUD.add_child(death_label)
+	
+	# --- FADE IN ANIMATION (Pojawianie się przez 1.5 sekundy) ---
+	var tween_in = create_tween().set_parallel(true)
+	tween_in.tween_property(fade_rect, "color:a", 1.0, 1.5)
+	tween_in.tween_property(death_label, "theme_override_colors/font_color:a", 1.0, 1.5)
+	
+	# Odczekanie czasu wyświetlania (1.5s wejście + 7.5s czytanie = 9 sekund od startu)
+	await get_tree().create_timer(9.0).timeout
+	
+	# --- FADE OUT ANIMATION (Zanikanie przez kolejne 2.0 sekundy pod koniec sad.mp3) ---
+	var tween_out = create_tween().set_parallel(true)
+	tween_out.tween_property(fade_rect, "color:a", 0.0, 2.0)
+	tween_out.tween_property(death_label, "theme_override_colors/font_color:a", 0.0, 2.0)
+	
+	# Łączny czas wyniósł dokładnie 11 sekund (zgrany z muzyką)
+	await tween_out.finished
+	
+	# Powrót do głównego menu gry
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _on_close_button_pressed() -> void:
 	_close_electric_quests()
