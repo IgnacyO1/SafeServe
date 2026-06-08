@@ -577,7 +577,7 @@ func _po_cutscence():
 	if audio_player: audio_player.stop()
 	_fade_out(1.0)
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://scenes/scena_5.tscn")
+	get_tree().change_scene_to_file("res://scenes/scena_4.tscn")
 
 func _czy_pozycja_zablokowana(pozycja: Vector2) -> bool:
 	var space_state = get_world_2d().direct_space_state
