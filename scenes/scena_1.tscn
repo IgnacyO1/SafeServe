@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena1/scena_1.gd" id="1_exvab"]
 [ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/scena1/MapContainer.gd" id="2_qjgc2"]
 [ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
-[ext_resource type="Texture2D" uid="uid://cnlu4ydydsxyc" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
+[ext_resource type="Texture2D" uid="uid://pqg61u2i5pfo" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/scena1/modal_button.gd" id="5_atxpi"]
 [ext_resource type="Script" uid="uid://dbhixobuaj6b" path="res://scripts/scena1/bottom_panel.gd" id="6_qjgc2"]
 [ext_resource type="Script" uid="uid://i231op5alp5j" path="res://scripts/scena1/side_panel.gd" id="7_7ealu"]
@@ -233,7 +233,6 @@ texture = ExtResource("8_maknc")
 
 [sub_resource type="LabelSettings" id="LabelSettings_ar68y"]
 font_size = 32
-font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Control" type="Control" unique_id=265069389]
 layout_mode = 3
@@ -725,17 +724,17 @@ offset_bottom = 40.0
 
 [node name="RadioSpriteGlow" type="Sprite2D" parent="HUD" unique_id=607752123]
 visible = false
-position = Vector2(83, 894)
+position = Vector2(101, 876)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("28_kkjyc")
 script = ExtResource("29_wv1cp")
 
 [node name="RadioSprite" type="TextureButton" parent="HUD" unique_id=471249022]
 layout_mode = 0
-offset_left = -105.0
-offset_top = 704.0
-offset_right = 540.0
-offset_bottom = 1349.0
+offset_left = -83.00001
+offset_top = 690.0
+offset_right = 562.0
+offset_bottom = 1335.0
 scale = Vector2(0.6, 0.6)
 texture_normal = ExtResource("21_bqyrf")
 script = ExtResource("31_pcab4")
@@ -775,6 +774,6 @@ texture = ExtResource("25_ar68y")
 [connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_on_press"]
 [connection signal="pressed" from="Tutorial modal/Button" to="Tutorial modal/Button" method="_begin_game"]
 [connection signal="pressed" from="General purpose modal/TextureButton" to="General purpose modal/TextureButton" method="_on_press"]
-[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
 [connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_on_press"]
+[connection signal="pressed" from="Message modal/TextureButton" to="Message modal/TextureButton" method="_play_message"]
 [connection signal="pressed" from="HUD/RadioSprite" to="HUD/RadioSprite" method="_click"]
