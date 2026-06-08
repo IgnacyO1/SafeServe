@@ -142,6 +142,25 @@ func _on_meta_entered(body):
 		return
 	if body.is_in_group("gracz"):
 		gra_aktywna = false
+		
+		# 1. Tworzymy czarny prostokąt wewnątrz Subviewportu
+		var fade_rect = ColorRect.new()
+		fade_rect.color = Color(0.0, 0.0, 0.0, 0.0) # Zaczynamy od przezroczystego
+		
+		# Ustawiamy rozmiar na sztywno, żeby na pewno pokrył całą arenę (wartości z clamp gracza)
+		fade_rect.position = Vector2(-100, -100)
+		fade_rect.size = Vector2(2100, 1200)
+		
+		# Wysoki z_index, żeby przykryć gracza, światła i pociągi wewnątrz viewportu
+		fade_rect.z_index = 999 
+		add_child(fade_rect)
+		
+		# 2. Animacja ściemnienia (Fade Out) - trwa 0.5 sekundy
+		var tween = create_tween()
+		tween.tween_property(fade_rect, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		# 3. Czekamy na koniec animacji i zmieniamy scenę
+		await tween.finished
 		get_tree().change_scene_to_file("res://scenes/scena_6ipol.tscn")
 
 func _screen_shake(intensity: float):
