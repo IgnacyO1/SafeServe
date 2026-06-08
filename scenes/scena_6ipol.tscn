@@ -213,6 +213,7 @@
 [ext_resource type="Texture2D" uid="uid://cqmf2w8fmthak" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0022.png" id="207_gbyjw"]
 [ext_resource type="Texture2D" uid="uid://b5mmb6ipv1xod" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0023.png" id="208_if5of"]
 [ext_resource type="Texture2D" uid="uid://cd6h3mk2ctsj4" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0024.png" id="209_aw4tb"]
+[ext_resource type="Texture2D" uid="uid://cjfhgogi711pt" path="res://assets/graphics/SPRITE+COLOR/krabkolor.png" id="214_2jj7n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_skrzynka"]
 radius = 80.0
@@ -1249,7 +1250,7 @@ polygon = PackedVector2Array(558, 746, 490, 759, 484, 681, 536, 659, 613, 629, 7
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Boundery" unique_id=697969127]
 position = Vector2(567, -227)
-polygon = PackedVector2Array(560, 761, 487, 761, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 865, 766, 805, 762, 749, 752, 700, 759, 635, 757)
+polygon = PackedVector2Array(560, 761, 487, 761, 484, 681, 536, 659, 613, 629, 750, 631, 850, 664, 870, 685, 865, 766, 805, 762, 762, 781, 733, 821, 649, 815)
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Boundery" unique_id=816972503]
 position = Vector2(563, 0)
@@ -1274,6 +1275,12 @@ polygon = PackedVector2Array(1595, 727, 1854, 734, 1853, 817, 1535, 824, 1531, 1
 
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Boundery" unique_id=107922754]
 polygon = PackedVector2Array(1262, 238, 1391, 238, 1407, 289, 1511, 277, 1537, 219, 1765, 210, 1818, 58, 1179, 36, 544, 17, 418, 19, 398, 317, 522, 304, 525, 226, 652, 231, 622, 304, 695, 298, 1283, 297)
+
+[node name="Krab" type="Sprite2D" parent="." unique_id=1745350945]
+position = Vector2(1282, 540)
+rotation = 2.365854
+scale = Vector2(0.49804688, 0.49804688)
+texture = ExtResource("214_2jj7n")
 
 [connection signal="body_entered" from="Skrzynka" to="." method="_on_skrzynka_area_entered"]
 [connection signal="body_exited" from="Skrzynka" to="." method="_on_skrzynka_area_exited"]
