@@ -29,6 +29,9 @@ func begin_call():
 	idx += 1
 
 func create_buttons(emergency : Emergency):
+	audio_player.stream = preload("res://assets/Sounds/scena 1/ringtone.mp3")
+	audio_player.play()
+	await audio_player.finished
 	get_parent().update_transcript("Dzień dobry, 112.")
 	audio_player.stream = preload("res://assets/Sounds/112.wav")
 	audio_player.play()
