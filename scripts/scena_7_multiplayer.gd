@@ -3,7 +3,7 @@ extends "res://scripts/radio.gd"
 
 # Gdy węzeł trafi do drzewa sceny.
 func _ready() -> void:
-	GameConfig.save_level("res://scenes/scena_7_multiplayer.tscn")
+	GameConfig.save_level("res://scenes/scena_7_multiplayer_version.tscn")
 	if DisplayServer.get_name() == "headless":
 		return
 	var sekundy_przed_wiadmoscia = randi_range(5, 10) # Tu ilość sekund, po której pojawia się popup

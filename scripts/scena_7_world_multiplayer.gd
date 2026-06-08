@@ -99,11 +99,11 @@ func run_as_client():
 
 	multiplayer.connected_to_server.connect(func(): 
 		print("[KLIENT] Połączono z VPS pomyślnie!")
-		if coords_label: coords_label.text = "POŁĄCZONO Z SERWEREM VPS"
+		if is_instance_valid(coords_label): coords_label.text = "POŁĄCZONO Z SERWEREM VPS"
 	)
 	multiplayer.connection_failed.connect(func(): 
 		print("[KLIENT] Błąd połączenia z VPS.")
-		if coords_label: coords_label.text = "BŁĄD: Serwer nie odpowiada"
+		if is_instance_valid(coords_label): coords_label.text = "BŁĄD: Serwer nie odpowiada"
 	)
 
 # =============================================================================
@@ -135,8 +135,9 @@ func _process_server():
 					is_close_and_blocked = true
 		if is_close_and_blocked or reached_end_of_path:
 			is_changing_scene = true
-			print("[SERWER] Koniec gry. Zwycięzca: ", closest_police_id, ". Wysyłam RPC.")
-			rpc("trigger_end_game", closest_police_id)
+			var winner_id = closest_police_id if is_close_and_blocked else -1
+			print("[SERWER] Koniec gry. Zwycięzca: ", winner_id, ". Wysyłam RPC.")
+			rpc("trigger_end_game", winner_id)
 
 func _process_client():
 	if is_changing_scene: return
@@ -231,12 +232,12 @@ func trigger_end_game(winner_id: int = -1):
 		return
 	# Sprawdź czy to my wygraliśmy wyścig
 	var my_id = multiplayer.get_unique_id()
-	if winner_id != -1 and my_id != winner_id:
-		GameConfig.multiplayer_loser = true
-		print("[KLIENT] Przegrałeś wyścig! Zwycięzca: ", winner_id)
-	else:
+	if winner_id != -1 and my_id == winner_id:
 		GameConfig.multiplayer_loser = false
 		print("[KLIENT] Wygrałeś wyścig!")
+	else:
+		GameConfig.multiplayer_loser = true
+		print("[KLIENT] Przegrałeś wyścig! Zwycięzca: ", winner_id)
 	play_cutscene_sequence()
 
 func setup_ui():

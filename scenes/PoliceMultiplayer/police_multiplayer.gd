@@ -47,14 +47,17 @@ func _ready():
 	var original_mask = collision_mask
 	collision_mask = 0
 	get_tree().create_timer(1.0).timeout.connect(func():
-		collision_mask = original_mask
-		velocity = Vector2.ZERO 
+		if is_instance_valid(self):
+			collision_mask = original_mask
+			velocity = Vector2.ZERO 
 	)
 	
 	# Przeszukujemy całe drzewo od korzenia (root), co chroni przed błędem null
 	map_manager = get_tree().root.find_child("MapManager", true, false)
 
 func _process(delta: float) -> void:
+	update_engine_sound(delta)
+	
 	# KLUCZOWE ZABEZPIECZENIE: Czytamy klawiaturę tylko u gracza, który kontroluje ten wóz!
 	if not is_multiplayer_authority(): return
 	
@@ -64,7 +67,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_lights"):
 		# Wysyłamy sygnał RPC do serwera, żeby zsynchronizował koguty u wszystkich
 		rpc("sync_emergency_lights", !lights_active)
-	update_engine_sound(delta)
 	if Input.is_action_just_pressed("horn"):
 		play_horn_sound()
 
@@ -185,7 +187,8 @@ func apply_lateral_friction() -> void:
 	velocity = forward_vel + lateral_vel * lateral_retention
 
 func play_horn_sound():
-	rpc("sync_horn")
+	if horn_player and not horn_player.playing:
+		rpc("sync_horn")
 
 @rpc("authority", "call_local", "reliable")
 func sync_horn():
