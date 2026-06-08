@@ -214,6 +214,7 @@
 [ext_resource type="Texture2D" uid="uid://b5mmb6ipv1xod" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0023.png" id="208_if5of"]
 [ext_resource type="Texture2D" uid="uid://cd6h3mk2ctsj4" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0024.png" id="209_aw4tb"]
 [ext_resource type="Texture2D" uid="uid://cjfhgogi711pt" path="res://assets/graphics/SPRITE+COLOR/krabkolor.png" id="214_2jj7n"]
+[ext_resource type="AudioStream" uid="uid://ga6epyhi1ert" path="res://assets/Sounds/alex_jauk-technology-beeping-192222.mp3" id="215_p4av8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_skrzynka"]
 radius = 80.0
@@ -1009,7 +1010,7 @@ scale_amount_max = 5.0
 color = Color(0.2, 0.8, 1, 1)
 
 [node name="Gracz" type="CharacterBody2D" parent="." unique_id=249299119]
-position = Vector2(1527, 742)
+position = Vector2(961, 866)
 script = ExtResource("5_8kxc3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gracz" unique_id=932186246]
@@ -1295,6 +1296,11 @@ position = Vector2(1282, 540)
 rotation = 2.365854
 scale = Vector2(0.49804688, 0.49804688)
 texture = ExtResource("214_2jj7n")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=308774935]
+stream = ExtResource("215_p4av8")
+volume_db = -9.315
+autoplay = true
 
 [connection signal="body_entered" from="Skrzynka" to="." method="_on_skrzynka_area_entered"]
 [connection signal="body_exited" from="Skrzynka" to="." method="_on_skrzynka_area_exited"]

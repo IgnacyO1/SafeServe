@@ -424,13 +424,22 @@ func _trigger_game_over() -> void:
 	quest_layer.hide()
 	prompt_label.hide()
 	
-	# Schowanie potencjalnie mrugającego ekranu zhakowanego
+	# Schowanie mrugającego ekranu zhakowanego
 	if is_instance_valid(hacked_screen):
 		hacked_screen.hide()
 
-	# Przygotowanie pełnego czarnego ekranu śmierci za pomocą istniejącego FadeRect
+	# Przygotowanie pełnego czarnego ekranu śmierci (wartość alfa na 0 przed Tweenem)
 	fade_rect.color = Color.BLACK
-	fade_rect.color.a = 1.0
+	fade_rect.color.a = 0.0
+	fade_rect.show()
+	
+	# Uruchomienie smutnej muzyki w tle (sad.mp3 - trwa dokładnie 11 sekund)
+	var sad_music_player = AudioStreamPlayer.new()
+	add_child(sad_music_player)
+	sad_music_player.stream = load("res://assets/Sounds/sad.mp3")
+	sad_music_player.volume_db = 2.0
+	sad_music_player.play()
+	sad_music_player.finished.connect(func(): sad_music_player.queue_free())
 	
 	# Dynamiczne stworzenie napisu przegranej na środku ekranu HUD
 	var death_label = Label.new()
@@ -438,19 +447,32 @@ func _trigger_game_over() -> void:
 	death_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	
-	# Stylizowanie tekstu (biały, czytelny)
-	death_label.add_theme_color_override("font_color", Color.WHITE)
+	# Stylizowanie tekstu (biały, przezroczysty na start pod animację)
+	death_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.0))
 	death_label.add_theme_font_size_override("font_size", 24)
 	
 	# Centrowanie na pełnym ekranie
 	death_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	$HUD.add_child(death_label)
 	
-	# Odczekanie chwili przed powrotem do menu głównego, aby gracz przeczytał napis
-	await get_tree().create_timer(5.0).timeout
+	# --- FADE IN ANIMATION (Pojawianie się przez 1.5 sekundy) ---
+	var tween_in = create_tween().set_parallel(true)
+	tween_in.tween_property(fade_rect, "color:a", 1.0, 1.5)
+	tween_in.tween_property(death_label, "theme_override_colors/font_color:a", 1.0, 1.5)
+	
+	# Odczekanie czasu wyświetlania (1.5s wejście + 7.5s czytanie = 9 sekund od startu)
+	await get_tree().create_timer(9.0).timeout
+	
+	# --- FADE OUT ANIMATION (Zanikanie przez kolejne 2.0 sekundy pod koniec sad.mp3) ---
+	var tween_out = create_tween().set_parallel(true)
+	tween_out.tween_property(fade_rect, "color:a", 0.0, 2.0)
+	tween_out.tween_property(death_label, "theme_override_colors/font_color:a", 0.0, 2.0)
+	
+	# Łączny czas wyniósł dokładnie 11 sekund (zgrany z muzyką)
+	await tween_out.finished
 	
 	# Powrót do głównego menu gry
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn") # Zmień ścieżkę, jeśli główne menu nazywa się inaczej
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _on_close_button_pressed() -> void:
 	_close_electric_quests()
