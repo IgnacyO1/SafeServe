@@ -246,7 +246,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_idle_gora",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -254,7 +254,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_idle_lewo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -262,7 +262,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_idle_prawo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -342,7 +342,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_skos_dol_lewo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -422,7 +422,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_skos_dol_prawo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -502,7 +502,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_skos_gora_lewo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -582,7 +582,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_skos_gora_prawo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -662,7 +662,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_walk_dol",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -742,7 +742,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_walk_gora",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -822,7 +822,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_walk_lewo",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -902,7 +902,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"policjant_walk_prawo",
-"speed": 5.0
+"speed": 15.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38swn"]
@@ -1024,7 +1024,7 @@ script = ExtResource("2_hu4f1")
 position = Vector2(-0.4000244, -5.5999756)
 scale = Vector2(0.08046871, 0.075781345)
 sprite_frames = SubResource("SpriteFrames_la362")
-animation = &"policjant_walk_prawo"
+animation = &"policjant_skos_dol_lewo"
 autoplay = "policjant_idle_dol"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Scena 6 root/Gracz" unique_id=1185796167]
