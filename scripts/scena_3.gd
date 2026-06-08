@@ -460,8 +460,16 @@ func _odswiez_minimape():
 	for child in markers_node.get_children(): child.queue_free()
 	var map_world_size = Vector2(8192, 4096)
 	var tex_size = minimapa_bg.texture.get_size()
+	
+	# Pobieramy pozycję i skalę tła, aby skompensować przesunięcie w edytorze
+	var tlo = get_node_or_null("Tlo")
+	var tlo_pos = tlo.position if tlo else Vector2(285, 317)
+	var tlo_scale = tlo.scale if tlo else Vector2(0.939, 0.812)
+
 	var get_marker_pos = func(real_pos: Vector2) -> Vector2:
-		var pos_norm = real_pos / map_world_size
+		# Przeliczamy pozycję ze świata na pozycję lokalną tła
+		var local_pos = (real_pos - tlo_pos) / tlo_scale
+		var pos_norm = local_pos / map_world_size
 		return (pos_norm * tex_size) - (tex_size / 2.0)
 
 	for ogien in ognie:
