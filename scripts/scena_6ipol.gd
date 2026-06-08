@@ -44,6 +44,7 @@ const BREAKER_NAMES = ["TRAKCJA A", "TRAKCJA B", "STEROWANIE", "AWARYJNE"]
 @onready var fade_rect = $HUD/FadeRect
 @onready var hacked_screen = $HackedScreen
 @onready var sparks = $Skrzynka/CPUParticles2D
+@onready var hud_rect = $HUD/HUDFadeLayer
 
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_6ipol.tscn")
@@ -53,7 +54,7 @@ func _ready() -> void:
 	flash_rect.color.a = 0.0
 	fade_rect.color = Color.BLACK
 	fade_rect.color.a = 1.0
-
+	hud_rect.hide()
 	# Fade in na start
 	var tw = create_tween()
 	tw.tween_property(fade_rect, "color:a", 0.0, 1.5)
@@ -342,7 +343,7 @@ func _complete_all_quests() -> void:
 	# NAGŁE zgaśnięcie świateł
 	fade_rect.color = Color.BLACK
 	fade_rect.color.a = 1.0 
-	
+	hud_rect.show()
 	prompt_label.hide()
 
 	# NOWOŚĆ: Natychmiastowy dźwięk odcięcia zasilania (power down)

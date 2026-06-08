@@ -1076,6 +1076,9 @@ autowrap_mode = 2
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="HUD/Radio popup" unique_id=927466880]
 volume_db = 19.712
 
+[node name="HUDFadeLayer" type="CanvasModulate" parent="HUD" unique_id=1311779371]
+color = Color(0.08720673, 0.13633603, 0.0336522, 1)
+
 [node name="QuestLayer" type="CanvasLayer" parent="." unique_id=1297051558]
 layer = 100
 visible = false
