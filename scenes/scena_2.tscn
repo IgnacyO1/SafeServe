@@ -22,7 +22,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxtjr"]
 font_size = 32
-font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Root" type="Node2D" unique_id=452106287]
 script = ExtResource("1_wb0wj")

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://4pul3axf4wb1" path="res://scripts/scena_6_root.gd" id="1_6f412"]
 [ext_resource type="Script" uid="uid://dv0g8lmejbqbt" path="res://scripts/scena_6.gd" id="1_hu4f1"]
 [ext_resource type="Texture2D" uid="uid://b2afy1a2xiynu" path="res://assets/graphics/metro.png" id="1_jv7rg"]
-[ext_resource type="Script" uid="uid://d3slpxbdpx534" path="res://scripts/scena6_gracz.gd" id="2_hu4f1"]
+[ext_resource type="Script" path="res://scripts/scena6_gracz.gd" id="2_hu4f1"]
 [ext_resource type="Texture2D" uid="uid://ohtpykkusxnj" path="res://assets/graphics/police_bez/idle/0.png" id="3_5vfn6"]
 [ext_resource type="Texture2D" uid="uid://bb8u47i038w4" path="res://assets/graphics/police_bez/idle/180.png" id="4_pgph5"]
 [ext_resource type="Texture2D" uid="uid://duj6dpcckvjc4" path="res://assets/graphics/police_bez/idle/270.png" id="5_smu5h"]
@@ -210,7 +210,7 @@
 [ext_resource type="Texture2D" uid="uid://cd6h3mk2ctsj4" path="res://assets/graphics/police_bez/bez broni prawo/1/bez_broniprawo0024.png" id="208_28l7j"]
 [ext_resource type="Texture2D" uid="uid://d24g8uashq26" path="res://assets/graphics/Motorola krotkofalowka glow.png" id="208_nmaqs"]
 [ext_resource type="Script" uid="uid://ccrn7dnbdgnrn" path="res://scripts/scena1/radio_glow.gd" id="209_6f412"]
-[ext_resource type="Texture2D" uid="uid://oal2kf8l4i8s" path="res://assets/graphics/Motorola krotkofalowka.png" id="210_uejic"]
+[ext_resource type="Texture2D" uid="uid://bupqi1b6epcou" path="res://assets/graphics/Motorola krotkofalowka dark.png" id="211_6f412"]
 [ext_resource type="Script" uid="uid://dj1yppat6lukl" path="res://scripts/scena_6_radio_handler.gd" id="211_7kxxk"]
 [ext_resource type="Script" uid="uid://dpdulfx50m58u" path="res://scripts/radio_popup.gd" id="212_0r3er"]
 [ext_resource type="Texture2D" uid="uid://d0q0x7voyxvqv" path="res://assets/graphics/Krótkofalówka dymek.png" id="213_wre1p"]
@@ -942,7 +942,6 @@ gradient = SubResource("Gradient_g3e0u")
 
 [sub_resource type="LabelSettings" id="LabelSettings_hrwxg"]
 font_size = 32
-font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Scena6" type="Node2D" unique_id=1624331308]
 script = ExtResource("1_6f412")
@@ -1098,7 +1097,7 @@ offset_top = 704.0
 offset_right = 540.0
 offset_bottom = 1349.0
 scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("210_uejic")
+texture_normal = ExtResource("211_6f412")
 script = ExtResource("211_7kxxk")
 
 [node name="Radio popup" type="Control" parent="HUD" unique_id=2132991748]

@@ -135,7 +135,6 @@ func despawn_agent(agent):
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
 font_size = 32
-font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="Root2" type="Node2D" unique_id=452106287]
 script = ExtResource("1_ohnw0")

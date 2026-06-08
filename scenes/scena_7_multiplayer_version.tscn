@@ -20,7 +20,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_q82ln"]
 font_size = 32
-font_color = Color(0, 0.6627451, 0, 1)
 
 [node name="RootMulti" type="Node2D" unique_id=452106287]
 script = ExtResource("1_34dss")
@@ -158,7 +157,3 @@ stream = ExtResource("17_2rql8")
 volume_db = -9.107
 autoplay = true
 parameters/looping = true
-
-
-
-
