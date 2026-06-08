@@ -91,6 +91,11 @@ var glus_sent_mails = []
 var seen_j_mail = false  
 
 func _ready():
+	# Wymuszenie rozciągania samego kontenera VBox na pełną szerokość panelu/scrolla
+	maile_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Jeśli nadrzędny ScrollContainer ma opcję follow focus lub scroll horizontal, warto go też upewnić
+	if maile_vbox.get_parent() is ScrollContainer:
+		maile_vbox.get_parent().horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	for contact in active_contacts:
 		conversation_histories[contact] = []
 	
@@ -184,16 +189,23 @@ func rebuild_global_mailbox_ui():
 		var mail_id = global_mailbox_history[i]
 		var mail_data = EMAILS[mail_id]
 		
-		var is_player_sender = mail_data.has("target") # Jeśli ma klucz "target", wysłał go gracz
+		var is_player_sender = mail_data.has("target")
 		
 		if current_filter == "received" and is_player_sender:
-			continue # Pomiń wysłane, jeśli szukamy odebranych
+			continue
 		elif current_filter == "sent" and not is_player_sender:
-			continue # Pomiń odebrane, jeśli szukamy wysłanych
+			continue
 			
 		var btn = Button.new()
-		# NOWOŚĆ: Przycisk rozciąga się i wypełnia całą szerokość kontenera VBox
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL 
+		
+		# --- POPRAWKA LAYOUTU ---
+		# Wymuszamy, aby przycisk rozciągał się poziomo na 100% szerokości VBoxa
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# Zapobiega ucinaniu dłuższego tekstu na małych przyciskach
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART 
+		# Opcjonalnie: minimalna wysokość przycisku maila, by dobrze wyglądał na liście
+		btn.custom_minimum_size.y = 40 
+		# ------------------------
 		
 		var sender_name = ""
 		if is_player_sender:

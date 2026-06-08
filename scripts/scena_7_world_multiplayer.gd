@@ -290,4 +290,3 @@ func play_cutscene_sequence():
 	# Usuń starą scenę multiplayer (RootMulti wraz ze wszystkimi dziećmi, w tym self)
 	# queue_free jest deferred — funkcja wykona się do końca przed faktycznym zwolnieniem
 	root_multi.queue_free()
-
