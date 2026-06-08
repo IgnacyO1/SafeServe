@@ -138,15 +138,18 @@ func _ready():
 	# Tworzenie HUD z kodu
 	_stworz_hud()
 	
-	# Szybka sekwencja intro (krótsze napisy)
-	_fade_in(0.5)
-	await get_tree().create_timer(0.2).timeout
-	
-	# Komunikat dla przegranego z multiplayer'a
+	# Komunikat dla przegranego z multiplayer'a — NA CZARNYM TLE (przed fade in)
 	if show_loser_msg:
+		# label_info ma domyślny z_index=0, a fade_rect ma z_index=100
+		# Podnosimy label nad czarny ekran, żeby tekst był widoczny
+		label_info.z_index = 101
 		_pokaz_info("PRZEGRYWASZ!\nTwój kolega był szybszy!", 3.0)
 		await get_tree().create_timer(3.5).timeout
+		label_info.z_index = 0  # Reset z_index na normalny
 	
+	# Szybka sekwencja intro (identyczna dla obu graczy)
+	_fade_in(0.5)
+	await get_tree().create_timer(0.2).timeout
 	_pokaz_info("WALKA Z CYBERKRABEM!", 1.0)
 	await get_tree().create_timer(1.2).timeout
 	_pokaz_info("GOTOWY?", 0.6)
