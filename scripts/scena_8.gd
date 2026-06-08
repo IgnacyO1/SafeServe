@@ -373,6 +373,16 @@ func _sprawdz_faze():
 			5:
 				_pokaz_info("⚠️ PROMIEŃ ZAGŁADY! ⚠️", 2.0)
 				label_faza.set("theme_override_colors/font_color", Color(0.8, 0.0, 1.0, 1.0))
+				
+				# --- ODTWARZANIE DŹWIĘKU ---
+				var dzwiek = AudioStreamPlayer.new()
+				add_child(dzwiek)
+				dzwiek.stream = load("res://assets/Sounds/laserzagladyciepokona.wav")
+				dzwiek.play()
+				# Usuń węzeł z pamięci po zakończeniu odtwarzania, żeby nie śmiecić
+				dzwiek.finished.connect(dzwiek.queue_free)
+				# ---------------------------
+
 				# Wyłącz zwykły laser gdy włącza się sweep
 				_wylacz_laser()
 				sweep_cooldown_timer = 1.5 # Krótka pauza przed pierwszym sweep'em
