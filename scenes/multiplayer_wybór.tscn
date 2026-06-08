@@ -31,7 +31,7 @@ custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_bt6pu")
 theme_override_font_sizes/font_size = 50
-text = "dołącz"
+text = "multiplayer"
 
 [node name="BtnExit" type="Button" parent="VBoxContainer" unique_id=1414870229]
 custom_minimum_size = Vector2(0, 150)
@@ -47,4 +47,4 @@ offset_right = 1780.0
 offset_bottom = 947.0
 theme_override_fonts/normal_font = ExtResource("2_bt6pu")
 theme_override_font_sizes/normal_font_size = 54
-text = "Podejrzany nam ucieka! Natomiast, póki nie skończy nam się subskrypcja na VPSie, możesz gonić go razem ze swoim kolegą. "
+text = "A teraz czas na pośćig! Do 29 czerwca możesz grać multiplayer."
