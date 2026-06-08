@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://bdwbnqmfd3gh2" path="res://scripts/scena1/scena_1.gd" id="1_exvab"]
 [ext_resource type="Script" uid="uid://dh0skni1nuuqo" path="res://scripts/scena1/MapContainer.gd" id="2_qjgc2"]
 [ext_resource type="Texture2D" uid="uid://dtsd5bnapbw5b" path="res://assets/graphics/scena_1/Mapa Krakow OSM.png" id="3_bqyrf"]
-[ext_resource type="Texture2D" uid="uid://cnlu4ydydsxyc" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
+[ext_resource type="Texture2D" uid="uid://pqg61u2i5pfo" path="res://assets/graphics/scena_1/HUD background.svg" id="4_bhyte"]
 [ext_resource type="Script" uid="uid://nvn2tksaoyv8" path="res://scripts/scena1/modal_button.gd" id="5_atxpi"]
-[ext_resource type="Texture2D" uid="uid://dn52leh6bgbqd" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
+[ext_resource type="Texture2D" uid="uid://cc0tyg3ckrrgj" path="res://assets/graphics/pasekwindows.png" id="5_cmwsu"]
 [ext_resource type="Script" uid="uid://dbhixobuaj6b" path="res://scripts/scena1/bottom_panel.gd" id="6_qjgc2"]
 [ext_resource type="Script" uid="uid://i231op5alp5j" path="res://scripts/scena1/side_panel.gd" id="7_7ealu"]
 [ext_resource type="Texture2D" uid="uid://bveopmywejl1k" path="res://assets/graphics/ogien.png" id="7_8g8i5"]
@@ -307,7 +307,7 @@ script = ExtResource("6_qjgc2")
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="BottomPanel" unique_id=1820753213]
 visible = false
-volume_db = 5.0
+volume_db = 24.0
 
 [node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
 position = Vector2(64, 64)
