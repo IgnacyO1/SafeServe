@@ -93,9 +93,23 @@ func _on_segment_hit(node: Node2D):
 	
 	if node.is_in_group("gracz"):
 		hit_cooldowns[node] = 3.0
-		var scena = get_tree().current_scene
-		if scena and scena.has_method("gracz_trafiony"):
-			scena.gracz_trafiony()
+		
+		# Szukamy skryptu poziomu, wchodząc w górę drzewa węzłów
+		var parent_node = self.get_parent()
+		var znalazlem_skrypt = false
+		
+		while parent_node != null:
+			if parent_node.has_method("gracz_trafiony"):
+				parent_node.gracz_trafiony()
+				znalazlem_skrypt = true
+				break
+			parent_node = parent_node.get_parent()
+			
+		# Koło ratunkowe: jeśli pociąg nie znalazł rodzica, próbuje starej metody
+		if not znalazlem_skrypt:
+			var scena = get_tree().current_scene
+			if scena and scena.has_method("gracz_trafiony"):
+				scena.gracz_trafiony()
 
 func rebuild_curve():
 	curve.clear_points()

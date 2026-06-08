@@ -19,6 +19,9 @@ func _ready():
 	_spawn_trains()
 	if meta:
 		meta.body_entered.connect(_on_meta_entered)
+	
+	# Uruchomienie efektu czarnego ekranu i budzenia na starcie sceny
+	_efekt_budzenia()
 
 func _physics_process(delta):
 	if not gra_aktywna:
@@ -116,6 +119,23 @@ func _spawn_krew_na_ekranie():
 	tween.tween_property(flash, "color:a", 0.0, 0.6)
 	
 	get_tree().create_timer(2.2).timeout.connect(canvas_layer.queue_free)
+
+func _efekt_budzenia():
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 99 
+	# POPRAWKA: Dodajemy do głównego okna gry (root)
+	get_tree().root.add_child.call_deferred(canvas_layer)
+	
+	var czarne_tlo = ColorRect.new()
+	czarne_tlo.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	czarne_tlo.color = Color(0.0, 0.0, 0.0, 1.0) 
+	canvas_layer.add_child(czarne_tlo)
+	
+	var tween = create_tween()
+	tween.tween_interval(3.0)
+	tween.tween_property(czarne_tlo, "color:a", 0.0, 5.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	tween.tween_callback(canvas_layer.queue_free)
 	
 func _on_meta_entered(body):
 	if not gra_aktywna:
