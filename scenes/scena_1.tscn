@@ -307,6 +307,7 @@ script = ExtResource("6_qjgc2")
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="BottomPanel" unique_id=1820753213]
 visible = false
+volume_db = 5.0
 
 [node name="Icon" type="Sprite2D" parent="BottomPanel" unique_id=1746933715]
 position = Vector2(64, 64)
