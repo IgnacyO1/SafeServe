@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var mass: float = 3000.0
 @export var max_speed: float = 600.0
 @export var acceleration: float = 200.0
 @export var brake_force: float = 400.0
@@ -62,7 +63,51 @@ func _physics_process(delta: float) -> void:
 	apply_steering(delta)
 	apply_lateral_friction()
 
+	var pre_velocity = velocity
 	move_and_slide()
+	
+	var restitution: float = 0.3
+	var pushed_colliders := {}
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if not collider or collider in pushed_colliders:
+			continue
+		pushed_colliders[collider] = true
+		
+		if "mass" in collider and collider.has_method("apply_impulse"):
+			var normal = collision.get_normal()
+			var collider_vel = Vector2.ZERO
+			if "velocity" in collider:
+				collider_vel = collider.velocity
+			elif "push_velocity" in collider:
+				collider_vel = collider.push_velocity
+				
+			var rel_vel = pre_velocity - collider_vel
+			var vel_along_normal = rel_vel.dot(normal)
+			
+			# Jeśli obiekty się od siebie oddalają, ignorujemy fizykę (unikamy bugów z przenikaniem)
+			if vel_along_normal >= 0:
+				continue
+				
+			var inv_mass1 = 1.0 / mass
+			var inv_mass2 = 1.0 / collider.mass
+			
+			# Ostateczny wzór na impuls (j)
+			var j = -(1.0 + restitution) * vel_along_normal
+			j /= (inv_mass1 + inv_mass2)
+			
+			# Aplikujemy na przeszkodę
+			collider.apply_impulse(-normal * j)
+			
+			# Aplikujemy odpowiedź na nas
+			velocity += normal * (j * inv_mass1)
+			
+			# Dodatkowy odrzut rozdzielający przy taranowaniu lżejszych aut (Anti-Sticking)
+			if mass > collider.mass:
+				velocity += normal * 80.0
 	# Wywołujemy aktualizację dźwięku silnika
 	update_engine_sound(delta)
 	if Input.is_action_just_pressed("horn"): 
@@ -183,3 +228,7 @@ func update_engine_sound(delta: float) -> void:
 	# OPTYMALNIE: Możesz też lekko zgłośnić silnik, gdy jedzie szybko
 	var target_volume = lerp(-15.0, -10.0, speed_ratio) # wartości w dB
 	engine_player.volume_db = lerp(engine_player.volume_db, target_volume, 5.0 * delta)
+
+func apply_impulse(impulse: Vector2):
+	var inv_mass = 1.0 / mass
+	velocity += impulse * inv_mass

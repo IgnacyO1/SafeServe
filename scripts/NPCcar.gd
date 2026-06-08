@@ -1,5 +1,11 @@
 extends CharacterBody2D
 
+@export var mass: float = 1000.0
+var push_velocity: Vector2 = Vector2.ZERO
+
+var stuck_timer: float = 0.0
+var last_position: Vector2 = Vector2.ZERO
+
 # --- BAZA WARIANTÓW SAMOCHODÓW ---
 # Definiujemy tekstury dla różnych marek/typów aut
 const CAR_VARIANTS = [
@@ -26,6 +32,7 @@ var original_speed: float = 400.0
 @onready var sprite = $Sprite2D # <--- Łapiemy nasz jedyny Sprite2D
 
 func _ready():
+	mass += randf_range(-100.0, 100.0)
 	choose_random_variant()
 
 func choose_random_variant():
@@ -56,18 +63,65 @@ func setup(start_points, manager, oneway_status):
 func _physics_process(delta):
 	if current_road_points.is_empty(): return
 	
+	# Anti-stuck despawn logic
+	if global_position.distance_to(last_position) < 5.0:
+		stuck_timer += delta
+		if stuck_timer > 10.0:
+			queue_free()
+			return
+	else:
+		stuck_timer = 0.0
+		last_position = global_position
+	
 	# KLUCZOWA ZMIANA: Przeliczamy target_pos w każdej klatce.
 	# Dzięki temu zmiana current_lane_offset zadziała natychmiast!
 	var target_pos = get_offset_point(target_index - 1, target_index)
 	var dir = global_position.direction_to(target_pos)
 	
-	velocity = dir * speed
+	push_velocity = push_velocity.move_toward(Vector2.ZERO, 600.0 * delta)
+	velocity = (dir * speed) + push_velocity
 	
-	if velocity.length() > 0:
-		var target_angle = velocity.angle()
+	if (dir * speed).length() > 0:
+		var target_angle = (dir * speed).angle()
 		rotation = lerp_angle(rotation, target_angle, 10.0 * delta)
 	
+	var pre_velocity = velocity
 	move_and_slide()
+	
+	var restitution: float = 0.3
+	var pushed_colliders := {}
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if not collider or collider in pushed_colliders:
+			continue
+		pushed_colliders[collider] = true
+		
+		if "mass" in collider and collider.has_method("apply_impulse"):
+			var normal = collision.get_normal()
+			var collider_vel = Vector2.ZERO
+			if "velocity" in collider:
+				collider_vel = collider.velocity
+			elif "push_velocity" in collider:
+				collider_vel = collider.push_velocity
+				
+			var rel_vel = pre_velocity - collider_vel
+			var vel_along_normal = rel_vel.dot(normal)
+			
+			if vel_along_normal >= 0:
+				continue
+				
+			var inv_mass1 = 1.0 / mass
+			var inv_mass2 = 1.0 / collider.mass
+			
+			var j = -(1.0 + restitution) * vel_along_normal
+			j /= (inv_mass1 + inv_mass2)
+			
+			collider.apply_impulse(-normal * j)
+			
+			push_velocity += normal * (j * inv_mass1)
 	
 	# Jeśli jesteśmy blisko punktu, idziemy do następnego
 	if global_position.distance_to(target_pos) < 20.0:
@@ -162,3 +216,7 @@ func resume_driving():
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "current_lane_offset", target_offset, 2.0)
 	tween.tween_property(self, "speed", original_speed, 2.0)
+
+func apply_impulse(impulse: Vector2):
+	var inv_mass = 1.0 / mass
+	push_velocity += impulse * inv_mass
