@@ -63,7 +63,7 @@ var mock_streets: Array = [
 
 # Baza zmyślonych właścicieli i adresów dla konkretnych przypadków
 var mock_owners: Dictionary = {
-	"KR4B2137": {"name": "--!Error!--", "address": "Sektor G7 26", "risk": "WYSOKIE", "color": COLOR_ERROR}
+	"KR4B2137": {"name": "--!Error!--", "address": "Sektor A5 M2", "risk": "WYSOKIE", "color": COLOR_ERROR}
 }
 
 func _ready() -> void:
@@ -75,6 +75,7 @@ func _ready() -> void:
 	_setup_video_player()
 	_setup_ui_signals()
 	_build_map_ui() 
+	btn_play.focus_mode = Control.FOCUS_NONE
 
 func _load_json_data() -> void:
 	if FileAccess.file_exists(json_path):
@@ -350,8 +351,19 @@ func _build_map_ui() -> void:
 
 func _on_dispatch_pressed() -> void:
 	if current_selected_plate == "KR4B2137":
-		get_tree().change_scene_to_file("res://scenes/scena_6.tscn")
+		# 1. Najpierw symulujemy dojazd patrolu na miejsce (tak jak dla innych aut, ale z innym tekstem)
+		dispatch_btn.disabled = true
+		dispatch_btn.text = "ŁADOWANIE..."
+		await get_tree().create_timer(1.0).timeout
+		
+		dispatch_btn.text = "PATROL JEDZIE NA MIEJSCE (SEKTOR A5)..."
+		map_title_label.text = "STATUS: W TOKU INTERWENCJI..."
+		await get_tree().create_timer(2.0).timeout
+		
+		# 2. Gdy dojadą na miejsce (Budowa Metra), odpalamy fade out i cutscenę
+		_fade_out_and_play_cutscene("res://assets/Videos/spadanie_do_metra.ogv", "res://scenes/scena_6.tscn")
 	else:
+		# Standardowe zachowanie dla pozostałych (błędnych) samochodów
 		dispatch_btn.disabled = true
 		dispatch_btn.text = "ŁADOWANIE..."
 		await get_tree().create_timer(1.5).timeout
@@ -363,6 +375,48 @@ func _on_dispatch_pressed() -> void:
 		_style_button(dispatch_btn, COLOR_SUCCESS, COLOR_SUCCESS)
 		dispatch_btn.text = "PATROL NIE ZNALAZŁ NIC PODEJRZANEGO"
 		map_title_label.text = "STATUS: FAŁSZYWY ALARM"
+
+# Nowa funkcja realizująca Fade Out, odtworzenie filmu i zmianę sceny
+func _fade_out_and_play_cutscene(video_file_path: String, next_scene_path: String) -> void:
+	# Sprawdzamy dostępność pliku
+	if not FileAccess.file_exists(video_file_path):
+		print("Błąd: Brak pliku wideo: ", video_file_path)
+		get_tree().change_scene_to_file(next_scene_path)
+		return
+
+	# --- KROK 1: TWORZENIE EKRANU DO FADE OUT ---
+	var fade_overlay = ColorRect.new()
+	fade_overlay.color = Color.BLACK
+	fade_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	fade_overlay.modulate.a = 0.0 # Zaczynamy od pełnej przezroczystości
+	fade_overlay.top_level = true # Upewniamy się, że przykryje absolutnie wszystko
+	$CanvasLayer.add_child(fade_overlay)
+	
+	# --- KROK 2: ANIMACJA FADE OUT (ŚCIEMNIENIE) ---
+	var tween = create_tween()
+	# Płynnie zmieniaj przezroczystość (alfa) do 1.0 w czasie 1.2 sekundy
+	tween.tween_property(fade_overlay, "modulate:a", 1.0, 1.2)
+	await tween.finished # Czekamy aż ekran zrobi się całkiem czarny
+	
+	# Zatrzymujemy odtwarzacz w tle, żeby dźwięki z głównej sceny nie leciały podczas filmu
+	if video_player:
+		video_player.paused = true
+
+	# --- KROK 3: PRZYGOTOWANIE I ODPALENIE CUTSCENY ---
+	var cutscene_player = VideoStreamPlayer.new()
+	cutscene_player.expand = true
+	cutscene_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	$CanvasLayer.add_child(cutscene_player)
+	
+	# Ukrywamy czarny prostokąt pod filmem, żeby nie zasłaniał wideo
+	fade_overlay.queue_free()
+	
+	cutscene_player.stream = load(video_file_path)
+	cutscene_player.play()
+	
+	# --- KROK 4: KONIEC FILMU -> ZMIANA SCENY ---
+	await cutscene_player.finished
+	get_tree().change_scene_to_file(next_scene_path)
 
 func _on_close_map_pressed() -> void:
 	map_panel.hide()
@@ -386,3 +440,13 @@ func _style_button(btn: Button, bg_col: Color, hover_col: Color) -> void:
 	btn.add_theme_stylebox_override("hover", hover)
 	btn.add_theme_stylebox_override("disabled", disabled)
 	btn.add_theme_color_override("font_color", Color.WHITE)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Sprawdzamy czy wciśnięto spację i czy akcja właśnie się wykonała (zabezpieczenie przed trzymaniem klawisza)
+	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.keycode == KEY_SPACE and event.pressed and not event.is_echo()):
+		# Blokada: Jeśli mapa jest otwarta, spacja nie powinna pauzować wideo w tle
+		if map_panel and map_panel.visible:
+			return
+			
+		_on_play_pause_toggled()
