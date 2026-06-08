@@ -8,19 +8,19 @@ var idx : int = 0
 
 func _ready() -> void:
 	emergencies.append(Emergency.new("Fire", Vector2(720, 1060) ))
-	emergencies[0].add_dialogue_option(DialogueOption.new( "Gdzie pan jest?", "res://assets/Sounds/gdziepanjest.mp3", "W Zespole Szkół Łączności, skrzyżowanie Monte Cassino i Kapelanki ", "", "Adres: ZSŁ nr. 14 Monte Cassino"))
-	emergencies[0].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", " Trzech uczniów się poparzyło ", "", "Ilość poszkodowanych: 3"))
-	emergencies[0].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Wybuch pożar w jednej z naszych pracowni", "", "Przyczyna: Pożar w pracowni"))
+	emergencies[0].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Wybuch pożar w jednej z naszych pracowni", "res://assets/Sounds/scena 1/zdarzenie1.mp3", "Przyczyna: Pożar w pracowni"))
+	emergencies[0].add_dialogue_option(DialogueOption.new( "Gdzie pan jest?", "res://assets/Sounds/gdziepanjest.mp3", "W Zespole Szkół Łączności, skrzyżowanie Monte Cassino i Kapelanki ", "res://assets/Sounds/scena 1/adres1.mp3", "Adres: ZSŁ nr. 14 Monte Cassino"))
+	emergencies[0].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", " Trzech uczniów się poparzyło ", "res://assets/Sounds/scena 1/osoby1.mp3", "Ilość poszkodowanych: 3"))
 	
 	emergencies.append(Emergency.new("Crime", Vector2(480, 480) ))
-	emergencies[1].add_dialogue_option(DialogueOption.new( "Gdzie pani jest?", "res://assets/Sounds/gdziepanijest.mp3", "na ulicy Jasnogórskiej", "", "Adres: ul. Jasnogórska"))
-	emergencies[1].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", "Jeszcze nikt, ale może kogoś pogryźć", "", "Ilość poszkodowanych: 0"))
-	emergencies[1].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Jakieś groźne zwierze jest na drzewie, wygląda jak lagun", "", "Wydarzenie: Groźne zwierze"))
+	emergencies[1].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Jakieś groźne zwierze jest na drzewie, wygląda jak lagun", "res://assets/Sounds/scena 1/zdarzenie2.mp3", "Wydarzenie: Groźne zwierze"))
+	emergencies[1].add_dialogue_option(DialogueOption.new( "Gdzie pani jest?", "res://assets/Sounds/gdziepanijest.mp3", "na ulicy Jasnogórskiej", "res://assets/Sounds/scena 1/adres2.mp3", "Adres: ul. Jasnogórska"))
+	emergencies[1].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", "Jeszcze nikt, ale to może kogoś pogryźć", "res://assets/Sounds/scena 1/osoby2.mp3", "Ilość poszkodowanych: 0"))
 
 	emergencies.append(Emergency.new("Fire", Vector2(480, 1400) ))
-	emergencies[2].add_dialogue_option(DialogueOption.new( "Gdzie pan jest?", "res://assets/Sounds/gdziepanjest.mp3", "Biuro Polyservers, Zielone Tulipany 82 ", "", "Adres: Zielone Tulipany 82"))
-	emergencies[2].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", "Chyba nikt, ale jedna starsza osoba utknęła w budynku", "", "Ilość poszkodowanych: 0"))
-	emergencies[2].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Serwerownia nagle zaczęła się palić, nie wygląda to na zwykły pożar", "", "Przyczyna: Możliwe podpalenie serwerowni"))
+	emergencies[2].add_dialogue_option(DialogueOption.new( "Co się stało?", "res://assets/Sounds/cosięstało.mp3", "Serwerownia nagle zaczęła się palić, nie wygląda to na zwykły pożar", "res://assets/Sounds/scena 1/zdarzenie3.mp3", "Przyczyna: Możliwe podpalenie serwerowni"))
+	emergencies[2].add_dialogue_option(DialogueOption.new( "Gdzie pan jest?", "res://assets/Sounds/gdziepanjest.mp3", "Biuro Polyservers, Zielone Tulipany 82 ", "res://assets/Sounds/scena 1/adres3.mp3", "Adres: Zielone Tulipany 82"))
+	emergencies[2].add_dialogue_option(DialogueOption.new( "Ile osób jest poszkodowanych?", "res://assets/Sounds/ileosóbjestposzkodowanych.mp3", "Chyba nikt, ale jedna starsza osoba utknęła w budynku", "res://assets/Sounds/scena 1/osoby3.mp3", "Ilość poszkodowanych: 0"))
 
 
 func begin_call():
