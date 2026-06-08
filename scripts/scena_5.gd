@@ -9,7 +9,7 @@ extends Control
 @onready var h_slider: HSlider = $CanvasLayer/HBoxContainer/HSlider
 @onready var time_label: Label = $CanvasLayer/HBoxContainer/TimeLabel
 
-@onready var car_info_panel: PanelContainer = $CanvasLayer/CarInfoPanelContainer
+@onready var car_info_panel: Panel = $CanvasLayer/CarInfoPanelContainer
 @onready var car_info_text: RichTextLabel = $CanvasLayer/CarInfoPanelContainer/RichTextLabel
 @onready var button_send: Button = $CanvasLayer/CarInfoPanelContainer/ButtonSend
 
