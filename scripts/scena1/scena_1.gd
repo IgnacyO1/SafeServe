@@ -15,7 +15,7 @@ var main_event = false
 
 func _ready() -> void:
 	GameConfig.save_level("res://scenes/scena_1.tscn")
-	
+	_przywroc_audio()
 
 func message( event : MapEvent ) -> void:
 	
@@ -63,3 +63,16 @@ func _main_event():
 func begin_radio_call():
 	radio_glow.start_glow()
 	find_child("RadioSprite").clickable = true
+
+
+func _przywroc_audio():
+	var bus_index = AudioServer.get_bus_index("Master")
+	
+	# Tworzymy płynne podgłaśnianie od -40 dB do 0 dB (lub domyślnej głośności)
+	var tween = create_tween()
+	tween.tween_method(
+		func(volume): AudioServer.set_bus_volume_db(bus_index, volume),
+		-40.0, # wartość startowa (wyciszona)
+		0.0,   # wartość docelowa (standardowa głośność)
+		1.5    # czas trwania efektu w sekundach
+	)
